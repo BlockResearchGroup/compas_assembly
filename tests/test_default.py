@@ -1,4 +1,4 @@
 import pytest
 
-def test_pass():
+def test_trivial():
     assert 1 == 1
