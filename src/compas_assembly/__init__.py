@@ -1,4 +1,4 @@
-"""
+'''
 ********************************************************************************
 compas_assembly
 ********************************************************************************
@@ -15,19 +15,19 @@ compas_assembly
     compas_assembly.utilities
 
 
-"""
+'''
 
 from __future__ import print_function
 
 import os
 
 
-__author__    = ["Tom Van Mele <van.mele@arch.ethz.ch>"]
-__copyright__ = "Block Research Group - ETH Zurich"
-__license__   = "MIT License"
-__email__     = "van.mele@arch.ethz.ch"
+__author__    = ['Tom Van Mele <van.mele@arch.ethz.ch>']
+__copyright__ = 'Block Research Group - ETH Zurich'
+__license__   = 'MIT License'
+__email__     = 'van.mele@arch.ethz.ch'
 
-__version__ = "__version__ = '0.1.5'"
+__version__ = '0.1.5'
 
 
 HERE = os.path.dirname(__file__)
