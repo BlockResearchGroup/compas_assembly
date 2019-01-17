@@ -5,6 +5,7 @@ python:
 
 before_install:
 - pip install Cython --install-option="--no-cython-compile";
+- pip install -r requirements-dev.txt
 
 install:
 - python setup.py install;
