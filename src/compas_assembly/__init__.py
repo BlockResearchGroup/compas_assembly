@@ -27,7 +27,7 @@ __copyright__ = 'Block Research Group - ETH Zurich'
 __license__   = 'MIT License'
 __email__     = 'van.mele@arch.ethz.ch'
 
-__version__ = '0.1.5'
+__version__ = '0.1.6'
 
 
 HERE = os.path.dirname(__file__)
