@@ -24,7 +24,7 @@ requirements = read('requirements.txt').split('\n')
 optional_requirements = {}
 
 setup(
-    name="COMPAS Assembly",
+    name="compas_assembly",
     version="0.1.0",
     description="Assembly data structures for the COMPAS framework.",
     long_description=long_description,

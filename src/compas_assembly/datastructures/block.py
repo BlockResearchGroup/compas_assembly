@@ -8,7 +8,7 @@ from compas.geometry import normalize_vector
 from compas.geometry import centroid_polyhedron
 from compas.geometry import volume_polyhedron
 
-from compas.geometry.algorithms.bestfit import bestfit_plane
+from compas.geometry import bestfit_plane
 from compas.geometry import project_points_plane
 
 from compas.datastructures import Mesh

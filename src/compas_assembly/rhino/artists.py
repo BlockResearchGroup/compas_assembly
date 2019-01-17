@@ -5,7 +5,10 @@ from __future__ import division
 from compas.utilities import i_to_blue, i_to_red
 from compas.utilities import color_to_colordict
 
-from compas.geometry import add_vectors, scale_vector, length_vector, sum_vectors
+from compas.geometry import add_vectors
+from compas.geometry import scale_vector
+from compas.geometry import length_vector
+from compas.geometry import sum_vectors
 
 import compas_rhino
 
