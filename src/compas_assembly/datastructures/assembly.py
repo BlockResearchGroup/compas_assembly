@@ -82,8 +82,14 @@ class Assembly(Network):
 
     __module__ = 'compas_assembly.datastructures'
 
-    def __init__(self, blocks=None, attributes=None, default_vertex_attributes=None, default_edge_attributes=None):
+    def __init__(self,
+                 blocks=None,
+                 attributes=None,
+                 default_vertex_attributes=None,
+                 default_edge_attributes=None):
+
         super(Assembly, self).__init__()
+
         self.blocks = {}
         self.attributes.update({'name': 'Assembly'})
         if attributes is not None:
@@ -256,33 +262,6 @@ class Assembly(Network):
 
         return keys
 
-    def add_support(self, block, attr_dict=None, **kwattr):
-        """Add a support to the assembly.
-
-        Parameters
-        ----------
-        block : compas_assembly.datastructures.Block
-            The block to add.
-        attr_dict : dict, optional
-            A dictionary of block attributes.
-            Default is ``None``.
-
-        Returns
-        -------
-        hashable
-            The identifier of the block.
-
-        Notes
-        -----
-        The support block is added as a vertex in the assembly data structure.
-        The XYZ coordinates of the vertex are the coordinates of the centroid of the block.
-
-        """
-        x, y, z = block.centroid()
-        key = self.add_vertex(x=x, y=y, z=z, is_support=True)
-        self.blocks[key] = block
-        return key
-
     def draw(self, settings=None):
         """Convenience function for drawing the assembly in Rhino using common visualisation settings.
 
@@ -319,23 +298,8 @@ class Assembly(Network):
             artist.draw_edges()
         if settings.get('show.interfaces'):
             artist.draw_interfaces()
-        if settings.get('show.forces'):
-            if settings.get('mode.interface') == 0:
-                artist.color_interfaces(0)
-            else:
-                artist.color_interfaces(1)
-            if settings.get('show.forces_as_vectors'):
-                if settings.get('mode.force') == 0:
-                    artist.draw_forces(mode=0)
-                else:
-                    artist.draw_forces(mode=1)
         if settings.get('show.selfweight'):
             artist.draw_selfweight()
-        if settings.get('show.frictions'):
-            if settings.get('mode.friction') == 0:
-                artist.draw_frictions(mode=0)
-            else:
-                artist.draw_frictions(mode=1)
 
         artist.redraw()
 
