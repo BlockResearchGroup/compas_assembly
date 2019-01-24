@@ -33,7 +33,7 @@
         <header class="navbar navbar-expand compas-navbar justify-content-between">
             <div class="navbar-header">
                 <a class="navbar-brand" href="../../index.html">
-                    COMPAS Assembly 0.1.0
+                    COMPAS Assembly 0.1.7
                 </a>
             </div>
 
@@ -62,7 +62,7 @@
 <dl class="class">
 <dt id="compas_assembly.rhino.AssemblyArtist">
 <em class="property">class </em><code class="descclassname">compas_assembly.rhino.</code><code class="descname">AssemblyArtist</code><span class="sig-paren">(</span><em>assembly</em>, <em>layer=None</em><span class="sig-paren">)</span></dt>
-<dd><p>Bases: <a class="reference external" href="https://compas-dev.github.io/main/api/generated/compas_rhino.artists.NetworkArtist.html#compas_rhino.artists.NetworkArtist" title="(in COMPAS v0.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas_rhino.artists.NetworkArtist</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://compas-dev.github.io/main/api/generated/compas_rhino.artists.NetworkArtist.html#compas_rhino.artists.NetworkArtist" title="(in COMPAS v0.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas_rhino.artists.NetworkArtist</span></code></a></p>
 <p>An artist for visualisation of assemblies in Rhino.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -93,37 +93,22 @@ Default is <code class="docutils literal notranslate"><span class="pre">None</sp
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.clear_blocks.html#compas_assembly.rhino.AssemblyArtist.clear_blocks" title="compas_assembly.rhino.AssemblyArtist.clear_blocks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_blocks</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.clear_forces.html#compas_assembly.rhino.AssemblyArtist.clear_forces" title="compas_assembly.rhino.AssemblyArtist.clear_forces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_forces</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.clear_interfaces.html#compas_assembly.rhino.AssemblyArtist.clear_interfaces" title="compas_assembly.rhino.AssemblyArtist.clear_interfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_interfaces</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.clear_interfaces.html#compas_assembly.rhino.AssemblyArtist.clear_interfaces" title="compas_assembly.rhino.AssemblyArtist.clear_interfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_interfaces</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.clear_selfweight.html#compas_assembly.rhino.AssemblyArtist.clear_selfweight" title="compas_assembly.rhino.AssemblyArtist.clear_selfweight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_selfweight</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.clear_selfweight.html#compas_assembly.rhino.AssemblyArtist.clear_selfweight" title="compas_assembly.rhino.AssemblyArtist.clear_selfweight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_selfweight</span></code></a>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.color_interfaces.html#compas_assembly.rhino.AssemblyArtist.color_interfaces" title="compas_assembly.rhino.AssemblyArtist.color_interfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">color_interfaces</span></code></a>([mode])</p></td>
-<td><p>Color the interfaces with shades of blue and red according to the forces at the corners.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_blockfacenormals.html#compas_assembly.rhino.AssemblyArtist.draw_blockfacenormals" title="compas_assembly.rhino.AssemblyArtist.draw_blockfacenormals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_blockfacenormals</span></code></a>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_blocks.html#compas_assembly.rhino.AssemblyArtist.draw_blocks" title="compas_assembly.rhino.AssemblyArtist.draw_blocks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_blocks</span></code></a>([show_faces, show_vertices])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_blocks.html#compas_assembly.rhino.AssemblyArtist.draw_blocks" title="compas_assembly.rhino.AssemblyArtist.draw_blocks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_blocks</span></code></a>([show_faces, show_vertices])</p></td>
 <td><p>Draw the blocks of the assembly.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_forces.html#compas_assembly.rhino.AssemblyArtist.draw_forces" title="compas_assembly.rhino.AssemblyArtist.draw_forces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_forces</span></code></a>([scale, eps, mode])</p></td>
-<td><p>Draw the contact forces at the interfaces.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_frictions.html#compas_assembly.rhino.AssemblyArtist.draw_frictions" title="compas_assembly.rhino.AssemblyArtist.draw_frictions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_frictions</span></code></a>([scale, eps, mode])</p></td>
-<td><p>Draw the contact frictions at the interfaces.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_iframes.html#compas_assembly.rhino.AssemblyArtist.draw_iframes" title="compas_assembly.rhino.AssemblyArtist.draw_iframes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_iframes</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_iframes.html#compas_assembly.rhino.AssemblyArtist.draw_iframes" title="compas_assembly.rhino.AssemblyArtist.draw_iframes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_iframes</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_interfaces.html#compas_assembly.rhino.AssemblyArtist.draw_interfaces" title="compas_assembly.rhino.AssemblyArtist.draw_interfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_interfaces</span></code></a>([keys, color])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_interfaces.html#compas_assembly.rhino.AssemblyArtist.draw_interfaces" title="compas_assembly.rhino.AssemblyArtist.draw_interfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_interfaces</span></code></a>([keys, color])</p></td>
 <td><p>Draw the interfaces between the blocks.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_selfweight.html#compas_assembly.rhino.AssemblyArtist.draw_selfweight" title="compas_assembly.rhino.AssemblyArtist.draw_selfweight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_selfweight</span></code></a>([scale, eps])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_selfweight.html#compas_assembly.rhino.AssemblyArtist.draw_selfweight" title="compas_assembly.rhino.AssemblyArtist.draw_selfweight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_selfweight</span></code></a>([scale, eps])</p></td>
 <td><p>Draw vectors indicating the magnitude of the selfweight of the blocks.</p></td>
 </tr>
 </tbody>
@@ -259,7 +244,7 @@ Default is <code class="docutils literal notranslate"><span class="pre">None</sp
 
         <footer class="compas-footer">
             
-                Last updated on Jan 11, 2019.
+                Last updated on Jan 24, 2019.
             
 
             
@@ -272,7 +257,7 @@ Default is <code class="docutils literal notranslate"><span class="pre">None</sp
             <script type="text/javascript">
 var DOCUMENTATION_OPTIONS = {
     URL_ROOT          : '',
-    VERSION           : '0.1.0',
+    VERSION           : '0.1.7',
     COLLAPSE_INDEX    : false,
     FILE_SUFFIX       : '.html',
     HAS_SOURCE        : 'false',

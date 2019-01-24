@@ -33,7 +33,7 @@
         <header class="navbar navbar-expand compas-navbar justify-content-between">
             <div class="navbar-header">
                 <a class="navbar-brand" href="../../index.html">
-                    COMPAS Assembly 0.1.0
+                    COMPAS Assembly 0.1.7
                 </a>
             </div>
 
@@ -62,7 +62,7 @@
 <dl class="class">
 <dt id="compas_assembly.datastructures.Assembly">
 <em class="property">class </em><code class="descclassname">compas_assembly.datastructures.</code><code class="descname">Assembly</code><span class="sig-paren">(</span><em>blocks=None</em>, <em>attributes=None</em>, <em>default_vertex_attributes=None</em>, <em>default_edge_attributes=None</em><span class="sig-paren">)</span></dt>
-<dd><p>Bases: <a class="reference external" href="https://compas-dev.github.io/main/api/generated/compas.datastructures.Network.html#compas.datastructures.Network" title="(in COMPAS v0.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas.datastructures.Network</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://compas-dev.github.io/main/api/generated/compas.datastructures.Network.html#compas.datastructures.Network" title="(in COMPAS v0.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas.datastructures.Network</span></code></a></p>
 <p>A data structure for discrete element assemblies.</p>
 <p>An assembly is essentially a network of assembly elements.
 Each vertex of the network represents an element of the assembly.
@@ -140,14 +140,14 @@ the individual elements, the built-in attributes are:</p>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.add_blocks_from_rhinomeshes.html#compas_assembly.datastructures.Assembly.add_blocks_from_rhinomeshes" title="compas_assembly.datastructures.Assembly.add_blocks_from_rhinomeshes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_blocks_from_rhinomeshes</span></code></a>(guids)</p></td>
 <td><p>Add multiple blocks from their representation as as Rhino meshes.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.add_support.html#compas_assembly.datastructures.Assembly.add_support" title="compas_assembly.datastructures.Assembly.add_support"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_support</span></code></a>(block[, attr_dict])</p></td>
-<td><p>Add a support to the assembly.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.draw.html#compas_assembly.datastructures.Assembly.draw" title="compas_assembly.datastructures.Assembly.draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw</span></code></a>([settings])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.draw.html#compas_assembly.datastructures.Assembly.draw" title="compas_assembly.datastructures.Assembly.draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw</span></code></a>([settings])</p></td>
 <td><p>Convenience function for drawing the assembly in Rhino using common visualisation settings.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.from_json.html#compas_assembly.datastructures.Assembly.from_json" title="compas_assembly.datastructures.Assembly.from_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code></a>(filepath)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.from_json.html#compas_assembly.datastructures.Assembly.from_json" title="compas_assembly.datastructures.Assembly.from_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code></a>(filepath)</p></td>
 <td><p>Construct a datastructure from structured data contained in a json file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.number_of_interface_vertices.html#compas_assembly.datastructures.Assembly.number_of_interface_vertices" title="compas_assembly.datastructures.Assembly.number_of_interface_vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">number_of_interface_vertices</span></code></a>()</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.to_json.html#compas_assembly.datastructures.Assembly.to_json" title="compas_assembly.datastructures.Assembly.to_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code></a>(filepath)</p></td>
 <td><p>Serialise the structured data representing the data structure to json.</p></td>
@@ -501,7 +501,7 @@ the individual elements, the built-in attributes are:</p>
 
         <footer class="compas-footer">
             
-                Last updated on Jan 11, 2019.
+                Last updated on Jan 24, 2019.
             
 
             
@@ -514,7 +514,7 @@ the individual elements, the built-in attributes are:</p>
             <script type="text/javascript">
 var DOCUMENTATION_OPTIONS = {
     URL_ROOT          : '',
-    VERSION           : '0.1.0',
+    VERSION           : '0.1.7',
     COLLAPSE_INDEX    : false,
     FILE_SUFFIX       : '.html',
     HAS_SOURCE        : 'false',

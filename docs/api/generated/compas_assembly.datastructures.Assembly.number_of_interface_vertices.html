@@ -18,11 +18,11 @@
         <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
         
-            <link rel="next" title="AssemblyArtist.draw_frictions" href="compas_assembly.rhino.AssemblyArtist.draw_frictions.html" />
+            <link rel="next" title="Assembly.to_json" href="compas_assembly.datastructures.Assembly.to_json.html" />
         
         
         
-            <link rel="prev" title="AssemblyArtist.draw_blocks" href="compas_assembly.rhino.AssemblyArtist.draw_blocks.html" />
+            <link rel="prev" title="Assembly.from_json" href="compas_assembly.datastructures.Assembly.from_json.html" />
         
 
         <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -33,7 +33,7 @@
         <header class="navbar navbar-expand compas-navbar justify-content-between">
             <div class="navbar-header">
                 <a class="navbar-brand" href="../../index.html">
-                    COMPAS Assembly 0.1.0
+                    COMPAS Assembly 0.1.7
                 </a>
             </div>
 
@@ -57,33 +57,12 @@
 
                         
 
-                        <div class="detail section" id="assemblyartist-draw-forces">
-<h1>AssemblyArtist.draw_forces</h1>
+                        <div class="detail section" id="assembly-number-of-interface-vertices">
+<h1>Assembly.number_of_interface_vertices</h1>
 <dl class="method">
-<dt id="compas_assembly.rhino.AssemblyArtist.draw_forces">
-<code class="descclassname">AssemblyArtist.</code><code class="descname">draw_forces</code><span class="sig-paren">(</span><em>scale=None</em>, <em>eps=None</em>, <em>mode=0</em><span class="sig-paren">)</span></dt>
-<dd><p>Draw the contact forces at the interfaces.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>scale</strong> (<em>float, optional</em>) – The scale at which the forces should be drawn.
-Default is <cite>0.1</cite>.</p></li>
-<li><p><strong>eps</strong> (<em>float, optional</em>) – A tolerance for drawing small force vectors.
-Force vectors with a scaled length smaller than this tolerance are not drawn.
-Default is <cite>1e-3</cite>.</p></li>
-<li><p><strong>mode</strong> (<em>int, optional</em>) – Display mode: 0 normal, 1 resultant forces
-Default is 0</p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<ul class="simple">
-<li><p>Forces are drawn as lines with arrow heads.</p></li>
-<li><p>Forces are drawn on a sub-layer <em>Forces</em> of the base layer, if a base layer was specified.</p></li>
-<li><p>At every interface point there can be a <em>compression</em> force (blue) and a <em>tension</em> force (red).</p></li>
-<li><p>Forces are named according to the following pattern: <code class="docutils literal notranslate"><span class="pre">&quot;{assembly_name}.force.{from</span> <span class="pre">block}-{to</span> <span class="pre">block}.{interface</span> <span class="pre">point}&quot;</span></code></p></li>
-</ul>
-</dd></dl>
+<dt id="compas_assembly.datastructures.Assembly.number_of_interface_vertices">
+<code class="descclassname">Assembly.</code><code class="descname">number_of_interface_vertices</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
 
 </div>
 
@@ -120,9 +99,9 @@ Default is 0</p></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../publications.html">Publications</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav active">
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.html">compas_assembly</a><ul class="nav active">
-<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
+<li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.interfaces.html">compas_assembly.interfaces</a></li>
-<li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.utilities.html">compas_assembly.utilities</a></li>
 </ul>
 </li>
@@ -147,7 +126,7 @@ Default is 0</p></li>
                     
 
                     <ul class="nav flex-column" id="compas-localnav">
-<li class="nav-item"><a class="nav-link reference internal" href="#">AssemblyArtist.draw_forces</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">Assembly.number_of_interface_vertices</a></li>
 </ul>
 
 
@@ -158,7 +137,7 @@ Default is 0</p></li>
 
         <footer class="compas-footer">
             
-                Last updated on Jan 11, 2019.
+                Last updated on Jan 24, 2019.
             
 
             
@@ -171,7 +150,7 @@ Default is 0</p></li>
             <script type="text/javascript">
 var DOCUMENTATION_OPTIONS = {
     URL_ROOT          : '',
-    VERSION           : '0.1.0',
+    VERSION           : '0.1.7',
     COLLAPSE_INDEX    : false,
     FILE_SUFFIX       : '.html',
     HAS_SOURCE        : 'false',

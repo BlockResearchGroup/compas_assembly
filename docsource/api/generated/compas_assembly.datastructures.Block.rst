@@ -43,7 +43,6 @@ Block
         ~Block.clear_halfedgedict
         ~Block.clear_vertexdict
         ~Block.collapse_edge
-        ~Block.collapse_edge_tri
         ~Block.copy
         ~Block.cull_edges
         ~Block.cull_vertices
@@ -155,10 +154,8 @@ Block
         ~Block.set_vertices_attribute
         ~Block.set_vertices_attributes
         ~Block.split_edge
-        ~Block.split_edge_tri
         ~Block.split_face
         ~Block.summary
-        ~Block.swap_edge_tri
         ~Block.to_data
         ~Block.to_json
         ~Block.to_obj

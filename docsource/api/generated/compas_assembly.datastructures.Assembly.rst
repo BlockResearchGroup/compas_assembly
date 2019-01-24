@@ -20,9 +20,9 @@ Assembly
         ~Assembly.add_block
         ~Assembly.add_blocks_from_polysurfaces
         ~Assembly.add_blocks_from_rhinomeshes
-        ~Assembly.add_support
         ~Assembly.draw
         ~Assembly.from_json
+        ~Assembly.number_of_interface_vertices
         ~Assembly.to_json
 
     .. rubric:: Inherited Methods

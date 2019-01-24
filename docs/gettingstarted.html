@@ -33,7 +33,7 @@
         <header class="navbar navbar-expand compas-navbar justify-content-between">
             <div class="navbar-header">
                 <a class="navbar-brand" href="index.html">
-                    COMPAS Assembly 0.1.0
+                    COMPAS Assembly 0.1.7
                 </a>
             </div>
 
@@ -59,6 +59,111 @@
 
                         <div class="section" id="getting-started">
 <h1>Getting Started</h1>
+<div class="section" id="requirements">
+<h2>Requirements</h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.anaconda.com/download">Anaconda</a></p></li>
+<li><p><a class="reference external" href="https://github.com">Github</a> account</p></li>
+<li><p><a class="reference external" href="https://git-scm.com/downloads">Git</a></p></li>
+</ul>
+</div>
+<div class="section" id="installation">
+<h2>Installation</h2>
+<p>In this tutorial, we will create a new virtual environment with <code class="docutils literal notranslate"><span class="pre">conda</span></code> to install
+<code class="docutils literal notranslate"><span class="pre">compas_assembly</span></code>. We will name the environment <code class="docutils literal notranslate"><span class="pre">assembly</span></code>, but you can use any
+name you like.</p>
+<p>If you wish to install <code class="docutils literal notranslate"><span class="pre">compas_assembly</span></code> in an already existing environment, just
+skip the first step and simply activate the environment of your choice.</p>
+<div class="section" id="create-a-virtual-environment-and-install-compas">
+<h3>1. Create a virtual environment and install COMPAS</h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments">https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments</a></p></li>
+</ul>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ conda create -n assembly -c conda-forge <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.6 COMPAS
+</code></pre></div>
+</div>
+</div>
+<div class="section" id="activate-the-environment">
+<h3>2. Activate the environment</h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments">https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments</a></p></li>
+</ul>
+<p><strong>On Mac</strong></p>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ <span class="nb">source</span> activate assembly
+</code></pre></div>
+</div>
+<p><strong>On Windows</strong></p>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ activate assembly
+</code></pre></div>
+</div>
+</div>
+<div class="section" id="install-dependencies">
+<h3>3. Install dependencies</h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://shapely.readthedocs.io/en/latest/">https://shapely.readthedocs.io/en/latest/</a></p></li>
+</ul>
+<p><strong>On Mac</strong></p>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>pip install shapely<span class="o">[</span>vectorized<span class="o">]</span>
+</code></pre></div>
+</div>
+<p><strong>On Windows</strong></p>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>conda install -n assembly -c conda-forge shapely
+</code></pre></div>
+</div>
+</div>
+<div class="section" id="fork-package">
+<h3>4. Fork package</h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/BlockResearchGroup/compas_assembly">COMPAS assembly</a></p></li>
+</ul>
+<p>Go to <a class="reference external" href="https://github.com/BlockResearchGroup/compas_assembly">https://github.com/BlockResearchGroup/compas_assembly</a> and <em>fork</em> the repository to your
+personal account. This will simplify the development process when you will start
+making changes to the code or when you want to start contributing.</p>
+</div>
+<div class="section" id="clone-forked-package">
+<h3>5. Clone forked package</h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com">https://github.com</a>/&lt;your-username&gt;/compas_assembly</p></li>
+</ul>
+<p>Clone the forked package to a location on your computer.</p>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ mkdir ~/Code/COMPAS-packages
+$ <span class="nb">cd</span> ~/Code/COMPAS-packages
+$ git clone https://github.com/&lt;your-username&gt;/compas_assembly.git
+</code></pre></div>
+</div>
+</div>
+<div class="section" id="install-cloned-package">
+<h3>6. Install cloned package</h3>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ <span class="nb">cd</span> compas_assembly
+$ pip install -r requirements-dev.txt
+</code></pre></div>
+</div>
+</div>
+<div class="section" id="check-installation">
+<h3>7. Check installation</h3>
+<p>Start an interactive Python session in the Terminal.</p>
+<div class="nohighlight notranslate"><div class="highlight"><pre><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas_assembly</span>
+</code></pre></div>
+</div>
+</div>
+<div class="section" id="install-packages-for-rhino">
+<h3>8. Install packages for Rhino</h3>
+<p><strong>On Mac</strong></p>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ python -m compas_rhinomac.install compas compas_rhino compas_assembly
+</code></pre></div>
+</div>
+<p><strong>On Windows</strong></p>
+<p><em>Not available yet.</em></p>
+</div>
+<div class="section" id="install-rhino-plugin">
+<h3>9. Install Rhino plugin</h3>
+<p><strong>On Mac</strong></p>
+<p><em>Not available yet.</em></p>
+<p><strong>On Windows</strong></p>
+<p><em>Not available yet.</em></p>
+</div>
+</div>
 </div>
 
                         
@@ -112,7 +217,22 @@
                     
 
                     <ul class="nav flex-column" id="compas-localnav">
-<li class="nav-item"><a class="nav-link reference internal" href="#">Getting Started</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">Getting Started</a><ul class="nav">
+<li class="nav-item"><a class="nav-link reference internal" href="#requirements">Requirements</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#installation">Installation</a><ul class="nav">
+<li class="nav-item"><a class="nav-link reference internal" href="#create-a-virtual-environment-and-install-compas">1. Create a virtual environment and install COMPAS</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#activate-the-environment">2. Activate the environment</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-dependencies">3. Install dependencies</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#fork-package">4. Fork package</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#clone-forked-package">5. Clone forked package</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-cloned-package">6. Install cloned package</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#check-installation">7. Check installation</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-packages-for-rhino">8. Install packages for Rhino</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-rhino-plugin">9. Install Rhino plugin</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
 
@@ -123,7 +243,7 @@
 
         <footer class="compas-footer">
             
-                Last updated on Jan 11, 2019.
+                Last updated on Jan 24, 2019.
             
 
             
@@ -136,7 +256,7 @@
             <script type="text/javascript">
 var DOCUMENTATION_OPTIONS = {
     URL_ROOT          : '',
-    VERSION           : '0.1.0',
+    VERSION           : '0.1.7',
     COLLAPSE_INDEX    : false,
     FILE_SUFFIX       : '.html',
     HAS_SOURCE        : 'false',
