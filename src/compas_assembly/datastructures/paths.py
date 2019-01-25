@@ -1,19 +1,18 @@
-from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
+from __future__ import print_function
 
-__all__ = ['planarize_interfaces']
+
+__all__ = ['assembly_shortest_path']
 
 
-def planarize_interfaces(assembly):
-    # TODO: this planarize interfaces for block geometries
-
-    print(assembly)
+def assembly_shortest_path(assembly, root, goal):
+    pass
 
 
 # ==============================================================================
 # Main
 # ==============================================================================
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     pass

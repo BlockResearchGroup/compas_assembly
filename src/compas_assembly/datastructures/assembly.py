@@ -69,15 +69,6 @@ class Assembly(Network):
 
         print(assembly.summary())
 
-        # ================================================================================
-        # Network summary
-        # ================================================================================
-
-        # - name: Assembly
-        # - vertices: 2
-        # - edges: 0
-        # - vertex degree: 0/0
-
     """
 
     __module__ = 'compas_assembly.datastructures'
@@ -94,9 +85,14 @@ class Assembly(Network):
         self.attributes.update({'name': 'Assembly'})
         if attributes is not None:
             self.attributes.update(attributes)
-        self.default_vertex_attributes.update({'is_support': False})
+
+        self.default_vertex_attributes.update({
+            'is_support': False,
+            'course': None,
+        })
         if default_vertex_attributes is not None:
             self.default_vertex_attributes.update(default_vertex_attributes)
+
         self.default_edge_attributes.update({
             'interface_points': None,
             'interface_type': None,
@@ -107,6 +103,7 @@ class Assembly(Network):
         })
         if default_edge_attributes is not None:
             self.default_edge_attributes.update(default_edge_attributes)
+
         if blocks:
             for block in blocks:
                 self.add_block(block)
@@ -280,29 +277,36 @@ class Assembly(Network):
 
         artist = AssemblyArtist(self, layer=settings.get('layer'))
 
-        artist.defaults.update({
-            key: settings[key]
-            for key in settings if key.startswith('color') or
-            key.startswith('scale') or key.startswith('eps')
-        })
+        artist.defaults.update(settings)
 
         artist.clear_layer()
         artist.draw_blocks()
 
+        vertexcolor = {key: artist.defaults['color.vertex:is_support'] for key in self.vertices_where({'is_support': True})}
+
         if settings.get('show.vertices'):
-            artist.draw_vertices(
-                color={
-                    key: settings.get('color.vertex:is_support')
-                    for key in self.vertices_where({
-                        'is_support': True
-                    })
-                })
+            artist.draw_vertices(color=vertexcolor)
         if settings.get('show.edges'):
             artist.draw_edges()
         if settings.get('show.interfaces'):
             artist.draw_interfaces()
+        if settings.get('show.forces'):
+            if settings.get('mode.interface') == 0:
+                artist.color_interfaces(0)
+            else:
+                artist.color_interfaces(1)
+            if settings.get('show.forces_as_vectors'):
+                if settings.get('mode.force') == 0:
+                    artist.draw_forces(mode=0)
+                else:
+                    artist.draw_forces(mode=1)
         if settings.get('show.selfweight'):
             artist.draw_selfweight()
+        if settings.get('show.frictions'):
+            if settings.get('mode.friction') == 0:
+                artist.draw_frictions(mode=0)
+            else:
+                artist.draw_frictions(mode=1)
 
         artist.redraw()
 

@@ -9,6 +9,6 @@ compas_assembly
    intro
    gettingstarted
    examples
-   publications
    api
+   publications
    license

@@ -131,16 +131,3 @@ Start an interactive Python session in the Terminal.
 
 *Not available yet.*
 
-
-9. Install Rhino plugin
------------------------
-
-**On Mac**
-
-*Not available yet.*
-
-
-**On Windows**
-
-*Not available yet.*
-

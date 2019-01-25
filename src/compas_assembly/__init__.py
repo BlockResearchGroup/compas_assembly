@@ -13,6 +13,7 @@ compas_assembly
     compas_assembly.interfaces
     compas_assembly.rhino
     compas_assembly.utilities
+    compas_assembly.viewer
 
 
 """
@@ -34,6 +35,11 @@ HERE = os.path.dirname(__file__)
 HOME = os.path.abspath(os.path.join(HERE, '../../'))
 DATA = os.path.abspath(os.path.join(HOME, 'data'))
 TEMP = os.path.abspath(os.path.join(HOME, 'temp'))
+
+
+def get(filename):
+    filename = filename.strip('/')
+    return os.path.abspath(os.path.join(DATA, filename))
 
 
 __all__ = ['DATA', 'TEMP']
