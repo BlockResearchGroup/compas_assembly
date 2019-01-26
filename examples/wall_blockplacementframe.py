@@ -9,14 +9,7 @@ from compas_assembly.datastructures import identify_interfaces
 from compas_assembly.datastructures import identify_courses
 
 
-# select block
-# compute frame of opposite surface of
-
-
 wall = Assembly.from_json(compas_assembly.get('frompolysurfaces.json'))
 
 identify_interfaces(wall)
 
-courses = identify_courses(wall)
-
-print(courses)
