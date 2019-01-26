@@ -12,4 +12,3 @@ from compas_assembly.datastructures import identify_courses
 wall = Assembly.from_json(compas_assembly.get('frompolysurfaces.json'))
 
 identify_interfaces(wall)
-

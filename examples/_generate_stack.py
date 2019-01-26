@@ -13,6 +13,7 @@ from compas.geometry import Scale
 from compas.geometry import subtract_vectors
 
 from compas.datastructures import mesh_transform
+from compas.datastructures import mesh_unify_cycles
 
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import Block
@@ -21,23 +22,29 @@ from compas_assembly.datastructures import identify_interfaces
 from compas_assembly.viewer import AssemblyViewer
 
 # number of blocks
-N = 5
+N = 30
 
 # block dimensions
 W = 2.0
 H = 0.5
 D = 1.0
 
-# brick geometry
-base = Box.from_width_height_depth(W, -0.01, D)
-brick = Box.from_width_height_depth(W, H, D)
-
 # empty assembly
 assembly = Assembly()
 
+# default block
+box = Box.from_width_height_depth(W, H, D)
+brick = Block.from_vertices_and_faces(box.vertices, box.faces)
+mesh_unify_cycles(brick)
+
 # make support block
-support = Block.from_vertices_and_faces(base.vertices, base.faces)
-mesh_transform(support, Scale([1.2, 1.2, 1.0]))
+box = Box.from_width_height_depth(W, 0.01, D)
+support = Block.from_vertices_and_faces(box.vertices, box.faces)
+mesh_unify_cycles(support)
+S = Scale([1.2, 1.2, 1.0])
+T = Translation([0, 0, -0.01])
+M = T.concatenate(S)
+mesh_transform(support, M)
 
 # add support to assembly
 assembly.add_block(support, is_support=True)
@@ -46,9 +53,10 @@ assembly.add_block(support, is_support=True)
 # place each block on top of previous
 # shift block randomly in XY plane
 for i in range(N):
-    block = Block.from_vertices_and_faces(brick.vertices, brick.faces)
+    block = brick.copy()
     factor = choice([+0.1, -0.1])
-    mesh_transform(block, Translation([factor * W, factor * H, i * H]))
+    T = Translation([factor * W, factor * H, i * H])
+    mesh_transform(block, T)
     assembly.add_block(block)
 
 # identify interfaces
@@ -75,7 +83,7 @@ identify_interfaces(assembly)
 # export to json
 assembly.to_json(compas_assembly.get('stack.json'))
 
-# visualise the result
-viewer = AssemblyViewer()
-viewer.assembly = assembly
-viewer.show()
+# # visualise the result
+# viewer = AssemblyViewer()
+# viewer.assembly = assembly
+# viewer.show()
