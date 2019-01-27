@@ -390,7 +390,7 @@ class AssemblyArtist(NetworkArtist):
         color_tension = self.defaults['color.force:tension']
 
         lines = []
-        resultant_lines = []
+        # resultant_lines = []
 
         for a, b, attr in self.assembly.edges(True):
             if attr['interface_forces'] is None:
@@ -398,7 +398,7 @@ class AssemblyArtist(NetworkArtist):
 
             w = attr['interface_uvw'][2]
 
-            forces = []
+            # forces = []
 
             for i in range(len(attr['interface_points'])):
                 sp = attr['interface_points'][i]
@@ -426,37 +426,35 @@ class AssemblyArtist(NetworkArtist):
                     'arrow' : 'end'
                 })
 
-                if mode == 1:
-                    forces.append([scale * f * w[axis] for axis in range(3)])
+                # if mode == 1:
+                #     forces.append([scale * f * w[axis] for axis in range(3)])
 
-            if mode == 0:
-                continue
+            # if mode == 0:
+            #     continue
 
-            resultant_force = sum_vectors(forces)
+            # resultant_force = sum_vectors(forces)
 
-            if len(forces) == 0:
-                continue
+            # if len(forces) == 0:
+            #     continue
 
-            resultant_pt = sum_vectors([
-                scale_vector(attr['interface_points'][i], (
-                    length_vector(forces[i]) / length_vector(resultant_force)))
-                for i in range(len(attr['interface_points']))
-            ])
+            # resultant_pt = sum_vectors([
+            #     scale_vector(attr['interface_points'][i], (length_vector(forces[i]) / length_vector(resultant_force)))
+            #     for i in range(len(attr['interface_points']))
+            # ])
 
-            resultant_lines.append({
-                'start' : resultant_pt,
-                'end'   : [resultant_pt[axis] + resultant_force[axis] for axis in range(3)],
-                'color' : color,
-                'name'  : "{0}.resultant-friction.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
-                'arrow' : 'end'
-            })
+            # resultant_lines.append({
+            #     'start' : resultant_pt,
+            #     'end'   : [resultant_pt[axis] + resultant_force[axis] for axis in range(3)],
+            #     'color' : color,
+            #     'name'  : "{0}.resultant-friction.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
+            #     'arrow' : 'end'
+            # })
 
-        if mode == 0:
-            compas_rhino.xdraw_lines(
-                lines, layer=layer, clear=False, redraw=False)
-        else:
-            compas_rhino.xdraw_lines(
-                resultant_lines, layer=layer, clear=False, redraw=False)
+        # if mode == 0:
+        compas_rhino.xdraw_lines(lines, layer=layer, clear=False, redraw=False)
+        # else:
+        #     compas_rhino.xdraw_lines(
+        #         resultant_lines, layer=layer, clear=False, redraw=False)
 
     def color_interfaces(self, mode=0):
         """Color the interfaces with shades of blue and red according to the forces at the corners.

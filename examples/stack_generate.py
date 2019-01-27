@@ -1,3 +1,18 @@
+"""Generate a stack of blocks.
+
+1. Define the number of blocks and the block dimensions
+2. Create an empty assembly.
+3. Make a standard brick.
+4. Add a support.
+5. Add the blocks of the stack.
+6. Identify the interfaces.
+7. Find the first block above the support.
+8. Centre the support to the first block.
+9. Update the interfaces.
+10. Serialise to json.
+
+"""
+
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -13,16 +28,13 @@ from compas.geometry import Scale
 from compas.geometry import subtract_vectors
 
 from compas.datastructures import mesh_transform
-from compas.datastructures import mesh_unify_cycles
 
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import Block
 from compas_assembly.datastructures import identify_interfaces
 
-from compas_assembly.viewer import AssemblyViewer
-
 # number of blocks
-N = 30
+N = 10
 
 # block dimensions
 W = 2.0
@@ -35,16 +47,13 @@ assembly = Assembly()
 # default block
 box = Box.from_width_height_depth(W, H, D)
 brick = Block.from_vertices_and_faces(box.vertices, box.faces)
-mesh_unify_cycles(brick)
 
 # make support block
 box = Box.from_width_height_depth(W, 0.01, D)
 support = Block.from_vertices_and_faces(box.vertices, box.faces)
-mesh_unify_cycles(support)
 S = Scale([1.2, 1.2, 1.0])
 T = Translation([0, 0, -0.01])
-M = T.concatenate(S)
-mesh_transform(support, M)
+mesh_transform(support, T.concatenate(S))
 
 # add support to assembly
 assembly.add_block(support, is_support=True)
@@ -82,8 +91,3 @@ identify_interfaces(assembly)
 
 # export to json
 assembly.to_json(compas_assembly.get('stack.json'))
-
-# # visualise the result
-# viewer = AssemblyViewer()
-# viewer.assembly = assembly
-# viewer.show()

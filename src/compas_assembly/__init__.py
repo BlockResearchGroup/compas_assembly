@@ -10,7 +10,7 @@ compas_assembly
     :maxdepth: 1
 
     compas_assembly.datastructures
-    compas_assembly.interfaces
+    compas_assembly.plotter
     compas_assembly.rhino
     compas_assembly.utilities
     compas_assembly.viewer
@@ -34,7 +34,8 @@ __version__ = '0.1.7'
 HERE = os.path.dirname(__file__)
 HOME = os.path.abspath(os.path.join(HERE, '../../'))
 DATA = os.path.abspath(os.path.join(HOME, 'data'))
-TEMP = os.path.abspath(os.path.join(HOME, 'temp'))
+
+TEMP = os.path.abspath(os.path.join(HERE, '__temp'))
 
 
 def get(filename):

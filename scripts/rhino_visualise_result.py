@@ -16,4 +16,7 @@ assembly.draw({
     'show.vertices': True,
     'show.interfaces': True,
     'show.forces': True,
-    'mode.interface': 0})
+    'show.forces_as_vectors': True,
+    'mode.interface': 0,
+    'scale.force': 1.0
+})

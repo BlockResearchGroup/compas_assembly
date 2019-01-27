@@ -56,26 +56,26 @@ for i in range(number_of_courses):
         # in the uneven rows we have
         # a half brick + (number_of_bricks - 1) full bricks + another half brick
 
-        block = brick.copy()
-        S = Scale([(0.5 * (width - gap)) / width, 1.0, 1.0])
-        T = Translation([dx, 0, dy])
-        M = T.concatenate(S)
-        mesh_transform(block, M)
-        assembly.add_block(block)
-
+        # block = brick.copy()
+        # S = Scale([(0.5 * (width - gap)) / width, 1.0, 1.0])
+        # T = Translation([dx, 0, dy])
+        # M = T.concatenate(S)
+        # mesh_transform(block, M)
+        # assembly.add_block(block)
         dx += 0.5 * (width + gap)
+
         for j in range(number_of_bricks - 1):
             block = brick.copy()
             mesh_transform(block, Translation([dx, 0, dy]))
             assembly.add_block(block)
             dx += width + gap
 
-        block = brick.copy()
-        S = Scale([(0.5 * (width - gap)) / width, 1.0, 1.0])
-        T = Translation([dx, 0, dy])
-        M = T.concatenate(S)
-        mesh_transform(block, M)
-        assembly.add_block(block)
+        # block = brick.copy()
+        # S = Scale([(0.5 * (width - gap)) / width, 1.0, 1.0])
+        # T = Translation([dx, 0, dy])
+        # M = T.concatenate(S)
+        # mesh_transform(block, M)
+        # assembly.add_block(block)
 
     dy += height
 
@@ -86,7 +86,7 @@ for i in range(number_of_courses):
 # export to json
 assembly.to_json(compas_assembly.get('wall.json'))
 
-# # visualise the result
-# viewer = AssemblyViewer()
-# viewer.assembly = assembly
-# viewer.show()
+# visualise the result
+viewer = AssemblyViewer()
+viewer.assembly = assembly
+viewer.show()

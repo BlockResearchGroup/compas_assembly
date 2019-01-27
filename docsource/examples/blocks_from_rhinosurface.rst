@@ -1,5 +1,5 @@
 ********************************************************************************
-Blocks from Rhino surfaces
+Blocks From Rhino Surfaces
 ********************************************************************************
 
 .. literalinclude:: blocks_from_rhinosurface.py
