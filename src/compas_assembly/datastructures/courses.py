@@ -3,10 +3,10 @@ from __future__ import division
 from __future__ import print_function
 
 
-__all__ = ['identify_courses']
+__all__ = ['assembly_courses']
 
 
-def identify_courses(wall):
+def assembly_courses(wall):
     """Identify the courses in a wall of blocks.
 
     Parameters

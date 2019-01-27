@@ -6,10 +6,10 @@ from compas.geometry import convex_hull_numpy
 from compas.topology import unify_cycles
 
 
-__all__ = ['compute_hull_numpy']
+__all__ = ['assembly_hull_numpy']
 
 
-def compute_hull_numpy(assembly, keys=None):
+def assembly_hull_numpy(assembly, keys=None):
     """"""
     keys = keys or list(assembly.vertices())
 

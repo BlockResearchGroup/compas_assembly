@@ -2,11 +2,6 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-from compas.datastructures import mesh_transform
-from compas.datastructures import mesh_transformed
-from compas.datastructures import network_transform
-from compas.datastructures import network_transformed
-
 from compas.geometry import transform_points
 
 
@@ -43,3 +38,12 @@ def assembly_transformed(assembly, T):
     assembly = assembly.copy()
     assembly_transform(assembly, T)
     return assembly
+
+
+# ==============================================================================
+# Main
+# ==============================================================================
+
+if __name__ == '__main__':
+
+    pass

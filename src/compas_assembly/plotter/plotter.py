@@ -31,6 +31,17 @@ class AssemblyPlotter(Plotter):
         polylines = []
         for key, attr in self.assembly.vertices(True):
             block = self.assembly.blocks[key]
+            xy = block.get_vertices_attributes('xy')
+            polylines.append({
+                'points': xy + xy[:1],
+                'color': '#ff0000' if attr['is_support'] else '#cccccc',
+            })
+        self.draw_polylines(polylines)
+
+    def draw_blocks_bbox(self):
+        polylines = []
+        for key, attr in self.assembly.vertices(True):
+            block = self.assembly.blocks[key]
             xyz = block.get_vertices_attributes('xyz')
             box = bounding_box_xy(xyz)
             polylines.append({

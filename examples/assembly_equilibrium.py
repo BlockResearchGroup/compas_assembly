@@ -1,4 +1,4 @@
-"""Compute the contact forces required for static equilibrium of a stack.
+"""Compute the contact forces required for static equilibrium of an assembly.
 
 1. Load an assembly from a JSON file.
 2. Make sure there are supports.
@@ -15,16 +15,14 @@ from __future__ import print_function
 import compas_assembly
 
 from compas_assembly.datastructures import Assembly
-from compas_assembly.datastructures import identify_interfaces
-
 from compas_rbe.equilibrium import compute_interface_forces_cvx
 
-
-assembly = Assembly.from_json(compas_assembly.get('stack.json'))
+assembly = Assembly.from_json(compas_assembly.get('wall_support.json'))
 supports = list(assembly.vertices_where({'is_support': True}))
 
 if supports:
-    identify_interfaces(assembly)
     compute_interface_forces_cvx(assembly, solver='CVXOPT', verbose=True)
+    assembly.to_json(compas_assembly.get('wall_result.json'))
 
-    assembly.to_json(compas_assembly.get('stack_result.json'))
+else:
+    print('The wall has no supports.')

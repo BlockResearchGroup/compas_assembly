@@ -19,7 +19,7 @@ from compas.geometry import length_vector
 # from compas.numerical import pca_numpy
 
 from compas_assembly.datastructures import Assembly
-from compas_assembly.datastructures import identify_interfaces
+from compas_assembly.datastructures import assembly_interfaces
 
 
 wall = Assembly.from_json(compas_assembly.get('polysurfaces.json'))
@@ -38,7 +38,7 @@ box, area = oriented_bounding_box_xy_numpy(points)
 
 print(box)
 
-identify_interfaces(wall)
+assembly_interfaces(wall)
 
 box = bounding_box(points)
 width = max(length_vector(subtract_vectors(b, a)) for a, b in pairwise(box))

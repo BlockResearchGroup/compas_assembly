@@ -25,7 +25,7 @@ from compas.geometry import global_coords_numpy
 
 
 __all__ = [
-    'identify_interfaces',
+    'assembly_interfaces',
 ]
 
 
@@ -40,7 +40,7 @@ def identify_interface(assembly, a, b):
     pass
 
 
-def identify_interfaces(assembly,
+def assembly_interfaces(assembly,
                         nmax=10,
                         tmax=1e-6,
                         amin=1e-1,
@@ -93,16 +93,13 @@ def identify_interfaces(assembly,
     for key in assembly.vertices():
         assembly.edge[key] = {}
         assembly.halfedge[key] = {}
-    # replace
 
-    key_index = {key: index for index, key in enumerate(assembly.vertices())}
-    index_key = {index: key for index, key in enumerate(assembly.vertices())}
+    key_index = assembly.key_index()
+    index_key = assembly.index_key()
 
     blocks = [assembly.blocks[key] for key in assembly.vertices()]
     nmax = min(nmax, len(blocks))
-    block_cloud = [
-        assembly.vertex_coordinates(key) for key in assembly.vertices()
-    ]
+    block_cloud = assembly.get_vertices_attributes('xyz')
     block_nnbrs = _find_nearest_neighbours(block_cloud, nmax)
 
     # k:      key of the base block
@@ -145,9 +142,9 @@ def identify_interfaces(assembly,
             # e.g. exclude overlapping top faces of two neighbouring blocks in same row
 
             for f0, (origin, uvw) in frames.items():
-                A = array(uvw)
-                o = array(origin).reshape((-1, 1))
-                xyz0 = array(block.face_coordinates(f0)).reshape((-1, 3)).T
+                A = array(uvw, dtype=float)
+                o = array(origin, dtype=float).reshape((-1, 1))
+                xyz0 = array(block.face_coordinates(f0), dtype=float).reshape((-1, 3)).T
                 rst0 = solve(A.T, xyz0 - o).T.tolist()
                 p0 = Polygon(rst0)
 
@@ -164,13 +161,8 @@ def identify_interfaces(assembly,
                         continue
 
                     nbr = assembly.blocks[n]
-                    k_i = {
-                        key: index
-                        for index, key in enumerate(nbr.vertices())
-                    }
-                    xyz = array([
-                        nbr.vertex_coordinates(key) for key in nbr.vertices()
-                    ]).reshape((-1, 3)).T
+                    k_i = {key: index for index, key in enumerate(nbr.vertices())}
+                    xyz = array(nbr.get_vertices_attributes('xyz'), dtype=float).reshape((-1, 3)).T
                     rst = solve(A.T, xyz - o).T.tolist()
                     rst = {key: rst[k_i[key]] for key in nbr.vertices()}
 
@@ -183,7 +175,7 @@ def identify_interfaces(assembly,
 
                         p1 = Polygon(rst1)
 
-                        if p1.area == 0.0:
+                        if p1.area < amin:
                             continue
 
                         if p0.intersects(p1):
@@ -192,9 +184,7 @@ def identify_interfaces(assembly,
                             area = intersection.area
 
                             if area >= amin:
-                                coords = [[
-                                    x, y, 0.0
-                                ] for x, y, z in intersection.exterior.coords]
+                                coords = [[x, y, 0.0] for x, y, z in intersection.exterior.coords]
                                 coords = global_coords_numpy(o, A, coords)
 
                                 attr = {
@@ -208,7 +198,7 @@ def identify_interfaces(assembly,
                                 assembly.add_edge(k, n, attr_dict=attr)
 
 
-# def identify_interfaces_bestfit(assembly,
+# def assembly_interfaces_bestfit(assembly,
 #                                 nmax=10,
 #                                 tmax=1e-6,
 #                                 amin=1e-1,
@@ -385,7 +375,7 @@ def identify_interfaces(assembly,
 #                                 assembly.add_edge(k, n, attr_dict=attr)
 
 
-# def identify_interfaces_offset(assembly,
+# def assembly_interfaces_offset(assembly,
 #                                nmax=10,
 #                                tmax=1e-6,
 #                                amin=1e-1,

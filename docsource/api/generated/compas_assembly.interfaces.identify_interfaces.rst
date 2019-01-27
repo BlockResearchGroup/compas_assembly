@@ -1,8 +1,8 @@
 .. rst-class:: detail
 
-identify_interfaces
+assembly_interfaces
 ==============================================
 
 .. currentmodule:: compas_assembly.interfaces
 
-.. autofunction:: identify_interfaces
+.. autofunction:: assembly_interfaces

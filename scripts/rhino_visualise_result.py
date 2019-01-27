@@ -4,9 +4,6 @@ from __future__ import print_function
 
 import os
 
-import compas_rhino
-import compas_assembly
-
 from compas_assembly.datastructures import Assembly
 
 HERE = os.path.dirname(__file__)
@@ -16,7 +13,7 @@ assembly.draw({
     'show.vertices': True,
     'show.interfaces': True,
     'show.forces': True,
-    'show.forces_as_vectors': True,
+    'show.forces_as_vectors': False,
     'mode.interface': 0,
     'scale.force': 1.0
 })
