@@ -26,6 +26,8 @@ from compas.geometry import Box
 from compas.geometry import Translation
 from compas.geometry import Scale
 from compas.geometry import subtract_vectors
+from compas.geometry import scale_vector
+from compas.geometry import add_vectors
 
 from compas.datastructures import mesh_transform
 
@@ -63,8 +65,10 @@ assembly.add_block(support, is_support=True)
 # shift block randomly in XY plane
 for i in range(N):
     block = brick.copy()
-    factor = choice([+0.1, -0.1])
-    T = Translation([factor * W, factor * H, i * H])
+    factor = choice([+0.01, -0.01, +0.05, -0.05, +0.1, -0.1])
+    axis = choice([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
+    vector = add_vectors(scale_vector(axis, factor), [0.0, 0.0, i * H])
+    T = Translation(vector)
     mesh_transform(block, T)
     assembly.add_block(block)
 

@@ -46,6 +46,8 @@ from __future__ import print_function
 from .assembly import *
 from .block import *
 
+from .transformations import *
+
 from .collision import *
 from .courses import *
 from .hull import *

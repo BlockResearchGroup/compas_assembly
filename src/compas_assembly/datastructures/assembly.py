@@ -136,6 +136,11 @@ class Assembly(Network):
         with open(filepath, 'w') as fo:
             json.dump(data, fo)
 
+    def copy(self):
+        assembly = super(Assembly, self).copy()
+        assembly.blocks = {key: self.blocks[key].copy() for key in self.vertices()}
+        return assembly
+
     def add_block(self, block, attr_dict=None, **kwattr):
         """Add a block to the assembly.
 
