@@ -22,7 +22,7 @@ from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import assembly_interfaces
 
 
-wall = Assembly.from_json(compas_assembly.get('frompolysurfaces.json'))
+wall = Assembly.from_json(compas_assembly.get('assembly.json'))
 
 key_index = wall.key_index()
 

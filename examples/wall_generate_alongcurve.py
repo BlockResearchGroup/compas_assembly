@@ -2,6 +2,13 @@
 
 1. ...
 
+Note
+----
+This example uses a very basic implementation of a Curve to define the geometry
+of the assembly. Try reimplementing it based on a RhinoCurve object (``compas_rhino.geometry.RhinoCurve``)
+in Rhino to improve the placement of blocks along the curve;
+for example, without overlaps...
+
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -85,4 +92,4 @@ for i in range(number_of_courses):
             # add the brick to the assembly
             assembly.add_block(block)
 
-assembly.to_json(compas_assembly.get('wall_alongcurve.json'))
+assembly.to_json(compas_assembly.get('assembly.json'))

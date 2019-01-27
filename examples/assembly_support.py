@@ -22,7 +22,7 @@ from compas_assembly.datastructures import Block
 from compas_assembly.datastructures import assembly_interfaces
 
 
-assembly = Assembly.from_json(compas_assembly.get('wall_alongcurve.json'))
+assembly = Assembly.from_json(compas_assembly.get('assembly.json'))
 
 points = []
 for key in assembly.vertices():
@@ -48,8 +48,8 @@ c1 = support.centroid()
 T = Translation(subtract_vectors(c0, c1))
 mesh_transform(support, T)
 
-assembly.add_block(support, is_support=True)
+assembly.add_block(support, is_support=True, is_placed=True)
 
-assembly_interfaces(assembly, nmax=1000)
+assembly_interfaces(assembly)
 
-assembly.to_json(compas_assembly.get('wall_support.json'))
+assembly.to_json(compas_assembly.get('assembly.json'))

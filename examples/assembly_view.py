@@ -13,7 +13,7 @@ import compas_assembly
 from compas_assembly.datastructures import Assembly
 from compas_assembly.viewer import AssemblyViewer
 
-assembly = Assembly.from_json(compas_assembly.get('wall_support.json'))
+assembly = Assembly.from_json(compas_assembly.get('assembly.json'))
 
 viewer = AssemblyViewer()
 viewer.assembly = assembly

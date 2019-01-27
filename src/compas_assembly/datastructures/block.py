@@ -115,9 +115,9 @@ class Block(Mesh):
 
         """
         xyz = self.face_coordinates(fkey)
-        o = xyz[0]
+        o = self.face_centroid(fkey)
         w = self.face_normal(fkey)
-        u = [xyz[1][i] - o[i] for i in range(3)]
+        u = [xyz[0][i] - o[i] for i in range(3)]
         v = cross_vectors(w, u)
         uvw = normalize_vector(u), normalize_vector(v), normalize_vector(w)
         return o, uvw

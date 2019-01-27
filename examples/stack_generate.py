@@ -58,4 +58,4 @@ for i in range(N):
     assembly.add_block(block)
 
 # export to json
-assembly.to_json(compas_assembly.get('stack.json'))
+assembly.to_json(compas_assembly.get('assembly.json'))

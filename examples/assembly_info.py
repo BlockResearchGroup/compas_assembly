@@ -27,13 +27,13 @@ import compas_assembly
 from compas.geometry import Rotation
 
 from compas_assembly.datastructures import Assembly
-from compas_assembly.datastructures import assembly_interfaces
 from compas_assembly.datastructures import assembly_transform
 
 from compas_assembly.plotter import AssemblyPlotter
 
+
 # load an assembly from serialised data in a json file
-assembly = Assembly.from_json(compas_assembly.get('wall_support.json'))
+assembly = Assembly.from_json(compas_assembly.get('assembly.json'))
 
 # rotate the assembly to the XY plane
 # note: make obsolete by providing a viewing axis to the plotter

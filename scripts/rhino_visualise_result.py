@@ -8,7 +8,7 @@ from compas_assembly.datastructures import Assembly
 
 HERE = os.path.dirname(__file__)
 
-assembly = Assembly.from_json(os.path.join(HERE, '../data/wall_result.json'))
+assembly = Assembly.from_json(os.path.join(HERE, '../data/assembly_result.json'))
 assembly.draw({
     'show.vertices': True,
     'show.interfaces': True,

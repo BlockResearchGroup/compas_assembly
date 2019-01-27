@@ -26,7 +26,7 @@ from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import assembly_hull_numpy
 
 
-assembly = Assembly.from_json(compas_assembly.get('wall_alongcurve.json'))
+assembly = Assembly.from_json(compas_assembly.get('assembly.json'))
 
 vertices, faces = assembly_hull_numpy(assembly)
 

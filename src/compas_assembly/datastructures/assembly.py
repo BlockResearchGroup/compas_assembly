@@ -88,6 +88,7 @@ class Assembly(Network):
 
         self.default_vertex_attributes.update({
             'is_support': False,
+            'is_placed': False,
             'course': None,
         })
         if default_vertex_attributes is not None:

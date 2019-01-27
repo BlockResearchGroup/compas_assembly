@@ -17,12 +17,14 @@ import compas_assembly
 from compas_assembly.datastructures import Assembly
 from compas_rbe.equilibrium import compute_interface_forces_cvx
 
-assembly = Assembly.from_json(compas_assembly.get('wall_support.json'))
+
+assembly = Assembly.from_json(compas_assembly.get('assembly.json'))
+
 supports = list(assembly.vertices_where({'is_support': True}))
 
 if supports:
     compute_interface_forces_cvx(assembly, solver='CVXOPT', verbose=True)
-    assembly.to_json(compas_assembly.get('wall_result.json'))
+    assembly.to_json(compas_assembly.get('assembly_result.json'))
 
 else:
     print('The wall has no supports.')

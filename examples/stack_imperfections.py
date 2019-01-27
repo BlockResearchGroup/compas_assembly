@@ -25,7 +25,7 @@ from compas_assembly.datastructures import Assembly
 XYZ = [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
 ANGLES = [radians(1), radians(-1), radians(2), radians(-2)]
 
-assembly = Assembly.from_json(compas_assembly.get('stack.json'))
+assembly = Assembly.from_json(compas_assembly.get('assembly.json'))
 
 # shift and rotate in random directions
 # use small increments ("imperfections")
@@ -37,4 +37,4 @@ for key in assembly.vertices():
     T = Translation(scale_vector(choice(XYZ), choice([0.01, -0.01])))
     mesh_transform(block, T.concatenate(R))
 
-assembly.to_json(compas_assembly.get('stack_imperfections.json'))
+assembly.to_json(compas_assembly.get('assembly.json'))

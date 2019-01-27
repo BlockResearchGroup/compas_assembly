@@ -6,7 +6,6 @@ import compas_assembly
 
 from compas.geometry import Box
 from compas.geometry import Translation
-from compas.geometry import Scale
 
 from compas.datastructures import mesh_transform
 
@@ -31,12 +30,12 @@ gap = 0.1
 box = Box.from_width_height_depth(width, height, depth)
 brick = Block.from_vertices_and_faces(box.vertices, box.faces)
 
-halfbrick = brick.copy()
-S = Scale([(0.5 * (width - gap)) / width, 1.0, 1.0])
-mesh_transform(halfbrick, S)
+# halfbrick geometry
+box = Box.from_width_height_depth(0.5 * (width - gap), height, depth)
+halfbrick = Block.from_vertices_and_faces(box.vertices, box.faces)
 
 # empty assembly
-wall = Assembly()
+assembly = Assembly()
 
 # add bricks in a staggered pattern
 for i in range(number_of_courses):
@@ -44,44 +43,42 @@ for i in range(number_of_courses):
 
     if i % 2 == 0:
         # in the even rows
-        # add only full bricks
+        # add (number_of_bricks) full bricks
 
         for j in range(number_of_bricks):
             # make a copy of the base brick
             block = brick.copy()
             # move it to the right location
-            T = Translation([j * (width + gap), 0, dy])
-            mesh_transform(block, T)
+            mesh_transform(block, Translation([j * (width + gap), 0, dy]))
             # add it to the assembly
-            wall.add_block(block)
+            assembly.add_block(block)
     else:
         # in the uneven rows
-        # add a half brick + (number_of_bricks - 1) full bricks + a half brick
+        # add a half brick
+        # add (number_of_bricks - 1) full bricks
+        # add a half brick
 
         # copy the base halfbrick
         block = halfbrick.copy()
         # move it to the right location
-        T = Translation([0, 0, dy])
-        mesh_transform(block, T)
+        mesh_transform(block, Translation([0, 0, dy]))
         # add it to the assembly
-        wall.add_block(block)
+        assembly.add_block(block)
 
         for j in range(number_of_bricks - 1):
             # make a copy of the base brick
             block = brick.copy()
             # move it to the right location
-            T = Translation([(0.5 + j) * (width + gap), 0, dy])
-            mesh_transform(block, T)
+            mesh_transform(block, Translation([(0.5 + j) * (width + gap), 0, dy]))
             # add it ti=o the assembly
-            wall.add_block(block)
+            assembly.add_block(block)
 
         # copy the base halfbrick
         block = halfbrick.copy()
         # move it to the right location
-        T = Translation([(0.5 + j + 1) * (width + gap), 0, dy])
-        mesh_transform(block, T)
+        mesh_transform(block, Translation([(0.5 + j + 1) * (width + gap), 0, dy]))
         # add it to the assembly
-        wall.add_block(block)
+        assembly.add_block(block)
 
 # export to json
-wall.to_json(compas_assembly.get('wall.json'))
+assembly.to_json(compas_assembly.get('assembly.json'))

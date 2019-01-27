@@ -82,7 +82,7 @@ class AssemblyArtist(NetworkArtist):
     def clear_selfweight(self):
         self.clear_('selfweight')
 
-    def draw_blocks(self, show_faces=False, show_vertices=False):
+    def draw_blocks(self, keys=None, show_faces=False, show_edges=True, show_vertices=False):
         """Draw the blocks of the assembly.
 
         Parameters
@@ -114,13 +114,17 @@ class AssemblyArtist(NetworkArtist):
             pass
 
         """
+        keys = keys or list(self.assembly.vertices())
         layer = "{}::Blocks".format(self.layer) if self.layer else None
         artist = BlockArtist(None, layer=layer)
-        for key, attr in self.assembly.vertices(True):
+        for key in keys:
             block = self.assembly.blocks[key]
             block.name = "{}.block.{}".format(self.assembly.name, key)
             artist.block = block
-            artist.draw_edges()
+            if not show_faces and not show_vertices:
+                show_edges = True
+            if show_edges:
+                artist.draw_edges()
             if show_faces:
                 artist.draw_faces()
             if show_vertices:
