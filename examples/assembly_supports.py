@@ -28,9 +28,11 @@ from compas_assembly.datastructures import assembly_interfaces_numpy
 
 
 # load assembly from JSON
+
 assembly = Assembly.from_json(compas_assembly.get('assembly.json'))
 
 # list the coordinates of all vertices of all blocks
+
 points = []
 for key in assembly.vertices():
     block = assembly.blocks[key]
@@ -38,12 +40,15 @@ for key in assembly.vertices():
     points.extend(xyz)
 
 # compute the XY bounding box of all listed vertices
+
 bbox = bounding_box_xy(points)
 
 # make a support block of the same size as the bounding box
+
 support = Block.from_vertices_and_faces(bbox, [[0, 1, 2, 3]])
 
 # scale the support
+
 lx = length_vector(subtract_vectors(bbox[1], bbox[0]))
 ly = length_vector(subtract_vectors(bbox[2], bbox[1]))
 sx = (0.5 + lx) / lx
@@ -53,6 +58,7 @@ S = Scale([sx, sy, 1.0])
 mesh_transform(support, S)
 
 # align the centroid of the support with the centroid of the bounding box
+
 c0 = centroid_points(bbox)
 c1 = support.centroid()
 
@@ -60,10 +66,13 @@ T = Translation(subtract_vectors(c0, c1))
 mesh_transform(support, T)
 
 # add the support to the assembly
+
 assembly.add_block(support, is_support=True, is_placed=True)
 
 # identify the interfaces
+
 assembly_interfaces_numpy(assembly, nmax=200)
 
 # serialise
+
 assembly.to_json(compas_assembly.get('assembly_supported.json'))

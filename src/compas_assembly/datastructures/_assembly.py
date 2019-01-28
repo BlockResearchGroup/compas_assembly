@@ -249,6 +249,19 @@ class Assembly(Network):
     def number_of_interface_vertices(self):
         return sum(len(attr['interface_points']) for u, v, attr in self.edges(True))
 
+    def subset(self, keys):
+        cls = type(self)
+        sub = cls()
+        for key, attr in self.vertices(True):
+            if key in keys:
+                block = self.blocks[key].copy()
+                sub.add_vertex(key=key, **attr)
+                sub.blocks[key] = block
+        for u, v, attr in self.edges(True):
+            if u in keys and v in keys:
+                sub.add_edge(u, v, **attr)
+        return sub
+
     def draw(self, settings=None):
         """Convenience function for drawing the assembly in Rhino using common visualisation settings.
 

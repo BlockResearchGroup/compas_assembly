@@ -10,6 +10,7 @@ Assembly of a brick wall
    wall/generate
    wall/supports
    wall/courses
-   wall/below
+   wall/sequence
    wall/equilibrium
+   wall/equilibrium_rhino
    wall/hull

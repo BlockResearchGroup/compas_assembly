@@ -1,5 +1,13 @@
 """Identify the courses of a assembly assembly.
 
+1. Load an assembly from a JSON file.
+2. Identify the course rows
+3. serialise to JSON
+
+Notes
+-----
+This will only work as expected on *wall* assemblies that are properly supported.
+
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -11,17 +19,26 @@ from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import assembly_courses
 
 
+# load an assembly
+
 assembly = Assembly.from_json(compas_assembly.get('assembly_supported.json'))
+
+# check if the assembly has supports
 
 supports = list(assembly.vertices_where({'is_support': True}))
 
-if supports:
-    courses = assembly_courses(assembly)
+if not supports:
+    raise Exception("The assembly has no supports.")
 
-    for i, course in enumerate(courses):
-        assembly.set_vertices_attribute('course', i, keys=course)
+# identify the courses
 
-    assembly.to_json(compas_assembly.get('assembly_courses.json'))
+courses = assembly_courses(assembly)
 
-else:
-    print("The assembly has no supports.")
+# assign course id's to the corresponding blocks
+
+for i, course in enumerate(courses):
+    assembly.set_vertices_attribute('course', i, keys=course)
+
+# serialise the result
+
+assembly.to_json(compas_assembly.get('assembly_courses.json'))

@@ -18,7 +18,7 @@
         <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
         
-            <link rel="next" title="Equilibrium during assembly" href="equilibrium.html" />
+            <link rel="next" title="Equilibrium of a building sequence" href="equilibrium.html" />
         
         
         
@@ -62,7 +62,8 @@
 <div class="figure">
 <img alt="../../_images/assembly_block_building_sequence.jpg" class="figure-img img-fluid" src="../../_images/assembly_block_building_sequence.jpg" />
 </div>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="sd">&quot;&quot;&quot;&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 
@@ -75,40 +76,55 @@
 <span class="kn">from</span> <span class="nn">compas_assembly.rhino</span> <span class="kn">import</span> <span class="n">AssemblyHelper</span>
 
 
+<span class="c1"># just so Rhino(Mac) gets the filepaths right</span>
+
 <span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+
+<span class="c1"># load an assembly from a JSON file</span>
 
 <span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s1">&#39;../data/assembly_courses.json&#39;</span><span class="p">))</span>
 
-
 <span class="c1"># make a list of the blocks that were already placed</span>
+
 <span class="n">placed</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">assembly</span><span class="o">.</span><span class="n">vertices_where</span><span class="p">({</span><span class="s1">&#39;is_placed&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}))</span>
 
 <span class="c1"># draw the assembly</span>
+
 <span class="n">artist</span> <span class="o">=</span> <span class="n">AssemblyArtist</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s2">&quot;Assembly&quot;</span><span class="p">)</span>
+
 <span class="n">artist</span><span class="o">.</span><span class="n">clear_layer</span><span class="p">()</span>
 <span class="n">artist</span><span class="o">.</span><span class="n">draw_vertices</span><span class="p">()</span>
 <span class="n">artist</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">(</span><span class="n">show_faces</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">show_edges</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># draw filled in blocks for the placed ones</span>
+
 <span class="k">if</span> <span class="n">placed</span><span class="p">:</span>
     <span class="n">artist</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">(</span><span class="n">keys</span><span class="o">=</span><span class="n">placed</span><span class="p">,</span> <span class="n">show_faces</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">show_edges</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="c1"># make sure Rhino redraws the view</span>
+
 <span class="n">artist</span><span class="o">.</span><span class="n">redraw</span><span class="p">()</span>
 
 <span class="c1"># select a block</span>
+
 <span class="n">key</span> <span class="o">=</span> <span class="n">AssemblyHelper</span><span class="o">.</span><span class="n">select_vertex</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
 
+<span class="c1"># exit if none was selected</span>
+
 <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;No block was selected.&quot;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;No block was selected.&quot;</span><span class="p">)</span>
 
-<span class="k">else</span><span class="p">:</span>
-    <span class="c1"># get the sequence</span>
-    <span class="n">sequence</span> <span class="o">=</span> <span class="n">assembly_block_building_sequence</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+<span class="c1"># get the sequence</span>
 
-    <span class="k">print</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+<span class="n">sequence</span> <span class="o">=</span> <span class="n">assembly_block_building_sequence</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">sequence</span><span class="p">:</span>
-        <span class="c1"># draw the blocks of the sequence</span>
-        <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">placed</span><span class="p">))</span>
-        <span class="n">artist</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">(</span><span class="n">keys</span><span class="o">=</span><span class="n">keys</span><span class="p">,</span> <span class="n">show_faces</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">show_edges</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-        <span class="n">artist</span><span class="o">.</span><span class="n">redraw</span><span class="p">()</span>
+<span class="c1"># draw the blocks of the sequence</span>
+
+<span class="k">if</span> <span class="n">sequence</span><span class="p">:</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">placed</span><span class="p">))</span>
+    <span class="n">artist</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">(</span><span class="n">keys</span><span class="o">=</span><span class="n">keys</span><span class="p">,</span> <span class="n">show_faces</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">show_edges</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">artist</span><span class="o">.</span><span class="n">redraw</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -149,7 +165,8 @@
 <li class="nav-item"><a class="nav-link reference internal" href="supports.html">Add supports</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="courses.html">Identify courses</a></li>
 <li class="nav-item active"><a class="nav-link active current reference internal" href="#">Block building sequence</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="equilibrium.html">Equilibrium during assembly</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="equilibrium.html">Equilibrium of a building sequence</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="equilibrium_rhino.html">Equilibrium of a building sequence in Rhino</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="hull.html">Assembly sequence hull</a></li>
 </ul>
 </li>

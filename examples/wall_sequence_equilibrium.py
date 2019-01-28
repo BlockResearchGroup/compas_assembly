@@ -6,6 +6,11 @@
 4. Compute interface forces.
 5. Serialise the result.
 
+Notes
+-----
+the results can be visualised in Rhino with ``assembly_view_rhino.py``.
+To run directly in Rhino you will need an XFunc or RPC connection.
+
 """
 
 from __future__ import absolute_import
@@ -19,42 +24,36 @@ from compas_rbe.equilibrium import compute_interface_forces_cvx
 
 
 # load an assembly
+
 assembly = Assembly.from_json(compas_assembly.get('assembly_courses.json'))
 
 # define a sequence of buildable blocks
+
 sequence = [28, 22, 23, 16, 17, 18, 11, 12, 13, 5, 6, 7, 8, 0, 1, 2, 3, 38]
 
 # create a sub_assembly for the sequence
-sub_assembly = Assembly()
 
-for key, attr in assembly.vertices(True):
-    if key in sequence:
-        block = assembly.blocks[key].copy()
-        sub_assembly.add_vertex(key=key, **attr)
-        sub_assembly.blocks[key] = block
-
-for u, v, attr in assembly.edges(True):
-    if u in sequence and v in sequence:
-        sub_assembly.add_edge(u, v, **attr)
-
-
-supports = list(sub_assembly.vertices_where({'is_support': True}))
+sub = assembly.subset(sequence)
 
 # check if the sub_assembly is supported
-if supports:
 
-    # compute the interface forces
-    compute_interface_forces_cvx(sub_assembly, solver='CVXOPT', verbose=True)
+supports = list(sub.vertices_where({'is_support': True}))
 
-    # update the original assembly
-    for u, v, attr in assembly.edges(True):
-        if sub_assembly.has_edge(u, v):
-            attr['interface_forces'] = sub_assembly.get_edge_attribute((u, v), 'interface_forces')
-        else:
-            attr['interface_forces'] = None
+if not supports:
+    raise Exception('The sub-assembly has no supports.')
 
-    # serialise to json
-    assembly.to_json(compas_assembly.get('assembly_result.json'))
+# compute the interface forces
 
-else:
-    print('The assembly has no supports.')
+compute_interface_forces_cvx(sub, solver='CVXOPT', verbose=True)
+
+# update the original assembly
+
+for u, v, attr in assembly.edges(True):
+    if sub.has_edge(u, v):
+        attr['interface_forces'] = sub.get_edge_attribute((u, v), 'interface_forces')
+    else:
+        attr['interface_forces'] = None
+
+# serialise to json
+
+assembly.to_json(compas_assembly.get('assembly_result.json'))

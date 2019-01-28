@@ -18,7 +18,7 @@
         <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
         
-            <link rel="next" title="Block building sequence" href="below.html" />
+            <link rel="next" title="Block building sequence" href="sequence.html" />
         
         
         
@@ -64,6 +64,14 @@
 </div>
 <div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="sd">&quot;&quot;&quot;Identify the courses of a assembly assembly.</span>
 
+<span class="sd">1. Load an assembly from a JSON file.</span>
+<span class="sd">2. Identify the course rows</span>
+<span class="sd">3. serialise to JSON</span>
+
+<span class="sd">Notes</span>
+<span class="sd">-----</span>
+<span class="sd">This will only work as expected on *wall* assemblies that are properly supported.</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
@@ -75,20 +83,29 @@
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">assembly_courses</span>
 
 
+<span class="c1"># load an assembly</span>
+
 <span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;assembly_supported.json&#39;</span><span class="p">))</span>
+
+<span class="c1"># check if the assembly has supports</span>
 
 <span class="n">supports</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">assembly</span><span class="o">.</span><span class="n">vertices_where</span><span class="p">({</span><span class="s1">&#39;is_support&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}))</span>
 
-<span class="k">if</span> <span class="n">supports</span><span class="p">:</span>
-    <span class="n">courses</span> <span class="o">=</span> <span class="n">assembly_courses</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">supports</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;The assembly has no supports.&quot;</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">course</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">courses</span><span class="p">):</span>
-        <span class="n">assembly</span><span class="o">.</span><span class="n">set_vertices_attribute</span><span class="p">(</span><span class="s1">&#39;course&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="n">course</span><span class="p">)</span>
+<span class="c1"># identify the courses</span>
 
-    <span class="n">assembly</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;assembly_courses.json&#39;</span><span class="p">))</span>
+<span class="n">courses</span> <span class="o">=</span> <span class="n">assembly_courses</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
 
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;The assembly has no supports.&quot;</span><span class="p">)</span>
+<span class="c1"># assign course id&#39;s to the corresponding blocks</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">course</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">courses</span><span class="p">):</span>
+    <span class="n">assembly</span><span class="o">.</span><span class="n">set_vertices_attribute</span><span class="p">(</span><span class="s1">&#39;course&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="n">course</span><span class="p">)</span>
+
+<span class="c1"># serialise the result</span>
+
+<span class="n">assembly</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;assembly_courses.json&#39;</span><span class="p">))</span>
 </code></pre></div>
 </div>
 </div>
@@ -128,8 +145,9 @@
 <li class="nav-item"><a class="nav-link reference internal" href="generate.html">Generate geometry</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="supports.html">Add supports</a></li>
 <li class="nav-item active"><a class="nav-link active current reference internal" href="#">Identify courses</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="below.html">Block building sequence</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="equilibrium.html">Equilibrium during assembly</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="sequence.html">Block building sequence</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="equilibrium.html">Equilibrium of a building sequence</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="equilibrium_rhino.html">Equilibrium of a building sequence in Rhino</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="hull.html">Assembly sequence hull</a></li>
 </ul>
 </li>

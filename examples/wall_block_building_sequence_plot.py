@@ -1,10 +1,10 @@
+""""""
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
 from math import pi
 from random import choice
-from collections import deque
 
 import compas_assembly
 
@@ -13,42 +13,37 @@ from compas.utilities import i_to_red
 from compas.geometry import Rotation
 
 from compas_assembly.datastructures import Assembly
+from compas_assembly.datastructures import assembly_block_building_sequence
 from compas_assembly.datastructures import assembly_transform
+
 from compas_assembly.plotter import AssemblyPlotter
 
 
+# load an assembly from a JSON file
+
 assembly = Assembly.from_json(compas_assembly.get('assembly_courses.json'))
 
-key = choice(list(assembly.vertices_where({'course': 7})))
-course = assembly.get_vertex_attribute(key, 'course')
-block = assembly.blocks[key]
+# get a random block from the top course
 
-sequence = []
-seen = set()
-tovisit = deque([(key, course + 1)])
+c_max = max(assembly.get_vertices_attribute('course'))
+key = choice(list(assembly.vertices_where({'course': c_max})))
 
-while tovisit:
-    k, course_above = tovisit.popleft()
+# get the sequence
 
-    if k not in seen:
-        seen.add(k)
+sequence = assembly_block_building_sequence(assembly, key)
+print(sequence)
 
-        course = assembly.get_vertex_attribute(k, 'course')
-
-        if course_above == course + 1:
-            sequence.append(k)
-
-            for nbr in assembly.vertex_neighbors(k):
-                if nbr not in seen:
-                    tovisit.append((nbr, course))
-
-# visualise
+# rotate the assembly for visualisation
 
 R = Rotation.from_axis_and_angle([1.0, 0, 0], -pi / 2)
 assembly_transform(assembly, R)
 
+# make a plotter
+
 plotter = AssemblyPlotter(assembly, figsize=(16, 6), tight=True)
 plotter.assembly_plotter.defaults['vertex.fontsize'] = 10
+
+# color vertices according to their building order
 
 i_min = 0
 i_max = len(sequence)
@@ -58,9 +53,14 @@ facecolor = {k: '#cccccc' for k in assembly.vertices()}
 facecolor.update({k: i_to_red((index - i_min) / i_spn) for index, k in enumerate(sequence[::-1])})
 facecolor[key] = '#ff0000'
 
+# plot the assembly vertices
+
 plotter.draw_vertices(
     text={key: str(key) for key in assembly.vertices()},
     facecolor=facecolor
 )
+
+# plot the block bounding boxes
+
 plotter.draw_blocks_bbox()
 plotter.show()

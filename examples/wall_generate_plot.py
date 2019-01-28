@@ -13,8 +13,6 @@ from compas_assembly.plotter import AssemblyPlotter
 
 assembly = assembly_from_wall(5, 7, 2.0, 0.5, 1.0, 0.1)
 
-# visualise
-
 R = Rotation.from_axis_and_angle([1.0, 0, 0], -pi / 2)
 assembly_transform(assembly, R)
 

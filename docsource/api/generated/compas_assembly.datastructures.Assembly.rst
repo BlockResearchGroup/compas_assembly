@@ -24,6 +24,7 @@ Assembly
         ~Assembly.draw
         ~Assembly.from_json
         ~Assembly.number_of_interface_vertices
+        ~Assembly.subset
         ~Assembly.to_json
 
     .. rubric:: Inherited Methods
