@@ -27,4 +27,4 @@ if supports:
     assembly.to_json(compas_assembly.get('assembly.json'))
 
 else:
-    print('The wall has no supports.')
+    print('The assembly has no supports.')

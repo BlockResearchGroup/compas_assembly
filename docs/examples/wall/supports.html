@@ -18,11 +18,11 @@
         <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
         
-            <link rel="next" title="Visualise assembly information" href="info.html" />
+            <link rel="next" title="Identify courses" href="courses.html" />
         
         
         
-            <link rel="prev" title="Generate a simple brick wall" href="generate.html" />
+            <link rel="prev" title="Generate geometry" href="generate.html" />
         
 
         <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -59,9 +59,16 @@
 
                         <div class="section" id="add-supports">
 <h1>Add supports</h1>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="sd">&quot;&quot;&quot;Add a support plate to an assembly and identify the interfaces.</span>
+<div class="figure">
+<img alt="../../_images/wall_supports_plot.png" class="figure-img img-fluid" src="../../_images/wall_supports_plot.png" />
+</div>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="sd">&quot;&quot;&quot;Add a support plate to a wll assembly and identify the interfaces.</span>
 
-<span class="sd">1. ...</span>
+<span class="sd">1. Load an assembly from a json file</span>
+<span class="sd">2. Compute the footprint of the assembly</span>
+<span class="sd">3. Add a support in the XY plane at least the size to the footprint</span>
+<span class="sd">4. Compute the interfaces of the assembly</span>
+<span class="sd">5. Serialise the result</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
@@ -75,27 +82,32 @@
 <span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Translation</span>
 <span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">subtract_vectors</span>
 <span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">length_vector</span>
+<span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">centroid_points</span>
 
 <span class="kn">from</span> <span class="nn">compas.datastructures</span> <span class="kn">import</span> <span class="n">mesh_transform</span>
 
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Block</span>
-<span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">assembly_interfaces</span>
+<span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">assembly_interfaces_numpy</span>
 
 
+<span class="c1"># load assembly from JSON</span>
 <span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;assembly.json&#39;</span><span class="p">))</span>
 
+<span class="c1"># list the coordinates of all vertices of all blocks</span>
 <span class="n">points</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">vertices</span><span class="p">():</span>
     <span class="n">block</span> <span class="o">=</span> <span class="n">assembly</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
     <span class="n">xyz</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">get_vertices_attributes</span><span class="p">(</span><span class="s1">&#39;xyz&#39;</span><span class="p">)</span>
     <span class="n">points</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">xyz</span><span class="p">)</span>
 
+<span class="c1"># compute the XY bounding box of all listed vertices</span>
 <span class="n">bbox</span> <span class="o">=</span> <span class="n">bounding_box_xy</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+
+<span class="c1"># make a support block of the same size as the bounding box</span>
 <span class="n">support</span> <span class="o">=</span> <span class="n">Block</span><span class="o">.</span><span class="n">from_vertices_and_faces</span><span class="p">(</span><span class="n">bbox</span><span class="p">,</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
 
-<span class="n">c0</span> <span class="o">=</span> <span class="n">support</span><span class="o">.</span><span class="n">centroid</span><span class="p">()</span>
-
+<span class="c1"># scale the support</span>
 <span class="n">lx</span> <span class="o">=</span> <span class="n">length_vector</span><span class="p">(</span><span class="n">subtract_vectors</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
 <span class="n">ly</span> <span class="o">=</span> <span class="n">length_vector</span><span class="p">(</span><span class="n">subtract_vectors</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
 <span class="n">sx</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">lx</span><span class="p">)</span> <span class="o">/</span> <span class="n">lx</span>
@@ -104,16 +116,21 @@
 <span class="n">S</span> <span class="o">=</span> <span class="n">Scale</span><span class="p">([</span><span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
 <span class="n">mesh_transform</span><span class="p">(</span><span class="n">support</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
 
+<span class="c1"># align the centroid of the support with the centroid of the bounding box</span>
+<span class="n">c0</span> <span class="o">=</span> <span class="n">centroid_points</span><span class="p">(</span><span class="n">bbox</span><span class="p">)</span>
 <span class="n">c1</span> <span class="o">=</span> <span class="n">support</span><span class="o">.</span><span class="n">centroid</span><span class="p">()</span>
 
 <span class="n">T</span> <span class="o">=</span> <span class="n">Translation</span><span class="p">(</span><span class="n">subtract_vectors</span><span class="p">(</span><span class="n">c0</span><span class="p">,</span> <span class="n">c1</span><span class="p">))</span>
 <span class="n">mesh_transform</span><span class="p">(</span><span class="n">support</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
 
+<span class="c1"># add the support to the assembly</span>
 <span class="n">assembly</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">support</span><span class="p">,</span> <span class="n">is_support</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">is_placed</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
-<span class="n">assembly_interfaces</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">nmax</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="c1"># identify the interfaces</span>
+<span class="n">assembly_interfaces_numpy</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">nmax</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 
-<span class="n">assembly</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;assembly.json&#39;</span><span class="p">))</span>
+<span class="c1"># serialise</span>
+<span class="n">assembly</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;assembly_supported.json&#39;</span><span class="p">))</span>
 </code></pre></div>
 </div>
 </div>
@@ -148,13 +165,14 @@
 <li class="nav-item"><a class="nav-link reference internal" href="../../intro.html">Introduction</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../gettingstarted.html">Getting Started</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../../examples.html">Examples</a><ul class="nav active">
+<li class="nav-item"><a class="nav-link reference internal" href="../stack.html">Equilibrium of a stack of blocks</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../wall.html">Assembly of a brick wall</a><ul class="nav active">
-<li class="nav-item"><a class="nav-link reference internal" href="generate.html">Generate a simple brick wall</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="generate.html">Generate geometry</a></li>
 <li class="nav-item active"><a class="nav-link active current reference internal" href="#">Add supports</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="info.html">Visualise assembly information</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="courses.html">Identify courses</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="equilibrium.html">Evaluate equilibrium</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="sequence.html">Determine assembly sequence</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="below.html">Block building sequence</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="equilibrium.html">Equilibrium during assembly</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="hull.html">Assembly sequence hull</a></li>
 </ul>
 </li>
 </ul>

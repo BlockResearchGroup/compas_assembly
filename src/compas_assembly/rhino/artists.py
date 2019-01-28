@@ -204,7 +204,36 @@ class AssemblyArtist(NetworkArtist):
                 'color' : (0, 0, 255),
                 'arrow' : 'end'
             })
-        compas_rhino.xdraw_lines(lines, layer=layer, clear=True, redraw=True)
+        self.draw_lines(lines, layer=layer, clear=True, redraw=True)
+
+    def draw_block_frame(self, key, fkey):
+        """"""
+        block = self.assembly.blocks[key]
+        o, uvw = block.frame(fkey)
+        o = block.face_center(fkey)
+        lines = []
+        lines.append({
+            'start' : o,
+            'end'   : add_vectors(o, uvw[0]),
+            'color' : (255, 0, 0),
+            'arrow' : 'end',
+            'name'  : '{}.block.{}.face.{}.frame.u'.format(self.assembly.name, key, fkey)
+        })
+        lines.append({
+            'start' : o,
+            'end'   : add_vectors(o, uvw[1]),
+            'color' : (0, 255, 0),
+            'arrow' : 'end',
+            'name'  : '{}.block.{}.face.{}.frame.v'.format(self.assembly.name, key, fkey)
+        })
+        lines.append({
+            'start' : o,
+            'end'   : add_vectors(o, uvw[2]),
+            'color' : (0, 0, 255),
+            'arrow' : 'end',
+            'name'  : '{}.block.{}.face.{}.frame.w'.format(self.assembly.name, key, fkey)
+        })
+        self.draw_lines(lines, layer=self.layer, clear_layer=False, redraw=True)
 
     def draw_selfweight(self, scale=None, eps=None):
         """Draw vectors indicating the magnitude of the selfweight of the blocks.
@@ -487,7 +516,7 @@ class AssemblyArtist(NetworkArtist):
             # redraw the faces with a discretisation that makes sense for the neutral axis
             # color the drawn meshes
             for u, v, attr in self.assembly.edges(True):
-                if attr['interface_forces'] is None:
+                if not attr['interface_forces']:
                     continue
 
                 name = "{}.interface.{}-{}".format(self.assembly.name, u, v)

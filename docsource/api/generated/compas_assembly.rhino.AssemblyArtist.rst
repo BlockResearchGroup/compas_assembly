@@ -24,6 +24,7 @@ AssemblyArtist
         ~AssemblyArtist.clear_interfaces
         ~AssemblyArtist.clear_selfweight
         ~AssemblyArtist.color_interfaces
+        ~AssemblyArtist.draw_block_frame
         ~AssemblyArtist.draw_blocks
         ~AssemblyArtist.draw_forces
         ~AssemblyArtist.draw_frictions

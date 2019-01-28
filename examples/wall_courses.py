@@ -11,7 +11,7 @@ from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import assembly_courses
 
 
-assembly = Assembly.from_json(compas_assembly.get('assembly.json'))
+assembly = Assembly.from_json(compas_assembly.get('assembly_supported.json'))
 
 supports = list(assembly.vertices_where({'is_support': True}))
 
@@ -21,7 +21,7 @@ if supports:
     for i, course in enumerate(courses):
         assembly.set_vertices_attribute('course', i, keys=course)
 
-    assembly.to_json(compas_assembly.get('assembly.json'))
+    assembly.to_json(compas_assembly.get('assembly_courses.json'))
 
 else:
     print("The assembly has no supports.")

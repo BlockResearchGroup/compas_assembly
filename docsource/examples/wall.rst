@@ -9,7 +9,7 @@ Assembly of a brick wall
 
    wall/generate
    wall/supports
-   wall/info
    wall/courses
+   wall/below
    wall/equilibrium
-   wall/sequence
+   wall/hull

@@ -39,14 +39,15 @@ class AssemblyPlotter(Plotter):
         self.draw_polylines(polylines)
 
     def draw_blocks_bbox(self):
-        polylines = []
+        polygons = []
         for key, attr in self.assembly.vertices(True):
             block = self.assembly.blocks[key]
             xyz = block.get_vertices_attributes('xyz')
             box = bounding_box_xy(xyz)
-            polylines.append({
-                'points': box + box[:1],
-                'color': '#000000' if attr['is_support'] else '#444444',
-                'width': 2.0 if attr['is_support'] else 1.0,
+            polygons.append({
+                'points': box,
+                'edgecolor': '#000000' if attr['is_support'] else '#444444',
+                'edgewidth': 2.0 if attr['is_support'] else 1.0,
+                'facecolor': '#eeeeee'
             })
-        self.draw_polylines(polylines)
+        self.draw_polygons(polygons)

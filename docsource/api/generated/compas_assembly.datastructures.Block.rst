@@ -26,6 +26,7 @@ Block
         ~Block.frames_offset
         ~Block.from_polysurface
         ~Block.from_rhinomesh
+        ~Block.top
         ~Block.volume
 
     .. rubric:: Inherited Methods

@@ -18,11 +18,11 @@
         <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
         
-            <link rel="next" title="Determine assembly sequence" href="sequence.html" />
+            <link rel="next" title="Assembly sequence hull" href="hull.html" />
         
         
         
-            <link rel="prev" title="Identify courses" href="courses.html" />
+            <link rel="prev" title="Block building sequence" href="below.html" />
         
 
         <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -57,8 +57,8 @@
 
                         
 
-                        <div class="section" id="evaluate-equilibrium">
-<h1>Evaluate equilibrium</h1>
+                        <div class="section" id="equilibrium-during-assembly">
+<h1>Equilibrium during assembly</h1>
 <div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="sd">&quot;&quot;&quot;Compute the contact forces required for static equilibrium of an assembly.</span>
 
 <span class="sd">1. Load an assembly from a JSON file.</span>
@@ -79,16 +79,46 @@
 <span class="kn">from</span> <span class="nn">compas_rbe.equilibrium</span> <span class="kn">import</span> <span class="n">compute_interface_forces_cvx</span>
 
 
-<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;assembly.json&#39;</span><span class="p">))</span>
+<span class="c1"># load an assembly</span>
+<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;assembly_courses.json&#39;</span><span class="p">))</span>
 
-<span class="n">supports</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">assembly</span><span class="o">.</span><span class="n">vertices_where</span><span class="p">({</span><span class="s1">&#39;is_support&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}))</span>
+<span class="c1"># define a sequence of buildable blocks</span>
+<span class="n">sequence</span> <span class="o">=</span> <span class="p">[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">38</span><span class="p">]</span>
 
+<span class="c1"># create a sub_assembly for the sequence</span>
+<span class="n">sub_assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">vertices</span><span class="p">(</span><span class="bp">True</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">sequence</span><span class="p">:</span>
+        <span class="n">block</span> <span class="o">=</span> <span class="n">assembly</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">sub_assembly</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="o">**</span><span class="n">attr</span><span class="p">)</span>
+        <span class="n">sub_assembly</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">block</span>
+
+<span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="bp">True</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">sequence</span> <span class="ow">and</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">sequence</span><span class="p">:</span>
+        <span class="n">sub_assembly</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="o">**</span><span class="n">attr</span><span class="p">)</span>
+
+
+<span class="n">supports</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sub_assembly</span><span class="o">.</span><span class="n">vertices_where</span><span class="p">({</span><span class="s1">&#39;is_support&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}))</span>
+
+<span class="c1"># check if the sub_assembly is supported</span>
 <span class="k">if</span> <span class="n">supports</span><span class="p">:</span>
-    <span class="n">compute_interface_forces_cvx</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;CVXOPT&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">assembly</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;assembly.json&#39;</span><span class="p">))</span>
+
+    <span class="c1"># compute the interface forces</span>
+    <span class="n">compute_interface_forces_cvx</span><span class="p">(</span><span class="n">sub_assembly</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;CVXOPT&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="c1"># update the original assembly</span>
+    <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="bp">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">sub_assembly</span><span class="o">.</span><span class="n">has_edge</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+            <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;interface_forces&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub_assembly</span><span class="o">.</span><span class="n">get_edge_attribute</span><span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="s1">&#39;interface_forces&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;interface_forces&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="c1"># serialise to json</span>
+    <span class="n">assembly</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;assembly_result.json&#39;</span><span class="p">))</span>
 
 <span class="k">else</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;The wall has no supports.&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;The assembly has no supports.&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -123,13 +153,14 @@
 <li class="nav-item"><a class="nav-link reference internal" href="../../intro.html">Introduction</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../gettingstarted.html">Getting Started</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../../examples.html">Examples</a><ul class="nav active">
+<li class="nav-item"><a class="nav-link reference internal" href="../stack.html">Equilibrium of a stack of blocks</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../wall.html">Assembly of a brick wall</a><ul class="nav active">
-<li class="nav-item"><a class="nav-link reference internal" href="generate.html">Generate a simple brick wall</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="generate.html">Generate geometry</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="supports.html">Add supports</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="info.html">Visualise assembly information</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="courses.html">Identify courses</a></li>
-<li class="nav-item active"><a class="nav-link active current reference internal" href="#">Evaluate equilibrium</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="sequence.html">Determine assembly sequence</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="below.html">Block building sequence</a></li>
+<li class="nav-item active"><a class="nav-link active current reference internal" href="#">Equilibrium during assembly</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="hull.html">Assembly sequence hull</a></li>
 </ul>
 </li>
 </ul>
@@ -155,7 +186,7 @@
                     
 
                     <ul class="nav flex-column" id="compas-localnav">
-<li class="nav-item"><a class="nav-link reference internal" href="#">Evaluate equilibrium</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">Equilibrium during assembly</a></li>
 </ul>
 
 

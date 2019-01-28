@@ -57,9 +57,34 @@
 
                         
 
-                        <div class="section" id="generate-a-simple-brick-wall">
-<h1>Generate a simple brick wall</h1>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+                        <div class="section" id="generate-geometry">
+<h1>Generate geometry</h1>
+<div class="figure">
+<img alt="../../_images/wall_generate_plot.png" class="figure-img img-fluid" src="../../_images/wall_generate_plot.png" />
+</div>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="sd">&quot;&quot;&quot;Generate an assembly describing a brick wall.</span>
+
+<span class="sd">Parameters</span>
+<span class="sd">----------</span>
+<span class="sd">number_of_even_bricks : int</span>
+<span class="sd">    The number of bricks on the even rows.</span>
+<span class="sd">number_of_courses : int</span>
+<span class="sd">    The number of course rows in the wall.</span>
+<span class="sd">width : float</span>
+<span class="sd">    The width of the base brick.</span>
+<span class="sd">height : float</span>
+<span class="sd">    The height of the base brick.</span>
+<span class="sd">depth : float</span>
+<span class="sd">    The depth of the base brick.</span>
+<span class="sd">gap : float</span>
+<span class="sd">    The horizontal gap between the bricks.</span>
+
+<span class="sd">Notes</span>
+<span class="sd">-----</span>
+<span class="sd">The script below does the same as ``compas_assembly.datastructures.assembly_from_wall()``.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 
@@ -74,7 +99,7 @@
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Block</span>
 
 <span class="c1"># number of bricks in base course</span>
-<span class="n">number_of_bricks</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">number_of_even_bricks</span> <span class="o">=</span> <span class="mi">5</span>
 
 <span class="c1"># number of courses</span>
 <span class="n">number_of_courses</span> <span class="o">=</span> <span class="mi">7</span>
@@ -104,9 +129,9 @@
 
     <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="c1"># in the even rows</span>
-        <span class="c1"># add (number_of_bricks) full bricks</span>
+        <span class="c1"># add (number_of_even_bricks) full bricks</span>
 
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_bricks</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_even_bricks</span><span class="p">):</span>
             <span class="c1"># make a copy of the base brick</span>
             <span class="n">block</span> <span class="o">=</span> <span class="n">brick</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
             <span class="c1"># move it to the right location</span>
@@ -116,7 +141,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># in the uneven rows</span>
         <span class="c1"># add a half brick</span>
-        <span class="c1"># add (number_of_bricks - 1) full bricks</span>
+        <span class="c1"># add (number_of_even_bricks - 1) full bricks</span>
         <span class="c1"># add a half brick</span>
 
         <span class="c1"># copy the base halfbrick</span>
@@ -126,7 +151,7 @@
         <span class="c1"># add it to the assembly</span>
         <span class="n">assembly</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_bricks</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_even_bricks</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
             <span class="c1"># make a copy of the base brick</span>
             <span class="n">block</span> <span class="o">=</span> <span class="n">brick</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
             <span class="c1"># move it to the right location</span>
@@ -177,13 +202,14 @@
 <li class="nav-item"><a class="nav-link reference internal" href="../../intro.html">Introduction</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../gettingstarted.html">Getting Started</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../../examples.html">Examples</a><ul class="nav active">
+<li class="nav-item"><a class="nav-link reference internal" href="../stack.html">Equilibrium of a stack of blocks</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../wall.html">Assembly of a brick wall</a><ul class="nav active">
-<li class="nav-item active"><a class="nav-link active current reference internal" href="#">Generate a simple brick wall</a></li>
+<li class="nav-item active"><a class="nav-link active current reference internal" href="#">Generate geometry</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="supports.html">Add supports</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="info.html">Visualise assembly information</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="courses.html">Identify courses</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="equilibrium.html">Evaluate equilibrium</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="sequence.html">Determine assembly sequence</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="below.html">Block building sequence</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="equilibrium.html">Equilibrium during assembly</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="hull.html">Assembly sequence hull</a></li>
 </ul>
 </li>
 </ul>
@@ -209,7 +235,7 @@
                     
 
                     <ul class="nav flex-column" id="compas-localnav">
-<li class="nav-item"><a class="nav-link reference internal" href="#">Generate a simple brick wall</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">Generate geometry</a></li>
 </ul>
 
 

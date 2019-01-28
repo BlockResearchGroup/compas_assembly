@@ -16,6 +16,7 @@ AssemblyHelper
         :toctree:
 
     
+        ~AssemblyHelper.select_block
         ~AssemblyHelper.update_edge_attributes
         ~AssemblyHelper.update_vertex_attributes
 

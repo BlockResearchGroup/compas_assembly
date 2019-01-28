@@ -101,6 +101,14 @@ class AssemblyHelper(VertexSelector,
             return True
         return False
 
+    @staticmethod
+    def select_block(assembly):
+        key = AssemblyHelper.select_vertex(assembly)
+        if key is not None:
+            block = assembly.blocks[key]
+            return block
+        return None
+
 
 class BlockHelper(VertexSelector,
                   EdgeSelector,

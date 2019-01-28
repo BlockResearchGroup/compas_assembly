@@ -33,7 +33,8 @@ Functions
     :nosignatures:
 
     assembly_courses
-    assembly_interfaces
+    assembly_interfaces_numpy
+    assembly_hull
     assembly_hull_numpy
 
 
@@ -43,17 +44,22 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-from .assembly import *
-from .block import *
+from ._assembly import *
+from ._block import *
 
 from .transformations import *
+
+from .constructors import *
 
 from .collision import *
 from .courses import *
 from .hull import *
-from .interfaces import *
+from .hull_numpy import *
+from .interfaces_numpy import *
 from .paths import *
 from .planarization import *
+
+from .sequencing import *
 
 
 def assembly_interfaces_xfunc(data, **kwargs):
