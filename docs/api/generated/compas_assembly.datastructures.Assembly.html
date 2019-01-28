@@ -132,22 +132,22 @@ the individual elements, the built-in attributes are:</p>
 <td><p>Add multiple blocks from their representation as as Rhino meshes.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.copy.html#compas_assembly.datastructures.Assembly.copy" title="compas_assembly.datastructures.Assembly.copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code></a>()</p></td>
-<td><p>Make an independent copy of the network object.</p></td>
+<td><p>Make an independent copy of an assembly.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.draw.html#compas_assembly.datastructures.Assembly.draw" title="compas_assembly.datastructures.Assembly.draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw</span></code></a>([settings])</p></td>
 <td><p>Convenience function for drawing the assembly in Rhino using common visualisation settings.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.from_json.html#compas_assembly.datastructures.Assembly.from_json" title="compas_assembly.datastructures.Assembly.from_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code></a>(filepath)</p></td>
-<td><p>Construct a datastructure from structured data contained in a json file.</p></td>
+<td><p>Construct an assembly from the data contained in a JSON file.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.number_of_interface_vertices.html#compas_assembly.datastructures.Assembly.number_of_interface_vertices" title="compas_assembly.datastructures.Assembly.number_of_interface_vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">number_of_interface_vertices</span></code></a>()</p></td>
-<td><p></p></td>
+<td><p>Compute the total number of interface vertices.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.subset.html#compas_assembly.datastructures.Assembly.subset" title="compas_assembly.datastructures.Assembly.subset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subset</span></code></a>(keys)</p></td>
-<td><p></p></td>
+<td><p>Create an assembly that is a subset of the urrent assembly.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.to_json.html#compas_assembly.datastructures.Assembly.to_json" title="compas_assembly.datastructures.Assembly.to_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code></a>(filepath)</p></td>
-<td><p>Serialise the structured data representing the data structure to json.</p></td>
+<td><p>Serialise the data dictionary representing an assembly to JSON and store in a file.</p></td>
 </tr>
 </tbody>
 </table>
@@ -453,14 +453,22 @@ the individual elements, the built-in attributes are:</p>
 <li class="nav-item"><a class="nav-link reference internal" href="../../gettingstarted.html">Getting Started</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../examples.html">Examples</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav active">
-<li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.html">compas_assembly</a><ul class="nav active">
-<li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
+<li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a><ul class="nav active">
+<li class="nav-item active"><a class="nav-link active current reference internal" href="#">Assembly</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.Block.html">Block</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_construct_wall.html">assembly_construct_wall</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_courses.html">assembly_courses</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_interfaces_numpy.html">assembly_interfaces_numpy</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_interfaces_xfunc.html">assembly_interfaces_xfunc</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull.html">assembly_hull</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull_numpy.html">assembly_hull_numpy</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull_xfunc.html">assembly_hull_xfunc</a></li>
+</ul>
+</li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.plotter.html">compas_assembly.plotter</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.utilities.html">compas_assembly.utilities</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.viewer.html">compas_assembly.viewer</a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../publications.html">Publications</a></li>
@@ -496,7 +504,7 @@ the individual elements, the built-in attributes are:</p>
 
         <footer class="compas-footer">
             
-                Last updated on Jan 28, 2019.
+                Last updated on Jan 29, 2019.
             
 
             

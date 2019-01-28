@@ -2,8 +2,9 @@
 Assembly sequence hull
 ********************************************************************************
 
-.. plot:: ../examples/wall_sequence_hull_plot.py
+.. figure:: /_images/wall_sequence_hull.jpg
+    :figclass: figure
     :class: figure-img img-fluid
 
-.. literalinclude:: /../examples/wall_sequence_hull.py
+.. literalinclude:: /../examples/wall_sequence_hull_rhino.py
     :language: python

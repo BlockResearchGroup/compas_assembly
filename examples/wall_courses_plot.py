@@ -1,7 +1,3 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 from math import pi
 
 import compas_assembly
@@ -15,7 +11,7 @@ from compas_assembly.datastructures import assembly_transform
 from compas_assembly.plotter import AssemblyPlotter
 
 
-assembly = Assembly.from_json(compas_assembly.get('assembly_courses.json'))
+assembly = Assembly.from_json(compas_assembly.get('wall_courses.json'))
 
 # visualise
 
@@ -32,10 +28,12 @@ c_max = max(courses)
 c_spn = c_max - c_min
 
 facecolor = {key: i_to_red((attr['course'] - c_min) / c_spn) for key, attr in assembly.vertices(True)}
+edgecolor = {key: '#000000' for key in assembly.vertices_where({'is_support': True})}
+edgewidth = {key: 3 for key in assembly.vertices_where({'is_support': True})}
 
-plotter.draw_vertices(
-    text={key: str(attr['course']) for key, attr in assembly.vertices(True)},
-    facecolor=facecolor
+plotter.draw_blocks(
+    facecolor=facecolor,
+    edgecolor=edgecolor,
+    edgewidth=edgewidth
 )
-plotter.draw_blocks_bbox()
 plotter.show()

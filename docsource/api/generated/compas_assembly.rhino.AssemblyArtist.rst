@@ -17,7 +17,6 @@ AssemblyArtist
 
     
         ~AssemblyArtist.__init__
-        ~AssemblyArtist.clear_
         ~AssemblyArtist.clear_blocks
         ~AssemblyArtist.clear_forces
         ~AssemblyArtist.clear_frictions

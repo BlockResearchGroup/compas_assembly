@@ -20,10 +20,7 @@ Block
         ~Block.center
         ~Block.centroid
         ~Block.frame
-        ~Block.frame_offset
-        ~Block.frame_planar
         ~Block.frames
-        ~Block.frames_offset
         ~Block.from_polysurface
         ~Block.from_rhinomesh
         ~Block.top

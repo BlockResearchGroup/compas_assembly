@@ -10,7 +10,49 @@ __all__ = ['assembly_hull_numpy']
 
 
 def assembly_hull_numpy(assembly, keys=None, unify=True):
-    """"""
+    """Construct the convex hull of an assembly.
+
+    Parameters
+    ----------
+    assembly : Assembly
+        The assembly data structure.
+    keys: list, optional
+        The identifiers of the blocks to include in the hull calculation.
+        Defaults to all blocks.
+    unify : bool, optional
+        Unify the face cycles of the hull.
+        Default is ``True``.
+
+    Returns
+    -------
+    tuple
+        The vertices and faces of the hull.
+
+    Warning
+    -------
+    This function requires Numpy and cannot be used directly inside Rhino.
+
+    Examples
+    --------
+    .. code-block:: python
+
+        import compas_assembly
+
+        from compas.datastructures import Mesh
+        from compas.viewers import MeshViewer
+
+        from compas_assembly.datastructures import Assembly
+
+        assembly = Assembly.from_json(compas_assembly.get('assembly.json'))
+
+        vertices, faces = assembly_hull_numpy(assembly)
+        hull = Mesh.from_vertices_and_faces(vertices, faces)
+
+        viewer = MeshViewer()
+        viewer.mesh = hull
+        viewer.show()
+
+    """
     keys = keys or list(assembly.vertices())
 
     points = []
@@ -38,20 +80,14 @@ def assembly_hull_numpy(assembly, keys=None, unify=True):
 if __name__ == '__main__':
 
     import compas_assembly
-    from compas.utilities import print_profile
     from compas.datastructures import Mesh
-    from compas.datastructures import mesh_unify_cycles
     from compas.viewers import MeshViewer
     from compas_assembly.datastructures import Assembly
-
-    unify = print_profile(mesh_unify_cycles)
 
     assembly = Assembly.from_json(compas_assembly.get('assembly.json'))
 
     vertices, faces = assembly_hull_numpy(assembly)
     hull = Mesh.from_vertices_and_faces(vertices, faces)
-
-    unify(hull)
 
     viewer = MeshViewer()
     viewer.mesh = hull

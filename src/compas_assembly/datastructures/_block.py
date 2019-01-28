@@ -8,8 +8,8 @@ from compas.geometry import normalize_vector
 from compas.geometry import centroid_polyhedron
 from compas.geometry import volume_polyhedron
 
-from compas.geometry import bestfit_plane
-from compas.geometry import project_points_plane
+# from compas.geometry import bestfit_plane
+# from compas.geometry import project_points_plane
 
 from compas.datastructures import Mesh
 
@@ -24,7 +24,8 @@ class Block(Mesh):
     --------
     .. code-block:: python
 
-        pass
+        box = Box.from_width_height_depth(2.0, 0.5, 1.0)
+        block = Block.from_vertices_and_faces(box.vertices, box.faces)
 
     """
 
@@ -123,63 +124,75 @@ class Block(Mesh):
         uvw = normalize_vector(u), normalize_vector(v), normalize_vector(w)
         return o, uvw
 
-    def frame_offset(self, fkey):
-        """Compute the frame with offset"""
+    # def frame_offset(self, fkey):
+    #     """Compute the frame with offset"""
 
-        # TODO need to be re-writen properly.
-        xyz = self.face_coordinates(fkey)
+    #     # TODO need to be re-writen properly.
+    #     xyz = self.face_coordinates(fkey)
 
-        centroid = centroid_points(xyz)
+    #     centroid = centroid_points(xyz)
 
-        new_xyz = []
-        for pt in xyz:
-            vec = [pt[i] * 0.9 + centroid[i] * 0.1 for i in range(3)]
-            new_xyz.append(vec)
+    #     new_xyz = []
+    #     for pt in xyz:
+    #         vec = [pt[i] * 0.9 + centroid[i] * 0.1 for i in range(3)]
+    #         new_xyz.append(vec)
 
-        o = new_xyz[0]
-        w = self.face_normal(fkey)
-        u = [new_xyz[1][i] - o[i] for i in range(3)]
-        v = cross_vectors(w, u)
-        uvw = normalize_vector(u), normalize_vector(v), normalize_vector(w)
-        return o, uvw
+    #     o = new_xyz[0]
+    #     w = self.face_normal(fkey)
+    #     u = [new_xyz[1][i] - o[i] for i in range(3)]
+    #     v = cross_vectors(w, u)
+    #     uvw = normalize_vector(u), normalize_vector(v), normalize_vector(w)
+    #     return o, uvw
 
-    def frames_offset(self):
-        # TODO need to be clean up
-        return {fkey: self.frame_offset(fkey) for fkey in self.faces()}
+    # def frames_offset(self):
+    #     # TODO need to be clean up
+    #     return {fkey: self.frame_offset(fkey) for fkey in self.faces()}
 
-    def frame_planar(self, fkey):
-        """Planarize and compute the frame of a specific face.
+    # def frame_planar(self, fkey):
+    #     """Planarize and compute the frame of a specific face.
 
-        Parameters
-        ----------
-        fkey : hashable
-            The identifier of the frame.
+    #     Parameters
+    #     ----------
+    #     fkey : hashable
+    #         The identifier of the frame.
+
+    #     Returns
+    #     -------
+    #     frame
+    #         The frame of the specified face.
+
+    #     """
+
+    #     xyz = self.face_coordinates(fkey)
+
+    #     b_plane = bestfit_plane(xyz)
+    #     b_xyz = project_points_plane(xyz, b_plane)
+
+    #     o = b_xyz[0]
+    #     w = b_plane[1]
+    #     u = (
+    #         b_xyz[2][0] - b_xyz[1][0],
+    #         b_xyz[2][1] - b_xyz[1][1],
+    #         b_xyz[2][2] - b_xyz[1][2],
+    #     )
+
+    #     v = cross_vectors(w, u)
+    #     uvw = normalize_vector(u), normalize_vector(v), normalize_vector(w)
+    #     return o, uvw, b_xyz, b_plane
+
+    def top(self):
+        """Identify the *top* face of the block.
 
         Returns
         -------
-        frame
-            The frame of the specified face.
+        int
+            The identifier of the face.
+
+        Notes
+        -----
+        The face with the highest centroid is considered the *top* face.
 
         """
-
-        xyz = self.face_coordinates(fkey)
-
-        b_plane = bestfit_plane(xyz)
-        b_xyz = project_points_plane(xyz, b_plane)
-
-        o = b_xyz[0]
-        w = b_plane[1]
-        u = (
-            b_xyz[2][0] - b_xyz[1][0],
-            b_xyz[2][1] - b_xyz[1][1],
-            b_xyz[2][2] - b_xyz[1][2],
-        )
-
-        v = cross_vectors(w, u)
-        uvw = normalize_vector(u), normalize_vector(v), normalize_vector(w)
-        return o, uvw, b_xyz, b_plane
-
-    def top(self):
         frames = self.frames()  # key: (o, uvw)
         fkey_centroid = {fkey: self.face_center(fkey) for fkey in self.faces()}
         fkey, _ = sorted(fkey_centroid.items(), key=lambda x: x[1][2])[-1]

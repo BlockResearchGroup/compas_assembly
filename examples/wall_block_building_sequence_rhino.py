@@ -18,7 +18,7 @@ HERE = os.path.dirname(__file__)
 
 # load an assembly from a JSON file
 
-assembly = Assembly.from_json(os.path.join(HERE, '../data/assembly_courses.json'))
+assembly = Assembly.from_json(os.path.join(HERE, '../data/wall_interfaces.json'))
 
 # make a list of the blocks that were already placed
 

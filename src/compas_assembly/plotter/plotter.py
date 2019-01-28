@@ -6,6 +6,9 @@ from compas.plotters import Plotter
 from compas.plotters import NetworkPlotter
 from compas.plotters import MeshPlotter
 
+from compas.utilities import valuedict
+from compas.utilities import color_to_rgb
+
 from compas.geometry import bounding_box_xy
 
 
@@ -13,7 +16,30 @@ __all__ = ['AssemblyPlotter']
 
 
 class AssemblyPlotter(Plotter):
-    """"""
+    """An ``AssemblyPlotter`` combines the functionality of a ``NetworkPlotter``
+    and a ``MeshPlotter`` and uses the same set of axes for all drawing output.
+
+    Parameters
+    ----------
+    assembly : Assembly
+        The assembly data structure.
+
+    Notes
+    -----
+    For all other relevant parameters, see ``Plotter``.
+
+    Examples
+    --------
+    .. code-block:: python
+
+        plotter = AssemblyPlotter(assembly, tight=True, figsize=(12, 8))
+
+        plotter.draw_vertices()
+        plotter.draw_blocks()
+
+        plotter.show()
+
+    """
 
     def __init__(self, assembly, **kwargs):
         super(AssemblyPlotter, self).__init__(**kwargs)
@@ -22,23 +48,37 @@ class AssemblyPlotter(Plotter):
         self.block_plotter = MeshPlotter(None, axes=self.axes)
 
     def draw_vertices(self, *args, **kwargs):
-        self.assembly_plotter.draw_vertices(*args, **kwargs)
+        """Draw the vertices of an assembly.
+        """
+        return self.assembly_plotter.draw_vertices(*args, **kwargs)
 
     def draw_edges(self, *args, **kwargs):
+        """Draw the edges of an assembly.
+        """
         self.assembly_plotter.draw_edges(*args, **kwargs)
 
-    def draw_blocks(self):
-        polylines = []
-        for key, attr in self.assembly.vertices(True):
-            block = self.assembly.blocks[key]
-            xy = block.get_vertices_attributes('xy')
-            polylines.append({
-                'points': xy + xy[:1],
-                'color': '#ff0000' if attr['is_support'] else '#cccccc',
-            })
-        self.draw_polylines(polylines)
+    def draw_blocks(self,
+                    keys=None,
+                    facecolor=None,
+                    edgecolor=None,
+                    edgewidth=None,
+                    textcolor=None,
+                    fontsize=None):
+        """Draw the blocks of an assembly.
 
-    def draw_blocks_bbox(self):
+        Notes
+        -----
+        The blocks are drawn as the boundaing boxes of their vertices.
+
+        """
+        keys = keys or list(self.assembly.vertices())
+
+        facecolordict = valuedict(keys, facecolor, self.block_plotter.defaults['face.facecolor'])
+        edgecolordict = valuedict(keys, edgecolor, self.block_plotter.defaults['face.edgecolor'])
+        edgewidthdict = valuedict(keys, edgewidth, self.block_plotter.defaults['face.edgewidth'])
+        textcolordict = valuedict(keys, textcolor, self.block_plotter.defaults['face.textcolor'])
+        fontsizedict  = valuedict(keys, fontsize,  self.block_plotter.defaults['face.fontsize'])
+
         polygons = []
         for key, attr in self.assembly.vertices(True):
             block = self.assembly.blocks[key]
@@ -46,8 +86,16 @@ class AssemblyPlotter(Plotter):
             box = bounding_box_xy(xyz)
             polygons.append({
                 'points': box,
-                'edgecolor': '#000000' if attr['is_support'] else '#444444',
-                'edgewidth': 2.0 if attr['is_support'] else 1.0,
-                'facecolor': '#eeeeee'
+                'edgecolor': edgecolordict[key],
+                'edgewidth': edgewidthdict[key],
+                'facecolor': facecolordict[key]
             })
         self.draw_polygons(polygons)
+
+
+# ==============================================================================
+# Main
+# ==============================================================================
+
+if __name__ == '__main__':
+    pass

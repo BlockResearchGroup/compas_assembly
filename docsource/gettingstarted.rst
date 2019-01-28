@@ -9,7 +9,7 @@ Requirements
 ============
 
 * `Anaconda <https://www.anaconda.com/download>`_
-* `Github <https://github.com>`_ account
+* `Github  account <https://github.com>`_
 * `Git <https://git-scm.com/downloads>`_
 
 
@@ -27,8 +27,6 @@ skip the first step and simply activate the environment of your choice.
 1. Create a virtual environment and install COMPAS
 --------------------------------------------------
 
-* https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments
-
 ::
 
     $ conda create -n assembly -c conda-forge python=3.6 COMPAS
@@ -36,9 +34,6 @@ skip the first step and simply activate the environment of your choice.
 
 2. Activate the environment
 ---------------------------
-
-* https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments
-
 
 **On Mac**
 
@@ -64,7 +59,7 @@ skip the first step and simply activate the environment of your choice.
 
 ::
 
-    pip install shapely[vectorized]
+    pip install shapely
 
 
 **On Windows**
@@ -77,9 +72,6 @@ skip the first step and simply activate the environment of your choice.
 4. Fork package
 ---------------
 
-* `COMPAS assembly <https://github.com/BlockResearchGroup/compas_assembly>`_
-
-
 Go to https://github.com/BlockResearchGroup/compas_assembly and *fork* the repository to your
 personal account. This will simplify the development process when you will start
 making changes to the code or when you want to start contributing.
@@ -87,8 +79,6 @@ making changes to the code or when you want to start contributing.
 
 5. Clone forked package
 -----------------------
-
-* https://github.com/<your-username>/compas_assembly
 
 Clone the forked package to a location on your computer.
 
@@ -117,17 +107,13 @@ Start an interactive Python session in the Terminal.
 >>> import compas_assembly
 
 
-8. Install packages for Rhino
------------------------------
+8. Install solvers
+------------------
 
-**On Mac**
+To evaluate the stability of an assembly or to compute the contact forces at the
+interfaces between the blocks required for static equilibrium, you will need to
+install an equilibrium solver.
 
-::
+* https://github.com/BlockResearchGroup/compas_rbe
 
-    $ python -m compas_rhinomac.install compas compas_rhino compas_assembly
-
-
-**On Windows**
-
-*Not available yet.*
 

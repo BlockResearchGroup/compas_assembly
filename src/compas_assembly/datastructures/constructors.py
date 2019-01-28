@@ -12,16 +12,16 @@ from compas_assembly.datastructures._block import Block
 
 
 __all__ = [
-    'assembly_from_wall'
+    'assembly_construct_wall'
 ]
 
 
-def assembly_from_wall(number_of_even_bricks,
-                       number_of_courses,
-                       width,
-                       height,
-                       depth,
-                       gap):
+def assembly_construct_wall(number_of_even_bricks,
+                            number_of_courses,
+                            width,
+                            height,
+                            depth,
+                            gap):
     """Construct an assembly from parameters describing a wall.
 
     Parameters
@@ -43,6 +43,12 @@ def assembly_from_wall(number_of_even_bricks,
     -------
     Assembly
         An assembly data structure describing the wall.
+
+    Examples
+    --------
+    .. code-block:: python
+
+        assembly = assembly_construct_wall(5, 7, 2.0, 0.5, 1.0, 0.1)
 
     """
     # brick geometry
@@ -100,3 +106,11 @@ def assembly_from_wall(number_of_even_bricks,
             assembly.add_block(block)
 
     return assembly
+
+
+# ==============================================================================
+# Main
+# ==============================================================================
+
+if __name__ == '__main__':
+    pass

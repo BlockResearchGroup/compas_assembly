@@ -12,11 +12,6 @@ the results can be visualised in Rhino with ``assembly_view_rhino.py``.
 To run directly in Rhino you will need an XFunc or RPC connection.
 
 """
-
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 import compas_assembly
 
 from compas_assembly.datastructures import Assembly
@@ -25,7 +20,7 @@ from compas_rbe.equilibrium import compute_interface_forces_cvx
 
 # load an assembly
 
-assembly = Assembly.from_json(compas_assembly.get('assembly_courses.json'))
+assembly = Assembly.from_json(compas_assembly.get('wall_interfaces.json'))
 
 # define a sequence of buildable blocks
 
@@ -56,4 +51,4 @@ for u, v, attr in assembly.edges(True):
 
 # serialise to json
 
-assembly.to_json(compas_assembly.get('assembly_result.json'))
+assembly.to_json(compas_assembly.get('wall_equilibrium.json'))

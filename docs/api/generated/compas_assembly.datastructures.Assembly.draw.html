@@ -65,9 +65,25 @@
 <dd><p>Convenience function for drawing the assembly in Rhino using common visualisation settings.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>settings</strong> (<em>dict, optional</em>) – A dictionary with drawing options.</p>
+<dd class="field-odd"><p><strong>settings</strong> (<em>dict, optional</em>) – A dictionary with drawing options.
+In addition to all configuration options supported by the <code class="docutils literal notranslate"><span class="pre">AssemblyArtist</span></code>,
+the following options are supported:</p>
+<ul class="simple">
+<li><p>layer: The layer in which the assembly should be drawn. If provided, the layer will be cleared.</p></li>
+<li><p>show.vertices: <code class="docutils literal notranslate"><span class="pre">True</span></code>/<code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p>show.edges: <code class="docutils literal notranslate"><span class="pre">True</span></code>/<code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p>show.faces: <code class="docutils literal notranslate"><span class="pre">True</span></code>/<code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p>show.forces: <code class="docutils literal notranslate"><span class="pre">True</span></code>/<code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p>show.forces_as_vectors: <code class="docutils literal notranslate"><span class="pre">True</span></code>/<code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p>show.interfaces: <code class="docutils literal notranslate"><span class="pre">True</span></code>/<code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p>show.friction: <code class="docutils literal notranslate"><span class="pre">True</span></code>/<code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p>show.selfweight: <code class="docutils literal notranslate"><span class="pre">True</span></code>/<code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+</ul>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p>This function is provided for convenience.
+For more drawing options, see the <code class="docutils literal notranslate"><span class="pre">AssemblyArtist</span></code>.</p>
 </dd></dl>
 
 </div>
@@ -103,14 +119,22 @@
 <li class="nav-item"><a class="nav-link reference internal" href="../../gettingstarted.html">Getting Started</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../examples.html">Examples</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav active">
-<li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.html">compas_assembly</a><ul class="nav active">
-<li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
+<li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a><ul class="nav active">
+<li class="nav-item active"><a class="nav-link reference internal" href="compas_assembly.datastructures.Assembly.html">Assembly</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.Block.html">Block</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_construct_wall.html">assembly_construct_wall</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_courses.html">assembly_courses</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_interfaces_numpy.html">assembly_interfaces_numpy</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_interfaces_xfunc.html">assembly_interfaces_xfunc</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull.html">assembly_hull</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull_numpy.html">assembly_hull_numpy</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull_xfunc.html">assembly_hull_xfunc</a></li>
+</ul>
+</li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.plotter.html">compas_assembly.plotter</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.utilities.html">compas_assembly.utilities</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.viewer.html">compas_assembly.viewer</a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../publications.html">Publications</a></li>
@@ -144,7 +168,7 @@
 
         <footer class="compas-footer">
             
-                Last updated on Jan 28, 2019.
+                Last updated on Jan 29, 2019.
             
 
             

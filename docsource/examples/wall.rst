@@ -1,5 +1,5 @@
 ********************************************************************************
-Assembly of a brick wall
+Brick wall
 ********************************************************************************
 
 .. toctree::
@@ -8,9 +8,9 @@ Assembly of a brick wall
    :glob:
 
    wall/generate
-   wall/supports
+   wall/support
    wall/courses
+   wall/interfaces
    wall/sequence
    wall/equilibrium
-   wall/equilibrium_rhino
    wall/hull

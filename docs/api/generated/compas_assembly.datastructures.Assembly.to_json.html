@@ -62,12 +62,20 @@
 <dl class="method">
 <dt id="compas_assembly.datastructures.Assembly.to_json">
 <code class="descclassname">Assembly.</code><code class="descname">to_json</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span></dt>
-<dd><p>Serialise the structured data representing the data structure to json.</p>
+<dd><p>Serialise the data dictionary representing an assembly to JSON and store in a file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em>) – The path to the json file.</p>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em>) – Path to the file.</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="s1">&#39;assembly.json&#39;</span><span class="p">)</span>
+
+<span class="c1"># do stuff</span>
+
+<span class="n">assembly</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="s1">&#39;assembly.json&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
 </dd></dl>
 
 </div>
@@ -103,14 +111,22 @@
 <li class="nav-item"><a class="nav-link reference internal" href="../../gettingstarted.html">Getting Started</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../examples.html">Examples</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav active">
-<li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.html">compas_assembly</a><ul class="nav active">
-<li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
+<li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a><ul class="nav active">
+<li class="nav-item active"><a class="nav-link reference internal" href="compas_assembly.datastructures.Assembly.html">Assembly</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.Block.html">Block</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_construct_wall.html">assembly_construct_wall</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_courses.html">assembly_courses</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_interfaces_numpy.html">assembly_interfaces_numpy</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_interfaces_xfunc.html">assembly_interfaces_xfunc</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull.html">assembly_hull</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull_numpy.html">assembly_hull_numpy</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull_xfunc.html">assembly_hull_xfunc</a></li>
+</ul>
+</li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.plotter.html">compas_assembly.plotter</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.utilities.html">compas_assembly.utilities</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.viewer.html">compas_assembly.viewer</a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../publications.html">Publications</a></li>
@@ -144,7 +160,7 @@
 
         <footer class="compas-footer">
             
-                Last updated on Jan 28, 2019.
+                Last updated on Jan 29, 2019.
             
 
             

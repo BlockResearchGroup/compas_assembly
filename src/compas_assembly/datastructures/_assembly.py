@@ -111,6 +111,25 @@ class Assembly(Network):
 
     @classmethod
     def from_json(cls, filepath):
+        """Construct an assembly from the data contained in a JSON file.
+
+        Parameters
+        ----------
+        filepath : str
+            Path to the file containing the data.
+
+        Returns
+        -------
+        Assembly
+            An assembly data structure.
+
+        Examples
+        --------
+        .. code-block:: python
+
+            assembly = Assembly.from_json('assembly.json')
+
+        """
         from compas_assembly.datastructures import Block
 
         with open(filepath, 'r') as fo:
@@ -125,6 +144,24 @@ class Assembly(Network):
         return assembly
 
     def to_json(self, filepath):
+        """Serialise the data dictionary representing an assembly to JSON and store in a file.
+
+        Parameters
+        ----------
+        filepath : str
+            Path to the file.
+
+        Examples
+        --------
+        .. code-block:: python
+
+            assembly = Assembly.from_json('assembly.json')
+
+            # do stuff
+
+            assembly.to_json('assembly.json')
+
+        """
         data = {
             'assembly': self.to_data(),
             'blocks': {str(key): self.blocks[key].to_data() for key in self.blocks}
@@ -133,6 +170,15 @@ class Assembly(Network):
             json.dump(data, fo)
 
     def copy(self):
+        """Make an independent copy of an assembly.
+
+        Examples
+        --------
+        .. code-block:: python
+
+            copy_of_assembly = assembly.copy()
+
+        """
         assembly = super(Assembly, self).copy()
         assembly.blocks = {key: self.blocks[key].copy() for key in self.vertices()}
         return assembly
@@ -187,7 +233,11 @@ class Assembly(Network):
         --------
         .. code-block:: python
 
-            pass
+            assembly = Assembly()
+
+            guids = compas_rhino.select_surfaces()
+
+            assembly.add_blocks_from_polysurfaces(guids)
 
         """
         from compas_assembly.datastructures import Block
@@ -227,7 +277,11 @@ class Assembly(Network):
         --------
         .. code-block:: python
 
-            pass
+            assembly = Assembly()
+
+            guids = compas_rhino.select_meshes()
+
+            assembly.add_blocks_from_rhinomeshes(guids)
 
         """
         from compas_assembly.datastructures import Block
@@ -247,9 +301,38 @@ class Assembly(Network):
         return keys
 
     def number_of_interface_vertices(self):
+        """Compute the total number of interface vertices.
+
+        Returns
+        -------
+        int
+            The number of vertices.
+
+        """
         return sum(len(attr['interface_points']) for u, v, attr in self.edges(True))
 
     def subset(self, keys):
+        """Create an assembly that is a subset of the urrent assembly.
+
+        Parameters
+        ----------
+        keys : list
+            Identifiers of the blocks that should be included in the subset.
+
+        Returns
+        -------
+        Assembly
+            The sub-assembly.
+
+        Examples
+        --------
+        .. code-block:: python
+
+            assembly = Assembly.from_json('assembly.json')
+
+            sub = assembly.subset([0, 1, 2, 3])
+
+        """
         cls = type(self)
         sub = cls()
         for key, attr in self.vertices(True):
@@ -269,6 +352,23 @@ class Assembly(Network):
         ----------
         settings : dict, optional
             A dictionary with drawing options.
+            In addition to all configuration options supported by the ``AssemblyArtist``,
+            the following options are supported:
+
+            * layer: The layer in which the assembly should be drawn. If provided, the layer will be cleared.
+            * show.vertices: ``True``/``False``.
+            * show.edges: ``True``/``False``.
+            * show.faces: ``True``/``False``.
+            * show.forces: ``True``/``False``.
+            * show.forces_as_vectors: ``True``/``False``.
+            * show.interfaces: ``True``/``False``.
+            * show.friction: ``True``/``False``.
+            * show.selfweight: ``True``/``False``.
+
+        Notes
+        -----
+        This function is provided for convenience.
+        For more drawing options, see the ``AssemblyArtist``.
 
         """
         from compas_assembly.rhino import AssemblyArtist

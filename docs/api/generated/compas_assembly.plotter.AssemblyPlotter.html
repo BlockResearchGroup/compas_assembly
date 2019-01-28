@@ -63,6 +63,24 @@
 <dt id="compas_assembly.plotter.AssemblyPlotter">
 <em class="property">class </em><code class="descclassname">compas_assembly.plotter.</code><code class="descname">AssemblyPlotter</code><span class="sig-paren">(</span><em>assembly</em>, <em>**kwargs</em><span class="sig-paren">)</span></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">compas.plotters.plotter.Plotter</span></code></p>
+<p>An <code class="docutils literal notranslate"><span class="pre">AssemblyPlotter</span></code> combines the functionality of a <code class="docutils literal notranslate"><span class="pre">NetworkPlotter</span></code>
+and a <code class="docutils literal notranslate"><span class="pre">MeshPlotter</span></code> and uses the same set of axes for all drawing output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>assembly</strong> (<em>Assembly</em>) – The assembly data structure.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>For all other relevant parameters, see <code class="docutils literal notranslate"><span class="pre">Plotter</span></code>.</p>
+<p class="rubric">Examples</p>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="n">plotter</span> <span class="o">=</span> <span class="n">AssemblyPlotter</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">tight</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="n">plotter</span><span class="o">.</span><span class="n">draw_vertices</span><span class="p">()</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">()</span>
+
+<span class="n">plotter</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
 <p class="rubric">Methods</p>
 <table class="longtable docutils">
 <colgroup>
@@ -73,17 +91,14 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.plotter.AssemblyPlotter.__init__.html#compas_assembly.plotter.AssemblyPlotter.__init__" title="compas_assembly.plotter.AssemblyPlotter.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(assembly, **kwargs)</p></td>
 <td><p>Initialises a plotter object</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.plotter.AssemblyPlotter.draw_blocks.html#compas_assembly.plotter.AssemblyPlotter.draw_blocks" title="compas_assembly.plotter.AssemblyPlotter.draw_blocks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_blocks</span></code></a>()</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.plotter.AssemblyPlotter.draw_blocks.html#compas_assembly.plotter.AssemblyPlotter.draw_blocks" title="compas_assembly.plotter.AssemblyPlotter.draw_blocks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_blocks</span></code></a>([keys, facecolor, edgecolor, …])</p></td>
+<td><p>Draw the blocks of an assembly.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.plotter.AssemblyPlotter.draw_blocks_bbox.html#compas_assembly.plotter.AssemblyPlotter.draw_blocks_bbox" title="compas_assembly.plotter.AssemblyPlotter.draw_blocks_bbox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_blocks_bbox</span></code></a>()</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.plotter.AssemblyPlotter.draw_edges.html#compas_assembly.plotter.AssemblyPlotter.draw_edges" title="compas_assembly.plotter.AssemblyPlotter.draw_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_edges</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Draw the edges of an assembly.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.plotter.AssemblyPlotter.draw_edges.html#compas_assembly.plotter.AssemblyPlotter.draw_edges" title="compas_assembly.plotter.AssemblyPlotter.draw_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_edges</span></code></a>(*args, **kwargs)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.plotter.AssemblyPlotter.draw_vertices.html#compas_assembly.plotter.AssemblyPlotter.draw_vertices" title="compas_assembly.plotter.AssemblyPlotter.draw_vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_vertices</span></code></a>(*args, **kwargs)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.plotter.AssemblyPlotter.draw_vertices.html#compas_assembly.plotter.AssemblyPlotter.draw_vertices" title="compas_assembly.plotter.AssemblyPlotter.draw_vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_vertices</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Draw the vertices of an assembly.</p></td>
 </tr>
 </tbody>
 </table>
@@ -179,14 +194,14 @@
 <li class="nav-item"><a class="nav-link reference internal" href="../../gettingstarted.html">Getting Started</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../examples.html">Examples</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav active">
-<li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.html">compas_assembly</a><ul class="nav active">
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
-<li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.plotter.html">compas_assembly.plotter</a></li>
+<li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.plotter.html">compas_assembly.plotter</a><ul class="nav active">
+<li class="nav-item active"><a class="nav-link active current reference internal" href="#">AssemblyPlotter</a></li>
+</ul>
+</li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.utilities.html">compas_assembly.utilities</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.viewer.html">compas_assembly.viewer</a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../publications.html">Publications</a></li>
@@ -222,7 +237,7 @@
 
         <footer class="compas-footer">
             
-                Last updated on Jan 28, 2019.
+                Last updated on Jan 29, 2019.
             
 
             

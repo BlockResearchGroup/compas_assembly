@@ -22,7 +22,7 @@
         
         
         
-            <link rel="prev" title="Equilibrium of a building sequence in Rhino" href="equilibrium_rhino.html" />
+            <link rel="prev" title="Equilibrium of a building sequence" href="equilibrium.html" />
         
 
         <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -59,6 +59,9 @@
 
                         <div class="section" id="assembly-sequence-hull">
 <h1>Assembly sequence hull</h1>
+<div class="figure">
+<img alt="../../_images/wall_sequence_hull.jpg" class="figure-img img-fluid" src="../../_images/wall_sequence_hull.jpg" />
+</div>
 <div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="sd">&quot;&quot;&quot;Compute the convex hull of an assembly.</span>
 
 <span class="sd">The convex hull is a quick and dirty approximation of a collision mesh.</span>
@@ -82,24 +85,38 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 
-<span class="kn">import</span> <span class="nn">compas_assembly</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">compas_rhino.artists</span> <span class="kn">import</span> <span class="n">MeshArtist</span>
 
 <span class="kn">from</span> <span class="nn">compas.datastructures</span> <span class="kn">import</span> <span class="n">Mesh</span>
-<span class="kn">from</span> <span class="nn">compas.viewers</span> <span class="kn">import</span> <span class="n">MeshViewer</span>
-
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
-<span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">assembly_hull_numpy</span>
+<span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">assembly_hull</span>
 
+<span class="c1"># just so Rhino(Mac) gets the filepaths right</span>
 
-<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;assembly.json&#39;</span><span class="p">))</span>
+<span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
 
-<span class="n">vertices</span><span class="p">,</span> <span class="n">faces</span> <span class="o">=</span> <span class="n">assembly_hull_numpy</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
+<span class="c1"># load an assembly from a JSON file</span>
+
+<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s1">&#39;../data/wall_interfaces.json&#39;</span><span class="p">))</span>
+
+<span class="c1"># define a sequence of buildable blocks</span>
+
+<span class="n">sequence</span> <span class="o">=</span> <span class="p">[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">38</span><span class="p">]</span>
+
+<span class="c1"># hull of the sequence</span>
+
+<span class="n">vertices</span><span class="p">,</span> <span class="n">faces</span> <span class="o">=</span> <span class="n">assembly_hull</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="n">sequence</span><span class="p">)</span>
 
 <span class="n">hull</span> <span class="o">=</span> <span class="n">Mesh</span><span class="o">.</span><span class="n">from_vertices_and_faces</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span> <span class="n">faces</span><span class="p">)</span>
 
-<span class="n">viewer</span> <span class="o">=</span> <span class="n">MeshViewer</span><span class="p">()</span>
-<span class="n">viewer</span><span class="o">.</span><span class="n">mesh</span> <span class="o">=</span> <span class="n">hull</span>
-<span class="n">viewer</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># visualise</span>
+
+<span class="n">artist</span> <span class="o">=</span> <span class="n">MeshArtist</span><span class="p">(</span><span class="n">hull</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s2">&quot;Hull&quot;</span><span class="p">)</span>
+<span class="n">artist</span><span class="o">.</span><span class="n">clear_layer</span><span class="p">()</span>
+<span class="n">artist</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+<span class="n">artist</span><span class="o">.</span><span class="n">redraw</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -134,14 +151,14 @@
 <li class="nav-item"><a class="nav-link reference internal" href="../../intro.html">Introduction</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../gettingstarted.html">Getting Started</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../../examples.html">Examples</a><ul class="nav active">
-<li class="nav-item"><a class="nav-link reference internal" href="../stack.html">Equilibrium of a stack of blocks</a></li>
-<li class="nav-item active"><a class="nav-link reference internal" href="../wall.html">Assembly of a brick wall</a><ul class="nav active">
+<li class="nav-item"><a class="nav-link reference internal" href="../stack.html">Stack of blocks</a></li>
+<li class="nav-item active"><a class="nav-link reference internal" href="../wall.html">Brick wall</a><ul class="nav active">
 <li class="nav-item"><a class="nav-link reference internal" href="generate.html">Generate geometry</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="supports.html">Add supports</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="support.html">Add supports</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="courses.html">Identify courses</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="interfaces.html">Identify interfaces</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="sequence.html">Block building sequence</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="equilibrium.html">Equilibrium of a building sequence</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="equilibrium_rhino.html">Equilibrium of a building sequence in Rhino</a></li>
 <li class="nav-item active"><a class="nav-link active current reference internal" href="#">Assembly sequence hull</a></li>
 </ul>
 </li>
@@ -179,7 +196,7 @@
 
         <footer class="compas-footer">
             
-                Last updated on Jan 28, 2019.
+                Last updated on Jan 29, 2019.
             
 
             

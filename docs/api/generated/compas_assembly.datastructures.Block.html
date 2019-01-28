@@ -65,7 +65,8 @@
 <dd><p>Bases: <a class="reference external" href="https://compas-dev.github.io/main/api/generated/compas.datastructures.Mesh.html#compas.datastructures.Mesh" title="(in COMPAS v0.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas.datastructures.Mesh</span></code></a></p>
 <p>A data structure for the individual blocks of a discrete element assembly.</p>
 <p class="rubric">Examples</p>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="k">pass</span>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="n">box</span> <span class="o">=</span> <span class="n">Box</span><span class="o">.</span><span class="n">from_width_height_depth</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="n">block</span> <span class="o">=</span> <span class="n">Block</span><span class="o">.</span><span class="n">from_vertices_and_faces</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">vertices</span><span class="p">,</span> <span class="n">box</span><span class="o">.</span><span class="n">faces</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <p class="rubric">Methods</p>
@@ -87,28 +88,19 @@
 <tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Block.frame.html#compas_assembly.datastructures.Block.frame" title="compas_assembly.datastructures.Block.frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">frame</span></code></a>(fkey)</p></td>
 <td><p>Compute the frame of a specific face.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Block.frame_offset.html#compas_assembly.datastructures.Block.frame_offset" title="compas_assembly.datastructures.Block.frame_offset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">frame_offset</span></code></a>(fkey)</p></td>
-<td><p>Compute the frame with offset</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Block.frame_planar.html#compas_assembly.datastructures.Block.frame_planar" title="compas_assembly.datastructures.Block.frame_planar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">frame_planar</span></code></a>(fkey)</p></td>
-<td><p>Planarize and compute the frame of a specific face.</p></td>
-</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Block.frames.html#compas_assembly.datastructures.Block.frames" title="compas_assembly.datastructures.Block.frames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">frames</span></code></a>()</p></td>
 <td><p>Compute the local frame of each face of the block.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Block.frames_offset.html#compas_assembly.datastructures.Block.frames_offset" title="compas_assembly.datastructures.Block.frames_offset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">frames_offset</span></code></a>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Block.from_polysurface.html#compas_assembly.datastructures.Block.from_polysurface" title="compas_assembly.datastructures.Block.from_polysurface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_polysurface</span></code></a>(guid)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Block.from_polysurface.html#compas_assembly.datastructures.Block.from_polysurface" title="compas_assembly.datastructures.Block.from_polysurface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_polysurface</span></code></a>(guid)</p></td>
 <td><p>Class method for constructing a block from a Rhino poly-surface.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Block.from_rhinomesh.html#compas_assembly.datastructures.Block.from_rhinomesh" title="compas_assembly.datastructures.Block.from_rhinomesh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_rhinomesh</span></code></a>(guid)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Block.from_rhinomesh.html#compas_assembly.datastructures.Block.from_rhinomesh" title="compas_assembly.datastructures.Block.from_rhinomesh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_rhinomesh</span></code></a>(guid)</p></td>
 <td><p>Class method for constructing a block from a Rhino mesh.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Block.top.html#compas_assembly.datastructures.Block.top" title="compas_assembly.datastructures.Block.top"><code class="xref py py-obj docutils literal notranslate"><span class="pre">top</span></code></a>()</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Block.top.html#compas_assembly.datastructures.Block.top" title="compas_assembly.datastructures.Block.top"><code class="xref py py-obj docutils literal notranslate"><span class="pre">top</span></code></a>()</p></td>
+<td><p>Identify the <em>top</em> face of the block.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Block.volume.html#compas_assembly.datastructures.Block.volume" title="compas_assembly.datastructures.Block.volume"><code class="xref py py-obj docutils literal notranslate"><span class="pre">volume</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Block.volume.html#compas_assembly.datastructures.Block.volume" title="compas_assembly.datastructures.Block.volume"><code class="xref py py-obj docutils literal notranslate"><span class="pre">volume</span></code></a>()</p></td>
 <td><p>Compute the volume of the block.</p></td>
 </tr>
 </tbody>
@@ -604,14 +596,22 @@
 <li class="nav-item"><a class="nav-link reference internal" href="../../gettingstarted.html">Getting Started</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../examples.html">Examples</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav active">
-<li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.html">compas_assembly</a><ul class="nav active">
-<li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
+<li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a><ul class="nav active">
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.Assembly.html">Assembly</a></li>
+<li class="nav-item active"><a class="nav-link active current reference internal" href="#">Block</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_construct_wall.html">assembly_construct_wall</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_courses.html">assembly_courses</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_interfaces_numpy.html">assembly_interfaces_numpy</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_interfaces_xfunc.html">assembly_interfaces_xfunc</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull.html">assembly_hull</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull_numpy.html">assembly_hull_numpy</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull_xfunc.html">assembly_hull_xfunc</a></li>
+</ul>
+</li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.plotter.html">compas_assembly.plotter</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.utilities.html">compas_assembly.utilities</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.viewer.html">compas_assembly.viewer</a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../publications.html">Publications</a></li>
@@ -647,7 +647,7 @@
 
         <footer class="compas-footer">
             
-                Last updated on Jan 28, 2019.
+                Last updated on Jan 29, 2019.
             
 
             

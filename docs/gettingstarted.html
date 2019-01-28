@@ -63,7 +63,7 @@
 <h2>Requirements</h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.anaconda.com/download">Anaconda</a></p></li>
-<li><p><a class="reference external" href="https://github.com">Github</a> account</p></li>
+<li><p><a class="reference external" href="https://github.com">Github  account</a></p></li>
 <li><p><a class="reference external" href="https://git-scm.com/downloads">Git</a></p></li>
 </ul>
 </div>
@@ -76,18 +76,12 @@ name you like.</p>
 skip the first step and simply activate the environment of your choice.</p>
 <div class="section" id="create-a-virtual-environment-and-install-compas">
 <h3>1. Create a virtual environment and install COMPAS</h3>
-<ul class="simple">
-<li><p><a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments">https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments</a></p></li>
-</ul>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ conda create -n assembly -c conda-forge <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.6 COMPAS
 </code></pre></div>
 </div>
 </div>
 <div class="section" id="activate-the-environment">
 <h3>2. Activate the environment</h3>
-<ul class="simple">
-<li><p><a class="reference external" href="https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments">https://conda.io/projects/conda/en/latest/user-guide/getting-started.html#managing-environments</a></p></li>
-</ul>
 <p><strong>On Mac</strong></p>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ <span class="nb">source</span> activate assembly
 </code></pre></div>
@@ -103,7 +97,7 @@ skip the first step and simply activate the environment of your choice.</p>
 <li><p><a class="reference external" href="https://shapely.readthedocs.io/en/latest/">https://shapely.readthedocs.io/en/latest/</a></p></li>
 </ul>
 <p><strong>On Mac</strong></p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>pip install shapely<span class="o">[</span>vectorized<span class="o">]</span>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>pip install shapely
 </code></pre></div>
 </div>
 <p><strong>On Windows</strong></p>
@@ -113,18 +107,12 @@ skip the first step and simply activate the environment of your choice.</p>
 </div>
 <div class="section" id="fork-package">
 <h3>4. Fork package</h3>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/BlockResearchGroup/compas_assembly">COMPAS assembly</a></p></li>
-</ul>
 <p>Go to <a class="reference external" href="https://github.com/BlockResearchGroup/compas_assembly">https://github.com/BlockResearchGroup/compas_assembly</a> and <em>fork</em> the repository to your
 personal account. This will simplify the development process when you will start
 making changes to the code or when you want to start contributing.</p>
 </div>
 <div class="section" id="clone-forked-package">
 <h3>5. Clone forked package</h3>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com">https://github.com</a>/&lt;your-username&gt;/compas_assembly</p></li>
-</ul>
 <p>Clone the forked package to a location on your computer.</p>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ mkdir ~/Code/COMPAS-packages
 $ <span class="nb">cd</span> ~/Code/COMPAS-packages
@@ -147,14 +135,14 @@ $ pip install -r requirements-dev.txt
 </code></pre></div>
 </div>
 </div>
-<div class="section" id="install-packages-for-rhino">
-<h3>8. Install packages for Rhino</h3>
-<p><strong>On Mac</strong></p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ python -m compas_rhinomac.install compas compas_rhino compas_assembly
-</code></pre></div>
-</div>
-<p><strong>On Windows</strong></p>
-<p><em>Not available yet.</em></p>
+<div class="section" id="install-solvers">
+<h3>8. Install solvers</h3>
+<p>To evaluate the stability of an assembly or to compute the contact forces at the
+interfaces between the blocks required for static equilibrium, you will need to
+install an equilibrium solver.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/BlockResearchGroup/compas_rbe">https://github.com/BlockResearchGroup/compas_rbe</a></p></li>
+</ul>
 </div>
 </div>
 </div>
@@ -220,7 +208,7 @@ $ pip install -r requirements-dev.txt
 <li class="nav-item"><a class="nav-link reference internal" href="#clone-forked-package">5. Clone forked package</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#install-cloned-package">6. Install cloned package</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#check-installation">7. Check installation</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#install-packages-for-rhino">8. Install packages for Rhino</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-solvers">8. Install solvers</a></li>
 </ul>
 </li>
 </ul>
@@ -235,7 +223,7 @@ $ pip install -r requirements-dev.txt
 
         <footer class="compas-footer">
             
-                Last updated on Jan 28, 2019.
+                Last updated on Jan 29, 2019.
             
 
             

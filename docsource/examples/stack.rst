@@ -1,5 +1,5 @@
 ********************************************************************************
-Equilibrium of a stack of blocks
+Stack of blocks
 ********************************************************************************
 
 .. toctree::
@@ -8,7 +8,6 @@ Equilibrium of a stack of blocks
    :glob:
 
    stack/generate
-   stack/imperfections
-   stack/support
    stack/interfaces
    stack/equilibrium
+   stack/rhino

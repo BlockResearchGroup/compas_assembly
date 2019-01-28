@@ -2,7 +2,7 @@
 Block building sequence
 ********************************************************************************
 
-.. figure:: /_images/assembly_block_building_sequence.jpg
+.. figure:: /_images/wall_block_building_sequence.jpg
     :figclass: figure
     :class: figure-img img-fluid
 

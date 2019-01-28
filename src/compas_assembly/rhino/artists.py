@@ -68,19 +68,30 @@ class AssemblyArtist(NetworkArtist):
     def assembly(self, assembly):
         self.datastructure = assembly
 
-    def clear_(self, name):
+    def _clear(self, name):
         name = "{}.{}.*".format(self.assembly.name, name)
         guids = compas_rhino.get_objects(name=name)
         compas_rhino.delete_objects(guids)
 
     def clear_blocks(self):
-        self.clear_('block')
+        """Delete all previously drawn blocks."""
+        self._clear('block')
 
     def clear_interfaces(self):
-        self.clear_('interface')
+        """Delete all previously drawn interfaces."""
+        self._clear('interface')
 
     def clear_selfweight(self):
-        self.clear_('selfweight')
+        """Delete all previously drawn self-weight vectors."""
+        self._clear('selfweight')
+
+    def clear_frictions(self):
+        """Delete all previously drawn friction vectors."""
+        self._clear('friction')
+
+    def clear_forces(self):
+        """Delete all previously drawn force vectors."""
+        self._clear('force')
 
     def draw_blocks(self, keys=None, show_faces=False, show_edges=True, show_vertices=False):
         """Draw the blocks of the assembly.
@@ -178,6 +189,8 @@ class AssemblyArtist(NetworkArtist):
         compas_rhino.xdraw_faces(faces, layer=layer, clear=False, redraw=False)
 
     def draw_iframes(self):
+        """Draw the frames of the interfaces.
+        """
         layer = "{}::iFrames".format(self.layer) if self.layer else None
         lines = []
         for a, b, attr in self.assembly.edges(True):
@@ -207,7 +220,16 @@ class AssemblyArtist(NetworkArtist):
         self.draw_lines(lines, layer=layer, clear=True, redraw=True)
 
     def draw_block_frame(self, key, fkey):
-        """"""
+        """Draw the frame of a specific face of a specific block of the assembly.
+
+        Parameters
+        ----------
+        key : int
+            Identifier of the block.
+        fkey : int
+            The identifier of the face.
+
+        """
         block = self.assembly.blocks[key]
         o, uvw = block.frame(fkey)
         o = block.face_center(fkey)
@@ -285,12 +307,6 @@ class AssemblyArtist(NetworkArtist):
             })
 
         compas_rhino.xdraw_lines(lines, layer=layer, clear=False, redraw=False)
-
-    def clear_frictions(self):
-        self.clear_('friction')
-
-    def clear_forces(self):
-        self.clear_('force')
 
     def draw_frictions(self, scale=None, eps=None, mode=0):
         """Draw the contact frictions at the interfaces.

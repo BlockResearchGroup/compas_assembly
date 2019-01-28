@@ -31,6 +31,9 @@ class AssemblyHelper(VertexSelector,
                      EdgeSelector,
                      VertexModifier,
                      EdgeModifier):
+    """An assembly helper groups functionality for selecting and modifying assembly
+    vertices and edges in Rhino.
+    """
 
     @staticmethod
     def update_vertex_attributes(assembly, keys, names=None):
@@ -116,12 +119,14 @@ class BlockHelper(VertexSelector,
                   VertexModifier,
                   EdgeModifier,
                   FaceModifier):
-
+    """A block helper groups functionality for selecting and modifying assembly
+    vertices, edges and faces in Rhino.
+    """
     pass
 
 
 # ==============================================================================
-# Debugging
+# Main
 # ==============================================================================
 
 if __name__ == "__main__":

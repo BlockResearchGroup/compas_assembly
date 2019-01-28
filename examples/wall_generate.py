@@ -17,13 +17,9 @@ gap : float
 
 Notes
 -----
-The script below does the same as ``compas_assembly.datastructures.assembly_from_wall()``.
+The script below does the same as ``compas_assembly.datastructures.assembly_construct_wall()``.
 
 """
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 import compas_assembly
 
 from compas.geometry import Box
@@ -101,4 +97,4 @@ for i in range(number_of_courses):
 
 # export to json
 
-assembly.to_json(compas_assembly.get('assembly.json'))
+assembly.to_json(compas_assembly.get('wall.json'))

@@ -11,7 +11,43 @@ __all__ = ['assembly_hull']
 
 
 def assembly_hull(assembly, keys=None, unify=True):
-    """"""
+    """Construct the convex hull of an assembly.
+
+    Parameters
+    ----------
+    assembly : Assembly
+        The assembly data structure.
+    keys: list, optional
+        The identifiers of the blocks to include in the hull calculation.
+        Defaults to all blocks.
+    unify : bool, optional
+        Unify the face cycles of the hull.
+        Default is ``True``.
+
+    Returns
+    -------
+    tuple
+        The vertices and faces of the hull.
+
+    Examples
+    --------
+    .. code-block:: python
+
+        import compas_assembly
+        from compas.datastructures import Mesh
+        from compas.viewers import MeshViewer
+        from compas_assembly.datastructures import Assembly
+
+        assembly = Assembly.from_json(compas_assembly.get('assembly.json'))
+
+        vertices, faces = assembly_hull(assembly)
+        hull = Mesh.from_vertices_and_faces(vertices, faces)
+
+        viewer = MeshViewer()
+        viewer.mesh = hull
+        viewer.show()
+
+    """
     keys = keys or list(assembly.vertices())
 
     points = []

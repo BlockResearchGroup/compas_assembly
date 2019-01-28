@@ -1,8 +1,4 @@
 """"""
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 from math import pi
 from random import choice
 
@@ -21,7 +17,7 @@ from compas_assembly.plotter import AssemblyPlotter
 
 # load an assembly from a JSON file
 
-assembly = Assembly.from_json(compas_assembly.get('assembly_courses.json'))
+assembly = Assembly.from_json(compas_assembly.get('wall_interfaces.json'))
 
 # get a random block from the top course
 
@@ -62,5 +58,5 @@ plotter.draw_vertices(
 
 # plot the block bounding boxes
 
-plotter.draw_blocks_bbox()
+plotter.draw_blocks()
 plotter.show()

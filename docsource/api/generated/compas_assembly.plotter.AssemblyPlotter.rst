@@ -18,7 +18,6 @@ AssemblyPlotter
     
         ~AssemblyPlotter.__init__
         ~AssemblyPlotter.draw_blocks
-        ~AssemblyPlotter.draw_blocks_bbox
         ~AssemblyPlotter.draw_edges
         ~AssemblyPlotter.draw_vertices
 

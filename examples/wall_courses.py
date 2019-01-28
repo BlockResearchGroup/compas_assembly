@@ -9,10 +9,6 @@ Notes
 This will only work as expected on *wall* assemblies that are properly supported.
 
 """
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 import compas_assembly
 
 from compas_assembly.datastructures import Assembly
@@ -21,7 +17,7 @@ from compas_assembly.datastructures import assembly_courses
 
 # load an assembly
 
-assembly = Assembly.from_json(compas_assembly.get('assembly_supported.json'))
+assembly = Assembly.from_json(compas_assembly.get('wall_supported.json'))
 
 # check if the assembly has supports
 
@@ -41,4 +37,4 @@ for i, course in enumerate(courses):
 
 # serialise the result
 
-assembly.to_json(compas_assembly.get('assembly_courses.json'))
+assembly.to_json(compas_assembly.get('wall_courses.json'))
