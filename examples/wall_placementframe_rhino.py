@@ -1,3 +1,6 @@
+"""
+
+"""
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -26,11 +29,18 @@ artist.draw_blocks()
 artist.draw_interfaces()
 artist.redraw()
 
+placed = list(assembly.vertices_where({'is_placed': True}))
+artist.draw_blocks(keys=placed, show_faces=True, show_edges=False)
+
+placed = set(placed)
+
+
 while True:
     # select the block you want to place
     key = AssemblyHelper.select_vertex(assembly)
 
     if key is None:
+        print('Nothing selected.')
         break
 
     # which neighbour have already been placed
@@ -41,21 +51,19 @@ while True:
     if not nbrs:
         raise Exception('The selected block has no neighbors.\nPerhaps the interfaces have not been identified.')
 
-    supports = []
-    for nbr in nbrs:
-        if assembly.get_vertex_attribute(nbr, 'is_placed'):
-            supports.append(nbr)
+    placed_nbrs = list(set(nbrs) & placed)
 
-    if not supports:
+    if not placed_nbrs:
         print('This block cannot be placed.')
         continue
 
     # evaluate equilibrium of subset of the assembly
 
-    # block = assembly.blocks[key]
-    # # "top" face frame
-    # frames = block.frames()
-    # fkey, frame = sorted(frames.items(), key=lambda x: x[1][0][2])[-1]
-    # print(key, fkey, frame)
+    placed.add(key)
 
-    artist.draw_blocks(supports, show_faces=True, show_edges=False)
+    # draw the top frame of the neighboring blocks
+    # sleep
+    # draw the block
+
+    artist.draw_blocks(keys=[key], show_faces=True, show_edges=False)
+    artist.redraw()

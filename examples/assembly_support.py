@@ -50,6 +50,6 @@ mesh_transform(support, T)
 
 assembly.add_block(support, is_support=True, is_placed=True)
 
-assembly_interfaces(assembly)
+assembly_interfaces(assembly, nmax=200)
 
 assembly.to_json(compas_assembly.get('assembly.json'))

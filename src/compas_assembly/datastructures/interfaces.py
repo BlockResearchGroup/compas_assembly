@@ -175,7 +175,7 @@ def assembly_interfaces(assembly,
 
                         p1 = Polygon(rst1)
 
-                        if p1.area == 0.0:
+                        if p1.area < amin:
                             continue
 
                         if p0.intersects(p1):

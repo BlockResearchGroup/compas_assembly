@@ -24,7 +24,7 @@ supports = list(assembly.vertices_where({'is_support': True}))
 
 if supports:
     compute_interface_forces_cvx(assembly, solver='CVXOPT', verbose=True)
-    assembly.to_json(compas_assembly.get('assembly_result.json'))
+    assembly.to_json(compas_assembly.get('assembly.json'))
 
 else:
     print('The wall has no supports.')

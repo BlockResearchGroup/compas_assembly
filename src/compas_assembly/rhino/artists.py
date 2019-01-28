@@ -121,8 +121,8 @@ class AssemblyArtist(NetworkArtist):
             block = self.assembly.blocks[key]
             block.name = "{}.block.{}".format(self.assembly.name, key)
             artist.block = block
-            if not show_faces and not show_vertices:
-                show_edges = True
+            # if not show_faces and not show_vertices:
+            #     show_edges = True
             if show_edges:
                 artist.draw_edges()
             if show_faces:
