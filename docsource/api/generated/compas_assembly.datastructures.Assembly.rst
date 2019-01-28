@@ -20,6 +20,7 @@ Assembly
         ~Assembly.add_block
         ~Assembly.add_blocks_from_polysurfaces
         ~Assembly.add_blocks_from_rhinomeshes
+        ~Assembly.copy
         ~Assembly.draw
         ~Assembly.from_json
         ~Assembly.number_of_interface_vertices
@@ -37,7 +38,6 @@ Assembly
         ~Assembly.clear_edgedict
         ~Assembly.clear_halfedgedict
         ~Assembly.clear_vertexdict
-        ~Assembly.copy
         ~Assembly.delete_edge
         ~Assembly.delete_vertex
         ~Assembly.dump

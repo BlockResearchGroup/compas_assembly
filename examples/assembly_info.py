@@ -41,13 +41,23 @@ R = Rotation.from_axis_and_angle([1.0, 0, 0], -pi / 2)
 assembly_transform(assembly, R)
 
 # plot the result
-# - highlight the vertex of the support block
+# - highlight the vertex of the support block(s)
+# - highlight the neighbours of the support block(s)
 # - display the block keys
-plotter = AssemblyPlotter(assembly, figsize=(10, 7))
+
+supports = list(assembly.vertices_where({'is_support': True}))
+
+facecolors = {}
+
+facecolors.update({key: '#ff0000' for key in supports})
+facecolors.update({nbr: '#00ff00' for key in supports for nbr in assembly.vertex_neighbors(key)})
+
+plotter = AssemblyPlotter(assembly, figsize=(16, 6), tight=True)
+plotter.assembly_plotter.defaults['vertex.fontsize'] = 10
+
 plotter.draw_vertices(
-    facecolor={key: '#ff0000' for key in assembly.vertices_where({'is_support': True})},
-    text={key: str(key) for key in assembly.vertices()}
+    facecolor=facecolors,
+    text={key: str(key) for key in assembly.vertices()},
 )
-plotter.draw_edges()
 plotter.draw_blocks_bbox()
 plotter.show()

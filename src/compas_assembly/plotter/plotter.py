@@ -46,6 +46,7 @@ class AssemblyPlotter(Plotter):
             box = bounding_box_xy(xyz)
             polylines.append({
                 'points': box + box[:1],
-                'color': '#ff0000' if attr['is_support'] else '#cccccc',
+                'color': '#000000' if attr['is_support'] else '#444444',
+                'width': 2.0 if attr['is_support'] else 1.0,
             })
         self.draw_polylines(polylines)

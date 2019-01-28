@@ -40,9 +40,9 @@ if __name__ == '__main__':
     from compas.viewers import MeshViewer
     from compas_assembly.datastructures import Assembly
 
-    assembly = Assembly.from_json(compas_assembly.get('frompolysurfaces.json'))
+    assembly = Assembly.from_json(compas_assembly.get('assembly.json'))
 
-    vertices, faces = compute_hull_numpy(assembly)
+    vertices, faces = assembly_hull_numpy(assembly)
     hull = Mesh.from_vertices_and_faces(vertices, faces)
 
     viewer = MeshViewer()

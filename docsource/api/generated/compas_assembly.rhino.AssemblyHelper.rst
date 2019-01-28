@@ -16,6 +16,8 @@ AssemblyHelper
         :toctree:
 
     
+        ~AssemblyHelper.update_edge_attributes
+        ~AssemblyHelper.update_vertex_attributes
 
     .. rubric:: Inherited Methods
 
@@ -30,8 +32,6 @@ AssemblyHelper
         ~AssemblyHelper.select_edges
         ~AssemblyHelper.select_vertex
         ~AssemblyHelper.select_vertices
-        ~AssemblyHelper.update_edge_attributes
-        ~AssemblyHelper.update_vertex_attributes
 
     
     

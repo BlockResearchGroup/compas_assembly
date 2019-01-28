@@ -18,7 +18,7 @@
         <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
         
-            <link rel="next" title="AssemblyHelper.move_edge" href="compas_assembly.rhino.AssemblyHelper.move_edge.html" />
+            <link rel="next" title="AssemblyHelper.update_edge_attributes" href="compas_assembly.rhino.AssemblyHelper.update_edge_attributes.html" />
         
         
         
@@ -63,8 +63,6 @@
 <dt id="compas_assembly.rhino.AssemblyHelper">
 <em class="property">class </em><code class="descclassname">compas_assembly.rhino.</code><code class="descname">AssemblyHelper</code></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">compas_rhino.selectors.vertexselector.VertexSelector</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">compas_rhino.selectors.edgeselector.EdgeSelector</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">compas_rhino.modifiers.vertexmodifier.VertexModifier</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">compas_rhino.modifiers.edgemodifier.EdgeModifier</span></code></p>
-<p>Helper class for selecting and modifying vertices and edges of an Assembly
-through the Rhino interface.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils">
 <colgroup>
@@ -72,6 +70,12 @@ through the Rhino interface.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyHelper.update_edge_attributes.html#compas_assembly.rhino.AssemblyHelper.update_edge_attributes" title="compas_assembly.rhino.AssemblyHelper.update_edge_attributes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_edge_attributes</span></code></a>(assembly, keys[, names])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyHelper.update_vertex_attributes.html#compas_assembly.rhino.AssemblyHelper.update_vertex_attributes" title="compas_assembly.rhino.AssemblyHelper.update_vertex_attributes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_vertex_attributes</span></code></a>(assembly, keys[, names])</p></td>
+<td><p></p></td>
+</tr>
 </tbody>
 </table>
 <p class="rubric">Inherited Methods</p>
@@ -100,12 +104,6 @@ through the Rhino interface.</p>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyHelper.select_vertices.html#compas_assembly.rhino.AssemblyHelper.select_vertices" title="compas_assembly.rhino.AssemblyHelper.select_vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_vertices</span></code></a>(self[, message])</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyHelper.update_edge_attributes.html#compas_assembly.rhino.AssemblyHelper.update_edge_attributes" title="compas_assembly.rhino.AssemblyHelper.update_edge_attributes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_edge_attributes</span></code></a>(self, keys[, names])</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyHelper.update_vertex_attributes.html#compas_assembly.rhino.AssemblyHelper.update_vertex_attributes" title="compas_assembly.rhino.AssemblyHelper.update_vertex_attributes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_vertex_attributes</span></code></a>(self, keys[, names])</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -162,17 +160,18 @@ through the Rhino interface.</p>
 <li class="nav-item"><a class="nav-link reference internal" href="../../intro.html">Introduction</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../gettingstarted.html">Getting Started</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../examples.html">Examples</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="../../publications.html">Publications</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav active">
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.html">compas_assembly</a><ul class="nav active">
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.interfaces.html">compas_assembly.interfaces</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.plotter.html">compas_assembly.plotter</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.utilities.html">compas_assembly.utilities</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.viewer.html">compas_assembly.viewer</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="nav-item"><a class="nav-link reference internal" href="../../publications.html">Publications</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../license.html">License</a></li>
 </ul>
 
@@ -205,7 +204,7 @@ through the Rhino interface.</p>
 
         <footer class="compas-footer">
             
-                Last updated on Jan 24, 2019.
+                Last updated on Jan 28, 2019.
             
 
             

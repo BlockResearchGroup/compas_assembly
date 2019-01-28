@@ -12,6 +12,10 @@ calculation. However, this will exclude some of the faces from being processed
 in the situation described above if the number of neighbors taken into account is
 too small.
 
+Note
+----
+Swith to tree based search only if number of faces exceeds 100?
+
 """
 from __future__ import absolute_import
 from __future__ import division

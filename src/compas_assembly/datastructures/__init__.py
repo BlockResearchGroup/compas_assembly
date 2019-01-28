@@ -34,7 +34,7 @@ Functions
 
     assembly_courses
     assembly_interfaces
-    compute_hull_numpy
+    assembly_hull_numpy
 
 
 """
