@@ -41,13 +41,13 @@ number_of_courses = 7
 
 # brick dimensions
 
-width = 2.0
-height = 0.5
-depth = 1.0
+width = 0.240
+height = 0.052
+depth = 0.116
 
 # horizontal joints
 
-gap = 0.1
+gap = 0.02
 
 # brick geometry
 
