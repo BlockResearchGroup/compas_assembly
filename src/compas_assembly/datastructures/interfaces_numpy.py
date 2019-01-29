@@ -8,6 +8,7 @@ import compas
 
 try:
     from numpy import array
+    from numpy import float64
 
     from scipy.linalg import solve
     from scipy.spatial import cKDTree
@@ -138,9 +139,9 @@ def assembly_interfaces_numpy(assembly,
             # e.g. exclude overlapping top faces of two neighbouring blocks in same row
 
             for f0, (origin, uvw) in frames.items():
-                A = array(uvw, dtype=float)
-                o = array(origin, dtype=float).reshape((-1, 1))
-                xyz0 = array(block.face_coordinates(f0), dtype=float).reshape((-1, 3)).T
+                A = array(uvw, dtype=float64)
+                o = array(origin, dtype=float64).reshape((-1, 1))
+                xyz0 = array(block.face_coordinates(f0), dtype=float64).reshape((-1, 3)).T
                 rst0 = solve(A.T, xyz0 - o).T.tolist()
                 p0 = Polygon(rst0)
 
@@ -158,7 +159,7 @@ def assembly_interfaces_numpy(assembly,
 
                     nbr = assembly.blocks[n]
                     k_i = {key: index for index, key in enumerate(nbr.vertices())}
-                    xyz = array(nbr.get_vertices_attributes('xyz'), dtype=float).reshape((-1, 3)).T
+                    xyz = array(nbr.get_vertices_attributes('xyz'), dtype=float64).reshape((-1, 3)).T
                     rst = solve(A.T, xyz - o).T.tolist()
                     rst = {key: rst[k_i[key]] for key in nbr.vertices()}
 

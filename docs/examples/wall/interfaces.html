@@ -18,11 +18,11 @@
         <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
         
-            <link rel="next" title="Block building sequence" href="sequence.html" />
+            <link rel="next" title="Identify courses" href="courses.html" />
         
         
         
-            <link rel="prev" title="Identify courses" href="courses.html" />
+            <link rel="prev" title="Add supports" href="support.html" />
         
 
         <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -73,27 +73,17 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">compas_assembly</span>
 
-<span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">bounding_box_xy</span>
-<span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Scale</span>
-<span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Translation</span>
-<span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">subtract_vectors</span>
-<span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">length_vector</span>
-<span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">centroid_points</span>
-
-<span class="kn">from</span> <span class="nn">compas.datastructures</span> <span class="kn">import</span> <span class="n">mesh_transform</span>
-
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
-<span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Block</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">assembly_interfaces_numpy</span>
 
 
 <span class="c1"># load assembly from JSON</span>
 
-<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;wall_courses.json&#39;</span><span class="p">))</span>
+<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;wall_supported.json&#39;</span><span class="p">))</span>
 
 <span class="c1"># identify the interfaces</span>
 
-<span class="n">assembly_interfaces_numpy</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">nmax</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">assembly_interfaces_numpy</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">nmax</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">amin</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">)</span>
 
 <span class="c1"># serialise</span>
 
@@ -136,8 +126,8 @@
 <li class="nav-item active"><a class="nav-link reference internal" href="../wall.html">Brick wall</a><ul class="nav active">
 <li class="nav-item"><a class="nav-link reference internal" href="generate.html">Generate geometry</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="support.html">Add supports</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="courses.html">Identify courses</a></li>
 <li class="nav-item active"><a class="nav-link active current reference internal" href="#">Identify interfaces</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="courses.html">Identify courses</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="sequence.html">Block building sequence</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="equilibrium.html">Equilibrium of a building sequence</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="hull.html">Assembly sequence hull</a></li>

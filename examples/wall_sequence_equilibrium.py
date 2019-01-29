@@ -20,7 +20,7 @@ from compas_rbe.equilibrium import compute_interface_forces_cvx
 
 # load an assembly
 
-assembly = Assembly.from_json(compas_assembly.get('wall_interfaces.json'))
+assembly = Assembly.from_json(compas_assembly.get('wall_courses.json'))
 
 # define a sequence of buildable blocks
 
@@ -39,7 +39,7 @@ if not supports:
 
 # compute the interface forces
 
-compute_interface_forces_cvx(sub, solver='CVXOPT', verbose=True)
+compute_interface_forces_cvx(sub, solver='CPLEX', verbose=True)
 
 # update the original assembly
 

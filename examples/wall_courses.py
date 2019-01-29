@@ -17,7 +17,7 @@ from compas_assembly.datastructures import assembly_courses
 
 # load an assembly
 
-assembly = Assembly.from_json(compas_assembly.get('wall_supported.json'))
+assembly = Assembly.from_json(compas_assembly.get('wall_interfaces.json'))
 
 # check if the assembly has supports
 

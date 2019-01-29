@@ -18,8 +18,8 @@ assembly_transform(assembly, R)
 plotter = AssemblyPlotter(assembly, figsize=(16, 6), tight=True)
 plotter.assembly_plotter.defaults['vertex.fontsize'] = 10
 
-plotter.draw_vertices(
-    text={key: str(key) for key in assembly.vertices()}
+plotter.draw_blocks(
+    edgecolor='#444444',
+    edgewidth=0.5
 )
-plotter.draw_blocks()
 plotter.show()

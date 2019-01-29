@@ -9,8 +9,8 @@ Brick wall
 
    wall/generate
    wall/support
-   wall/courses
    wall/interfaces
+   wall/courses
    wall/sequence
    wall/equilibrium
    wall/hull

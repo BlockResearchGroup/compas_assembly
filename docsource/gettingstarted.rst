@@ -107,7 +107,24 @@ Start an interactive Python session in the Terminal.
 >>> import compas_assembly
 
 
-8. Install solvers
+8. Install packages for Rhino
+-----------------------------
+
+**On Mac**
+
+::
+
+    $ python -m compas_rhinomac.install -p compas compas_assembly
+
+
+**On Windows**
+
+::
+
+    $ python -m compas_rhino.install -p compas compas_assembly
+
+
+9. Install solvers
 ------------------
 
 To evaluate the stability of an assembly or to compute the contact forces at the

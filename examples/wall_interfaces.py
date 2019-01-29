@@ -9,27 +9,17 @@
 """
 import compas_assembly
 
-from compas.geometry import bounding_box_xy
-from compas.geometry import Scale
-from compas.geometry import Translation
-from compas.geometry import subtract_vectors
-from compas.geometry import length_vector
-from compas.geometry import centroid_points
-
-from compas.datastructures import mesh_transform
-
 from compas_assembly.datastructures import Assembly
-from compas_assembly.datastructures import Block
 from compas_assembly.datastructures import assembly_interfaces_numpy
 
 
 # load assembly from JSON
 
-assembly = Assembly.from_json(compas_assembly.get('wall_courses.json'))
+assembly = Assembly.from_json(compas_assembly.get('wall_supported.json'))
 
 # identify the interfaces
 
-assembly_interfaces_numpy(assembly, nmax=200)
+assembly_interfaces_numpy(assembly, nmax=100, amin=0.0001)
 
 # serialise
 

@@ -50,7 +50,7 @@ HERE = os.path.dirname(__file__)
 
 # load an assembly from a JSON file
 
-assembly = Assembly.from_json(os.path.join(HERE, '../data/wall_interfaces.json'))
+assembly = Assembly.from_json(os.path.join(HERE, '../data/wall_courses.json'))
 
 # define a sequence of buildable blocks
 
@@ -69,7 +69,7 @@ if not supports:
 
 # compute the interface forces
 
-compute_interface_forces(sub, solver='CVXOPT', verbose=True)
+compute_interface_forces(sub, solver='CPLEX', verbose=True)
 
 # update the original assembly
 

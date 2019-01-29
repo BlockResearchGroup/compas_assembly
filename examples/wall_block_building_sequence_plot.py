@@ -17,7 +17,7 @@ from compas_assembly.plotter import AssemblyPlotter
 
 # load an assembly from a JSON file
 
-assembly = Assembly.from_json(compas_assembly.get('wall_interfaces.json'))
+assembly = Assembly.from_json(compas_assembly.get('wall_courses.json'))
 
 # get a random block from the top course
 
@@ -46,17 +46,14 @@ i_max = len(sequence)
 i_spn = i_max - i_min
 
 facecolor = {k: '#cccccc' for k in assembly.vertices()}
-facecolor.update({k: i_to_red((index - i_min) / i_spn) for index, k in enumerate(sequence[::-1])})
+facecolor.update({k: i_to_red((index - i_min) / i_spn) for index, k in enumerate(sequence)})
 facecolor[key] = '#ff0000'
 
 # plot the assembly vertices
 
-plotter.draw_vertices(
-    text={key: str(key) for key in assembly.vertices()},
-    facecolor=facecolor
-)
-
 # plot the block bounding boxes
 
-plotter.draw_blocks()
+plotter.draw_blocks(
+    facecolor=facecolor
+)
 plotter.show()
