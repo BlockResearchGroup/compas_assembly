@@ -88,4 +88,4 @@ for i in range(number_of_courses):
             # add the brick to the assembly
             assembly.add_block(block)
 
-assembly.to_json(compas_assembly.get('assembly.json'))
+assembly.to_json(compas_assembly.get('curvedwall.json'))

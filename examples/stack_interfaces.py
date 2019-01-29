@@ -1,6 +1,9 @@
 """Identify the interfaces of a stack.
 
-1. ...
+1. Load a stack from a json file
+2. Identify the interfaces
+3. Export to json
+4. Visualise
 
 """
 from math import pi
