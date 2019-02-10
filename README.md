@@ -5,7 +5,7 @@ Assembly data structures for the COMPAS framework.
 
 ## Getting Started
 
-https://blockresearchgroup.github.io/compas_rbe/gettingstarted.html
+https://blockresearchgroup.github.io/compas_asssembly/gettingstarted.html
 
 
 ## First Steps

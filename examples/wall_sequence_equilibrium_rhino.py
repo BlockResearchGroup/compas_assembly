@@ -8,13 +8,11 @@
 6. Visualise in Rhino.
 
 """
-
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
 import os
-
 import compas
 
 from compas_rhino.utilities import XFunc
@@ -25,32 +23,27 @@ from compas_assembly.datastructures import Assembly
 
 compute_interface_forces_xfunc = XFunc('compas_rbe.equilibrium.compute_interface_forces_xfunc')
 
-# path to CPython on RhinoMac
-# change this if necessary
-
-if compas.is_mono():
-    python = os.path.join(os.environ['HOME'], 'anaconda3/bin/python')
-    compute_interface_forces_xfunc.python = python
 
 # a convenience wrapper
 
 def compute_interface_forces(assembly, **kwargs):
-    data = {
-        'assembly': assembly.to_data(),
-        'blocks': {str(key): assembly.blocks[key].to_data() for key in assembly.blocks},
-    }
+    data = {'assembly': assembly.to_data(),
+            'blocks': {str(key): assembly.blocks[key].to_data() for key in assembly.blocks}}
     result = compute_interface_forces_xfunc(data, **kwargs)
     assembly.data = result['assembly']
     for key in assembly.blocks:
         assembly.blocks[key].data = result['blocks'][str(key)]
 
+
 # just so Rhino(Mac) gets the filepaths right
 
 HERE = os.path.dirname(__file__)
+DATA = os.path.join(HERE, '../data')
+PATH = os.path.join(DATA, 'wall_courses.json')
 
 # load an assembly from a JSON file
 
-assembly = Assembly.from_json(os.path.join(HERE, '../data/wall_courses.json'))
+assembly = Assembly.from_json(PATH)
 
 # define a sequence of buildable blocks
 

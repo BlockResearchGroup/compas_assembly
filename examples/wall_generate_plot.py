@@ -6,7 +6,6 @@ from compas.geometry import Rotation
 
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import assembly_transform
-from compas_assembly.datastructures import assembly_construct_wall
 from compas_assembly.plotter import AssemblyPlotter
 
 

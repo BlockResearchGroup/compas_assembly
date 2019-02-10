@@ -59,29 +59,17 @@
 
                         <div class="section" id="compute-equilibrium">
 <h1>Compute equilibrium</h1>
-<div class="figure">
-<img alt="../../_images/stack_equilibrium.png" class="figure-img img-fluid" src="../../_images/stack_equilibrium.png" />
-</div>
 <div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="sd">&quot;&quot;&quot;Compute the contact forces required for static equilibrium of an assembly.</span>
 
 <span class="sd">1. Load an assembly from a JSON file.</span>
-<span class="sd">2. Make sure there are supports.</span>
-<span class="sd">3. Identify the interfaces.</span>
-<span class="sd">4. Compute interface forces.</span>
-<span class="sd">5. Serialise the result.</span>
+<span class="sd">2. Compute interface forces.</span>
+<span class="sd">3. Serialise the result.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
-
 <span class="kn">import</span> <span class="nn">compas_assembly</span>
 
-<span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Rotation</span>
-
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
-<span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">assembly_transform</span>
 <span class="kn">from</span> <span class="nn">compas_rbe.equilibrium</span> <span class="kn">import</span> <span class="n">compute_interface_forces_cvx</span>
-
-<span class="kn">from</span> <span class="nn">compas_assembly.plotter</span> <span class="kn">import</span> <span class="n">AssemblyPlotter</span>
 
 
 <span class="c1"># load assembly</span>
@@ -95,20 +83,6 @@
 <span class="c1"># serialise</span>
 
 <span class="n">assembly</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;stack.json&#39;</span><span class="p">))</span>
-
-<span class="c1"># visualise</span>
-
-<span class="n">R</span> <span class="o">=</span> <span class="n">Rotation</span><span class="o">.</span><span class="n">from_axis_and_angle</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">assembly_transform</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span>
-
-<span class="n">plotter</span> <span class="o">=</span> <span class="n">AssemblyPlotter</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">tight</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-
-<span class="n">plotter</span><span class="o">.</span><span class="n">draw_vertices</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">vertices</span><span class="p">(</span><span class="bp">True</span><span class="p">)})</span>
-<span class="n">plotter</span><span class="o">.</span><span class="n">draw_edges</span><span class="p">()</span>
-<span class="n">plotter</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">(</span>
-    <span class="n">facecolor</span><span class="o">=</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="s1">&#39;#ff0000&#39;</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">vertices_where</span><span class="p">({</span><span class="s1">&#39;is_support&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">})}</span>
-<span class="p">)</span>
-<span class="n">plotter</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -185,7 +159,7 @@
 
         <footer class="compas-footer">
             
-                Last updated on Jan 29, 2019.
+                Last updated on Feb 10, 2019.
             
 
             

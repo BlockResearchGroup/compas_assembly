@@ -54,6 +54,7 @@ Assembly
         ~Assembly.edge_vector
         ~Assembly.edges
         ~Assembly.edges_where
+        ~Assembly.edges_where_predicate
         ~Assembly.from_data
         ~Assembly.from_lines
         ~Assembly.from_obj
@@ -119,6 +120,7 @@ Assembly
         ~Assembly.vertex_neighbors_out
         ~Assembly.vertices
         ~Assembly.vertices_where
+        ~Assembly.vertices_where_predicate
 
     
     

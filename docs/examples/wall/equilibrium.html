@@ -72,13 +72,11 @@
 <span class="sd">6. Visualise in Rhino.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
-
 <span class="kn">import</span> <span class="nn">compas</span>
 
 <span class="kn">from</span> <span class="nn">compas_rhino.utilities</span> <span class="kn">import</span> <span class="n">XFunc</span>
@@ -89,32 +87,27 @@
 
 <span class="n">compute_interface_forces_xfunc</span> <span class="o">=</span> <span class="n">XFunc</span><span class="p">(</span><span class="s1">&#39;compas_rbe.equilibrium.compute_interface_forces_xfunc&#39;</span><span class="p">)</span>
 
-<span class="c1"># path to CPython on RhinoMac</span>
-<span class="c1"># change this if necessary</span>
-
-<span class="k">if</span> <span class="n">compas</span><span class="o">.</span><span class="n">is_mono</span><span class="p">():</span>
-    <span class="n">python</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;HOME&#39;</span><span class="p">],</span> <span class="s1">&#39;anaconda3/bin/python&#39;</span><span class="p">)</span>
-    <span class="n">compute_interface_forces_xfunc</span><span class="o">.</span><span class="n">python</span> <span class="o">=</span> <span class="n">python</span>
 
 <span class="c1"># a convenience wrapper</span>
 
 <span class="k">def</span> <span class="nf">compute_interface_forces</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;assembly&#39;</span><span class="p">:</span> <span class="n">assembly</span><span class="o">.</span><span class="n">to_data</span><span class="p">(),</span>
-        <span class="s1">&#39;blocks&#39;</span><span class="p">:</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">):</span> <span class="n">assembly</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">to_data</span><span class="p">()</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">blocks</span><span class="p">},</span>
-    <span class="p">}</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;assembly&#39;</span><span class="p">:</span> <span class="n">assembly</span><span class="o">.</span><span class="n">to_data</span><span class="p">(),</span>
+            <span class="s1">&#39;blocks&#39;</span><span class="p">:</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">):</span> <span class="n">assembly</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">to_data</span><span class="p">()</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">blocks</span><span class="p">}}</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">compute_interface_forces_xfunc</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">assembly</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;assembly&#39;</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">blocks</span><span class="p">:</span>
         <span class="n">assembly</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;blocks&#39;</span><span class="p">][</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span>
 
+
 <span class="c1"># just so Rhino(Mac) gets the filepaths right</span>
 
 <span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+<span class="n">DATA</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s1">&#39;../data&#39;</span><span class="p">)</span>
+<span class="n">PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DATA</span><span class="p">,</span> <span class="s1">&#39;wall_courses.json&#39;</span><span class="p">)</span>
 
 <span class="c1"># load an assembly from a JSON file</span>
 
-<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s1">&#39;../data/wall_courses.json&#39;</span><span class="p">))</span>
+<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">PATH</span><span class="p">)</span>
 
 <span class="c1"># define a sequence of buildable blocks</span>
 
@@ -233,7 +226,7 @@
 
         <footer class="compas-footer">
             
-                Last updated on Jan 29, 2019.
+                Last updated on Feb 10, 2019.
             
 
             

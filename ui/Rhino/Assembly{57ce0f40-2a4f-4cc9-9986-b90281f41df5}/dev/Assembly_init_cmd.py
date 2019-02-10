@@ -9,6 +9,8 @@ import traceback
 
 import compas_rhino
 
+from compas.rpc import Proxy
+
 import clr
 
 clr.AddReference("Eto")
@@ -20,10 +22,11 @@ __commandname__ = "Assembly_init"
 
 def RunCommand(is_interactive):
     try:
+        proxy = Proxy()
+
         sc.sticky['compas_assembly'] = {
             'settings': {
                 'layer': 'Assembly',
-                'python': os.path.join(os.environ['HOME'], 'anaconda3/bin/python'),
                 'solver': 'ECOS',
                 'scale.selfweight': 0.1,
                 'scale.force': 0.1,

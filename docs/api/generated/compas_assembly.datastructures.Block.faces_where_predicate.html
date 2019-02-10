@@ -18,11 +18,11 @@
         <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
         
-            <link rel="next" title="Block.split_face" href="compas_assembly.datastructures.Block.split_face.html" />
+            <link rel="next" title="Block.from_data" href="compas_assembly.datastructures.Block.from_data.html" />
         
         
         
-            <link rel="prev" title="Block.set_vertices_attributes" href="compas_assembly.datastructures.Block.set_vertices_attributes.html" />
+            <link rel="prev" title="Block.faces_where" href="compas_assembly.datastructures.Block.faces_where.html" />
         
 
         <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -57,29 +57,53 @@
 
                         
 
-                        <div class="detail section" id="block-split-edge">
-<h1>Block.split_edge</h1>
+                        <div class="detail section" id="block-faces-where-predicate">
+<h1>Block.faces_where_predicate</h1>
 <dl class="method">
-<dt id="compas_assembly.datastructures.Block.split_edge">
-<code class="descclassname">Block.</code><code class="descname">split_edge</code><span class="sig-paren">(</span><em>u</em>, <em>v</em>, <em>t=0.5</em>, <em>allow_boundary=False</em><span class="sig-paren">)</span></dt>
-<dd><p>Split and edge by inserting a vertex along its length.</p>
+<dt id="compas_assembly.datastructures.Block.faces_where_predicate">
+<code class="descclassname">Block.</code><code class="descname">faces_where_predicate</code><span class="sig-paren">(</span><em>predicate</em>, <em>data=False</em><span class="sig-paren">)</span></dt>
+<dd><p>Get faces for which a certain condition or set of conditions is true using a lambda function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>u</strong> (<em>str</em>) – The key of the first vertex of the edge.</p></li>
-<li><p><strong>v</strong> (<em>str</em>) – The key of the second vertex of the edge.</p></li>
-<li><p><strong>t</strong> (<em>float (0.5)</em>) – The position of the inserted vertex.
-The value should be between 0.0 and 1.0</p></li>
-<li><p><strong>allow_boundary</strong> (<em>bool (False)</em>) – Split edges on the boundary.</p></li>
+<li><p><strong>predicate</strong> (<em>callable</em>) – The condition you want to evaluate. The callable takes 2 parameters: <code class="docutils literal notranslate"><span class="pre">key</span></code>, <code class="docutils literal notranslate"><span class="pre">attr</span></code> and should return <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>data</strong> (<em>bool, optional</em>) – Yield the faces and their data attributes.
+Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><em>int</em> – The key of the inserted vertex.</p>
-</dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> – If u and v are not neighbors.</p>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>key</strong> (<em>hashable</em>) – The next face that matches the condition.</p></li>
+<li><p><em>2-tuple</em> – The next face and its attributes, if <code class="docutils literal notranslate"><span class="pre">data=True</span></code>.</p></li>
+</ul>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">compas.datastructures</span> <span class="kn">import</span> <span class="n">Mesh</span>
+
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">Mesh</span><span class="p">()</span>
+
+<span class="n">v0</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">v1</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">v2</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">v3</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+
+<span class="n">mesh</span><span class="o">.</span><span class="n">add_face</span><span class="p">([</span><span class="n">v0</span><span class="p">,</span><span class="n">v1</span><span class="p">,</span><span class="n">v3</span><span class="p">],</span> <span class="n">extra_attr1</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">extra_attr2</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span>
+<span class="n">mesh</span><span class="o">.</span><span class="n">add_face</span><span class="p">([</span><span class="n">v1</span><span class="p">,</span><span class="n">v2</span><span class="p">,</span><span class="n">v3</span><span class="p">],</span> <span class="n">extra_attr1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">extra_attr2</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">12</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">f_key</span> <span class="ow">in</span> <span class="n">mesh</span><span class="o">.</span><span class="n">faces_where_predicate</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f_key</span><span class="p">,</span> <span class="n">attr</span><span class="p">:</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;extra_attr1&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">5</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">f_key</span>
+
+<span class="k">for</span> <span class="n">f_key</span><span class="p">,</span> <span class="n">f_data</span> <span class="ow">in</span> <span class="n">mesh</span><span class="o">.</span><span class="n">faces_where_predicate</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f_key</span><span class="p">,</span> <span class="n">attr</span><span class="p">:</span> <span class="mi">3</span> <span class="o">&lt;=</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;extra_attr1&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">6</span><span class="p">,</span> <span class="bp">True</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">f_key</span><span class="p">,</span> <span class="n">f_data</span>
+
+<span class="k">for</span> <span class="n">f_key</span> <span class="ow">in</span> <span class="n">mesh</span><span class="o">.</span><span class="n">faces_where_predicate</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f_key</span><span class="p">,</span> <span class="n">attr</span><span class="p">:</span> <span class="s1">&#39;extra_attr2&#39;</span> <span class="ow">in</span> <span class="n">attr</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">f_key</span>
+
+<span class="k">for</span> <span class="n">f_key</span> <span class="ow">in</span> <span class="n">mesh</span><span class="o">.</span><span class="n">faces_where_predicate</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f_key</span><span class="p">,</span> <span class="n">attr</span><span class="p">:</span> <span class="mi">3</span> <span class="ow">in</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;extra_attr2&#39;</span><span class="p">]):</span>
+    <span class="k">print</span> <span class="n">f_key</span>
+</code></pre></div>
+</div>
 </dd></dl>
 
 </div>
@@ -153,7 +177,7 @@ The value should be between 0.0 and 1.0</p></li>
                     
 
                     <ul class="nav flex-column" id="compas-localnav">
-<li class="nav-item"><a class="nav-link reference internal" href="#">Block.split_edge</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">Block.faces_where_predicate</a></li>
 </ul>
 
 
@@ -164,7 +188,7 @@ The value should be between 0.0 and 1.0</p></li>
 
         <footer class="compas-footer">
             
-                Last updated on Jan 29, 2019.
+                Last updated on Feb 10, 2019.
             
 
             

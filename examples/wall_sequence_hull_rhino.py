@@ -32,10 +32,12 @@ from compas_assembly.datastructures import assembly_hull
 # just so Rhino(Mac) gets the filepaths right
 
 HERE = os.path.dirname(__file__)
+DATA = os.path.join(HERE, '../data')
+PATH = os.path.join(DATA, 'wall_interfaces.json')
 
 # load an assembly from a JSON file
 
-assembly = Assembly.from_json(os.path.join(HERE, '../data/wall_interfaces.json'))
+assembly = Assembly.from_json(PATH)
 
 # define a sequence of buildable blocks
 

@@ -5,26 +5,25 @@ from __future__ import division
 import scriptcontext as sc
 import traceback
 
-import compas_rbe
-
-from compas_rhino.utilities import XFunc
+from compas.rpc import Proxy
 
 
-compute_interface_forces_xfunc = XFunc('compas_rbe.equilibrium.compute_interface_forces_xfunc', tmpdir=compas_rbe.TEMP)
+proxy = Proxy('compas_assembly.datastructures')
+assembly_interfaces_xfunc = proxy.assembly_interfaces_xfunc
 
 
-def compute_interface_forces(assembly, solver):
+def assembly_interfaces(assembly, nmax=10, tmax=0.05, amin=0.01, lmin=0.01):
     data = {
         'assembly': assembly.to_data(),
-        'blocks': {str(key): assembly.blocks[key].to_data() for key in assembly.blocks},
+        'blocks': {str(key): assembly.blocks[key].to_data() for key in assembly.blocks}
     }
-    result = compute_interface_forces_xfunc(data, solver=solver)
+    result = assembly_interfaces_xfunc(data, nmax=nmax, tmax=tmax, amin=amin, lmin=lmin)
     assembly.data = result['assembly']
     for key in assembly.blocks:
         assembly.blocks[key].data = result['blocks'][str(key)]
 
 
-__commandname__ = "Assembly_compute_interface_forces"
+__commandname__ = "Assembly_assembly_interfaces"
 
 
 def RunCommand(is_interactive):
@@ -35,11 +34,7 @@ def RunCommand(is_interactive):
         assembly = sc.sticky['compas_assembly']['assembly']
         settings = sc.sticky['compas_assembly']['settings']
 
-        python = settings['python']
-        solver = settings['solver']
-
-        compute_interface_forces_xfunc.python = python
-        compute_interface_forces(assembly, solver)
+        assembly_interfaces(assembly, nmax=100)
 
         assembly.draw(settings)
 

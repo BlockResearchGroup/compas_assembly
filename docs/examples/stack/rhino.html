@@ -71,9 +71,10 @@
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
 
 <span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
-<span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s1">&#39;../data/stack.json&#39;</span><span class="p">)</span>
+<span class="n">DATA</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s1">&#39;../data&#39;</span><span class="p">)</span>
+<span class="n">PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DATA</span><span class="p">,</span> <span class="s1">&#39;stack.json&#39;</span><span class="p">)</span>
 
-<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">PATH</span><span class="p">)</span>
 <span class="n">assembly</span><span class="o">.</span><span class="n">draw</span><span class="p">({</span>
     <span class="s1">&#39;layer&#39;</span><span class="p">:</span> <span class="s1">&#39;Assembly&#39;</span><span class="p">,</span>
     <span class="s1">&#39;show.vertices&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
@@ -159,7 +160,7 @@
 
         <footer class="compas-footer">
             
-                Last updated on Jan 29, 2019.
+                Last updated on Feb 10, 2019.
             
 
             

@@ -49,11 +49,5 @@ facecolor = {k: '#cccccc' for k in assembly.vertices()}
 facecolor.update({k: i_to_red((index - i_min) / i_spn) for index, k in enumerate(sequence)})
 facecolor[key] = '#ff0000'
 
-# plot the assembly vertices
-
-# plot the block bounding boxes
-
-plotter.draw_blocks(
-    facecolor=facecolor
-)
+plotter.draw_blocks(facecolor=facecolor)
 plotter.show()

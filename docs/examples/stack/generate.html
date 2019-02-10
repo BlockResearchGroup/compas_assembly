@@ -92,6 +92,15 @@
 <span class="kn">from</span> <span class="nn">compas_assembly.plotter</span> <span class="kn">import</span> <span class="n">AssemblyPlotter</span>
 
 
+<span class="c1"># helper function</span>
+
+<span class="k">def</span> <span class="nf">shift</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+    <span class="n">factor</span> <span class="o">=</span> <span class="n">choice</span><span class="p">([</span><span class="o">+</span><span class="mf">0.01</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="o">+</span><span class="mf">0.05</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="o">+</span><span class="mf">0.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">])</span>
+    <span class="n">axis</span> <span class="o">=</span> <span class="n">choice</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]])</span>
+    <span class="n">vector</span> <span class="o">=</span> <span class="n">add_vectors</span><span class="p">(</span><span class="n">scale_vector</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">factor</span><span class="p">),</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
+    <span class="n">mesh_transform</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">Translation</span><span class="p">(</span><span class="n">vector</span><span class="p">))</span>
+
+
 <span class="c1"># number of blocks</span>
 
 <span class="n">N</span> <span class="o">=</span> <span class="mi">10</span>
@@ -118,11 +127,7 @@
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
     <span class="n">block</span> <span class="o">=</span> <span class="n">brick</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-    <span class="n">factor</span> <span class="o">=</span> <span class="n">choice</span><span class="p">([</span><span class="o">+</span><span class="mf">0.01</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="o">+</span><span class="mf">0.05</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="o">+</span><span class="mf">0.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">])</span>
-    <span class="n">axis</span> <span class="o">=</span> <span class="n">choice</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]])</span>
-    <span class="n">vector</span> <span class="o">=</span> <span class="n">add_vectors</span><span class="p">(</span><span class="n">scale_vector</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">factor</span><span class="p">),</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">i</span> <span class="o">*</span> <span class="n">H</span><span class="p">])</span>
-
-    <span class="n">mesh_transform</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">Translation</span><span class="p">(</span><span class="n">vector</span><span class="p">))</span>
+    <span class="n">shift</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">i</span> <span class="o">*</span> <span class="n">H</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">assembly</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">is_support</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
@@ -139,11 +144,8 @@
 <span class="n">assembly_transform</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span>
 
 <span class="n">plotter</span> <span class="o">=</span> <span class="n">AssemblyPlotter</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">tight</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-
-<span class="n">plotter</span><span class="o">.</span><span class="n">draw_vertices</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">vertices</span><span class="p">(</span><span class="bp">True</span><span class="p">)})</span>
-<span class="n">plotter</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">(</span>
-    <span class="n">facecolor</span><span class="o">=</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="s1">&#39;#ff0000&#39;</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">vertices_where</span><span class="p">({</span><span class="s1">&#39;is_support&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">})}</span>
-<span class="p">)</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">draw_vertices</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;key&#39;</span><span class="p">)</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="s1">&#39;#ff0000&#39;</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">vertices_where</span><span class="p">({</span><span class="s1">&#39;is_support&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">})})</span>
 <span class="n">plotter</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
@@ -221,7 +223,7 @@
 
         <footer class="compas-footer">
             
-                Last updated on Jan 29, 2019.
+                Last updated on Feb 10, 2019.
             
 
             

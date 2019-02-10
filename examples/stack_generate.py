@@ -28,6 +28,15 @@ from compas_assembly.datastructures import assembly_transform
 from compas_assembly.plotter import AssemblyPlotter
 
 
+# helper function
+
+def shift(block, z):
+    factor = choice([+0.01, -0.01, +0.05, -0.05, +0.1, -0.1])
+    axis = choice([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
+    vector = add_vectors(scale_vector(axis, factor), [0.0, 0.0, z])
+    mesh_transform(block, Translation(vector))
+
+
 # number of blocks
 
 N = 10
@@ -54,11 +63,7 @@ brick = Block.from_vertices_and_faces(box.vertices, box.faces)
 for i in range(N):
     block = brick.copy()
 
-    factor = choice([+0.01, -0.01, +0.05, -0.05, +0.1, -0.1])
-    axis = choice([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
-    vector = add_vectors(scale_vector(axis, factor), [0.0, 0.0, i * H])
-
-    mesh_transform(block, Translation(vector))
+    shift(block, i * H)
 
     if i == 0:
         assembly.add_block(block, is_support=True)
@@ -75,9 +80,6 @@ R = Rotation.from_axis_and_angle([1.0, 0, 0], -pi / 2)
 assembly_transform(assembly, R)
 
 plotter = AssemblyPlotter(assembly, tight=True)
-
-plotter.draw_vertices(text={key: str(key) for key, attr in assembly.vertices(True)})
-plotter.draw_blocks(
-    facecolor={key: '#ff0000' for key in assembly.vertices_where({'is_support': True})}
-)
+plotter.draw_vertices(text='key')
+plotter.draw_blocks(facecolor={key: '#ff0000' for key in assembly.vertices_where({'is_support': True})})
 plotter.show()

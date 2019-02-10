@@ -18,11 +18,11 @@
         <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
         
-            <link rel="next" title="Block.update_default_edge_attributes" href="compas_assembly.datastructures.Block.update_default_edge_attributes.html" />
+            <link rel="next" title="Assembly.from_data" href="compas_assembly.datastructures.Assembly.from_data.html" />
         
         
         
-            <link rel="prev" title="Block.to_vertices_and_faces" href="compas_assembly.datastructures.Block.to_vertices_and_faces.html" />
+            <link rel="prev" title="Assembly.edges_where" href="compas_assembly.datastructures.Assembly.edges_where.html" />
         
 
         <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -57,58 +57,54 @@
 
                         
 
-                        <div class="detail section" id="block-unweld-vertices">
-<h1>Block.unweld_vertices</h1>
+                        <div class="detail section" id="assembly-edges-where-predicate">
+<h1>Assembly.edges_where_predicate</h1>
 <dl class="method">
-<dt id="compas_assembly.datastructures.Block.unweld_vertices">
-<code class="descclassname">Block.</code><code class="descname">unweld_vertices</code><span class="sig-paren">(</span><em>fkey</em>, <em>where=None</em><span class="sig-paren">)</span></dt>
-<dd><p>Unweld a face of the mesh.</p>
+<dt id="compas_assembly.datastructures.Assembly.edges_where_predicate">
+<code class="descclassname">Assembly.</code><code class="descname">edges_where_predicate</code><span class="sig-paren">(</span><em>predicate</em>, <em>data=False</em><span class="sig-paren">)</span></dt>
+<dd><p>Get edges for which a certain condition or set of conditions is true using a lambda function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mesh</strong> (<em>Mesh</em>) – A mesh object.</p></li>
-<li><p><strong>fkey</strong> (<em>hashable</em>) – The identifier of a face.</p></li>
-<li><p><strong>where</strong> (<em>list (None)</em>) – A list of vertices to unweld.
-Default is to unweld all vertices of the face.</p></li>
+<li><p><strong>predicate</strong> (<em>callable</em>) – The condition you want to evaluate. The callable takes 3 parameters: <code class="docutils literal notranslate"><span class="pre">u</span></code>, <code class="docutils literal notranslate"><span class="pre">v</span></code>, <code class="docutils literal notranslate"><span class="pre">attr</span></code> and should return <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>data</strong> (<em>bool, optional</em>) – Yield the vertices and their data attributes.
+Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Yields</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><em>2-tuple</em> – The next edge as a (u, v) tuple, if <code class="docutils literal notranslate"><span class="pre">data=False</span></code>.</p></li>
+<li><p><em>3-tuple</em> – The next edge as a (u, v, data) tuple, if <code class="docutils literal notranslate"><span class="pre">data=True</span></code>.</p></li>
 </ul>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">import</span> <span class="nn">compas</span>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">compas.datastructures</span> <span class="kn">import</span> <span class="n">Mesh</span>
 
-<span class="kn">from</span> <span class="nn">compas.datastructures</span> <span class="kn">import</span> <span class="n">Mesh</span>
-<span class="kn">from</span> <span class="nn">compas.plotters</span> <span class="kn">import</span> <span class="n">MeshPlotter</span>
-<span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">subtract_vectors</span>
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">Mesh</span><span class="p">()</span>
 
-<span class="n">mesh</span> <span class="o">=</span> <span class="n">Mesh</span><span class="o">.</span><span class="n">from_obj</span><span class="p">(</span><span class="n">compas</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;faces.obj&#39;</span><span class="p">))</span>
+<span class="n">v0</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">v1</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">v2</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">v3</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
 
-<span class="n">vertices</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">vertices</span><span class="p">())</span>
+<span class="n">mesh</span><span class="o">.</span><span class="n">add_face</span><span class="p">([</span><span class="n">v0</span><span class="p">,</span><span class="n">v1</span><span class="p">,</span><span class="n">v3</span><span class="p">])</span>
+<span class="n">mesh</span><span class="o">.</span><span class="n">add_face</span><span class="p">([</span><span class="n">v1</span><span class="p">,</span><span class="n">v2</span><span class="p">,</span><span class="n">v3</span><span class="p">])</span>
 
-<span class="n">fkey</span>  <span class="o">=</span> <span class="mi">12</span>
-<span class="n">where</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">face_vertices</span><span class="p">(</span><span class="n">fkey</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">centroid</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">face_centroid</span><span class="p">(</span><span class="n">fkey</span><span class="p">)</span>
+<span class="n">mesh</span><span class="o">.</span><span class="n">update_default_edge_attributes</span><span class="p">({</span><span class="s1">&#39;extra_attr1&#39;</span><span class="p">:</span><span class="bp">None</span><span class="p">,</span> <span class="s2">&quot;extra_attr2&quot;</span><span class="p">:[]})</span>
 
-<span class="n">face</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">unweld_vertices</span><span class="p">(</span><span class="n">fkey</span><span class="p">,</span> <span class="n">where</span><span class="p">)</span>
+<span class="n">random_edge</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">get_any_edge</span><span class="p">()</span>
+<span class="n">mesh</span><span class="o">.</span><span class="n">set_edge_attributes</span><span class="p">(</span><span class="n">random_edge</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;extra_attr1&#39;</span><span class="p">,</span> <span class="s1">&#39;extra_attr2&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">9</span><span class="p">]])</span>
 
-<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">face</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">vertices</span><span class="p">:</span>
-        <span class="k">continue</span>
-    <span class="n">xyz</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">vertex_coordinates</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-    <span class="n">v</span> <span class="o">=</span> <span class="n">subtract_vectors</span><span class="p">(</span><span class="n">centroid</span><span class="p">,</span> <span class="n">xyz</span><span class="p">)</span>
-    <span class="n">mesh</span><span class="o">.</span><span class="n">vertex</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">mesh</span><span class="o">.</span><span class="n">vertex</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">mesh</span><span class="o">.</span><span class="n">vertex</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;z&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">e_data</span> <span class="ow">in</span> <span class="n">mesh</span><span class="o">.</span><span class="n">edges_where_predicate</span><span class="p">(</span><span class="k">lambda</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">attr</span><span class="p">:</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;extra_attr1&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">True</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">e_data</span>
 
-<span class="n">plotter</span> <span class="o">=</span> <span class="n">MeshPlotter</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">mesh</span><span class="o">.</span><span class="n">edges_where_predicate</span><span class="p">(</span><span class="k">lambda</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">attr</span><span class="p">:</span> <span class="s1">&#39;extra_attr1&#39;</span> <span class="ow">in</span> <span class="n">attr</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span>
 
-<span class="n">plotter</span><span class="o">.</span><span class="n">draw_vertices</span><span class="p">()</span>
-<span class="n">plotter</span><span class="o">.</span><span class="n">draw_faces</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="p">{</span><span class="n">fkey</span><span class="p">:</span> <span class="n">fkey</span> <span class="k">for</span> <span class="n">fkey</span> <span class="ow">in</span> <span class="n">mesh</span><span class="o">.</span><span class="n">faces</span><span class="p">()})</span>
-
-<span class="n">plotter</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">mesh</span><span class="o">.</span><span class="n">edges_where_predicate</span><span class="p">(</span><span class="k">lambda</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">attr</span><span class="p">:</span> <span class="mi">3</span> <span class="ow">in</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;extra_attr2&#39;</span><span class="p">]):</span>
+    <span class="k">print</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span>
 </code></pre></div>
-</div>
-<div class="figure">
-<img alt="../../_images/compas_assembly-datastructures-Block-unweld_vertices-1.png" src="../../_images/compas_assembly-datastructures-Block-unweld_vertices-1.png" />
 </div>
 </dd></dl>
 
@@ -146,8 +142,8 @@ Default is to unweld all vertices of the face.</p></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../examples.html">Examples</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav active">
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a><ul class="nav active">
-<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.Assembly.html">Assembly</a></li>
-<li class="nav-item active"><a class="nav-link reference internal" href="compas_assembly.datastructures.Block.html">Block</a></li>
+<li class="nav-item active"><a class="nav-link reference internal" href="compas_assembly.datastructures.Assembly.html">Assembly</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.Block.html">Block</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_construct_wall.html">assembly_construct_wall</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_courses.html">assembly_courses</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_interfaces_numpy.html">assembly_interfaces_numpy</a></li>
@@ -183,7 +179,7 @@ Default is to unweld all vertices of the face.</p></li>
                     
 
                     <ul class="nav flex-column" id="compas-localnav">
-<li class="nav-item"><a class="nav-link reference internal" href="#">Block.unweld_vertices</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">Assembly.edges_where_predicate</a></li>
 </ul>
 
 
@@ -194,7 +190,7 @@ Default is to unweld all vertices of the face.</p></li>
 
         <footer class="compas-footer">
             
-                Last updated on Jan 29, 2019.
+                Last updated on Feb 10, 2019.
             
 
             

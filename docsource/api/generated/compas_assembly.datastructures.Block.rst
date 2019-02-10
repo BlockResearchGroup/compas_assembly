@@ -40,7 +40,6 @@ Block
         ~Block.clear_facedict
         ~Block.clear_halfedgedict
         ~Block.clear_vertexdict
-        ~Block.collapse_edge
         ~Block.copy
         ~Block.cull_edges
         ~Block.cull_vertices
@@ -60,6 +59,7 @@ Block
         ~Block.edges
         ~Block.edges_on_boundary
         ~Block.edges_where
+        ~Block.edges_where_predicate
         ~Block.euler
         ~Block.face_adjacency_halfedge
         ~Block.face_area
@@ -82,6 +82,7 @@ Block
         ~Block.faces
         ~Block.faces_on_boundary
         ~Block.faces_where
+        ~Block.faces_where_predicate
         ~Block.from_data
         ~Block.from_json
         ~Block.from_lines
@@ -151,15 +152,12 @@ Block
         ~Block.set_vertex_attributes
         ~Block.set_vertices_attribute
         ~Block.set_vertices_attributes
-        ~Block.split_edge
-        ~Block.split_face
         ~Block.summary
         ~Block.to_data
         ~Block.to_json
         ~Block.to_obj
         ~Block.to_pickle
         ~Block.to_vertices_and_faces
-        ~Block.unweld_vertices
         ~Block.update_default_edge_attributes
         ~Block.update_default_face_attributes
         ~Block.update_default_vertex_attributes
@@ -181,6 +179,7 @@ Block
         ~Block.vertices_on_boundaries
         ~Block.vertices_on_boundary
         ~Block.vertices_where
+        ~Block.vertices_where_predicate
 
     
     

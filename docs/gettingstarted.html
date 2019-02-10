@@ -69,85 +69,48 @@
 </div>
 <div class="section" id="installation">
 <h2>Installation</h2>
-<p>In this tutorial, we will create a new virtual environment with <code class="docutils literal notranslate"><span class="pre">conda</span></code> to install
-<code class="docutils literal notranslate"><span class="pre">compas_assembly</span></code>. We will name the environment <code class="docutils literal notranslate"><span class="pre">assembly</span></code>, but you can use any
-name you like.</p>
-<p>If you wish to install <code class="docutils literal notranslate"><span class="pre">compas_assembly</span></code> in an already existing environment, just
-skip the first step and simply activate the environment of your choice.</p>
-<div class="section" id="create-a-virtual-environment-and-install-compas">
-<h3>1. Create a virtual environment and install COMPAS</h3>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ conda create -n assembly -c conda-forge <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.6 COMPAS
-</code></pre></div>
-</div>
-</div>
-<div class="section" id="activate-the-environment">
-<h3>2. Activate the environment</h3>
-<p><strong>On Mac</strong></p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ <span class="nb">source</span> activate assembly
-</code></pre></div>
-</div>
-<p><strong>On Windows</strong></p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ activate assembly
-</code></pre></div>
-</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you intend to install <code class="docutils literal notranslate"><span class="pre">compas_assembly</span></code> in a virtual environment,
+make sure to activate the environment first.</p>
 </div>
 <div class="section" id="install-dependencies">
-<h3>3. Install dependencies</h3>
-<ul class="simple">
-<li><p><a class="reference external" href="https://shapely.readthedocs.io/en/latest/">https://shapely.readthedocs.io/en/latest/</a></p></li>
-</ul>
+<h3>1. Install dependencies</h3>
 <p><strong>On Mac</strong></p>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>pip install shapely
 </code></pre></div>
 </div>
 <p><strong>On Windows</strong></p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>conda install -n assembly -c conda-forge shapely
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>conda install -c conda-forge shapely
 </code></pre></div>
 </div>
 </div>
-<div class="section" id="fork-package">
-<h3>4. Fork package</h3>
-<p>Go to <a class="reference external" href="https://github.com/BlockResearchGroup/compas_assembly">https://github.com/BlockResearchGroup/compas_assembly</a> and <em>fork</em> the repository to your
-personal account. This will simplify the development process when you will start
-making changes to the code or when you want to start contributing.</p>
+<div class="section" id="install-the-package">
+<h3>2. Install the package</h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This will also install COMPAS and its dependencies, if necessary.</p>
 </div>
-<div class="section" id="clone-forked-package">
-<h3>5. Clone forked package</h3>
-<p>Clone the forked package to a location on your computer.</p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ mkdir ~/Code/COMPAS-packages
-$ <span class="nb">cd</span> ~/Code/COMPAS-packages
-$ git clone https://github.com/&lt;your-username&gt;/compas_assembly.git
-</code></pre></div>
-</div>
-</div>
-<div class="section" id="install-cloned-package">
-<h3>6. Install cloned package</h3>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ <span class="nb">cd</span> compas_assembly
-$ pip install -r requirements-dev.txt
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ pip install git+https://github.com/BlockResearchGroup/compas_assembly.git
 </code></pre></div>
 </div>
 </div>
 <div class="section" id="check-installation">
-<h3>7. Check installation</h3>
+<h3>3. Check installation</h3>
 <p>Start an interactive Python session in the Terminal.</p>
-<div class="nohighlight notranslate"><div class="highlight"><pre><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas_assembly</span>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>&gt;&gt;&gt; import compas
+&gt;&gt;&gt; import compas_assembly
 </code></pre></div>
 </div>
 </div>
-<div class="section" id="install-packages-for-rhino">
-<h3>8. Install packages for Rhino</h3>
-<p><strong>On Mac</strong></p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ python -m compas_rhinomac.install -p compas compas_assembly
-</code></pre></div>
-</div>
-<p><strong>On Windows</strong></p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ python -m compas_rhino.install -p compas compas_assembly
+<div class="section" id="install-package-for-rhino">
+<h3>4. Install package for Rhino</h3>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ python -m compas_rhino.install -p compas_assembly
 </code></pre></div>
 </div>
 </div>
 <div class="section" id="install-solvers">
-<h3>9. Install solvers</h3>
+<h3>5. Install solvers</h3>
 <p>To evaluate the stability of an assembly or to compute the contact forces at the
 interfaces between the blocks required for static equilibrium, you will need to
 install an equilibrium solver.</p>
@@ -212,15 +175,11 @@ install an equilibrium solver.</p>
 <li class="nav-item"><a class="nav-link reference internal" href="#">Getting Started</a><ul class="nav">
 <li class="nav-item"><a class="nav-link reference internal" href="#requirements">Requirements</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#installation">Installation</a><ul class="nav">
-<li class="nav-item"><a class="nav-link reference internal" href="#create-a-virtual-environment-and-install-compas">1. Create a virtual environment and install COMPAS</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#activate-the-environment">2. Activate the environment</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#install-dependencies">3. Install dependencies</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#fork-package">4. Fork package</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#clone-forked-package">5. Clone forked package</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#install-cloned-package">6. Install cloned package</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#check-installation">7. Check installation</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#install-packages-for-rhino">8. Install packages for Rhino</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#install-solvers">9. Install solvers</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-dependencies">1. Install dependencies</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-the-package">2. Install the package</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#check-installation">3. Check installation</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-package-for-rhino">4. Install package for Rhino</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-solvers">5. Install solvers</a></li>
 </ul>
 </li>
 </ul>
@@ -235,7 +194,7 @@ install an equilibrium solver.</p>
 
         <footer class="compas-footer">
             
-                Last updated on Jan 29, 2019.
+                Last updated on Feb 10, 2019.
             
 
             

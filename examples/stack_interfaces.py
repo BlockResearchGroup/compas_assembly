@@ -37,10 +37,7 @@ R = Rotation.from_axis_and_angle([1.0, 0, 0], -pi / 2)
 assembly_transform(assembly, R)
 
 plotter = AssemblyPlotter(assembly, tight=True)
-
-plotter.draw_vertices(text={key: str(key) for key, attr in assembly.vertices(True)})
+plotter.draw_vertices(text='key')
 plotter.draw_edges()
-plotter.draw_blocks(
-    facecolor={key: '#ff0000' for key in assembly.vertices_where({'is_support': True})}
-)
+plotter.draw_blocks(facecolor={key: '#ff0000' for key in assembly.vertices_where({'is_support': True})})
 plotter.show()
