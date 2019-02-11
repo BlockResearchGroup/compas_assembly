@@ -167,7 +167,7 @@ class Assembly(Network):
             'blocks': {str(key): self.blocks[key].to_data() for key in self.blocks}
         }
         with open(filepath, 'w') as fo:
-            json.dump(data, fo)
+            json.dump(data, fo, indent=4, sort_keys=True)
 
     def copy(self):
         """Make an independent copy of an assembly.
