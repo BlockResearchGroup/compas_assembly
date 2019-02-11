@@ -9,7 +9,6 @@ Requirements
 ============
 
 * `Anaconda <https://www.anaconda.com/download>`_
-* `Github  account <https://github.com>`_
 * `Git <https://git-scm.com/downloads>`_
 
 
@@ -29,14 +28,14 @@ Installation
 
 ::
 
-    pip install shapely
+    $ pip install shapely
 
 
 **On Windows**
 
 ::
 
-    conda install -c conda-forge shapely
+    $ conda install -c conda-forge shapely
 
 
 2. Install the package

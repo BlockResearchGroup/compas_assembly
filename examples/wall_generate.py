@@ -15,10 +15,6 @@ depth : float
 gap : float
     The horizontal gap between the bricks.
 
-Notes
------
-The script below does the same as ``compas_assembly.datastructures.assembly_construct_wall()``.
-
 """
 import compas_assembly
 

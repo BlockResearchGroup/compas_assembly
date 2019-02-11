@@ -25,8 +25,5 @@ edgecolor.update({key: '#ff0000' for key in supports})
 edgewidth = {key: 0.5 for key in assembly.vertices()}
 edgewidth.update({key: 3.0 for key in supports})
 
-plotter.draw_blocks(
-    edgecolor=edgecolor,
-    edgewidth=edgewidth
-)
+plotter.draw_blocks(edgecolor=edgecolor, edgewidth=edgewidth)
 plotter.show()

@@ -46,6 +46,7 @@ class AssemblyPlotter(Plotter):
         self.assembly = assembly
         self.assembly_plotter = NetworkPlotter(self.assembly, axes=self.axes)
         self.block_plotter = MeshPlotter(None, axes=self.axes)
+        self.blockcollection = None
 
     def draw_vertices(self, *args, **kwargs):
         """Draw the vertices of an assembly.
@@ -56,6 +57,10 @@ class AssemblyPlotter(Plotter):
         """Draw the edges of an assembly.
         """
         self.assembly_plotter.draw_edges(*args, **kwargs)
+
+    def clear_blocks(self):
+        if self.blockcollection:
+            self.blockcollection.remove()
 
     def draw_blocks(self,
                     keys=None,
@@ -90,7 +95,9 @@ class AssemblyPlotter(Plotter):
                 'edgewidth': edgewidthdict[key],
                 'facecolor': facecolordict[key]
             })
-        self.draw_polygons(polygons)
+        collection = self.draw_polygons(polygons)
+        self.blockcollection = collection
+        return collection
 
 
 # ==============================================================================
