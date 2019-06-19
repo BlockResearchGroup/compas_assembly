@@ -50,6 +50,23 @@ class AssemblyPlotter(Plotter):
 
     def draw_vertices(self, *args, **kwargs):
         """Draw the vertices of an assembly.
+
+        Parameters
+        ----------
+        keys
+        text
+        radius
+        edgecolor
+        facecolor
+        edgewidth
+        picker
+
+        Examples
+        --------
+        .. code-block:: python
+
+
+
         """
         return self.assembly_plotter.draw_vertices(*args, **kwargs)
 

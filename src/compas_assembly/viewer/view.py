@@ -158,7 +158,7 @@ class View(GLWidget):
                 'f'                : len(self.block_array_faces_front(block)),
             })
         for interface in self.interfaces:
-            # combine all interface vertices in a single 
+            # combine all interface vertices in a single
             self.buffers["interfaces"].append({
                 'xyz'                   : self.make_vertex_buffer(self.interface_array_xyz(interface)),
                 'interfaces:front'      : self.make_index_buffer(self.interface_array_faces_front(interface)),
@@ -221,6 +221,16 @@ class View(GLWidget):
                 glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, b['interfaces:back'])
                 glDrawElements(GL_TRIANGLES, b['f'], GL_UNSIGNED_INT, None)
 
+        for b in self.buffers['forces']:
+
+            glBindBuffer(GL_ARRAY_BUFFER, b['xyz'])
+            glVertexPointer(3, GL_FLOAT, 0, None)
+
+            glLineWidth(self.settings['forces.width:value'])
+            glBindBuffer(GL_ARRAY_BUFFER, b['forces.color'])
+            glColorPointer(3, GL_FLOAT, 0, None)
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, b['forces'])
+            glDrawElements(GL_LINES, b['f'], GL_UNSIGNED_INT, None)
 
         glDisableClientState(GL_COLOR_ARRAY)
         glDisableClientState(GL_VERTEX_ARRAY)

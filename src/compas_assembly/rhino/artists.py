@@ -186,7 +186,7 @@ class AssemblyArtist(NetworkArtist):
                 'name'   : "{}.interface.{}-{}".format(self.assembly.name, u, v),
                 'color'  : colordict[(u, v)]
             })
-        compas_rhino.xdraw_faces(faces, layer=layer, clear=False, redraw=False)
+        compas_rhino.draw_faces(faces, layer=layer, clear=False, redraw=False)
 
     def draw_iframes(self):
         """Draw the frames of the interfaces.
@@ -306,7 +306,7 @@ class AssemblyArtist(NetworkArtist):
                 'arrow' : 'end'
             })
 
-        compas_rhino.xdraw_lines(lines, layer=layer, clear=False, redraw=False)
+        compas_rhino.draw_lines(lines, layer=layer, clear=False, redraw=False)
 
     def draw_frictions(self, scale=None, eps=None, mode=0):
         """Draw the contact frictions at the interfaces.
@@ -401,10 +401,10 @@ class AssemblyArtist(NetworkArtist):
             })
 
         if mode == 0:
-            compas_rhino.xdraw_lines(
+            compas_rhino.draw_lines(
                 lines, layer=layer, clear=False, redraw=False)
         else:
-            compas_rhino.xdraw_lines(
+            compas_rhino.draw_lines(
                 resultant_lines, layer=layer, clear=False, redraw=False)
 
     def draw_forces(self, scale=None, eps=None, mode=0):
@@ -500,9 +500,9 @@ class AssemblyArtist(NetworkArtist):
             # })
 
         # if mode == 0:
-        compas_rhino.xdraw_lines(lines, layer=layer, clear=False, redraw=False)
+        compas_rhino.draw_lines(lines, layer=layer, clear=False, redraw=False)
         # else:
-        #     compas_rhino.xdraw_lines(
+        #     compas_rhino.draw_lines(
         #         resultant_lines, layer=layer, clear=False, redraw=False)
 
     def color_interfaces(self, mode=0):

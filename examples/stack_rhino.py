@@ -15,6 +15,7 @@ assembly.draw({
     'layer': 'Assembly',
     'show.vertices': True,
     'show.interfaces': True,
+    'show.edges': True,
     'show.forces': True,
     'show.forces_as_vectors': False,
     'mode.interface': 0,
