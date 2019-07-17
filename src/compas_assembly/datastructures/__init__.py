@@ -47,6 +47,8 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+import compas
+
 from ._assembly import *
 from ._block import *
 
@@ -57,8 +59,13 @@ from .constructors import *
 from .collision import *
 from .courses import *
 from .hull import *
-from .hull_numpy import *
-from .interfaces_numpy import *
+
+if not compas.IPY:
+    from .hull_numpy import *
+
+if not compas.IPY:
+    from .interfaces_numpy import *
+
 from .paths import *
 from .planarization import *
 
