@@ -53,5 +53,5 @@ hull = Mesh.from_vertices_and_faces(vertices, faces)
 
 artist = MeshArtist(hull, layer="Hull")
 artist.clear_layer()
-artist.draw()
+artist.draw_mesh()
 artist.redraw()

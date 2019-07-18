@@ -15,7 +15,7 @@ from __future__ import print_function
 import os
 import compas
 
-from compas_rhino.utilities import XFunc
+from compas.utilities import XFunc
 from compas_assembly.datastructures import Assembly
 
 
