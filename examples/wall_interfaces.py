@@ -7,15 +7,19 @@
 5. Serialise the result
 
 """
-import compas_assembly
+import os
 
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import assembly_interfaces_numpy
 
+HERE = os.path.dirname(__file__)
+DATA = os.path.join(HERE, '../data')
+FILE_I = os.path.join(DATA, 'wall_supported.json')
+FILE_O = os.path.join(DATA, 'wall_interfaces.json')
 
 # load assembly from JSON
 
-assembly = Assembly.from_json(compas_assembly.get('wall_supported.json'))
+assembly = Assembly.from_json(FILE_I)
 
 # identify the interfaces
 
@@ -23,4 +27,4 @@ assembly_interfaces_numpy(assembly, nmax=100, amin=0.0001)
 
 # serialise
 
-assembly.to_json(compas_assembly.get('wall_interfaces.json'))
+assembly.to_json(FILE_O)

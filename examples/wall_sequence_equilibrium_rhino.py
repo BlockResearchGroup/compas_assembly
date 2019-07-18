@@ -18,11 +18,9 @@ import compas
 from compas.utilities import XFunc
 from compas_assembly.datastructures import Assembly
 
-
 # make an XFunc version of the compute interfaces function
 
 compute_interface_forces_xfunc = XFunc('compas_rbe.equilibrium.compute_interface_forces_xfunc')
-
 
 # a convenience wrapper
 
@@ -34,16 +32,15 @@ def compute_interface_forces(assembly, **kwargs):
     for key in assembly.blocks:
         assembly.blocks[key].data = result['blocks'][str(key)]
 
-
 # just so Rhino(Mac) gets the filepaths right
 
 HERE = os.path.dirname(__file__)
 DATA = os.path.join(HERE, '../data')
-PATH = os.path.join(DATA, 'wall_courses.json')
+FILE = os.path.join(DATA, 'wall_courses.json')
 
 # load an assembly from a JSON file
 
-assembly = Assembly.from_json(PATH)
+assembly = Assembly.from_json(FILE)
 
 # define a sequence of buildable blocks
 

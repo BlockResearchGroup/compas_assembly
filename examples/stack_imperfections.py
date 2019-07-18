@@ -6,11 +6,10 @@
 4. Visualise
 
 """
+import os
 from math import radians
 from math import pi
 from random import choice
-
-import compas_assembly
 
 from compas.datastructures import mesh_transform
 from compas.geometry import Rotation
@@ -22,6 +21,10 @@ from compas_assembly.datastructures import assembly_transform
 
 from compas_assembly.plotter import AssemblyPlotter
 
+HERE = os.path.dirname(__file__)
+DATA = os.path.join(HERE, '../data')
+FILE_I = os.path.join(DATA, 'stack.json')
+FILE_O = os.path.join(DATA, 'stack.json')
 
 # possible imperfection
 
@@ -30,7 +33,7 @@ ANGLES = [radians(1), radians(-1), radians(2), radians(-2)]
 
 # load an assembly
 
-assembly = Assembly.from_json(compas_assembly.get('stack.json'))
+assembly = Assembly.from_json(FILE_I)
 
 # shift and rotate in random directions
 # use small increments ("imperfections")
@@ -45,7 +48,7 @@ for key in assembly.vertices():
 
 # serialise
 
-assembly.to_json(compas_assembly.get('assembly.json'))
+assembly.to_json(FILE_O)
 
 # visualise
 

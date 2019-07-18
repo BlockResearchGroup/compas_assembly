@@ -6,9 +6,8 @@
 4. Visualise
 
 """
+import os
 from math import pi
-
-import compas_assembly
 
 from compas.geometry import Rotation
 
@@ -18,18 +17,22 @@ from compas_assembly.datastructures import assembly_interfaces_numpy
 
 from compas_assembly.plotter import AssemblyPlotter
 
+HERE = os.path.dirname(__file__)
+DATA = os.path.join(HERE, '../data')
+FILE_I = os.path.join(DATA, 'stack.json')
+FILE_O = os.path.join(DATA, 'stack.json')
 
 # load assembly
 
-assembly = Assembly.from_json(compas_assembly.get('stack.json'))
+assembly = Assembly.from_json(FILE_I)
 
 # identify_interfaces
 
-assembly_interfaces_numpy(assembly)
+assembly_interfaces_numpy(assembly, tmax=0.01)
 
 # export to json
 
-assembly.to_json(compas_assembly.get('stack.json'))
+assembly.to_json(FILE_O)
 
 # visualise
 

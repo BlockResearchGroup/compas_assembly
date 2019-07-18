@@ -1,17 +1,17 @@
+import os
 from math import pi
 
-import compas_assembly
-
 from compas.utilities import i_to_red
-
 from compas.geometry import Rotation
-
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import assembly_transform
 from compas_assembly.plotter import AssemblyPlotter
 
+HERE = os.path.dirname(__file__)
+DATA = os.path.join(HERE, '../data')
+FILE = os.path.join(DATA, 'wall_courses.json')
 
-assembly = Assembly.from_json(compas_assembly.get('wall_courses.json'))
+assembly = Assembly.from_json(FILE)
 
 # visualise
 

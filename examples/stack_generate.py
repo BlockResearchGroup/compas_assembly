@@ -8,10 +8,9 @@
 7. Visualise the result
 
 """
+import os
 from math import pi
 from random import choice
-
-import compas_assembly
 
 from compas.geometry import Box
 from compas.geometry import Translation
@@ -27,6 +26,9 @@ from compas_assembly.datastructures import assembly_transform
 
 from compas_assembly.plotter import AssemblyPlotter
 
+HERE = os.path.dirname(__file__)
+DATA = os.path.join(HERE, '../data')
+FILE = os.path.join(DATA, 'stack.json')
 
 # helper function
 
@@ -35,7 +37,6 @@ def shift(block, z):
     axis = choice([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
     vector = add_vectors(scale_vector(axis, factor), [0.0, 0.0, z])
     mesh_transform(block, Translation(vector))
-
 
 # number of blocks
 
@@ -72,7 +73,7 @@ for i in range(N):
 
 # export to json
 
-assembly.to_json(compas_assembly.get('stack.json'))
+assembly.to_json(FILE)
 
 # visualise
 

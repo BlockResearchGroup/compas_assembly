@@ -16,7 +16,7 @@ gap : float
     The horizontal gap between the bricks.
 
 """
-import compas_assembly
+import os
 
 from compas.geometry import Box
 from compas.geometry import Translation
@@ -26,6 +26,10 @@ from compas.datastructures import mesh_transform
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import Block
 
+HERE = os.path.dirname(__file__)
+DATA = os.path.join(HERE, '../data')
+FILE_I = os.path.join(DATA, 'wall.json')
+FILE_O = os.path.join(DATA, 'wall.json')
 
 # number of bricks in even courses
 
@@ -93,4 +97,4 @@ for i in range(number_of_courses):
 
 # export to json
 
-assembly.to_json(compas_assembly.get('wall.json'))
+assembly.to_json(FILE_O)
