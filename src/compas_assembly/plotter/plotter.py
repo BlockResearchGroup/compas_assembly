@@ -2,9 +2,9 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-from compas.plotters import Plotter
-from compas.plotters import NetworkPlotter
-from compas.plotters import MeshPlotter
+from compas_plotters import Plotter
+from compas_plotters import NetworkPlotter
+from compas_plotters import MeshPlotter
 
 from compas.utilities import valuedict
 from compas.utilities import color_to_rgb
