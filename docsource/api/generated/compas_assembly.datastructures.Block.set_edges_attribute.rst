@@ -1,8 +1,0 @@
-.. rst-class:: detail
-
-Block.set_edges_attribute
-========================================================
-
-.. currentmodule:: compas_assembly.datastructures
-
-.. automethod:: Block.set_edges_attribute
