@@ -20,7 +20,8 @@ try:
 except ImportError:
     compas.raise_if_not_ironpython()
 
-from compas.geometry import global_coords_numpy
+from compas.geometry import Frame
+from compas.geometry import local_to_world_coords_numpy
 # from compas.geometry import project_points_plane
 # from compas.geometry import centroid_points
 
@@ -182,7 +183,8 @@ def assembly_interfaces_numpy(assembly,
 
                             if area >= amin:
                                 coords = [[x, y, 0.0] for x, y, z in intersection.exterior.coords]
-                                coords = global_coords_numpy(o, A, coords)
+                                # coords = global_coords_numpy(o, A, coords)
+                                coords = local_to_world_coords_numpy(Frame(o, A[0], A[1]), coords)
 
                                 attr = {
                                     'interface_type': 'face_face',
