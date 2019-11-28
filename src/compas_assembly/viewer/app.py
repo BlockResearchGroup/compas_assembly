@@ -2,7 +2,7 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-from compas.viewers.core import App
+from compas_viewers.core import App
 
 from compas_assembly.viewer.view import View
 from compas_assembly.viewer.controller import Controller
@@ -45,4 +45,14 @@ class AssemblyViewer(App):
 
 if __name__ == '__main__':
 
-    pass
+    from compas_assembly.datastructures import Assembly
+    import compas_assembly
+    import os
+
+    assembly = Assembly.from_json(os.path.join(compas_assembly.DATA, 'stack.json'))
+
+    viewer = AssemblyViewer()
+
+    viewer.assembly = assembly
+    viewer.show()
+
