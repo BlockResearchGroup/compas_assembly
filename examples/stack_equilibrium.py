@@ -5,14 +5,12 @@
 3. Serialise the result.
 
 """
-import os
+import compas_assembly
 
 from compas_assembly.datastructures import Assembly
 from compas_rbe.equilibrium import compute_interface_forces_cvx
 
-HERE = os.path.dirname(__file__)
-DATA = os.path.join(HERE, '../data')
-FILE = os.path.join(DATA, 'stack.json')
+FILE = compas_assembly.get('stack.json')
 
 # load assembly
 

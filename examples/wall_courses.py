@@ -9,15 +9,13 @@ Notes
 This will only work as expected on *wall* assemblies that are properly supported.
 
 """
-import os
+import compas_assembly
 
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import assembly_courses
 
-HERE = os.path.dirname(__file__)
-DATA = os.path.join(HERE, '../data')
-FILE_I = os.path.join(DATA, 'wall_interfaces.json')
-FILE_O = os.path.join(DATA, 'wall_courses.json')
+FILE_I = compas_assembly.get('wall_interfaces.json')
+FILE_O = compas_assembly.get('wall_courses.json')
 
 # load an assembly
 

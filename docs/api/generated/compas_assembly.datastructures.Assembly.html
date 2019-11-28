@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>compas_assembly</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <meta name="author" content="" />
+    <meta name="description" content="" />
+
+    <link rel="shortcut icon" href="../../_static/images/compas.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/styles/default.min.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../../_static/css/prism.css" /> -->
+    <link rel="stylesheet" type="text/css" href="../../_static/css/compas.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
+
+    
+        <link rel="next" title="Assembly.__init__" href="compas_assembly.datastructures.Assembly.__init__.html" />
+    
+    
+    
+        <link rel="prev" title="compas_assembly.datastructures" href="../compas_assembly.datastructures.html" />
+    
+
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+</head>
+
+<body data-spy="scroll" data-target="#compas-localnav">
+
+    <nav class="navbar navbar-expand compas-navbar">
+        <a class="navbar-brand" href="/">
+            <img src="../../_static/images/compas_icon_white.png" width="36px" height="36px" alt="compas" />
+        </a>
+
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="../../index.html">COMPAS Assembly</a></li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" target="_blank" href="">Github</a></li>
+            <li class="nav-item"><a class="nav-link" target="_blank" href="https://compas-dev.github.io">COMPAS framework</a></li>
+        </ul>
+    </nav>    
+
+    <div class="container-fluid">
+        <div class="row flex-xl-nowrap">
+
+            <main class="col-12 col-md-9 col-xl-8 compas-content" role="main">
+                <div class="container">
+                
+
+                    
+
+                    <div class="detail section" id="assembly">
+<h1>Assembly</h1>
+<dl class="class">
+<dt id="compas_assembly.datastructures.Assembly">
+<em class="property">class </em><code class="sig-prename descclassname">compas_assembly.datastructures.</code><code class="sig-name descname">Assembly</code><span class="sig-paren">(</span><em class="sig-param">blocks=None</em>, <em class="sig-param">attributes=None</em>, <em class="sig-param">default_vertex_attributes=None</em>, <em class="sig-param">default_edge_attributes=None</em><span class="sig-paren">)</span></dt>
+<dd><p>Bases: <a class="reference external" href="https://compas-dev.github.io/main/api/generated/compas.datastructures.Network.html#compas.datastructures.Network" title="(in COMPAS v0.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas.datastructures.Network</span></code></a></p>
+<p>A data structure for discrete element assemblies.</p>
+<p>An assembly is essentially a network of assembly elements.
+Each vertex of the network represents an element of the assembly.
+Each edge of the network represents an interface between two assembly elements.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>blocks</strong> (list of <a class="reference internal" href="compas_assembly.datastructures.Block.html#compas_assembly.datastructures.Block" title="compas_assembly.datastructures.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas_assembly.datastructures.Block</span></code></a>, optional) – A list of assembly blocks.</p></li>
+<li><p><strong>attributes</strong> (<em>dict, optional</em>) – User-defined attributes of the assembly.
+Built-in attributes are:</p>
+<ul>
+<li><p>name (str) : ‘Assembly’</p></li>
+</ul>
+</li>
+<li><p><strong>default_vertex_attributes</strong> (<em>dict, optional</em>) – User-defined default attributes of the vertices of the network.
+Since the vertices of the assembly network represent the individual
+elements, the built-in attributes are:</p>
+<ul>
+<li><p>is_support (bool) : False</p></li>
+</ul>
+</li>
+<li><p><strong>default_edge_attributes</strong> (<em>dict, optional</em>) – User-defined default attributes of the edges of the network.
+Since the edges of the assembly network represent the interfaces between
+the individual elements, the built-in attributes are:</p>
+<ul>
+<li><p>interface_points (list) : None</p></li>
+<li><p>interface_type ({‘face_face’, ‘face_edge’, ‘face_vertex’}) : None</p></li>
+<li><p>interface_size (float) : None</p></li>
+<li><p>interface_uvw (list) : None</p></li>
+<li><p>interface_origin (list) : None</p></li>
+<li><p>interface_forces (list) : None</p></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
+<span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Block</span>
+
+<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">block</span> <span class="o">=</span> <span class="n">Block</span><span class="o">.</span><span class="n">from_polyhedron</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+    <span class="n">assembly</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">assembly</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</code></pre></div>
+</div>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.__init__.html#compas_assembly.datastructures.Assembly.__init__" title="compas_assembly.datastructures.Assembly.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([blocks, attributes, …])</p></td>
+<td><p>Initialize self.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.add_block.html#compas_assembly.datastructures.Assembly.add_block" title="compas_assembly.datastructures.Assembly.add_block"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_block</span></code></a>(block[, key, attr_dict])</p></td>
+<td><p>Add a block to the assembly.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.add_blocks_from_polysurfaces.html#compas_assembly.datastructures.Assembly.add_blocks_from_polysurfaces" title="compas_assembly.datastructures.Assembly.add_blocks_from_polysurfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_blocks_from_polysurfaces</span></code></a>(guids)</p></td>
+<td><p>Add multiple blocks from their representation as Rhino poly surfaces.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.add_blocks_from_rhinomeshes.html#compas_assembly.datastructures.Assembly.add_blocks_from_rhinomeshes" title="compas_assembly.datastructures.Assembly.add_blocks_from_rhinomeshes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_blocks_from_rhinomeshes</span></code></a>(guids)</p></td>
+<td><p>Add multiple blocks from their representation as as Rhino meshes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.copy.html#compas_assembly.datastructures.Assembly.copy" title="compas_assembly.datastructures.Assembly.copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code></a>()</p></td>
+<td><p>Make an independent copy of an assembly.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.draw.html#compas_assembly.datastructures.Assembly.draw" title="compas_assembly.datastructures.Assembly.draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw</span></code></a>([settings])</p></td>
+<td><p>Convenience function for drawing the assembly in Rhino using common visualisation settings.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.from_json.html#compas_assembly.datastructures.Assembly.from_json" title="compas_assembly.datastructures.Assembly.from_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code></a>(filepath)</p></td>
+<td><p>Construct an assembly from the data contained in a JSON file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.number_of_interface_vertices.html#compas_assembly.datastructures.Assembly.number_of_interface_vertices" title="compas_assembly.datastructures.Assembly.number_of_interface_vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">number_of_interface_vertices</span></code></a>()</p></td>
+<td><p>Compute the total number of interface vertices.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.subset.html#compas_assembly.datastructures.Assembly.subset" title="compas_assembly.datastructures.Assembly.subset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subset</span></code></a>(keys)</p></td>
+<td><p>Create an assembly that is a subset of the urrent assembly.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.to_json.html#compas_assembly.datastructures.Assembly.to_json" title="compas_assembly.datastructures.Assembly.to_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code></a>(filepath)</p></td>
+<td><p>Serialise the data dictionary representing an assembly to JSON and store in a file.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Inherited Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.add_edge.html#compas_assembly.datastructures.Assembly.add_edge" title="compas_assembly.datastructures.Assembly.add_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_edge</span></code></a>(u, v[, attr_dict])</p></td>
+<td><p>Add an edge and specify its attributes.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.add_vertex.html#compas_assembly.datastructures.Assembly.add_vertex" title="compas_assembly.datastructures.Assembly.add_vertex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_vertex</span></code></a>([key, attr_dict])</p></td>
+<td><p>Add a vertex and specify its attributes (optional).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.clear.html#compas_assembly.datastructures.Assembly.clear" title="compas_assembly.datastructures.Assembly.clear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear</span></code></a>()</p></td>
+<td><p>Clear all the network data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.clear_edgedict.html#compas_assembly.datastructures.Assembly.clear_edgedict" title="compas_assembly.datastructures.Assembly.clear_edgedict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_edgedict</span></code></a>()</p></td>
+<td><p>Clear only the edges.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.clear_halfedgedict.html#compas_assembly.datastructures.Assembly.clear_halfedgedict" title="compas_assembly.datastructures.Assembly.clear_halfedgedict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_halfedgedict</span></code></a>()</p></td>
+<td><p>Clear only the half-edges.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.clear_vertexdict.html#compas_assembly.datastructures.Assembly.clear_vertexdict" title="compas_assembly.datastructures.Assembly.clear_vertexdict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_vertexdict</span></code></a>()</p></td>
+<td><p>Clear only the vertices.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.delete_edge.html#compas_assembly.datastructures.Assembly.delete_edge" title="compas_assembly.datastructures.Assembly.delete_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_edge</span></code></a>(u, v)</p></td>
+<td><p>Delete an edge from the network.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.delete_vertex.html#compas_assembly.datastructures.Assembly.delete_vertex" title="compas_assembly.datastructures.Assembly.delete_vertex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_vertex</span></code></a>(key)</p></td>
+<td><p>Delete a vertex from the network.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.dump.html#compas_assembly.datastructures.Assembly.dump" title="compas_assembly.datastructures.Assembly.dump"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dump</span></code></a>(filepath)</p></td>
+<td><p>Dump the data representing the network to a file using Python’s built-in object serialisation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.dumps.html#compas_assembly.datastructures.Assembly.dumps" title="compas_assembly.datastructures.Assembly.dumps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dumps</span></code></a>()</p></td>
+<td><p>Dump the data representing the network to a string using Python’s built-in object serialisation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.edge_connected_edges.html#compas_assembly.datastructures.Assembly.edge_connected_edges" title="compas_assembly.datastructures.Assembly.edge_connected_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edge_connected_edges</span></code></a>(u, v)</p></td>
+<td><p>Return the edges connected to an edge.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.edge_coordinates.html#compas_assembly.datastructures.Assembly.edge_coordinates" title="compas_assembly.datastructures.Assembly.edge_coordinates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edge_coordinates</span></code></a>(u, v[, axes])</p></td>
+<td><p>Return the coordinates of the start and end point of an edge.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.edge_direction.html#compas_assembly.datastructures.Assembly.edge_direction" title="compas_assembly.datastructures.Assembly.edge_direction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edge_direction</span></code></a>(u, v)</p></td>
+<td><p>Return the direction vector of an edge.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.edge_label_name.html#compas_assembly.datastructures.Assembly.edge_label_name" title="compas_assembly.datastructures.Assembly.edge_label_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edge_label_name</span></code></a>(u, v)</p></td>
+<td><p>Get the name of an edge label.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.edge_length.html#compas_assembly.datastructures.Assembly.edge_length" title="compas_assembly.datastructures.Assembly.edge_length"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edge_length</span></code></a>(u, v)</p></td>
+<td><p>Return the length of an edge.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.edge_midpoint.html#compas_assembly.datastructures.Assembly.edge_midpoint" title="compas_assembly.datastructures.Assembly.edge_midpoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edge_midpoint</span></code></a>(u, v)</p></td>
+<td><p>Return the location of the midpoint of an edge.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.edge_name.html#compas_assembly.datastructures.Assembly.edge_name" title="compas_assembly.datastructures.Assembly.edge_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edge_name</span></code></a>(u, v)</p></td>
+<td><p>Get the name of an edge.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.edge_point.html#compas_assembly.datastructures.Assembly.edge_point" title="compas_assembly.datastructures.Assembly.edge_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edge_point</span></code></a>(u, v[, t])</p></td>
+<td><p>Return the location of a point along an edge.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.edge_vector.html#compas_assembly.datastructures.Assembly.edge_vector" title="compas_assembly.datastructures.Assembly.edge_vector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edge_vector</span></code></a>(u, v)</p></td>
+<td><p>Return the vector of an edge.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.edges.html#compas_assembly.datastructures.Assembly.edges" title="compas_assembly.datastructures.Assembly.edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edges</span></code></a>([data])</p></td>
+<td><p>Iterate over the edges of the network.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.edges_where.html#compas_assembly.datastructures.Assembly.edges_where" title="compas_assembly.datastructures.Assembly.edges_where"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edges_where</span></code></a>(conditions[, data])</p></td>
+<td><p>Get edges for which a certain condition or set of conditions is true.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.edges_where_predicate.html#compas_assembly.datastructures.Assembly.edges_where_predicate" title="compas_assembly.datastructures.Assembly.edges_where_predicate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edges_where_predicate</span></code></a>(predicate[, data])</p></td>
+<td><p>Get edges for which a certain condition or set of conditions is true using a lambda function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.from_data.html#compas_assembly.datastructures.Assembly.from_data" title="compas_assembly.datastructures.Assembly.from_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_data</span></code></a>(data)</p></td>
+<td><p>Construct a datastructure from structured data.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.from_lines.html#compas_assembly.datastructures.Assembly.from_lines" title="compas_assembly.datastructures.Assembly.from_lines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_lines</span></code></a>(lines[, precision])</p></td>
+<td><p>Construct a network from a set of lines represented by their start and end point coordinates.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.from_obj.html#compas_assembly.datastructures.Assembly.from_obj" title="compas_assembly.datastructures.Assembly.from_obj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_obj</span></code></a>(filepath[, precision])</p></td>
+<td><p>Construct a network from the data contained in an OBJ file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.from_vertices_and_edges.html#compas_assembly.datastructures.Assembly.from_vertices_and_edges" title="compas_assembly.datastructures.Assembly.from_vertices_and_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_vertices_and_edges</span></code></a>(vertices, edges)</p></td>
+<td><p>Construct a network from vertices and edges.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.get_any_edge.html#compas_assembly.datastructures.Assembly.get_any_edge" title="compas_assembly.datastructures.Assembly.get_any_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_any_edge</span></code></a>()</p></td>
+<td><p>Get the identifier of a random edge.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.get_any_vertex.html#compas_assembly.datastructures.Assembly.get_any_vertex" title="compas_assembly.datastructures.Assembly.get_any_vertex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_any_vertex</span></code></a>()</p></td>
+<td><p>Get the identifier of a random vertex.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.get_any_vertices.html#compas_assembly.datastructures.Assembly.get_any_vertices" title="compas_assembly.datastructures.Assembly.get_any_vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_any_vertices</span></code></a>(n[, exclude_leaves])</p></td>
+<td><p>Get a list of identifiers of a random set of n vertices.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.get_edge_attribute.html#compas_assembly.datastructures.Assembly.get_edge_attribute" title="compas_assembly.datastructures.Assembly.get_edge_attribute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_edge_attribute</span></code></a>(key, name[, value])</p></td>
+<td><p>Get the value of a named attribute of one edge.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.get_edge_attributes.html#compas_assembly.datastructures.Assembly.get_edge_attributes" title="compas_assembly.datastructures.Assembly.get_edge_attributes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_edge_attributes</span></code></a>(key, names[, values])</p></td>
+<td><p>Get the value of a named attribute of one edge.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.get_edges_attribute.html#compas_assembly.datastructures.Assembly.get_edges_attribute" title="compas_assembly.datastructures.Assembly.get_edges_attribute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_edges_attribute</span></code></a>(name[, value, keys])</p></td>
+<td><p>Get the value of a named attribute of multiple edges.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.get_edges_attributes.html#compas_assembly.datastructures.Assembly.get_edges_attributes" title="compas_assembly.datastructures.Assembly.get_edges_attributes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_edges_attributes</span></code></a>(names[, values, keys])</p></td>
+<td><p>Get the values of multiple named attribute of multiple edges.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.get_vertex_attribute.html#compas_assembly.datastructures.Assembly.get_vertex_attribute" title="compas_assembly.datastructures.Assembly.get_vertex_attribute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_vertex_attribute</span></code></a>(key, name[, value])</p></td>
+<td><p>Get the value of a named attribute of one vertex.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.get_vertex_attributes.html#compas_assembly.datastructures.Assembly.get_vertex_attributes" title="compas_assembly.datastructures.Assembly.get_vertex_attributes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_vertex_attributes</span></code></a>(key, names[, values])</p></td>
+<td><p>Get the value of a named attribute of one vertex.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.get_vertices_attribute.html#compas_assembly.datastructures.Assembly.get_vertices_attribute" title="compas_assembly.datastructures.Assembly.get_vertices_attribute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_vertices_attribute</span></code></a>(name[, value, keys])</p></td>
+<td><p>Get the value of a named attribute of multiple vertices.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.get_vertices_attributes.html#compas_assembly.datastructures.Assembly.get_vertices_attributes" title="compas_assembly.datastructures.Assembly.get_vertices_attributes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_vertices_attributes</span></code></a>(names[, values, keys])</p></td>
+<td><p>Get the values of multiple named attribute of multiple vertices.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.gkey_key.html#compas_assembly.datastructures.Assembly.gkey_key" title="compas_assembly.datastructures.Assembly.gkey_key"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gkey_key</span></code></a>([precision])</p></td>
+<td><p>Returns a dictionary that maps <em>geometric keys</em> of a certain precision to the keys of the corresponding vertices.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.has_edge.html#compas_assembly.datastructures.Assembly.has_edge" title="compas_assembly.datastructures.Assembly.has_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_edge</span></code></a>(u, v[, directed])</p></td>
+<td><p>Verify if the network contains a specific edge.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.has_vertex.html#compas_assembly.datastructures.Assembly.has_vertex" title="compas_assembly.datastructures.Assembly.has_vertex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_vertex</span></code></a>(key)</p></td>
+<td><p>Verify if a specific vertex is present in the network.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.index_key.html#compas_assembly.datastructures.Assembly.index_key" title="compas_assembly.datastructures.Assembly.index_key"><code class="xref py py-obj docutils literal notranslate"><span class="pre">index_key</span></code></a>()</p></td>
+<td><p>Returns a dictionary that maps the indices of a vertex list to keys in a vertex dictionary.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.index_uv.html#compas_assembly.datastructures.Assembly.index_uv" title="compas_assembly.datastructures.Assembly.index_uv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">index_uv</span></code></a>()</p></td>
+<td><p>Returns a dictionary that maps edges in a list to the corresponding vertex key pairs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.is_vertex_connected.html#compas_assembly.datastructures.Assembly.is_vertex_connected" title="compas_assembly.datastructures.Assembly.is_vertex_connected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_vertex_connected</span></code></a>(key)</p></td>
+<td><p>Verify if a specific vertex is connected.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.is_vertex_leaf.html#compas_assembly.datastructures.Assembly.is_vertex_leaf" title="compas_assembly.datastructures.Assembly.is_vertex_leaf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_vertex_leaf</span></code></a>(key)</p></td>
+<td><p>Verify if a vertex is a leaf.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.key_gkey.html#compas_assembly.datastructures.Assembly.key_gkey" title="compas_assembly.datastructures.Assembly.key_gkey"><code class="xref py py-obj docutils literal notranslate"><span class="pre">key_gkey</span></code></a>([precision])</p></td>
+<td><p>Returns a dictionary that maps vertex dictionary keys to the corresponding <em>geometric key</em> up to a certain precision.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.key_index.html#compas_assembly.datastructures.Assembly.key_index" title="compas_assembly.datastructures.Assembly.key_index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">key_index</span></code></a>()</p></td>
+<td><p>Returns a dictionary that maps vertex dictionary keys to the corresponding index in a vertex list or array.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.leaves.html#compas_assembly.datastructures.Assembly.leaves" title="compas_assembly.datastructures.Assembly.leaves"><code class="xref py py-obj docutils literal notranslate"><span class="pre">leaves</span></code></a>()</p></td>
+<td><p>Return all leaves of the network.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.load.html#compas_assembly.datastructures.Assembly.load" title="compas_assembly.datastructures.Assembly.load"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load</span></code></a>(filepath)</p></td>
+<td><p>Load serialised network data from a pickle file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.loads.html#compas_assembly.datastructures.Assembly.loads" title="compas_assembly.datastructures.Assembly.loads"><code class="xref py py-obj docutils literal notranslate"><span class="pre">loads</span></code></a>(s)</p></td>
+<td><p>Load serialised network data from a pickle string.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.number_of_edges.html#compas_assembly.datastructures.Assembly.number_of_edges" title="compas_assembly.datastructures.Assembly.number_of_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">number_of_edges</span></code></a>()</p></td>
+<td><p>Compute the number of edges of the network.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.number_of_vertices.html#compas_assembly.datastructures.Assembly.number_of_vertices" title="compas_assembly.datastructures.Assembly.number_of_vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">number_of_vertices</span></code></a>()</p></td>
+<td><p>Compute the number of vertices of the network.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.plot.html#compas_assembly.datastructures.Assembly.plot" title="compas_assembly.datastructures.Assembly.plot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot</span></code></a>([vertexcolor, edgecolor, vertexsize, …])</p></td>
+<td><p>Plot a 2D representation of the network.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.set_edge_attribute.html#compas_assembly.datastructures.Assembly.set_edge_attribute" title="compas_assembly.datastructures.Assembly.set_edge_attribute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_edge_attribute</span></code></a>(key, name, value)</p></td>
+<td><p>Set one attribute of one edge.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.set_edge_attributes.html#compas_assembly.datastructures.Assembly.set_edge_attributes" title="compas_assembly.datastructures.Assembly.set_edge_attributes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_edge_attributes</span></code></a>(key, names, values)</p></td>
+<td><p>Set multiple attributes of one edge.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.set_edges_attribute.html#compas_assembly.datastructures.Assembly.set_edges_attribute" title="compas_assembly.datastructures.Assembly.set_edges_attribute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_edges_attribute</span></code></a>(name, value[, keys])</p></td>
+<td><p>Set one attribute of multiple edges.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.set_edges_attributes.html#compas_assembly.datastructures.Assembly.set_edges_attributes" title="compas_assembly.datastructures.Assembly.set_edges_attributes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_edges_attributes</span></code></a>(names, values[, keys])</p></td>
+<td><p>Set multiple attributes of multiple edges.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.set_vertex_attribute.html#compas_assembly.datastructures.Assembly.set_vertex_attribute" title="compas_assembly.datastructures.Assembly.set_vertex_attribute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_vertex_attribute</span></code></a>(key, name, value)</p></td>
+<td><p>Set one attribute of one vertex.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.set_vertex_attributes.html#compas_assembly.datastructures.Assembly.set_vertex_attributes" title="compas_assembly.datastructures.Assembly.set_vertex_attributes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_vertex_attributes</span></code></a>(key, names, values)</p></td>
+<td><p>Set multiple attributes of one vertex.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.set_vertices_attribute.html#compas_assembly.datastructures.Assembly.set_vertices_attribute" title="compas_assembly.datastructures.Assembly.set_vertices_attribute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_vertices_attribute</span></code></a>(name, value[, keys])</p></td>
+<td><p>Set one attribute of multiple vertices.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.set_vertices_attributes.html#compas_assembly.datastructures.Assembly.set_vertices_attributes" title="compas_assembly.datastructures.Assembly.set_vertices_attributes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_vertices_attributes</span></code></a>(names, values[, keys])</p></td>
+<td><p>Set multiple attributes of multiple vertices.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.split_edge.html#compas_assembly.datastructures.Assembly.split_edge" title="compas_assembly.datastructures.Assembly.split_edge"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split_edge</span></code></a>(u, v[, t])</p></td>
+<td><p>Split and edge by inserting a vertex along its length.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.summary.html#compas_assembly.datastructures.Assembly.summary" title="compas_assembly.datastructures.Assembly.summary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">summary</span></code></a>()</p></td>
+<td><p>Print a summary of the mesh.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.to_data.html#compas_assembly.datastructures.Assembly.to_data" title="compas_assembly.datastructures.Assembly.to_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_data</span></code></a>()</p></td>
+<td><p>Returns a dictionary of structured data representing the data structure.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.to_lines.html#compas_assembly.datastructures.Assembly.to_lines" title="compas_assembly.datastructures.Assembly.to_lines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_lines</span></code></a>([axes])</p></td>
+<td><p>Return the lines of the network as pairs of start and end point coordinates.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.to_obj.html#compas_assembly.datastructures.Assembly.to_obj" title="compas_assembly.datastructures.Assembly.to_obj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_obj</span></code></a>()</p></td>
+<td><p>Write the network to an OBJ file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.to_points.html#compas_assembly.datastructures.Assembly.to_points" title="compas_assembly.datastructures.Assembly.to_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_points</span></code></a>([axes])</p></td>
+<td><p>Return the coordinates of the network.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.to_vertices_and_edges.html#compas_assembly.datastructures.Assembly.to_vertices_and_edges" title="compas_assembly.datastructures.Assembly.to_vertices_and_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_vertices_and_edges</span></code></a>()</p></td>
+<td><p>Return the vertices and edges of a network.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.update_default_edge_attributes.html#compas_assembly.datastructures.Assembly.update_default_edge_attributes" title="compas_assembly.datastructures.Assembly.update_default_edge_attributes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_default_edge_attributes</span></code></a>([attr_dict])</p></td>
+<td><p>Update the default edge attributes (this also affects already existing edges).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.update_default_vertex_attributes.html#compas_assembly.datastructures.Assembly.update_default_vertex_attributes" title="compas_assembly.datastructures.Assembly.update_default_vertex_attributes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_default_vertex_attributes</span></code></a>([attr_dict])</p></td>
+<td><p>Update the default vertex attributes (this also affects already existing vertices).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.uv_index.html#compas_assembly.datastructures.Assembly.uv_index" title="compas_assembly.datastructures.Assembly.uv_index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uv_index</span></code></a>()</p></td>
+<td><p>Returns a dictionary that maps edge keys (i.e.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.vertex_connected_edges.html#compas_assembly.datastructures.Assembly.vertex_connected_edges" title="compas_assembly.datastructures.Assembly.vertex_connected_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex_connected_edges</span></code></a>(key)</p></td>
+<td><p>Return the edges connected to a vertex.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.vertex_coordinates.html#compas_assembly.datastructures.Assembly.vertex_coordinates" title="compas_assembly.datastructures.Assembly.vertex_coordinates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex_coordinates</span></code></a>(key[, axes])</p></td>
+<td><p>Return the coordinates of a vertex.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.vertex_degree.html#compas_assembly.datastructures.Assembly.vertex_degree" title="compas_assembly.datastructures.Assembly.vertex_degree"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex_degree</span></code></a>(key)</p></td>
+<td><p>Return the number of neighbors of a vertex.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.vertex_degree_in.html#compas_assembly.datastructures.Assembly.vertex_degree_in" title="compas_assembly.datastructures.Assembly.vertex_degree_in"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex_degree_in</span></code></a>(key)</p></td>
+<td><p>Return the numer of incoming neighbors of a vertex.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.vertex_degree_out.html#compas_assembly.datastructures.Assembly.vertex_degree_out" title="compas_assembly.datastructures.Assembly.vertex_degree_out"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex_degree_out</span></code></a>(key)</p></td>
+<td><p>Return the number of outgoing neighbors of a vertex.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.vertex_label_name.html#compas_assembly.datastructures.Assembly.vertex_label_name" title="compas_assembly.datastructures.Assembly.vertex_label_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex_label_name</span></code></a>(key)</p></td>
+<td><p>Get the name of a vertex label.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.vertex_laplacian.html#compas_assembly.datastructures.Assembly.vertex_laplacian" title="compas_assembly.datastructures.Assembly.vertex_laplacian"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex_laplacian</span></code></a>(key)</p></td>
+<td><p>Return the vector from the vertex to the centroid of its 1-ring neighborhood.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.vertex_max_degree.html#compas_assembly.datastructures.Assembly.vertex_max_degree" title="compas_assembly.datastructures.Assembly.vertex_max_degree"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex_max_degree</span></code></a>()</p></td>
+<td><p>Compute the maximum degree of all vertices.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.vertex_min_degree.html#compas_assembly.datastructures.Assembly.vertex_min_degree" title="compas_assembly.datastructures.Assembly.vertex_min_degree"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex_min_degree</span></code></a>()</p></td>
+<td><p>Compute the minimum degree of all vertices.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.vertex_name.html#compas_assembly.datastructures.Assembly.vertex_name" title="compas_assembly.datastructures.Assembly.vertex_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex_name</span></code></a>(key)</p></td>
+<td><p>Get the name of a vertex.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.vertex_neighborhood.html#compas_assembly.datastructures.Assembly.vertex_neighborhood" title="compas_assembly.datastructures.Assembly.vertex_neighborhood"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex_neighborhood</span></code></a>(key[, ring])</p></td>
+<td><p>Return the vertices in the neighborhood of a vertex.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.vertex_neighborhood_centroid.html#compas_assembly.datastructures.Assembly.vertex_neighborhood_centroid" title="compas_assembly.datastructures.Assembly.vertex_neighborhood_centroid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex_neighborhood_centroid</span></code></a>(key)</p></td>
+<td><p>Compute the centroid of the neighboring vertices.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.vertex_neighbors.html#compas_assembly.datastructures.Assembly.vertex_neighbors" title="compas_assembly.datastructures.Assembly.vertex_neighbors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex_neighbors</span></code></a>(key)</p></td>
+<td><p>Return the neighbors of a vertex.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.vertex_neighbors_in.html#compas_assembly.datastructures.Assembly.vertex_neighbors_in" title="compas_assembly.datastructures.Assembly.vertex_neighbors_in"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex_neighbors_in</span></code></a>(key)</p></td>
+<td><p>Return the incoming neighbors of a vertex.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.vertex_neighbors_out.html#compas_assembly.datastructures.Assembly.vertex_neighbors_out" title="compas_assembly.datastructures.Assembly.vertex_neighbors_out"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertex_neighbors_out</span></code></a>(key)</p></td>
+<td><p>Return the outgoing neighbors of a vertex.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.vertices.html#compas_assembly.datastructures.Assembly.vertices" title="compas_assembly.datastructures.Assembly.vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertices</span></code></a>([data])</p></td>
+<td><p>Iterate over the vertices of the network.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.vertices_where.html#compas_assembly.datastructures.Assembly.vertices_where" title="compas_assembly.datastructures.Assembly.vertices_where"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertices_where</span></code></a>(conditions[, data])</p></td>
+<td><p>Get vertices for which a certain condition or set of conditions is true.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.vertices_where_predicate.html#compas_assembly.datastructures.Assembly.vertices_where_predicate" title="compas_assembly.datastructures.Assembly.vertices_where_predicate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertices_where_predicate</span></code></a>(predicate[, data])</p></td>
+<td><p>Get vertices for which a certain condition or set of conditions is true using a lambda function.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+                    
+                
+                </div>
+            </main>
+
+            <!-- site navigation sidebar -->
+
+            <div class="col-12 col-md-3 col-xl-2 compas-sidebar" role="navigation"> 
+                <div class="navbar-light">
+
+                    <form id="" class="d-flex compas-searchbox" action="../../search.html" method="get">
+                        <input class="form-control" type="text" name="q" placeholder="Search docs" />
+                        <input type="hidden" name="check_keywords" value="yes" />
+                        <input type="hidden" name="area" value="default" />
+
+                        <button class="navbar-toggler d-md-none compas-navigation-toggler" type="button" data-toggle="collapse" data-target="#compas-navigation" aria-controls="compas-navigation" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </form>
+
+                    
+                    
+
+                        <div class="navbar-expand-md">
+                            <div id="compas-navigation" class="collapse navbar-collapse compas-navigation">
+
+                            <ul class="nav flex-column active">
+<li class="nav-item"><a class="nav-link reference internal" href="../../intro.html">Introduction</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../../examples.html">Examples</a></li>
+<li class="nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav active">
+<li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a><ul class="nav active">
+<li class="nav-item active"><a class="nav-link active current reference internal" href="#">Assembly</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.Block.html">Block</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_construct_wall.html">assembly_construct_wall</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_courses.html">assembly_courses</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_interfaces_numpy.html">assembly_interfaces_numpy</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_interfaces_xfunc.html">assembly_interfaces_xfunc</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull.html">assembly_hull</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull_numpy.html">assembly_hull_numpy</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull_xfunc.html">assembly_hull_xfunc</a></li>
+</ul>
+</li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.plotter.html">compas_assembly.plotter</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.utilities.html">compas_assembly.utilities</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.viewer.html">compas_assembly.viewer</a></li>
+</ul>
+</li>
+<li class="nav-item"><a class="nav-link reference internal" href="../../publications.html">Publications</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../../license.html">License</a></li>
+</ul>
+
+
+                            </div>
+                        </div>
+
+                    
+
+                </div>
+            </div>
+
+            <!-- table of contents of main content -->
+            
+            <div class="d-none d-xl-block col-xl-2 compas-toc" role="toc">
+
+                
+
+                <ul class="nav flex-column" id="compas-localnav">
+<li class="nav-item"><a class="nav-link reference internal" href="#">Assembly</a><ul class="nav">
+</ul>
+</li>
+</ul>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="bg-dark pb-5">
+        <div class="container text-center pt-5 pb-5 text-muted">
+            
+                Last updated on Nov 28, 2019.
+            
+
+            
+                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+            
+        </div>
+    </footer>
+
+    
+        <script type="text/javascript">
+            var DOCUMENTATION_OPTIONS = {
+            URL_ROOT          : '',
+            VERSION           : '0.2.1',
+            COLLAPSE_INDEX    : false,
+            FILE_SUFFIX       : '.html',
+            HAS_SOURCE        : 'false',
+            SOURCELINK_SUFFIX : '.txt'
+            };
+        </script>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.0.0/anchor.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/highlight.min.js"></script>
+
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/js/searchtools_.js"></script>
+        <!-- <script src="../../_static/js/prism.js"></script> -->
+
+        <script>
+        $(document).ready(function() {
+        $(".language-default code").addClass("python");
+        $(".language-python code").addClass("python");
+        $(".language-bash code").addClass("bash");
+        $(".language-cpp code").addClass("cpp");
+        $(".language-json code").addClass("json");
+        $(".language-none code").addClass("plaintext");
+
+        hljs.initHighlighting();
+        anchors.add();
+        });
+        </script>
+    
+</body>
+</html>

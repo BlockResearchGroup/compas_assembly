@@ -10,7 +10,6 @@ in Rhino to improve the placement of blocks along the curve;
 for example, without overlaps...
 
 """
-import os
 import compas_assembly
 
 from compas.geometry import Bezier
@@ -24,9 +23,7 @@ from compas.datastructures import mesh_transform
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import Block
 
-HERE = os.path.dirname(__file__)
-DATA = os.path.join(HERE, '../data')
-FILE = os.path.join(DATA, 'curvedwall.json')
+FILE = compas_assembly.get('curvedwall.json')
 
 # number of bricks in base course
 number_of_bricks = 10

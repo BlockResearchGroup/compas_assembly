@@ -7,8 +7,6 @@
 5. Serialise the result
 
 """
-import os
-
 from compas.geometry import bounding_box_xy
 from compas.geometry import Scale
 from compas.geometry import Translation
@@ -18,13 +16,13 @@ from compas.geometry import centroid_points
 
 from compas.datastructures import mesh_transform
 
+import compas_assembly
+
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import Block
 
-HERE = os.path.dirname(__file__)
-DATA = os.path.join(HERE, '../data')
-FILE_I = os.path.join(DATA, 'wall.json')
-FILE_O = os.path.join(DATA, 'wall_supported.json')
+FILE_I = compas_assembly.get('wall.json')
+FILE_O = compas_assembly.get('wall_supported.json')
 
 # load assembly from JSON
 

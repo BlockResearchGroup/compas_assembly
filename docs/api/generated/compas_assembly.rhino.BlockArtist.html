@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>compas_assembly</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <meta name="author" content="" />
+    <meta name="description" content="" />
+
+    <link rel="shortcut icon" href="../../_static/images/compas.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/styles/default.min.css">
+    <!-- <link rel="stylesheet" type="text/css" href="../../_static/css/prism.css" /> -->
+    <link rel="stylesheet" type="text/css" href="../../_static/css/compas.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
+
+    
+        <link rel="next" title="BlockArtist.__init__" href="compas_assembly.rhino.BlockArtist.__init__.html" />
+    
+    
+    
+        <link rel="prev" title="AssemblyHelper.select_vertices" href="compas_assembly.rhino.AssemblyHelper.select_vertices.html" />
+    
+
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+</head>
+
+<body data-spy="scroll" data-target="#compas-localnav">
+
+    <nav class="navbar navbar-expand compas-navbar">
+        <a class="navbar-brand" href="/">
+            <img src="../../_static/images/compas_icon_white.png" width="36px" height="36px" alt="compas" />
+        </a>
+
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="../../index.html">COMPAS Assembly</a></li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" target="_blank" href="">Github</a></li>
+            <li class="nav-item"><a class="nav-link" target="_blank" href="https://compas-dev.github.io">COMPAS framework</a></li>
+        </ul>
+    </nav>    
+
+    <div class="container-fluid">
+        <div class="row flex-xl-nowrap">
+
+            <main class="col-12 col-md-9 col-xl-8 compas-content" role="main">
+                <div class="container">
+                
+
+                    
+
+                    <div class="detail section" id="blockartist">
+<h1>BlockArtist</h1>
+<dl class="class">
+<dt id="compas_assembly.rhino.BlockArtist">
+<em class="property">class </em><code class="sig-prename descclassname">compas_assembly.rhino.</code><code class="sig-name descname">BlockArtist</code><span class="sig-paren">(</span><em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span></dt>
+<dd><p>Bases: <a class="reference external" href="https://compas-dev.github.io/main/api/generated/compas_rhino.artists.MeshArtist.html#compas_rhino.artists.MeshArtist" title="(in COMPAS v0.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas_rhino.artists.MeshArtist</span></code></a></p>
+<p>An artist for painting blocks.</p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.__init__.html#compas_assembly.rhino.BlockArtist.__init__" title="compas_assembly.rhino.BlockArtist.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Initialize self.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Inherited Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.clear.html#compas_assembly.rhino.BlockArtist.clear" title="compas_assembly.rhino.BlockArtist.clear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear</span></code></a>()</p></td>
+<td><p>Clear the vertices, faces and edges of the mesh, without clearing the other elements in the layer.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.clear_edgelabels.html#compas_assembly.rhino.BlockArtist.clear_edgelabels" title="compas_assembly.rhino.BlockArtist.clear_edgelabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_edgelabels</span></code></a>([keys])</p></td>
+<td><p>Clear all edge labels previously drawn by the <code class="docutils literal notranslate"><span class="pre">EdgeArtist</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.clear_edges.html#compas_assembly.rhino.BlockArtist.clear_edges" title="compas_assembly.rhino.BlockArtist.clear_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_edges</span></code></a>([keys])</p></td>
+<td><p>Clear all edges previously drawn by the <code class="docutils literal notranslate"><span class="pre">EdgeArtist</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.clear_facelabels.html#compas_assembly.rhino.BlockArtist.clear_facelabels" title="compas_assembly.rhino.BlockArtist.clear_facelabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_facelabels</span></code></a>([keys])</p></td>
+<td><p>Clear all face labels previously drawn by the <code class="docutils literal notranslate"><span class="pre">FaceArtist</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.clear_facenormals.html#compas_assembly.rhino.BlockArtist.clear_facenormals" title="compas_assembly.rhino.BlockArtist.clear_facenormals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_facenormals</span></code></a>([keys])</p></td>
+<td><p>Clear the normals of all faces previously drawn by the <code class="docutils literal notranslate"><span class="pre">FaceArtist</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.clear_faces.html#compas_assembly.rhino.BlockArtist.clear_faces" title="compas_assembly.rhino.BlockArtist.clear_faces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_faces</span></code></a>([keys])</p></td>
+<td><p>Clear all faces previously drawn by the <code class="docutils literal notranslate"><span class="pre">FaceArtist</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.clear_layer.html#compas_assembly.rhino.BlockArtist.clear_layer" title="compas_assembly.rhino.BlockArtist.clear_layer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_layer</span></code></a>()</p></td>
+<td><p>Clear the main layer of the artist.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.clear_mesh.html#compas_assembly.rhino.BlockArtist.clear_mesh" title="compas_assembly.rhino.BlockArtist.clear_mesh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_mesh</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.clear_normals.html#compas_assembly.rhino.BlockArtist.clear_normals" title="compas_assembly.rhino.BlockArtist.clear_normals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_normals</span></code></a>([keys])</p></td>
+<td><p>Clear all normals previously drawn by the <code class="docutils literal notranslate"><span class="pre">MeshArtist</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.clear_vertexlabels.html#compas_assembly.rhino.BlockArtist.clear_vertexlabels" title="compas_assembly.rhino.BlockArtist.clear_vertexlabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_vertexlabels</span></code></a>([keys])</p></td>
+<td><p>Clear all vertex labels previously drawn by the <code class="docutils literal notranslate"><span class="pre">VertexArtist</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.clear_vertices.html#compas_assembly.rhino.BlockArtist.clear_vertices" title="compas_assembly.rhino.BlockArtist.clear_vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_vertices</span></code></a>([keys])</p></td>
+<td><p>Clear all vertices previously drawn by the <code class="docutils literal notranslate"><span class="pre">VertexArtist</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.draw_circles.html#compas_assembly.rhino.BlockArtist.draw_circles" title="compas_assembly.rhino.BlockArtist.draw_circles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_circles</span></code></a>(circles[, layer, clear_layer, …])</p></td>
+<td><p>Draw a collection of circles.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.draw_edgelabels.html#compas_assembly.rhino.BlockArtist.draw_edgelabels" title="compas_assembly.rhino.BlockArtist.draw_edgelabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_edgelabels</span></code></a>([text, color])</p></td>
+<td><p>Draw labels for a selection of edges.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.draw_edges.html#compas_assembly.rhino.BlockArtist.draw_edges" title="compas_assembly.rhino.BlockArtist.draw_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_edges</span></code></a>([keys, color])</p></td>
+<td><p>Draw a selection of edges.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.draw_facelabels.html#compas_assembly.rhino.BlockArtist.draw_facelabels" title="compas_assembly.rhino.BlockArtist.draw_facelabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_facelabels</span></code></a>([text, color])</p></td>
+<td><p>Draw labels for a selection of faces.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.draw_facenormals.html#compas_assembly.rhino.BlockArtist.draw_facenormals" title="compas_assembly.rhino.BlockArtist.draw_facenormals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_facenormals</span></code></a>([color, scale])</p></td>
+<td><p>Draw the normals of the faces.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.draw_faces.html#compas_assembly.rhino.BlockArtist.draw_faces" title="compas_assembly.rhino.BlockArtist.draw_faces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_faces</span></code></a>([keys, color, join_faces])</p></td>
+<td><p>Draw a selection of faces.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.draw_lines.html#compas_assembly.rhino.BlockArtist.draw_lines" title="compas_assembly.rhino.BlockArtist.draw_lines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_lines</span></code></a>(lines[, layer, clear_layer, redraw])</p></td>
+<td><p>Draw a collection of lines.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.draw_mesh.html#compas_assembly.rhino.BlockArtist.draw_mesh" title="compas_assembly.rhino.BlockArtist.draw_mesh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_mesh</span></code></a>([color, disjoint])</p></td>
+<td><p>Draw the mesh as a consolidated RhinoMesh.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.draw_normals.html#compas_assembly.rhino.BlockArtist.draw_normals" title="compas_assembly.rhino.BlockArtist.draw_normals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_normals</span></code></a>([keys, color, scale])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.draw_points.html#compas_assembly.rhino.BlockArtist.draw_points" title="compas_assembly.rhino.BlockArtist.draw_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_points</span></code></a>(points[, layer, clear_layer, redraw])</p></td>
+<td><p>Draw a collection of points.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.draw_polygons.html#compas_assembly.rhino.BlockArtist.draw_polygons" title="compas_assembly.rhino.BlockArtist.draw_polygons"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_polygons</span></code></a>(polygons[, layer, …])</p></td>
+<td><p>Draw a collection of polygons.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.draw_polylines.html#compas_assembly.rhino.BlockArtist.draw_polylines" title="compas_assembly.rhino.BlockArtist.draw_polylines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_polylines</span></code></a>(polylines[, layer, …])</p></td>
+<td><p>Draw a collection of polygons.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.draw_vertexlabels.html#compas_assembly.rhino.BlockArtist.draw_vertexlabels" title="compas_assembly.rhino.BlockArtist.draw_vertexlabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_vertexlabels</span></code></a>([text, color])</p></td>
+<td><p>Draw labels for a selection vertices.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.draw_vertices.html#compas_assembly.rhino.BlockArtist.draw_vertices" title="compas_assembly.rhino.BlockArtist.draw_vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_vertices</span></code></a>([keys, color])</p></td>
+<td><p>Draw a selection of vertices.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.redraw.html#compas_assembly.rhino.BlockArtist.redraw" title="compas_assembly.rhino.BlockArtist.redraw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">redraw</span></code></a>([timeout])</p></td>
+<td><p>Redraw the Rhino view.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.BlockArtist.save.html#compas_assembly.rhino.BlockArtist.save" title="compas_assembly.rhino.BlockArtist.save"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save</span></code></a>(path[, width, height, scale, …])</p></td>
+<td><p>Save the current screen view.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+                    
+                
+                </div>
+            </main>
+
+            <!-- site navigation sidebar -->
+
+            <div class="col-12 col-md-3 col-xl-2 compas-sidebar" role="navigation"> 
+                <div class="navbar-light">
+
+                    <form id="" class="d-flex compas-searchbox" action="../../search.html" method="get">
+                        <input class="form-control" type="text" name="q" placeholder="Search docs" />
+                        <input type="hidden" name="check_keywords" value="yes" />
+                        <input type="hidden" name="area" value="default" />
+
+                        <button class="navbar-toggler d-md-none compas-navigation-toggler" type="button" data-toggle="collapse" data-target="#compas-navigation" aria-controls="compas-navigation" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </form>
+
+                    
+                    
+
+                        <div class="navbar-expand-md">
+                            <div id="compas-navigation" class="collapse navbar-collapse compas-navigation">
+
+                            <ul class="nav flex-column active">
+<li class="nav-item"><a class="nav-link reference internal" href="../../intro.html">Introduction</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../../examples.html">Examples</a></li>
+<li class="nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav active">
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.plotter.html">compas_assembly.plotter</a></li>
+<li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a><ul class="nav active">
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.rhino.AssemblyArtist.html">AssemblyArtist</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.rhino.AssemblyHelper.html">AssemblyHelper</a></li>
+<li class="nav-item active"><a class="nav-link active current reference internal" href="#">BlockArtist</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.rhino.BlockHelper.html">BlockHelper</a></li>
+</ul>
+</li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.utilities.html">compas_assembly.utilities</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.viewer.html">compas_assembly.viewer</a></li>
+</ul>
+</li>
+<li class="nav-item"><a class="nav-link reference internal" href="../../publications.html">Publications</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../../license.html">License</a></li>
+</ul>
+
+
+                            </div>
+                        </div>
+
+                    
+
+                </div>
+            </div>
+
+            <!-- table of contents of main content -->
+            
+            <div class="d-none d-xl-block col-xl-2 compas-toc" role="toc">
+
+                
+
+                <ul class="nav flex-column" id="compas-localnav">
+<li class="nav-item"><a class="nav-link reference internal" href="#">BlockArtist</a><ul class="nav">
+</ul>
+</li>
+</ul>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="bg-dark pb-5">
+        <div class="container text-center pt-5 pb-5 text-muted">
+            
+                Last updated on Nov 28, 2019.
+            
+
+            
+                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+            
+        </div>
+    </footer>
+
+    
+        <script type="text/javascript">
+            var DOCUMENTATION_OPTIONS = {
+            URL_ROOT          : '',
+            VERSION           : '0.2.1',
+            COLLAPSE_INDEX    : false,
+            FILE_SUFFIX       : '.html',
+            HAS_SOURCE        : 'false',
+            SOURCELINK_SUFFIX : '.txt'
+            };
+        </script>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.0.0/anchor.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/highlight.min.js"></script>
+
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/js/searchtools_.js"></script>
+        <!-- <script src="../../_static/js/prism.js"></script> -->
+
+        <script>
+        $(document).ready(function() {
+        $(".language-default code").addClass("python");
+        $(".language-python code").addClass("python");
+        $(".language-bash code").addClass("bash");
+        $(".language-cpp code").addClass("cpp");
+        $(".language-json code").addClass("json");
+        $(".language-none code").addClass("plaintext");
+
+        hljs.initHighlighting();
+        anchors.add();
+        });
+        </script>
+    
+</body>
+</html>

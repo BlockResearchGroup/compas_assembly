@@ -1,15 +1,14 @@
-import os
 from math import pi
 
 from compas.geometry import Rotation
+
+import compas_assembly
 
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import assembly_transform
 from compas_assembly.plotter import AssemblyPlotter
 
-HERE = os.path.dirname(__file__)
-DATA = os.path.join(HERE, '../data')
-FILE = os.path.join(DATA, 'wall_interfaces.json')
+FILE = compas_assembly.get('wall_interfaces.json')
 
 assembly = Assembly.from_json(FILE)
 

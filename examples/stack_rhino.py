@@ -2,15 +2,13 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import os
+import compas_assembly
 
 from compas_assembly.datastructures import Assembly
 
-HERE = os.path.dirname(__file__)
-DATA = os.path.join(HERE, '../data')
-PATH = os.path.join(DATA, 'stack.json')
+FILE = compas_assembly.get('stack.json')
 
-assembly = Assembly.from_json(PATH)
+assembly = Assembly.from_json(FILE)
 assembly.draw({
     'layer': 'Assembly',
     'show.vertices': True,
