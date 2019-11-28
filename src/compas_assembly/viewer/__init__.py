@@ -100,6 +100,7 @@ CONFIG = {
                     'text' : None,
                     'items': [
                         {
+                            'name'   : '',
                             'type'   : 'slider',
                             'text'   : 'size vertices',
                             'value'  : Controller.settings['vertices.size:value'],
@@ -111,6 +112,7 @@ CONFIG = {
                             'edit'   : 'edit_size_vertices',
                         },
                         {
+                            'name': '',
                             'type'   : 'slider',
                             'text'   : 'width edges',
                             'value'  : Controller.settings['edges.width:value'],

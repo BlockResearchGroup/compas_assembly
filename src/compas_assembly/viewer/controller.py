@@ -1,19 +1,10 @@
-from __future__ import print_function
-from __future__ import absolute_import
-from __future__ import division
+import os
 
 from functools import partial
 
-try:
-    import PySide2
-except ImportError:
-    from PySide import QtCore
-    from PySide import QtGui
-    import PySide.QtGui as QtWidgets
-else:
-    from PySide2 import QtCore
-    from PySide2 import QtGui
-    from PySide2 import QtWidgets
+from PySide2 import QtCore
+from PySide2 import QtGui
+from PySide2 import QtWidgets
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
@@ -35,7 +26,6 @@ from compas_assembly.viewer.model import InterfaceView
 
 
 __all__ = ['Controller']
-
 
 hex_to_rgb = partial(hex_to_rgb, normalize=True)
 
@@ -72,9 +62,9 @@ class Controller(core.controller.Controller):
     settings['faces.on'] = False
     settings['interfaces.on'] = True
 
-    # settings['vertices.labels.on'] = False
-    # settings['edges.labels.on'] = False
-    # settings['faces.labels.on'] = False
+    settings['vertices.labels.on'] = False
+    settings['edges.labels.on'] = False
+    settings['faces.labels.on'] = False
 
     settings['camera.elevation:value'] = -10
     settings['camera.elevation:minval'] = -180
