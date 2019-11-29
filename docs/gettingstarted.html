@@ -58,63 +58,45 @@
 
                     <div class="section" id="getting-started">
 <h1>Getting Started</h1>
-<div class="section" id="requirements">
-<h2>Requirements</h2>
-<ul class="simple">
-<li><p><a class="reference external" href="https://www.anaconda.com/download">Anaconda</a></p></li>
-<li><p><a class="reference external" href="https://git-scm.com/downloads">Git</a></p></li>
-</ul>
-</div>
-<div class="section" id="installation">
-<h2>Installation</h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If you intend to install <code class="docutils literal notranslate"><span class="pre">compas_assembly</span></code> in a virtual environment,
-make sure to activate the environment first.</p>
+which you should, make sure to activate the environment first.</p>
 </div>
 <div class="section" id="install-dependencies">
-<h3>1. Install dependencies</h3>
-<p><strong>On Mac</strong></p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ pip install shapely
+<h2>Install dependencies</h2>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>conda install -c conda-forge COMPAS
+conda install -c conda-forge shapely
+conda install -c conda-forge PySide2
+conda install -c conda-forge PyOpenGL
 </code></pre></div>
 </div>
-<p><strong>On Windows</strong></p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ conda install -c conda-forge shapely
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>pip install git+https://github.com/compas-dev/compas_viewers.git#egg<span class="o">=</span>compas_viewers
 </code></pre></div>
 </div>
 </div>
 <div class="section" id="install-the-package">
-<h3>2. Install the package</h3>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This will also install COMPAS and its dependencies, if necessary.</p>
-</div>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ pip install git+https://github.com/BlockResearchGroup/compas_assembly.git
+<h2>Install the package</h2>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>pip install git+https://github.com/BlockResearchGroup/compas_assembly.git#egg<span class="o">=</span>compas_assembly
 </code></pre></div>
 </div>
 </div>
 <div class="section" id="check-installation">
-<h3>3. Check installation</h3>
-<p>Start an interactive Python session in the Terminal.</p>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>&gt;&gt;&gt; import compas
-&gt;&gt;&gt; import compas_assembly
+<h2>Check installation</h2>
+<p>Start an interactive Python interpreter on the commad line and import the packages.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">shapely</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">PySide2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">PyOpenGL</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas_viewers</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas_assembly</span>
 </code></pre></div>
 </div>
 </div>
 <div class="section" id="install-package-for-rhino">
-<h3>4. Install package for Rhino</h3>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>$ python -m compas_rhino.install -p compas_assembly
+<h2>Install package for Rhino</h2>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">compas_rhino</span><span class="o">.</span><span class="n">install</span> <span class="o">-</span><span class="n">p</span> <span class="n">compas</span> <span class="n">compas_rhino</span> <span class="n">compas_assembly</span>
 </code></pre></div>
-</div>
-</div>
-<div class="section" id="install-solvers">
-<h3>5. Install solvers</h3>
-<p>To evaluate the stability of an assembly or to compute the contact forces at the
-interfaces between the blocks required for static equilibrium, you will need to
-install an equilibrium solver.</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/BlockResearchGroup/compas_rbe">https://github.com/BlockResearchGroup/compas_rbe</a></p></li>
-</ul>
 </div>
 </div>
 </div>
@@ -171,15 +153,10 @@ install an equilibrium solver.</p>
 
                 <ul class="nav flex-column" id="compas-localnav">
 <li class="nav-item"><a class="nav-link reference internal" href="#">Getting Started</a><ul class="nav">
-<li class="nav-item"><a class="nav-link reference internal" href="#requirements">Requirements</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#installation">Installation</a><ul class="nav">
-<li class="nav-item"><a class="nav-link reference internal" href="#install-dependencies">1. Install dependencies</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#install-the-package">2. Install the package</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#check-installation">3. Check installation</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#install-package-for-rhino">4. Install package for Rhino</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#install-solvers">5. Install solvers</a></li>
-</ul>
-</li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-dependencies">Install dependencies</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-the-package">Install the package</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#check-installation">Check installation</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-package-for-rhino">Install package for Rhino</a></li>
 </ul>
 </li>
 </ul>
