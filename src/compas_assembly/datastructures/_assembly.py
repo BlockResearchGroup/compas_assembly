@@ -97,7 +97,7 @@ class Assembly(Network):
         self.default_edge_attributes.update({
             'interface_points': None,
             'interface_type': None,
-            'niterface_size': None,
+            'interface_size': None,
             'interface_uvw': None,
             'interface_origin': None,
             'interface_forces': None,
