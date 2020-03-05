@@ -33,10 +33,7 @@ class AssemblyArtist(NetworkArtist):
 
     Examples
     --------
-    .. code-block:: python
-
-        pass
-
+    >>>
     """
 
     def __init__(self, assembly, layer=None):
@@ -125,7 +122,7 @@ class AssemblyArtist(NetworkArtist):
             pass
 
         """
-        keys = keys or list(self.assembly.vertices())
+        keys = keys or list(self.assembly.nodes())
         layer = "{}::Blocks".format(self.layer) if self.layer else None
         artist = BlockArtist(None, layer=layer)
         for key in keys:

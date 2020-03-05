@@ -9,13 +9,17 @@ Notes
 This will only work as expected on *wall* assemblies that are properly supported.
 
 """
-import compas_assembly
+import os
 
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import assembly_courses
 
-FILE_I = compas_assembly.get('wall_interfaces.json')
-FILE_O = compas_assembly.get('wall_courses.json')
+
+HERE = os.path.dirname(__file__)
+DATA = os.path.join(HERE, '../../data')
+FILE_I = os.path.join(DATA, 'wall_interfaces.json')
+FILE_O = os.path.join(DATA, 'wall_courses.json')
+
 
 # load an assembly
 
@@ -23,7 +27,7 @@ assembly = Assembly.from_json(FILE_I)
 
 # check if the assembly has supports
 
-supports = list(assembly.vertices_where({'is_support': True}))
+supports = list(assembly.nodes_where({'is_support': True}))
 
 if not supports:
     raise Exception("The assembly has no supports.")
@@ -35,7 +39,7 @@ courses = assembly_courses(assembly)
 # assign course id's to the corresponding blocks
 
 for i, course in enumerate(courses):
-    assembly.set_vertices_attribute('course', i, keys=course)
+    assembly.nodes_attribute('course', i, keys=course)
 
 # serialise the result
 

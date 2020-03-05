@@ -95,10 +95,7 @@ class AssemblyArtist(NetworkArtist):
 
         Examples
         --------
-        .. code-block:: python
-
-            pass
-
+        >>>
         """
         keys = keys or list(self.assembly.vertices())
         artist = BlockArtist(None)

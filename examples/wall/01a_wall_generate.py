@@ -20,16 +20,15 @@ import os
 
 from compas.geometry import Box
 from compas.geometry import Translation
-
 from compas.datastructures import mesh_transform
-
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import Block
 
+
 HERE = os.path.dirname(__file__)
-DATA = os.path.join(HERE, '../data')
-FILE_I = os.path.join(DATA, 'wall.json')
-FILE_O = os.path.join(DATA, 'wall.json')
+DATA = os.path.join(HERE, '../../data')
+FILE = os.path.join(DATA, 'wall.json')
+
 
 # number of bricks in even courses
 
@@ -41,13 +40,13 @@ number_of_courses = 7
 
 # brick dimensions
 
-width = 0.240
-height = 0.052
-depth = 0.116
+width = 1.0
+height = 0.25
+depth = 0.5
 
 # horizontal joints
 
-gap = 0.02
+gap = 0.025
 
 # brick geometry
 
@@ -66,15 +65,17 @@ assembly = Assembly()
 # add bricks in a staggered pattern
 
 for i in range(number_of_courses):
-    dy = i * height
+    dy = (0.5 + i) * height
 
     if i % 2 == 0:
         # in the even rows
         # add (number_of_even_bricks) full bricks
 
         for j in range(number_of_even_bricks):
+            dx = 0.5 * width + j * (width + gap)
+            T = Translation([dx, 0, dy])
             block = brick.copy()
-            mesh_transform(block, Translation([j * (width + gap), 0, dy]))
+            block.transform(T)
             assembly.add_block(block)
     else:
         # in the uneven rows
@@ -82,19 +83,25 @@ for i in range(number_of_courses):
         # add (number_of_even_bricks - 1) full bricks
         # add a half brick
 
+        dx = 0.25 * (width - gap)
+        T = Translation([dx, 0, dy])
         block = halfbrick.copy()
-        mesh_transform(block, Translation([0, 0, dy]))
+        block.transform(T)
         assembly.add_block(block)
 
         for j in range(number_of_even_bricks - 1):
+            dx = 0.5 * width + (0.5 + j) * (width + gap)
+            T = Translation([dx, 0, dy])
             block = brick.copy()
-            mesh_transform(block, Translation([(0.5 + j) * (width + gap), 0, dy]))
+            block.transform(T)
             assembly.add_block(block)
 
+        dx = 0.25 * (width - gap) + (0.5 + j + 1) * (width + gap)
+        T = Translation([dx, 0, dy])
         block = halfbrick.copy()
-        mesh_transform(block, Translation([(0.5 + j + 1) * (width + gap), 0, dy]))
+        block.transform(T)
         assembly.add_block(block)
 
 # export to json
 
-assembly.to_json(FILE_O)
+assembly.to_json(FILE)

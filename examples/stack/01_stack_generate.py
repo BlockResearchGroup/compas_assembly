@@ -8,33 +8,34 @@
 7. Visualise the result
 
 """
+import os
 from math import pi
 from random import choice
-
 from compas.geometry import Box
 from compas.geometry import Translation
 from compas.geometry import Rotation
 from compas.geometry import scale_vector
 from compas.geometry import add_vectors
-
 from compas.datastructures import mesh_transform
-
-import compas_assembly
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import Block
 from compas_assembly.datastructures import assembly_transform
-
 from compas_assembly.plotter import AssemblyPlotter
 
-FILE = compas_assembly.get('stack.json')
+
+HERE = os.path.dirname(__file__)
+DATA = os.path.join(HERE, '../../data')
+FILE = os.path.join(DATA, 'stack.json')
 
 
 # helper function
+
 def shift(block, z):
-    factor = choice([+0.01, -0.01, +0.05, -0.05, +0.1, -0.1])
+    scale = choice([+0.01, -0.01, +0.05, -0.05, +0.1, -0.1])
     axis = choice([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
-    vector = add_vectors(scale_vector(axis, factor), [0.0, 0.0, z])
-    mesh_transform(block, Translation(vector))
+    vector = add_vectors(scale_vector(axis, scale), [0.0, 0.0, z])
+    T = Translation(vector)
+    block.transform(T)
 
 
 # number of blocks
@@ -63,7 +64,7 @@ brick = Block.from_vertices_and_faces(box.vertices, box.faces)
 for i in range(N):
     block = brick.copy()
 
-    shift(block, i * H)
+    shift(block, 0.5 * H + i * H)
 
     if i == 0:
         assembly.add_block(block, is_support=True)
@@ -78,8 +79,9 @@ assembly.to_json(FILE)
 
 R = Rotation.from_axis_and_angle([1.0, 0, 0], -pi / 2)
 assembly_transform(assembly, R)
+# change to assembly.transform(R)
 
-plotter = AssemblyPlotter(assembly, figsize=(10, 7), tight=True)
-plotter.draw_vertices(text='key')
-plotter.draw_blocks(facecolor={key: '#ff0000' for key in assembly.vertices_where({'is_support': True})})
+plotter = AssemblyPlotter(assembly, figsize=(5, 8), tight=True)
+plotter.draw_nodes(text='key')
+plotter.draw_blocks(facecolor={key: '#ff0000' for key in assembly.nodes_where({'is_support': True})})
 plotter.show()

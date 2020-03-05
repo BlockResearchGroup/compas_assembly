@@ -7,36 +7,38 @@
 5. Serialise the result
 
 """
+import os
+
 from compas.geometry import bounding_box_xy
 from compas.geometry import Scale
 from compas.geometry import Translation
 from compas.geometry import subtract_vectors
 from compas.geometry import length_vector
 from compas.geometry import centroid_points
-
 from compas.datastructures import mesh_transform
-
-import compas_assembly
-
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import Block
 
-FILE_I = compas_assembly.get('wall.json')
-FILE_O = compas_assembly.get('wall_supported.json')
+
+HERE = os.path.dirname(__file__)
+DATA = os.path.join(HERE, '../../data')
+FILE_I = os.path.join(DATA, 'wall.json')
+FILE_O = os.path.join(DATA, 'wall_supported.json')
+
 
 # load assembly from JSON
 
 assembly = Assembly.from_json(FILE_I)
 
-# list the coordinates of all vertices of all blocks
+# list the coordinates of all nodes of all blocks
 
 points = []
-for key in assembly.vertices():
+for key in assembly.nodes():
     block = assembly.blocks[key]
-    xyz = block.get_vertices_attributes('xyz')
+    xyz = block.vertices_attributes('xyz')
     points.extend(xyz)
 
-# compute the XY bounding box of all listed vertices
+# compute the XY bounding box of all listed nodes
 
 bbox = bounding_box_xy(points)
 

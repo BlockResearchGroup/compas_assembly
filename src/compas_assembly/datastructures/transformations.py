@@ -36,13 +36,13 @@ def assembly_transform(assembly, T):
 
     """
     points = []
-    for key in assembly.vertices():
+    for key in assembly.nodes():
         block = assembly.blocks[key]
-        xyz = block.get_vertices_attributes('xyz')
+        xyz = block.vertices_attributes('xyz')
         points.extend(xyz)
     points = transform_points(points, T)
     k = 0
-    for i, (key, a) in enumerate(assembly.vertices(True)):
+    for i, (key, a) in enumerate(assembly.nodes(True)):
         block = assembly.blocks[key]
         for j, (_, b) in enumerate(block.vertices(True)):
             b['x'] = points[k][0]

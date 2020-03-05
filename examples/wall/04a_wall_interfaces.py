@@ -7,12 +7,17 @@
 5. Serialise the result
 
 """
-import compas_assembly
+import os
+
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import assembly_interfaces_numpy
 
-FILE_I = compas_assembly.get('wall_supported.json')
-FILE_O = compas_assembly.get('wall_interfaces.json')
+
+HERE = os.path.dirname(__file__)
+DATA = os.path.join(HERE, '../../data')
+FILE_I = os.path.join(DATA, 'wall_supported.json')
+FILE_O = os.path.join(DATA, 'wall_interfaces.json')
+
 
 # load assembly from JSON
 

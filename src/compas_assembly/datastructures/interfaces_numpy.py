@@ -1,24 +1,10 @@
-from __future__ import print_function
-from __future__ import absolute_import
-from __future__ import division
-
 from math import fabs
 
-import compas
-
-try:
-    from numpy import array
-    from numpy import float64
-
-    from scipy.linalg import solve
-    from scipy.spatial import cKDTree
-except ImportError:
-    compas.raise_if_not_ironpython()
-
-try:
-    from shapely.geometry import Polygon
-except ImportError:
-    compas.raise_if_not_ironpython()
+from numpy import array
+from numpy import float64
+from scipy.linalg import solve
+from scipy.spatial import cKDTree
+from shapely.geometry import Polygon
 
 from compas.geometry import Frame
 from compas.geometry import local_to_world_coords_numpy
@@ -45,7 +31,7 @@ def assembly_interfaces_numpy(assembly,
                               lmin=1e-3,
                               face_face=True,
                               face_edge=False,
-                              face_vertex=False):
+                              face_node=False):
     """Identify the interfaces between the blocks of an assembly.
 
     Parameters
@@ -70,8 +56,8 @@ def assembly_interfaces_numpy(assembly,
     face_edge : bool, optional
         Test for "face-edge" interfaces.
         Default is ``False``.
-    face_vertex : bool, optional
-        Test for "face-vertex" interfaces.
+    face_node : bool, optional
+        Test for "face-node" interfaces.
         Default is ``False``.
 
     References
@@ -85,19 +71,12 @@ def assembly_interfaces_numpy(assembly,
         pass
 
     """
-    # replace by something proper
-    assembly.edge = {}
-    assembly.halfedge = {}
-    for key in assembly.vertices():
-        assembly.edge[key] = {}
-        assembly.halfedge[key] = {}
-
     key_index = assembly.key_index()
     index_key = assembly.index_key()
 
-    blocks = [assembly.blocks[key] for key in assembly.vertices()]
+    blocks = [assembly.blocks[key] for key in assembly.nodes()]
     nmax = min(nmax, len(blocks))
-    block_cloud = assembly.get_vertices_attributes('xyz')
+    block_cloud = assembly.nodes_attributes('xyz')
     block_nnbrs = _find_nearest_neighbours(block_cloud, nmax)
 
     # k:      key of the base block
@@ -109,22 +88,22 @@ def assembly_interfaces_numpy(assembly,
     # f0:   key of the current base face
     # A:    uvw base frame of f0
     # o:    origin of the base frame of f0
-    # xyz0: xyz coordinates of the vertices of f0
-    # rst0: local coordinates of the vertices of f0, with respect to the frame of f0
+    # xyz0: xyz coordinates of the nodes of f0
+    # rst0: local coordinates of the nodes of f0, with respect to the frame of f0
     # p0:   2D polygon of f0 in local coordinates
 
     # j:   index of the current neighbour
     # n:   key of the current neighbour
     # nbr: neighbour block
-    # k_i: key index map for the vertices of the nbr block
-    # xyz: xyz coorindates of all vertices of nbr
-    # rst: local coordinates of all vertices of nbr, with respect to the frame of f0
+    # k_i: key index map for the nodes of the nbr block
+    # xyz: xyz coorindates of all nodes of nbr
+    # rst: local coordinates of all nodes of nbr, with respect to the frame of f0
 
     # f1:   key of the current neighbour face
-    # rst1: local coordinates of the vertices of f1, with respect to the frame of f0
+    # rst1: local coordinates of the nodes of f1, with respect to the frame of f0
     # p1:   2D polygon of f1 in local coordinates
 
-    for k in assembly.vertices():
+    for k in assembly.nodes():
 
         i = key_index[k]
 
@@ -160,7 +139,7 @@ def assembly_interfaces_numpy(assembly,
 
                     nbr = assembly.blocks[n]
                     k_i = {key: index for index, key in enumerate(nbr.vertices())}
-                    xyz = array(nbr.get_vertices_attributes('xyz'), dtype=float64).reshape((-1, 3)).T
+                    xyz = array(nbr.vertices_attributes('xyz'), dtype=float64).reshape((-1, 3)).T
                     rst = solve(A.T, xyz - o).T.tolist()
                     rst = {key: rst[k_i[key]] for key in nbr.vertices()}
 
@@ -204,7 +183,7 @@ def assembly_interfaces_numpy(assembly,
 #                                 lmin=1e-3,
 #                                 face_face=True,
 #                                 face_edge=False,
-#                                 face_vertex=False):
+#                                 face_node=False):
 #     """Identify the bestfit planar interfaces between the blocks of an assembly.
 
 #     Parameters
@@ -229,8 +208,8 @@ def assembly_interfaces_numpy(assembly,
 #     face_edge : bool, optional
 #         Test for "face-edge" interfaces.
 #         Default is ``False``.
-#     face_vertex : bool, optional
-#         Test for "face-vertex" interfaces.
+#     face_node : bool, optional
+#         Test for "face-node" interfaces.
 #         Default is ``False``.
 
 #     References
@@ -239,19 +218,15 @@ def assembly_interfaces_numpy(assembly,
 
 #     Examples
 #     --------
-#     .. code-block:: python
-
-#         pass
-
+#     >>>
 #     """
+#     key_index = {key: index for index, key in enumerate(assembly.nodes())}
+#     index_key = {index: key for index, key in enumerate(assembly.nodes())}
 
-#     key_index = {key: index for index, key in enumerate(assembly.vertices())}
-#     index_key = {index: key for index, key in enumerate(assembly.vertices())}
-
-#     blocks = [assembly.blocks[key] for key in assembly.vertices()]
+#     blocks = [assembly.blocks[key] for key in assembly.nodes()]
 #     nmax = min(nmax, len(blocks))
 #     block_cloud = [
-#         assembly.vertex_coordinates(key) for key in assembly.vertices()
+#         assembly.node_coordinates(key) for key in assembly.nodes()
 #     ]
 #     block_nnbrs = _find_nearest_neighbours(block_cloud, nmax)
 
@@ -264,22 +239,22 @@ def assembly_interfaces_numpy(assembly,
 #     # f0:   key of the current base face
 #     # A:    uvw base frame of f0
 #     # o:    origin of the base frame of f0
-#     # xyz0: xyz coordinates of the vertices of f0
-#     # rst0: local coordinates of the vertices of f0, with respect to the frame of f0
+#     # xyz0: xyz coordinates of the nodes of f0
+#     # rst0: local coordinates of the nodes of f0, with respect to the frame of f0
 #     # p0:   2D polygon of f0 in local coordinates
 
 #     # j:   index of the current neighbour
 #     # n:   key of the current neighbour
 #     # nbr: neighbour block
-#     # k_i: key index map for the vertices of the nbr block
-#     # xyz: xyz coorindates of all vertices of nbr
-#     # rst: local coordinates of all vertices of nbr, with respect to the frame of f0
+#     # k_i: key index map for the nodes of the nbr block
+#     # xyz: xyz coorindates of all nodes of nbr
+#     # rst: local coordinates of all nodes of nbr, with respect to the frame of f0
 
 #     # f1:   key of the current neighbour face
-#     # rst1: local coordinates of the vertices of f1, with respect to the frame of f0
+#     # rst1: local coordinates of the nodes of f1, with respect to the frame of f0
 #     # p1:   2D polygon of f1 in local coordinates
 
-#     for k in assembly.vertices():
+#     for k in assembly.nodes():
 
 #         i = key_index[k]
 
@@ -381,7 +356,7 @@ def assembly_interfaces_numpy(assembly,
 #                                lmin=1e-3,
 #                                face_face=True,
 #                                face_edge=False,
-#                                face_vertex=False):
+#                                face_node=False):
 #     """Identify the offset interfaces between the blocks of an assembly.
 
 #     Parameters
@@ -406,8 +381,8 @@ def assembly_interfaces_numpy(assembly,
 #     face_edge : bool, optional
 #         Test for "face-edge" interfaces.
 #         Default is ``False``.
-#     face_vertex : bool, optional
-#         Test for "face-vertex" interfaces.
+#     face_node : bool, optional
+#         Test for "face-node" interfaces.
 #         Default is ``False``.
 
 #     References
@@ -427,18 +402,18 @@ def assembly_interfaces_numpy(assembly,
 #     # replace by something proper
 #     assembly.edge = {}
 #     assembly.halfedge = {}
-#     for key in assembly.vertices():
+#     for key in assembly.nodes():
 #         assembly.edge[key] = {}
 #         assembly.halfedge[key] = {}
 #     # replace
 
-#     key_index = {key: index for index, key in enumerate(assembly.vertices())}
-#     index_key = {index: key for index, key in enumerate(assembly.vertices())}
+#     key_index = {key: index for index, key in enumerate(assembly.nodes())}
+#     index_key = {index: key for index, key in enumerate(assembly.nodes())}
 
-#     blocks = [assembly.blocks[key] for key in assembly.vertices()]
+#     blocks = [assembly.blocks[key] for key in assembly.nodes()]
 #     nmax = min(nmax, len(blocks))
 #     block_cloud = [
-#         assembly.vertex_coordinates(key) for key in assembly.vertices()
+#         assembly.node_coordinates(key) for key in assembly.nodes()
 #     ]
 #     block_nnbrs = _find_nearest_neighbours(block_cloud, nmax)
 
@@ -451,22 +426,22 @@ def assembly_interfaces_numpy(assembly,
 #     # f0:   key of the current base face
 #     # A:    uvw base frame of f0
 #     # o:    origin of the base frame of f0
-#     # xyz0: xyz coordinates of the vertices of f0
-#     # rst0: local coordinates of the vertices of f0, with respect to the frame of f0
+#     # xyz0: xyz coordinates of the nodes of f0
+#     # rst0: local coordinates of the nodes of f0, with respect to the frame of f0
 #     # p0:   2D polygon of f0 in local coordinates
 
 #     # j:   index of the current neighbour
 #     # n:   key of the current neighbour
 #     # nbr: neighbour block
-#     # k_i: key index map for the vertices of the nbr block
-#     # xyz: xyz coorindates of all vertices of nbr
-#     # rst: local coordinates of all vertices of nbr, with respect to the frame of f0
+#     # k_i: key index map for the nodes of the nbr block
+#     # xyz: xyz coorindates of all nodes of nbr
+#     # rst: local coordinates of all nodes of nbr, with respect to the frame of f0
 
 #     # f1:   key of the current neighbour face
-#     # rst1: local coordinates of the vertices of f1, with respect to the frame of f0
+#     # rst1: local coordinates of the nodes of f1, with respect to the frame of f0
 #     # p1:   2D polygon of f1 in local coordinates
 
-#     for k in assembly.vertices():
+#     for k in assembly.nodes():
 
 #         i = key_index[k]
 
@@ -504,17 +479,17 @@ def assembly_interfaces_numpy(assembly,
 #                     nbr = assembly.blocks[n]
 #                     k_i = {
 #                         key: index
-#                         for index, key in enumerate(nbr.vertices())
+#                         for index, key in enumerate(nbr.nodes())
 #                     }
 #                     xyz = array([
-#                         nbr.vertex_coordinates(key) for key in nbr.vertices()
+#                         nbr.node_coordinates(key) for key in nbr.nodes()
 #                     ]).reshape((-1, 3)).T
 #                     rst = solve(A.T, xyz - o).T.tolist()
-#                     rst = {key: rst[k_i[key]] for key in nbr.vertices()}
+#                     rst = {key: rst[k_i[key]] for key in nbr.nodes()}
 
 #                     for f1 in nbr.faces():
 
-#                         rst1 = [rst[key] for key in nbr.face_vertices(f1)]
+#                         rst1 = [rst[key] for key in nbr.face_nodes(f1)]
 
 #                         if any(fabs(t) > tmax for r, s, t in rst1):
 #                             continue

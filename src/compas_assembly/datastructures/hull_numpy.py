@@ -1,7 +1,3 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 from compas.geometry import convex_hull_numpy
 from compas.topology import unify_cycles
 
@@ -34,31 +30,14 @@ def assembly_hull_numpy(assembly, keys=None, unify=True):
 
     Examples
     --------
-    .. code-block:: python
-
-        import compas_assembly
-
-        from compas.datastructures import Mesh
-        from compas.viewers import MeshViewer
-
-        from compas_assembly.datastructures import Assembly
-
-        assembly = Assembly.from_json(compas_assembly.get('assembly.json'))
-
-        vertices, faces = assembly_hull_numpy(assembly)
-        hull = Mesh.from_vertices_and_faces(vertices, faces)
-
-        viewer = MeshViewer()
-        viewer.mesh = hull
-        viewer.show()
-
+    >>>
     """
-    keys = keys or list(assembly.vertices())
+    keys = keys or list(assembly.nodes())
 
     points = []
     for key in keys:
         block = assembly.blocks[key]
-        points.extend(block.get_vertices_attributes('xyz'))
+        points.extend(block.vertices_attributes('xyz'))
 
     vertices, faces = convex_hull_numpy(points)
 

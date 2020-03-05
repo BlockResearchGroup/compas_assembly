@@ -6,13 +6,21 @@ from compas_plotters import Plotter
 from compas_plotters import NetworkPlotter
 from compas_plotters import MeshPlotter
 
-from compas.utilities import valuedict
 from compas.utilities import color_to_rgb
-
 from compas.geometry import bounding_box_xy
 
 
 __all__ = ['AssemblyPlotter']
+
+
+def valuedict(keys, value, default):
+    value = value or default
+    if isinstance(value, dict):
+        valuedict = {key: default for key in keys}
+        valuedict.update(value)
+    else:
+        valuedict = {key: value for key in keys}
+    return valuedict
 
 
 class AssemblyPlotter(Plotter):
@@ -30,15 +38,7 @@ class AssemblyPlotter(Plotter):
 
     Examples
     --------
-    .. code-block:: python
-
-        plotter = AssemblyPlotter(assembly, tight=True, figsize=(12, 8))
-
-        plotter.draw_vertices()
-        plotter.draw_blocks()
-
-        plotter.show()
-
+    >>>
     """
 
     def __init__(self, assembly, **kwargs):
@@ -48,27 +48,17 @@ class AssemblyPlotter(Plotter):
         self.block_plotter = MeshPlotter(None, axes=self.axes)
         self.blockcollection = None
 
-    def draw_vertices(self, *args, **kwargs):
-        """Draw the vertices of an assembly.
+    def draw_nodes(self, *args, **kwargs):
+        """Draw the nodes of an assembly.
 
         Parameters
         ----------
-        keys
-        text
-        radius
-        edgecolor
-        facecolor
-        edgewidth
-        picker
 
         Examples
         --------
-        .. code-block:: python
-
-
-
+        >>>
         """
-        return self.assembly_plotter.draw_vertices(*args, **kwargs)
+        return self.assembly_plotter.draw_nodes(*args, **kwargs)
 
     def draw_edges(self, *args, **kwargs):
         """Draw the edges of an assembly.
@@ -93,7 +83,7 @@ class AssemblyPlotter(Plotter):
         The blocks are drawn as the boundaing boxes of their vertices.
 
         """
-        keys = keys or list(self.assembly.vertices())
+        keys = keys or list(self.assembly.nodes())
 
         facecolordict = valuedict(keys, facecolor, self.block_plotter.defaults['face.facecolor'])
         edgecolordict = valuedict(keys, edgecolor, self.block_plotter.defaults['face.edgecolor'])
@@ -102,9 +92,9 @@ class AssemblyPlotter(Plotter):
         fontsizedict  = valuedict(keys, fontsize,  self.block_plotter.defaults['face.fontsize'])
 
         polygons = []
-        for key, attr in self.assembly.vertices(True):
+        for key, attr in self.assembly.nodes(True):
             block = self.assembly.blocks[key]
-            xyz = block.get_vertices_attributes('xyz')
+            xyz = block.vertices_attributes('xyz')
             box = bounding_box_xy(xyz)
             polygons.append({
                 'points': box,

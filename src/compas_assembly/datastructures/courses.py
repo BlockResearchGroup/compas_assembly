@@ -21,14 +21,11 @@ def assembly_courses(wall):
 
     Examples
     --------
-    .. code-block:: python
-
-        pass
-
+    >>>
     """
     courses = []
-    vertices = set(wall.vertices())
-    base = set(wall.vertices_where({'is_support': True}))
+    vertices = set(wall.nodes())
+    base = set(wall.nodes_where({'is_support': True}))
 
     if base:
         courses.append(list(base))
@@ -39,7 +36,7 @@ def assembly_courses(wall):
         vertices -= base
 
         while vertices:
-            nbrs = set(nbr for key in courses[-1] for nbr in wall.vertex_neighbors(key))
+            nbrs = set(nbr for key in courses[-1] for nbr in wall.neighbors(key))
             course = list(nbrs - seen)
             courses.append(course)
             seen.update(nbrs)

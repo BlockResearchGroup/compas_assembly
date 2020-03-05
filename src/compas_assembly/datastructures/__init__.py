@@ -32,44 +32,30 @@ Functions
     :toctree: generated/
     :nosignatures:
 
-    assembly_construct_wall
-    assembly_courses
-    assembly_interfaces_numpy
-    assembly_interfaces_xfunc
     assembly_hull
     assembly_hull_numpy
     assembly_hull_xfunc
-
+    assembly_interfaces_numpy
+    assembly_interfaces_xfunc
+    assembly_transform
+    assembly_transformed
 
 """
-
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
 import compas
 
-from ._assembly import *
-from ._block import *
+from .core import *
 
-from .transformations import *
-
-from .constructors import *
-
-from .collision import *
-from .courses import *
 from .hull import *
-
 if not compas.IPY:
     from .hull_numpy import *
-
 if not compas.IPY:
     from .interfaces_numpy import *
-
-from .paths import *
-from .planarization import *
-
-from .sequencing import *
+# from .sequencing import *
+from .transformations import *
 
 
 def assembly_interfaces_xfunc(data, **kwargs):
@@ -96,21 +82,8 @@ def assembly_interfaces_xfunc(data, **kwargs):
 
     Examples
     --------
-    .. code-block:: python
-
-        assembly_interfaces_xfunc = XFunc('compas_assembly.datastructures.assembly_interfaces_xfunc')
-
-        data = {'assembly': assembly.to_data(),
-                'blocks': {str(key): assembly.blocks[key].to_data() for key in assembly.vertices()}}
-
-        result = assembly_interfaces_xfunc(data)
-
-        assembly.data = result['assembly']
-        assembly.blocks = {int(key): Block.from_data(data) for key, data in result['blocks']}
-
+    >>>
     """
-    from compas_assembly.datastructures import Assembly
-    from compas_assembly.datastructures import Block
     assembly = Assembly.from_data(data['assembly'])
     assembly.blocks = {int(key): Block.from_data(data['blocks'][key]) for key in data['blocks']}
     assembly_interfaces_numpy(assembly, **kwargs)
@@ -142,18 +115,8 @@ def assembly_hull_xfunc(data, **kwargs):
 
     Examples
     --------
-    .. code-block:: python
-
-        assembly_hull_xfunc = XFunc('compas_assembly.datastructures.assembly_hull_xfunc')
-
-        data = {'assembly': assembly.to_data(),
-                'blocks': {str(key): assembly.blocks[key].to_data() for key in assembly.vertices()}}
-
-        vertices, faces = assembly_hull_xfunc(data)
-
+    >>>
     """
-    from compas_assembly.datastructures import Assembly
-    from compas_assembly.datastructures import Block
     assembly = Assembly.from_data(data['assembly'])
     assembly.blocks = {int(key): Block.from_data(data['blocks'][key]) for key in data['blocks']}
     return assembly_hull_numpy(assembly, **kwargs)
