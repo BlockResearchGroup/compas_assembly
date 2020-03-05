@@ -3,7 +3,7 @@ API Reference
 ********************************************************************************
 
 .. toctree::
-    :maxdepth: 1
+    :maxdepth: 3
     :glob:
 
-    api/*
+    api/compas_assembly

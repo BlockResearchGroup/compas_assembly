@@ -84,7 +84,7 @@ assembly.to_json(FILE)
 R = Rotation.from_axis_and_angle([1.0, 0, 0], -pi / 2)
 assembly.transform(R)
 
-plotter = AssemblyPlotter(assembly, figsize=(8, 5), tight=True)
+plotter = AssemblyPlotter(assembly, figsize=(16, 10), tight=True)
 plotter.draw_nodes(radius=0.05)
 plotter.draw_edges()
 plotter.draw_blocks(facecolor={key: '#ff0000' for key in assembly.nodes_where({'is_support': True})})

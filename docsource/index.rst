@@ -8,6 +8,7 @@ compas_assembly
 
    intro
    gettingstarted
+   tutorial
    examples
    api
    publications
