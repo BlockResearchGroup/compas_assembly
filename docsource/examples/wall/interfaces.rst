@@ -1,9 +1,9 @@
-********************************************************************************
+*******************
 Identify interfaces
-********************************************************************************
+*******************
 
-.. plot:: ../examples/wall_interfaces_plot.py
+.. plot:: examples/wall/interfaces.py
     :class: figure-img img-fluid
 
-.. literalinclude:: /../examples/wall_interfaces.py
+.. literalinclude:: /examples/wall/interfaces.py
     :language: python

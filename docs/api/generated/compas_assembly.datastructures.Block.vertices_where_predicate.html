@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
     
-        <link rel="next" title="assembly_construct_wall" href="compas_assembly.datastructures.assembly_construct_wall.html" />
+        <link rel="next" title="assembly_hull" href="compas_assembly.datastructures.assembly_hull.html" />
     
     
     
@@ -78,32 +78,7 @@ Default is <code class="docutils literal notranslate"><span class="pre">False</s
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">compas.datastructures</span> <span class="kn">import</span> <span class="n">Mesh</span>
-
-<span class="n">mesh</span> <span class="o">=</span> <span class="n">Mesh</span><span class="p">()</span>
-
-<span class="n">v0</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">extra_attr1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">extra_attr2</span><span class="o">=</span><span class="p">[])</span>
-<span class="n">v1</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">extra_attr1</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">extra_attr2</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span>
-<span class="n">v2</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">extra_attr1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">extra_attr2</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;value1&#39;</span><span class="p">,</span> <span class="s1">&#39;value2&#39;</span><span class="p">])</span>
-<span class="n">v3</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">extra_attr1</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">extra_attr2</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">12</span><span class="p">])</span>
-
-<span class="n">mesh</span><span class="o">.</span><span class="n">add_face</span><span class="p">([</span><span class="n">v0</span><span class="p">,</span><span class="n">v1</span><span class="p">,</span><span class="n">v3</span><span class="p">])</span>
-<span class="n">mesh</span><span class="o">.</span><span class="n">add_face</span><span class="p">([</span><span class="n">v1</span><span class="p">,</span><span class="n">v2</span><span class="p">,</span><span class="n">v3</span><span class="p">])</span>
-
-<span class="k">for</span> <span class="n">v_key</span> <span class="ow">in</span> <span class="n">mesh</span><span class="o">.</span><span class="n">vertices_where_predicate</span><span class="p">(</span><span class="k">lambda</span> <span class="n">key</span><span class="p">,</span> <span class="n">attr</span><span class="p">:</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mf">100.0</span><span class="p">):</span>
-    <span class="k">print</span> <span class="n">v_key</span>
-
-<span class="k">for</span> <span class="n">v_key</span><span class="p">,</span> <span class="n">v_data</span> <span class="ow">in</span> <span class="n">mesh</span><span class="o">.</span><span class="n">vertices_where_predicate</span><span class="p">(</span><span class="k">lambda</span> <span class="n">key</span><span class="p">,</span> <span class="n">attr</span><span class="p">:</span> <span class="mf">50.0</span> <span class="o">&lt;=</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mf">150.0</span><span class="p">,</span> <span class="bp">True</span><span class="p">):</span>
-    <span class="k">print</span> <span class="n">v_key</span><span class="p">,</span> <span class="n">v_data</span>
-
-<span class="k">for</span> <span class="n">v_key</span> <span class="ow">in</span> <span class="n">mesh</span><span class="o">.</span><span class="n">vertices_where_predicate</span><span class="p">(</span><span class="k">lambda</span> <span class="n">key</span><span class="p">,</span> <span class="n">attr</span><span class="p">:</span> <span class="s1">&#39;extra_attr2&#39;</span> <span class="ow">in</span> <span class="n">attr</span><span class="p">):</span>
-    <span class="k">print</span> <span class="n">v_key</span>
-
-<span class="k">for</span> <span class="n">v_key</span> <span class="ow">in</span> <span class="n">mesh</span><span class="o">.</span><span class="n">vertices_where_predicate</span><span class="p">(</span><span class="k">lambda</span> <span class="n">key</span><span class="p">,</span> <span class="n">attr</span><span class="p">:</span> <span class="mi">3</span> <span class="ow">in</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;extra_attr2&#39;</span><span class="p">]):</span>
-    <span class="k">print</span> <span class="n">v_key</span>
-
-<span class="k">for</span> <span class="n">v_key</span> <span class="ow">in</span> <span class="n">mesh</span><span class="o">.</span><span class="n">vertices_where_predicate</span><span class="p">(</span><span class="k">lambda</span> <span class="n">key</span><span class="p">,</span> <span class="n">attr</span><span class="p">:</span> <span class="s1">&#39;value2&#39;</span> <span class="ow">in</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;extra_attr2&#39;</span><span class="p">]):</span>
-    <span class="k">print</span> <span class="n">v_key</span>
+<div class="doctest language-python notranslate"><div class="highlight"><pre><code><span></span><span class="go">&gt;&gt;&gt;</span>
 </code></pre></div>
 </div>
 </dd></dl>
@@ -144,19 +119,17 @@ Default is <code class="docutils literal notranslate"><span class="pre">False</s
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a><ul class="nav active">
 <li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.Assembly.html">Assembly</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="compas_assembly.datastructures.Block.html">Block</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_construct_wall.html">assembly_construct_wall</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_courses.html">assembly_courses</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_interfaces_numpy.html">assembly_interfaces_numpy</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_interfaces_xfunc.html">assembly_interfaces_xfunc</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull.html">assembly_hull</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull_numpy.html">assembly_hull_numpy</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull_xfunc.html">assembly_hull_xfunc</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_interfaces_numpy.html">assembly_interfaces_numpy</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_interfaces_xfunc.html">assembly_interfaces_xfunc</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_transform.html">assembly_transform</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_transformed.html">assembly_transformed</a></li>
 </ul>
 </li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.plotter.html">compas_assembly.plotter</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.utilities.html">compas_assembly.utilities</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.viewer.html">compas_assembly.viewer</a></li>
 </ul>
 </li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../publications.html">Publications</a></li>
@@ -191,11 +164,11 @@ Default is <code class="docutils literal notranslate"><span class="pre">False</s
     <footer class="bg-dark pb-5">
         <div class="container text-center pt-5 pb-5 text-muted">
             
-                Last updated on Nov 28, 2019.
+                Last updated on Mar 05, 2020.
             
 
             
-                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.
             
         </div>
     </footer>

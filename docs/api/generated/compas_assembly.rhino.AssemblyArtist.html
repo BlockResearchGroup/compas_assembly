@@ -23,7 +23,7 @@
     
     
     
-        <link rel="prev" title="compas_assembly.rhino" href="../compas_assembly.rhino.html" />
+        <link rel="prev" title="BlockArtist.to_data" href="compas_assembly.rhino.BlockArtist.to_data.html" />
     
 
     <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -61,7 +61,7 @@
 <dl class="class">
 <dt id="compas_assembly.rhino.AssemblyArtist">
 <em class="property">class </em><code class="sig-prename descclassname">compas_assembly.rhino.</code><code class="sig-name descname">AssemblyArtist</code><span class="sig-paren">(</span><em class="sig-param">assembly</em>, <em class="sig-param">layer=None</em><span class="sig-paren">)</span></dt>
-<dd><p>Bases: <a class="reference external" href="https://compas-dev.github.io/main/api/generated/compas_rhino.artists.NetworkArtist.html#compas_rhino.artists.NetworkArtist" title="(in COMPAS v0.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas_rhino.artists.NetworkArtist</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://compas-dev.github.io/main/api/generated/compas_rhino.artists.NetworkArtist.html#compas_rhino.artists.NetworkArtist" title="(in COMPAS v0.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas_rhino.artists.NetworkArtist</span></code></a></p>
 <p>An artist for visualisation of assemblies in Rhino.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -73,7 +73,7 @@ Default is <code class="docutils literal notranslate"><span class="pre">None</sp
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="k">pass</span>
+<div class="doctest language-python notranslate"><div class="highlight"><pre><code><span></span><span class="go">&gt;&gt;&gt;</span>
 </code></pre></div>
 </div>
 <p class="rubric">Methods</p>
@@ -104,19 +104,13 @@ Default is <code class="docutils literal notranslate"><span class="pre">None</sp
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.color_interfaces.html#compas_assembly.rhino.AssemblyArtist.color_interfaces" title="compas_assembly.rhino.AssemblyArtist.color_interfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">color_interfaces</span></code></a>([mode])</p></td>
 <td><p>Color the interfaces with shades of blue and red according to the forces at the corners.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_block_frame.html#compas_assembly.rhino.AssemblyArtist.draw_block_frame" title="compas_assembly.rhino.AssemblyArtist.draw_block_frame"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_block_frame</span></code></a>(key, fkey)</p></td>
-<td><p>Draw the frame of a specific face of a specific block of the assembly.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_blocks.html#compas_assembly.rhino.AssemblyArtist.draw_blocks" title="compas_assembly.rhino.AssemblyArtist.draw_blocks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_blocks</span></code></a>([keys, show_faces, show_edges, …])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_blocks.html#compas_assembly.rhino.AssemblyArtist.draw_blocks" title="compas_assembly.rhino.AssemblyArtist.draw_blocks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_blocks</span></code></a>([keys, show_faces, …])</p></td>
 <td><p>Draw the blocks of the assembly.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_forces.html#compas_assembly.rhino.AssemblyArtist.draw_forces" title="compas_assembly.rhino.AssemblyArtist.draw_forces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_forces</span></code></a>([scale, eps, mode])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_forces.html#compas_assembly.rhino.AssemblyArtist.draw_forces" title="compas_assembly.rhino.AssemblyArtist.draw_forces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_forces</span></code></a>([scale, eps, mode])</p></td>
 <td><p>Draw the contact forces at the interfaces.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_frictions.html#compas_assembly.rhino.AssemblyArtist.draw_frictions" title="compas_assembly.rhino.AssemblyArtist.draw_frictions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_frictions</span></code></a>([scale, eps, mode])</p></td>
-<td><p>Draw the contact frictions at the interfaces.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_iframes.html#compas_assembly.rhino.AssemblyArtist.draw_iframes" title="compas_assembly.rhino.AssemblyArtist.draw_iframes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_iframes</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_interface_frames.html#compas_assembly.rhino.AssemblyArtist.draw_interface_frames" title="compas_assembly.rhino.AssemblyArtist.draw_interface_frames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_interface_frames</span></code></a>()</p></td>
 <td><p>Draw the frames of the interfaces.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_interfaces.html#compas_assembly.rhino.AssemblyArtist.draw_interfaces" title="compas_assembly.rhino.AssemblyArtist.draw_interfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_interfaces</span></code></a>([keys, color])</p></td>
@@ -134,56 +128,53 @@ Default is <code class="docutils literal notranslate"><span class="pre">None</sp
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.clear.html#compas_assembly.rhino.AssemblyArtist.clear" title="compas_assembly.rhino.AssemblyArtist.clear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear</span></code></a>()</p></td>
-<td><p>Clear the vertices and edges of the network, without clearing the other elements in the layer.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.build.html#compas_assembly.rhino.AssemblyArtist.build" title="compas_assembly.rhino.AssemblyArtist.build"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build</span></code></a>(item, **kwargs)</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.clear_edgelabels.html#compas_assembly.rhino.AssemblyArtist.clear_edgelabels" title="compas_assembly.rhino.AssemblyArtist.clear_edgelabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_edgelabels</span></code></a>([keys])</p></td>
-<td><p>Clear all edge labels previously drawn by the <code class="docutils literal notranslate"><span class="pre">EdgeArtist</span></code>.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.clear.html#compas_assembly.rhino.AssemblyArtist.clear" title="compas_assembly.rhino.AssemblyArtist.clear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear</span></code></a>()</p></td>
+<td><p>Clear the nodes and edges of the network, without clearing the other elements in the layer.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.clear_edges.html#compas_assembly.rhino.AssemblyArtist.clear_edges" title="compas_assembly.rhino.AssemblyArtist.clear_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_edges</span></code></a>([keys])</p></td>
-<td><p>Clear all edges previously drawn by the <code class="docutils literal notranslate"><span class="pre">EdgeArtist</span></code>.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.clear_edgelabels.html#compas_assembly.rhino.AssemblyArtist.clear_edgelabels" title="compas_assembly.rhino.AssemblyArtist.clear_edgelabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_edgelabels</span></code></a>([keys])</p></td>
+<td><p>Clear all previously drawn edge labels.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.clear_layer.html#compas_assembly.rhino.AssemblyArtist.clear_layer" title="compas_assembly.rhino.AssemblyArtist.clear_layer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_layer</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.clear_edges.html#compas_assembly.rhino.AssemblyArtist.clear_edges" title="compas_assembly.rhino.AssemblyArtist.clear_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_edges</span></code></a>([keys])</p></td>
+<td><p>Clear all previously drawn edges.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.clear_layer.html#compas_assembly.rhino.AssemblyArtist.clear_layer" title="compas_assembly.rhino.AssemblyArtist.clear_layer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_layer</span></code></a>()</p></td>
 <td><p>Clear the main layer of the artist.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.clear_vertexlabels.html#compas_assembly.rhino.AssemblyArtist.clear_vertexlabels" title="compas_assembly.rhino.AssemblyArtist.clear_vertexlabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_vertexlabels</span></code></a>([keys])</p></td>
-<td><p>Clear all vertex labels previously drawn by the <code class="docutils literal notranslate"><span class="pre">VertexArtist</span></code>.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.clear_nodelabels.html#compas_assembly.rhino.AssemblyArtist.clear_nodelabels" title="compas_assembly.rhino.AssemblyArtist.clear_nodelabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_nodelabels</span></code></a>([keys])</p></td>
+<td><p>Clear all previously drawn node labels.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.clear_vertices.html#compas_assembly.rhino.AssemblyArtist.clear_vertices" title="compas_assembly.rhino.AssemblyArtist.clear_vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_vertices</span></code></a>([keys])</p></td>
-<td><p>Clear all vertices previously drawn by the <code class="docutils literal notranslate"><span class="pre">VertexArtist</span></code>.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.clear_nodes.html#compas_assembly.rhino.AssemblyArtist.clear_nodes" title="compas_assembly.rhino.AssemblyArtist.clear_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_nodes</span></code></a>([keys])</p></td>
+<td><p>Clear all previously drawn nodes.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_circles.html#compas_assembly.rhino.AssemblyArtist.draw_circles" title="compas_assembly.rhino.AssemblyArtist.draw_circles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_circles</span></code></a>(circles[, layer, clear_layer, …])</p></td>
-<td><p>Draw a collection of circles.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw.html#compas_assembly.rhino.AssemblyArtist.draw" title="compas_assembly.rhino.AssemblyArtist.draw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw</span></code></a>([settings])</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_edgelabels.html#compas_assembly.rhino.AssemblyArtist.draw_edgelabels" title="compas_assembly.rhino.AssemblyArtist.draw_edgelabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_edgelabels</span></code></a>([text, color])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_edgelabels.html#compas_assembly.rhino.AssemblyArtist.draw_edgelabels" title="compas_assembly.rhino.AssemblyArtist.draw_edgelabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_edgelabels</span></code></a>([text, color])</p></td>
 <td><p>Draw labels for a selection of edges.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_edges.html#compas_assembly.rhino.AssemblyArtist.draw_edges" title="compas_assembly.rhino.AssemblyArtist.draw_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_edges</span></code></a>([keys, color])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_edges.html#compas_assembly.rhino.AssemblyArtist.draw_edges" title="compas_assembly.rhino.AssemblyArtist.draw_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_edges</span></code></a>([keys, color])</p></td>
 <td><p>Draw a selection of edges.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_lines.html#compas_assembly.rhino.AssemblyArtist.draw_lines" title="compas_assembly.rhino.AssemblyArtist.draw_lines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_lines</span></code></a>(lines[, layer, clear_layer, redraw])</p></td>
-<td><p>Draw a collection of lines.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_nodelabels.html#compas_assembly.rhino.AssemblyArtist.draw_nodelabels" title="compas_assembly.rhino.AssemblyArtist.draw_nodelabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_nodelabels</span></code></a>([text, color])</p></td>
+<td><p>Draw labels for a selection nodes.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_points.html#compas_assembly.rhino.AssemblyArtist.draw_points" title="compas_assembly.rhino.AssemblyArtist.draw_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_points</span></code></a>(points[, layer, clear_layer, redraw])</p></td>
-<td><p>Draw a collection of points.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_nodes.html#compas_assembly.rhino.AssemblyArtist.draw_nodes" title="compas_assembly.rhino.AssemblyArtist.draw_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_nodes</span></code></a>([keys, color])</p></td>
+<td><p>Draw a selection of nodes.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_polygons.html#compas_assembly.rhino.AssemblyArtist.draw_polygons" title="compas_assembly.rhino.AssemblyArtist.draw_polygons"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_polygons</span></code></a>(polygons[, layer, …])</p></td>
-<td><p>Draw a collection of polygons.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.from_data.html#compas_assembly.rhino.AssemblyArtist.from_data" title="compas_assembly.rhino.AssemblyArtist.from_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_data</span></code></a>(data)</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_polylines.html#compas_assembly.rhino.AssemblyArtist.draw_polylines" title="compas_assembly.rhino.AssemblyArtist.draw_polylines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_polylines</span></code></a>(polylines[, layer, …])</p></td>
-<td><p>Draw a collection of polygons.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.redraw.html#compas_assembly.rhino.AssemblyArtist.redraw" title="compas_assembly.rhino.AssemblyArtist.redraw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">redraw</span></code></a>()</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_vertexlabels.html#compas_assembly.rhino.AssemblyArtist.draw_vertexlabels" title="compas_assembly.rhino.AssemblyArtist.draw_vertexlabels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_vertexlabels</span></code></a>([text, color])</p></td>
-<td><p>Draw labels for a selection vertices.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.register.html#compas_assembly.rhino.AssemblyArtist.register" title="compas_assembly.rhino.AssemblyArtist.register"><code class="xref py py-obj docutils literal notranslate"><span class="pre">register</span></code></a>(item_type, artist_type)</p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.draw_vertices.html#compas_assembly.rhino.AssemblyArtist.draw_vertices" title="compas_assembly.rhino.AssemblyArtist.draw_vertices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">draw_vertices</span></code></a>([keys, color])</p></td>
-<td><p>Draw a selection of vertices.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.redraw.html#compas_assembly.rhino.AssemblyArtist.redraw" title="compas_assembly.rhino.AssemblyArtist.redraw"><code class="xref py py-obj docutils literal notranslate"><span class="pre">redraw</span></code></a>([timeout])</p></td>
-<td><p>Redraw the Rhino view.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.save.html#compas_assembly.rhino.AssemblyArtist.save" title="compas_assembly.rhino.AssemblyArtist.save"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save</span></code></a>(path[, width, height, scale, …])</p></td>
-<td><p>Save the current screen view.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.rhino.AssemblyArtist.to_data.html#compas_assembly.rhino.AssemblyArtist.to_data" title="compas_assembly.rhino.AssemblyArtist.to_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_data</span></code></a>()</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -225,14 +216,10 @@ Default is <code class="docutils literal notranslate"><span class="pre">None</sp
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.plotter.html">compas_assembly.plotter</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a><ul class="nav active">
-<li class="nav-item active"><a class="nav-link active current reference internal" href="#">AssemblyArtist</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.rhino.AssemblyHelper.html">AssemblyHelper</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.rhino.BlockArtist.html">BlockArtist</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.rhino.BlockHelper.html">BlockHelper</a></li>
+<li class="nav-item active"><a class="nav-link active current reference internal" href="#">AssemblyArtist</a></li>
 </ul>
 </li>
-<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.utilities.html">compas_assembly.utilities</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.viewer.html">compas_assembly.viewer</a></li>
 </ul>
 </li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../publications.html">Publications</a></li>
@@ -269,11 +256,11 @@ Default is <code class="docutils literal notranslate"><span class="pre">None</sp
     <footer class="bg-dark pb-5">
         <div class="container text-center pt-5 pb-5 text-muted">
             
-                Last updated on Nov 28, 2019.
+                Last updated on Mar 05, 2020.
             
 
             
-                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.
             
         </div>
     </footer>

@@ -1,9 +1,9 @@
-********************************************************************************
+*****************
 Generate geometry
-********************************************************************************
+*****************
 
-.. plot:: ../examples/stack_generate.py
+.. plot:: examples/stack/generate.py
     :class: figure-img img-fluid
 
-.. literalinclude:: /../examples/stack_generate.py
+.. literalinclude:: /examples/stack/generate.py
     :language: python

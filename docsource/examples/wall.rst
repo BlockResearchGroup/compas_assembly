@@ -8,9 +8,6 @@ Brick wall
    :glob:
 
    wall/generate
-   wall/support
    wall/interfaces
-   wall/courses
-   wall/sequence
    wall/equilibrium
-   wall/hull
+   wall/rhino

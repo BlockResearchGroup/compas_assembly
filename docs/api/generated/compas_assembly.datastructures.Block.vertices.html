@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
     
-        <link rel="next" title="Block.vertices_on_boundaries" href="compas_assembly.datastructures.Block.vertices_on_boundaries.html" />
+        <link rel="next" title="Block.vertices_attribute" href="compas_assembly.datastructures.Block.vertices_attribute.html" />
     
     
     
@@ -67,10 +67,8 @@
 <dd class="field-odd"><p><strong>data</strong> (<em>bool, optional</em>) – Return the vertex data as well as the vertex keys.</p>
 </dd>
 <dt class="field-even">Yields</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><em>hashable</em> – The next vertex identifier (<em>key</em>), if <code class="docutils literal notranslate"><span class="pre">data</span></code> is false.</p></li>
-<li><p><em>2-tuple</em> – The next vertex as a (key, attr) tuple, if <code class="docutils literal notranslate"><span class="pre">data</span></code> is true.</p></li>
-</ul>
+<dd class="field-even"><p><em>int or tuple</em> – The next vertex identifier, if <code class="docutils literal notranslate"><span class="pre">data</span></code> is false.
+The next vertex as a (key, attr) tuple, if <code class="docutils literal notranslate"><span class="pre">data</span></code> is true.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -111,19 +109,17 @@
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a><ul class="nav active">
 <li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.Assembly.html">Assembly</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="compas_assembly.datastructures.Block.html">Block</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_construct_wall.html">assembly_construct_wall</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_courses.html">assembly_courses</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_interfaces_numpy.html">assembly_interfaces_numpy</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_interfaces_xfunc.html">assembly_interfaces_xfunc</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull.html">assembly_hull</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull_numpy.html">assembly_hull_numpy</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_hull_xfunc.html">assembly_hull_xfunc</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_interfaces_numpy.html">assembly_interfaces_numpy</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_interfaces_xfunc.html">assembly_interfaces_xfunc</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_transform.html">assembly_transform</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.assembly_transformed.html">assembly_transformed</a></li>
 </ul>
 </li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.plotter.html">compas_assembly.plotter</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.utilities.html">compas_assembly.utilities</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.viewer.html">compas_assembly.viewer</a></li>
 </ul>
 </li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../publications.html">Publications</a></li>
@@ -158,11 +154,11 @@
     <footer class="bg-dark pb-5">
         <div class="container text-center pt-5 pb-5 text-muted">
             
-                Last updated on Nov 28, 2019.
+                Last updated on Mar 05, 2020.
             
 
             
-                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.
             
         </div>
     </footer>

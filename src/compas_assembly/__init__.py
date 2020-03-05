@@ -12,8 +12,6 @@ compas_assembly
     compas_assembly.datastructures
     compas_assembly.plotter
     compas_assembly.rhino
-    compas_assembly.viewer
-
 
 """
 

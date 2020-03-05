@@ -16,16 +16,8 @@ Assembly
         :toctree:
 
     
-        ~Assembly.__init__
-        ~Assembly.add_block
-        ~Assembly.add_blocks_from_polysurfaces
-        ~Assembly.add_blocks_from_rhinomeshes
-        ~Assembly.copy
-        ~Assembly.draw
-        ~Assembly.from_json
-        ~Assembly.number_of_interface_vertices
-        ~Assembly.subset
-        ~Assembly.to_json
+        ~Assembly.transform
+        ~Assembly.transformed
 
     .. rubric:: Inherited Methods
 
@@ -33,94 +25,84 @@ Assembly
         :toctree:
 
     
+        ~Assembly.__init__
+        ~Assembly.add_block
         ~Assembly.add_edge
-        ~Assembly.add_vertex
+        ~Assembly.add_node
         ~Assembly.clear
-        ~Assembly.clear_edgedict
-        ~Assembly.clear_halfedgedict
-        ~Assembly.clear_vertexdict
+        ~Assembly.connected_edges
+        ~Assembly.copy
+        ~Assembly.degree
+        ~Assembly.degree_in
+        ~Assembly.degree_out
         ~Assembly.delete_edge
-        ~Assembly.delete_vertex
-        ~Assembly.dump
-        ~Assembly.dumps
-        ~Assembly.edge_connected_edges
+        ~Assembly.delete_node
+        ~Assembly.edge_attribute
+        ~Assembly.edge_attributes
         ~Assembly.edge_coordinates
         ~Assembly.edge_direction
-        ~Assembly.edge_label_name
         ~Assembly.edge_length
         ~Assembly.edge_midpoint
-        ~Assembly.edge_name
         ~Assembly.edge_point
         ~Assembly.edge_vector
         ~Assembly.edges
+        ~Assembly.edges_attribute
+        ~Assembly.edges_attributes
         ~Assembly.edges_where
         ~Assembly.edges_where_predicate
         ~Assembly.from_data
+        ~Assembly.from_edges
+        ~Assembly.from_json
         ~Assembly.from_lines
+        ~Assembly.from_networkx
+        ~Assembly.from_nodes_and_edges
         ~Assembly.from_obj
-        ~Assembly.from_vertices_and_edges
         ~Assembly.get_any_edge
-        ~Assembly.get_any_vertex
-        ~Assembly.get_any_vertices
-        ~Assembly.get_edge_attribute
-        ~Assembly.get_edge_attributes
-        ~Assembly.get_edges_attribute
-        ~Assembly.get_edges_attributes
-        ~Assembly.get_vertex_attribute
-        ~Assembly.get_vertex_attributes
-        ~Assembly.get_vertices_attribute
-        ~Assembly.get_vertices_attributes
+        ~Assembly.get_any_edges
+        ~Assembly.get_any_node
+        ~Assembly.get_any_nodes
         ~Assembly.gkey_key
         ~Assembly.has_edge
-        ~Assembly.has_vertex
+        ~Assembly.has_node
         ~Assembly.index_key
         ~Assembly.index_uv
-        ~Assembly.is_vertex_connected
-        ~Assembly.is_vertex_leaf
+        ~Assembly.is_leaf
+        ~Assembly.is_node_connected
         ~Assembly.key_gkey
         ~Assembly.key_index
         ~Assembly.leaves
-        ~Assembly.load
-        ~Assembly.loads
+        ~Assembly.neighborhood
+        ~Assembly.neighbors
+        ~Assembly.neighbors_in
+        ~Assembly.neighbors_out
+        ~Assembly.node_attribute
+        ~Assembly.node_attributes
+        ~Assembly.node_coordinates
+        ~Assembly.node_laplacian
+        ~Assembly.node_neighborhood_centroid
+        ~Assembly.nodes
+        ~Assembly.nodes_attribute
+        ~Assembly.nodes_attributes
+        ~Assembly.nodes_where
+        ~Assembly.nodes_where_predicate
         ~Assembly.number_of_edges
-        ~Assembly.number_of_vertices
-        ~Assembly.plot
-        ~Assembly.set_edge_attribute
-        ~Assembly.set_edge_attributes
-        ~Assembly.set_edges_attribute
-        ~Assembly.set_edges_attributes
-        ~Assembly.set_vertex_attribute
-        ~Assembly.set_vertex_attributes
-        ~Assembly.set_vertices_attribute
-        ~Assembly.set_vertices_attributes
+        ~Assembly.number_of_interface_nodes
+        ~Assembly.number_of_nodes
         ~Assembly.split_edge
+        ~Assembly.subset
         ~Assembly.summary
         ~Assembly.to_data
+        ~Assembly.to_json
         ~Assembly.to_lines
+        ~Assembly.to_networkx
+        ~Assembly.to_nodes_and_edges
         ~Assembly.to_obj
         ~Assembly.to_points
-        ~Assembly.to_vertices_and_edges
+        ~Assembly.unset_edge_attribute
+        ~Assembly.unset_node_attribute
         ~Assembly.update_default_edge_attributes
-        ~Assembly.update_default_vertex_attributes
+        ~Assembly.update_default_node_attributes
         ~Assembly.uv_index
-        ~Assembly.vertex_connected_edges
-        ~Assembly.vertex_coordinates
-        ~Assembly.vertex_degree
-        ~Assembly.vertex_degree_in
-        ~Assembly.vertex_degree_out
-        ~Assembly.vertex_label_name
-        ~Assembly.vertex_laplacian
-        ~Assembly.vertex_max_degree
-        ~Assembly.vertex_min_degree
-        ~Assembly.vertex_name
-        ~Assembly.vertex_neighborhood
-        ~Assembly.vertex_neighborhood_centroid
-        ~Assembly.vertex_neighbors
-        ~Assembly.vertex_neighbors_in
-        ~Assembly.vertex_neighbors_out
-        ~Assembly.vertices
-        ~Assembly.vertices_where
-        ~Assembly.vertices_where_predicate
 
     
     

@@ -23,7 +23,7 @@
     
     
     
-        <link rel="prev" title="AssemblyArtist.draw_circles" href="compas_assembly.rhino.AssemblyArtist.draw_circles.html" />
+        <link rel="prev" title="AssemblyArtist.draw" href="compas_assembly.rhino.AssemblyArtist.draw.html" />
     
 
     <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -72,7 +72,7 @@ String values are interpreted as hex colors (e.g. <code class="docutils literal 
 Tuples are interpreted as RGB component specifications (e.g. <code class="docutils literal notranslate"><span class="pre">(255,</span> <span class="pre">0,</span> <span class="pre">0)</span> <span class="pre">for</span> <span class="pre">red</span></code>.
 Individual colors can be assigned using a dictionary
 of key-color pairs. Missing keys will be assigned the default face
-color (<code class="docutils literal notranslate"><span class="pre">self.defaults['edge.color']</span></code>).
+color (<code class="docutils literal notranslate"><span class="pre">self.settings['edge.color']</span></code>).
 The default is <code class="docutils literal notranslate"><span class="pre">None</span></code>, in which case all edges are assigned the
 default edge color.</p></li>
 </ul>
@@ -80,7 +80,7 @@ default edge color.</p></li>
 </dl>
 <p class="rubric">Notes</p>
 <p>All labels are assigned a name using the folling template:
-<code class="docutils literal notranslate"><span class="pre">&quot;{}.edge.{}&quot;.format(self.datastructure.name,</span> <span class="pre">key)</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">&quot;{}.edge.{}&quot;.format(self.network.name,</span> <span class="pre">key)</span></code>.</p>
 </dd></dl>
 
 </div>
@@ -119,14 +119,10 @@ default edge color.</p></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.plotter.html">compas_assembly.plotter</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a><ul class="nav active">
-<li class="nav-item active"><a class="nav-link reference internal" href="compas_assembly.rhino.AssemblyArtist.html">AssemblyArtist</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.rhino.AssemblyHelper.html">AssemblyHelper</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.rhino.BlockArtist.html">BlockArtist</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.rhino.BlockHelper.html">BlockHelper</a></li>
+<li class="nav-item active"><a class="nav-link reference internal" href="compas_assembly.rhino.AssemblyArtist.html">AssemblyArtist</a></li>
 </ul>
 </li>
-<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.utilities.html">compas_assembly.utilities</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.viewer.html">compas_assembly.viewer</a></li>
 </ul>
 </li>
 <li class="nav-item"><a class="nav-link reference internal" href="../../publications.html">Publications</a></li>
@@ -161,11 +157,11 @@ default edge color.</p></li>
     <footer class="bg-dark pb-5">
         <div class="container text-center pt-5 pb-5 text-muted">
             
-                Last updated on Nov 28, 2019.
+                Last updated on Mar 05, 2020.
             
 
             
-                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.
             
         </div>
     </footer>

@@ -1,9 +1,9 @@
-********************************************************************************
+*****************
 Generate geometry
-********************************************************************************
+*****************
 
-.. plot:: ../examples/wall_generate_plot.py
+.. plot:: examples/wall/generate.py
     :class: figure-img img-fluid
 
-.. literalinclude:: /../examples/wall_generate.py
+.. literalinclude:: /examples/wall/generate.py
     :language: python

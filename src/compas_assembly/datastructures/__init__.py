@@ -48,6 +48,7 @@ from __future__ import print_function
 import compas
 
 from .core import *
+from .assembly import Assembly
 
 from .hull import *
 if not compas.IPY:

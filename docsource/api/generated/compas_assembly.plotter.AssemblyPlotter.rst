@@ -20,7 +20,7 @@ AssemblyPlotter
         ~AssemblyPlotter.clear_blocks
         ~AssemblyPlotter.draw_blocks
         ~AssemblyPlotter.draw_edges
-        ~AssemblyPlotter.draw_vertices
+        ~AssemblyPlotter.draw_nodes
 
     .. rubric:: Inherited Methods
 

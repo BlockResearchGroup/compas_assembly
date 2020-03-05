@@ -19,11 +19,11 @@
     <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
     
-        <link rel="next" title="Assembly sequence hull" href="hull.html" />
+        <link rel="next" title="Visualise in Rhino" href="rhino.html" />
     
     
     
-        <link rel="prev" title="Block building sequence" href="sequence.html" />
+        <link rel="prev" title="Identify interfaces" href="interfaces.html" />
     
 
     <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -56,93 +56,41 @@
 
                     
 
-                    <div class="section" id="equilibrium-of-a-building-sequence">
-<h1>Equilibrium of a building sequence</h1>
-<div class="figure align-default">
-<img alt="../../_images/wall_equilibrium_sequence.jpg" class="figure-img img-fluid" src="../../_images/wall_equilibrium_sequence.jpg" />
-</div>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="sd">&quot;&quot;&quot;Compute the contact forces required for static equilibrium of an assembly.</span>
+                    <div class="section" id="equilibrium">
+<h1>Equilibrium</h1>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">import</span> <span class="nn">os</span>
 
-<span class="sd">1. Make an Xfunc of ``compute_interface_forces``</span>
-<span class="sd">2. Load an assembly from a JSON file.</span>
-<span class="sd">3. Make a sub-assembly corresponding to the building sequence.</span>
-<span class="sd">4. Check if the sub-assembly is properly supported.</span>
-<span class="sd">5. Compute interface forces.</span>
-<span class="sd">6. Visualise in Rhino.</span>
-
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
-
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">compas</span>
-
-<span class="kn">from</span> <span class="nn">compas.utilities</span> <span class="kn">import</span> <span class="n">XFunc</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
+<span class="kn">from</span> <span class="nn">compas_rbe.equilibrium</span> <span class="kn">import</span> <span class="n">compute_interface_forces_cvx</span>
 
-<span class="c1"># make an XFunc version of the compute interfaces function</span>
 
-<span class="n">compute_interface_forces_xfunc</span> <span class="o">=</span> <span class="n">XFunc</span><span class="p">(</span><span class="s1">&#39;compas_rbe.equilibrium.compute_interface_forces_xfunc&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
 
-<span class="c1"># a convenience wrapper</span>
+<span class="n">DATA</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s1">&#39;../../../data&#39;</span><span class="p">)</span>
+<span class="n">FILE_I</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DATA</span><span class="p">,</span> <span class="s1">&#39;wall_interfaces.json&#39;</span><span class="p">)</span>
+<span class="n">FILE_O</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DATA</span><span class="p">,</span> <span class="s1">&#39;wall_equilibrium.json&#39;</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">compute_interface_forces</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;assembly&#39;</span><span class="p">:</span> <span class="n">assembly</span><span class="o">.</span><span class="n">to_data</span><span class="p">(),</span>
-            <span class="s1">&#39;blocks&#39;</span><span class="p">:</span> <span class="p">{</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">):</span> <span class="n">assembly</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">to_data</span><span class="p">()</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">blocks</span><span class="p">}}</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">compute_interface_forces_xfunc</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="n">assembly</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;assembly&#39;</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">blocks</span><span class="p">:</span>
-        <span class="n">assembly</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;blocks&#39;</span><span class="p">][</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)]</span>
 
-<span class="c1"># just so Rhino(Mac) gets the filepaths right</span>
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># Load assembly from file</span>
+<span class="c1"># ==============================================================================</span>
 
-<span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
-<span class="n">DATA</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s1">&#39;../data&#39;</span><span class="p">)</span>
-<span class="n">FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DATA</span><span class="p">,</span> <span class="s1">&#39;wall_courses.json&#39;</span><span class="p">)</span>
+<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">FILE_I</span><span class="p">)</span>
 
-<span class="c1"># load an assembly from a JSON file</span>
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># Interface forces</span>
+<span class="c1"># ==============================================================================</span>
 
-<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">FILE</span><span class="p">)</span>
+<span class="n">compute_interface_forces_cvx</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;CPLEX&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># define a sequence of buildable blocks</span>
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># Export</span>
+<span class="c1"># ==============================================================================</span>
 
-<span class="n">sequence</span> <span class="o">=</span> <span class="p">[</span><span class="mi">28</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">38</span><span class="p">]</span>
-
-<span class="c1"># create a sub_assembly for the sequence</span>
-
-<span class="n">sub</span> <span class="o">=</span> <span class="n">assembly</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
-
-<span class="c1"># check if the sub_assembly is supported</span>
-
-<span class="n">supports</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">vertices_where</span><span class="p">({</span><span class="s1">&#39;is_support&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}))</span>
-
-<span class="k">if</span> <span class="ow">not</span> <span class="n">supports</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;The sub-assembly has no supports.&#39;</span><span class="p">)</span>
-
-<span class="c1"># compute the interface forces</span>
-
-<span class="n">compute_interface_forces</span><span class="p">(</span><span class="n">sub</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;CPLEX&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-
-<span class="c1"># update the original assembly</span>
-
-<span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="bp">True</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">sub</span><span class="o">.</span><span class="n">has_edge</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
-        <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;interface_forces&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub</span><span class="o">.</span><span class="n">get_edge_attribute</span><span class="p">((</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="s1">&#39;interface_forces&#39;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;interface_forces&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
-
-<span class="c1"># visualise the result</span>
-
-<span class="n">assembly</span><span class="o">.</span><span class="n">draw</span><span class="p">({</span>
-    <span class="s1">&#39;layer&#39;</span><span class="p">:</span> <span class="s1">&#39;Assembly&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;show.vertices&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-    <span class="s1">&#39;show.interfaces&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-    <span class="s1">&#39;show.forces&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-    <span class="s1">&#39;show.forces_as_vectors&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
-    <span class="s1">&#39;mode.interface&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="s1">&#39;scale.force&#39;</span><span class="p">:</span> <span class="mf">1.0</span>
-<span class="p">})</span>
+<span class="n">assembly</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">FILE_O</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -180,12 +128,9 @@
 <li class="nav-item"><a class="nav-link reference internal" href="../stack.html">Stack of blocks</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../wall.html">Brick wall</a><ul class="nav active">
 <li class="nav-item"><a class="nav-link reference internal" href="generate.html">Generate geometry</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="support.html">Add supports</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="interfaces.html">Identify interfaces</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="courses.html">Identify courses</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="sequence.html">Block building sequence</a></li>
-<li class="nav-item active"><a class="nav-link active current reference internal" href="#">Equilibrium of a building sequence</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="hull.html">Assembly sequence hull</a></li>
+<li class="nav-item active"><a class="nav-link active current reference internal" href="#">Equilibrium</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="rhino.html">Visualise in Rhino</a></li>
 </ul>
 </li>
 </ul>
@@ -211,7 +156,7 @@
                 
 
                 <ul class="nav flex-column" id="compas-localnav">
-<li class="nav-item"><a class="nav-link reference internal" href="#">Equilibrium of a building sequence</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">Equilibrium</a></li>
 </ul>
 
 
@@ -223,11 +168,11 @@
     <footer class="bg-dark pb-5">
         <div class="container text-center pt-5 pb-5 text-muted">
             
-                Last updated on Nov 28, 2019.
+                Last updated on Mar 05, 2020.
             
 
             
-                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.
             
         </div>
     </footer>

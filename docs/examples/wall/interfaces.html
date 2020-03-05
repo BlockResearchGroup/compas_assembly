@@ -19,11 +19,11 @@
     <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
     
-        <link rel="next" title="Identify courses" href="courses.html" />
+        <link rel="next" title="Equilibrium" href="equilibrium.html" />
     
     
     
-        <link rel="prev" title="Add supports" href="support.html" />
+        <link rel="prev" title="Generate geometry" href="generate.html" />
     
 
     <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -59,35 +59,57 @@
                     <div class="section" id="identify-interfaces">
 <h1>Identify interfaces</h1>
 <div class="figure align-default">
-<img alt="../../_images/wall_interfaces_plot.png" class="figure-img img-fluid" src="../../_images/wall_interfaces_plot.png" />
+<img alt="../../_images/interfaces2.png" class="figure-img img-fluid" src="../../_images/interfaces2.png" />
 </div>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="sd">&quot;&quot;&quot;Add a support plate to a wll assembly and identify the interfaces.</span>
-
-<span class="sd">1. Load an assembly from a json file</span>
-<span class="sd">2. Compute the footprint of the assembly</span>
-<span class="sd">3. Add a support in the XY plane at least the size to the footprint</span>
-<span class="sd">4. Compute the interfaces of the assembly</span>
-<span class="sd">5. Serialise the result</span>
-
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">compas_assembly</span>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
+<span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Rotation</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">assembly_interfaces_numpy</span>
+<span class="kn">from</span> <span class="nn">compas_assembly.plotter</span> <span class="kn">import</span> <span class="n">AssemblyPlotter</span>
 
-<span class="n">FILE_I</span> <span class="o">=</span> <span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;wall_supported.json&#39;</span><span class="p">)</span>
-<span class="n">FILE_O</span> <span class="o">=</span> <span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;wall_interfaces.json&#39;</span><span class="p">)</span>
 
-<span class="c1"># load assembly from JSON</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+
+<span class="n">DATA</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s1">&#39;../../../data&#39;</span><span class="p">)</span>
+<span class="n">FILE_I</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DATA</span><span class="p">,</span> <span class="s1">&#39;wall.json&#39;</span><span class="p">)</span>
+<span class="n">FILE_O</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DATA</span><span class="p">,</span> <span class="s1">&#39;wall_interfaces.json&#39;</span><span class="p">)</span>
+
+
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># Load assembly from file</span>
+<span class="c1"># ==============================================================================</span>
 
 <span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">FILE_I</span><span class="p">)</span>
 
-<span class="c1"># identify the interfaces</span>
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># Identify interfaces</span>
+<span class="c1"># ==============================================================================</span>
 
 <span class="n">assembly_interfaces_numpy</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">nmax</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">amin</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">)</span>
 
-<span class="c1"># serialise</span>
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># Export</span>
+<span class="c1"># ==============================================================================</span>
 
 <span class="n">assembly</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">FILE_O</span><span class="p">)</span>
+
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># Visualize</span>
+<span class="c1"># ==============================================================================</span>
+
+<span class="n">R</span> <span class="o">=</span> <span class="n">Rotation</span><span class="o">.</span><span class="n">from_axis_and_angle</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">assembly</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
+
+<span class="n">plotter</span> <span class="o">=</span> <span class="n">AssemblyPlotter</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">tight</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">plotter</span><span class="o">.</span><span class="n">draw_nodes</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="s2">&quot;#ff0000&quot;</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">nodes_where</span><span class="p">({</span><span class="s1">&#39;is_support&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})})</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">draw_edges</span><span class="p">()</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">(</span><span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;#444444&#39;</span><span class="p">,</span> <span class="n">edgewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -125,12 +147,9 @@
 <li class="nav-item"><a class="nav-link reference internal" href="../stack.html">Stack of blocks</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../wall.html">Brick wall</a><ul class="nav active">
 <li class="nav-item"><a class="nav-link reference internal" href="generate.html">Generate geometry</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="support.html">Add supports</a></li>
 <li class="nav-item active"><a class="nav-link active current reference internal" href="#">Identify interfaces</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="courses.html">Identify courses</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="sequence.html">Block building sequence</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="equilibrium.html">Equilibrium of a building sequence</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="hull.html">Assembly sequence hull</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="equilibrium.html">Equilibrium</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="rhino.html">Visualise in Rhino</a></li>
 </ul>
 </li>
 </ul>
@@ -168,11 +187,11 @@
     <footer class="bg-dark pb-5">
         <div class="container text-center pt-5 pb-5 text-muted">
             
-                Last updated on Nov 28, 2019.
+                Last updated on Mar 05, 2020.
             
 
             
-                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.
             
         </div>
     </footer>

@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
     
-        <link rel="next" title="Add supports" href="support.html" />
+        <link rel="next" title="Identify interfaces" href="interfaces.html" />
     
     
     
@@ -59,40 +59,32 @@
                     <div class="section" id="generate-geometry">
 <h1>Generate geometry</h1>
 <div class="figure align-default">
-<img alt="../../_images/wall_generate_plot.png" class="figure-img img-fluid" src="../../_images/wall_generate_plot.png" />
+<img alt="../../_images/generate2.png" class="figure-img img-fluid" src="../../_images/generate2.png" />
 </div>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="sd">&quot;&quot;&quot;Generate an assembly describing a brick wall.</span>
-
-<span class="sd">Parameters</span>
-<span class="sd">----------</span>
-<span class="sd">number_of_even_bricks : int</span>
-<span class="sd">    The number of bricks on the even rows.</span>
-<span class="sd">number_of_courses : int</span>
-<span class="sd">    The number of course rows in the wall.</span>
-<span class="sd">width : float</span>
-<span class="sd">    The width of the base brick.</span>
-<span class="sd">height : float</span>
-<span class="sd">    The height of the base brick.</span>
-<span class="sd">depth : float</span>
-<span class="sd">    The depth of the base brick.</span>
-<span class="sd">gap : float</span>
-<span class="sd">    The horizontal gap between the bricks.</span>
-
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
 
 <span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Box</span>
 <span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Translation</span>
-
+<span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Rotation</span>
 <span class="kn">from</span> <span class="nn">compas.datastructures</span> <span class="kn">import</span> <span class="n">mesh_transform</span>
-
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Block</span>
+<span class="kn">from</span> <span class="nn">compas_assembly.plotter</span> <span class="kn">import</span> <span class="n">AssemblyPlotter</span>
 
-<span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
-<span class="n">DATA</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s1">&#39;../data&#39;</span><span class="p">)</span>
-<span class="n">FILE_I</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DATA</span><span class="p">,</span> <span class="s1">&#39;wall.json&#39;</span><span class="p">)</span>
-<span class="n">FILE_O</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DATA</span><span class="p">,</span> <span class="s1">&#39;wall.json&#39;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+
+<span class="n">DATA</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s1">&#39;../../../data&#39;</span><span class="p">)</span>
+<span class="n">FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DATA</span><span class="p">,</span> <span class="s1">&#39;wall.json&#39;</span><span class="p">)</span>
+
+
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># Parameters</span>
+<span class="c1"># ==============================================================================</span>
 
 <span class="c1"># number of bricks in even courses</span>
 
@@ -104,63 +96,88 @@
 
 <span class="c1"># brick dimensions</span>
 
-<span class="n">width</span> <span class="o">=</span> <span class="mf">0.240</span>
-<span class="n">height</span> <span class="o">=</span> <span class="mf">0.052</span>
-<span class="n">depth</span> <span class="o">=</span> <span class="mf">0.116</span>
+<span class="n">width</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">height</span> <span class="o">=</span> <span class="mf">0.25</span>
+<span class="n">depth</span> <span class="o">=</span> <span class="mf">0.5</span>
 
 <span class="c1"># horizontal joints</span>
 
-<span class="n">gap</span> <span class="o">=</span> <span class="mf">0.02</span>
+<span class="n">gap</span> <span class="o">=</span> <span class="mf">0.025</span>
+
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># Elements</span>
+<span class="c1"># ==============================================================================</span>
 
 <span class="c1"># brick geometry</span>
 
 <span class="n">box</span> <span class="o">=</span> <span class="n">Box</span><span class="o">.</span><span class="n">from_width_height_depth</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
-<span class="n">brick</span> <span class="o">=</span> <span class="n">Block</span><span class="o">.</span><span class="n">from_vertices_and_faces</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">vertices</span><span class="p">,</span> <span class="n">box</span><span class="o">.</span><span class="n">faces</span><span class="p">)</span>
+<span class="n">brick</span> <span class="o">=</span> <span class="n">Block</span><span class="o">.</span><span class="n">from_shape</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
 
 <span class="c1"># halfbrick geometry</span>
 
 <span class="n">box</span> <span class="o">=</span> <span class="n">Box</span><span class="o">.</span><span class="n">from_width_height_depth</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">gap</span><span class="p">),</span> <span class="n">height</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
-<span class="n">halfbrick</span> <span class="o">=</span> <span class="n">Block</span><span class="o">.</span><span class="n">from_vertices_and_faces</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">vertices</span><span class="p">,</span> <span class="n">box</span><span class="o">.</span><span class="n">faces</span><span class="p">)</span>
+<span class="n">halfbrick</span> <span class="o">=</span> <span class="n">Block</span><span class="o">.</span><span class="n">from_shape</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
 
-<span class="c1"># empty assembly</span>
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># Assembly</span>
+<span class="c1"># ==============================================================================</span>
 
 <span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="p">()</span>
 
-<span class="c1"># add bricks in a staggered pattern</span>
-
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_courses</span><span class="p">):</span>
-    <span class="n">dy</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">height</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span>
 
     <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="c1"># in the even rows</span>
         <span class="c1"># add (number_of_even_bricks) full bricks</span>
-
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_even_bricks</span><span class="p">):</span>
+            <span class="n">dx</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">width</span> <span class="o">+</span> <span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">width</span> <span class="o">+</span> <span class="n">gap</span><span class="p">)</span>
+            <span class="n">T</span> <span class="o">=</span> <span class="n">Translation</span><span class="p">([</span><span class="n">dx</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dy</span><span class="p">])</span>
             <span class="n">block</span> <span class="o">=</span> <span class="n">brick</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">mesh_transform</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">Translation</span><span class="p">([</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">width</span> <span class="o">+</span> <span class="n">gap</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dy</span><span class="p">]))</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
             <span class="n">assembly</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># in the uneven rows</span>
         <span class="c1"># add a half brick</span>
-        <span class="c1"># add (number_of_even_bricks - 1) full bricks</span>
-        <span class="c1"># add a half brick</span>
-
+        <span class="n">dx</span> <span class="o">=</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="p">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">gap</span><span class="p">)</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="n">Translation</span><span class="p">([</span><span class="n">dx</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dy</span><span class="p">])</span>
         <span class="n">block</span> <span class="o">=</span> <span class="n">halfbrick</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">mesh_transform</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">Translation</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dy</span><span class="p">]))</span>
+        <span class="n">block</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
         <span class="n">assembly</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
 
+        <span class="c1"># add (number_of_even_bricks - 1) full bricks</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_even_bricks</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">dx</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">width</span> <span class="o">+</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">width</span> <span class="o">+</span> <span class="n">gap</span><span class="p">)</span>
+            <span class="n">T</span> <span class="o">=</span> <span class="n">Translation</span><span class="p">([</span><span class="n">dx</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dy</span><span class="p">])</span>
             <span class="n">block</span> <span class="o">=</span> <span class="n">brick</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">mesh_transform</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">Translation</span><span class="p">([(</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">j</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">width</span> <span class="o">+</span> <span class="n">gap</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dy</span><span class="p">]))</span>
+            <span class="n">block</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
             <span class="n">assembly</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
 
+        <span class="c1"># add a half brick</span>
+        <span class="n">dx</span> <span class="o">=</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="p">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">gap</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">width</span> <span class="o">+</span> <span class="n">gap</span><span class="p">)</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="n">Translation</span><span class="p">([</span><span class="n">dx</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dy</span><span class="p">])</span>
         <span class="n">block</span> <span class="o">=</span> <span class="n">halfbrick</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">mesh_transform</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">Translation</span><span class="p">([(</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">width</span> <span class="o">+</span> <span class="n">gap</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dy</span><span class="p">]))</span>
+        <span class="n">block</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
         <span class="n">assembly</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
 
-<span class="c1"># export to json</span>
+<span class="n">assembly</span><span class="o">.</span><span class="n">nodes_attribute</span><span class="p">(</span><span class="s1">&#39;is_support&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">number_of_even_bricks</span><span class="p">)))</span>
 
-<span class="n">assembly</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">FILE_O</span><span class="p">)</span>
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># Export</span>
+<span class="c1"># ==============================================================================</span>
+
+<span class="n">assembly</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">FILE</span><span class="p">)</span>
+
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># Visualize</span>
+<span class="c1"># ==============================================================================</span>
+
+<span class="n">R</span> <span class="o">=</span> <span class="n">Rotation</span><span class="o">.</span><span class="n">from_axis_and_angle</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">assembly</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
+
+<span class="n">plotter</span> <span class="o">=</span> <span class="n">AssemblyPlotter</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">tight</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">draw_nodes</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="s2">&quot;#ff0000&quot;</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">nodes_where</span><span class="p">({</span><span class="s1">&#39;is_support&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})})</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">(</span><span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;#444444&#39;</span><span class="p">,</span> <span class="n">edgewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plotter</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -198,12 +215,9 @@
 <li class="nav-item"><a class="nav-link reference internal" href="../stack.html">Stack of blocks</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../wall.html">Brick wall</a><ul class="nav active">
 <li class="nav-item active"><a class="nav-link active current reference internal" href="#">Generate geometry</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="support.html">Add supports</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="interfaces.html">Identify interfaces</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="courses.html">Identify courses</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="sequence.html">Block building sequence</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="equilibrium.html">Equilibrium of a building sequence</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="hull.html">Assembly sequence hull</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="equilibrium.html">Equilibrium</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="rhino.html">Visualise in Rhino</a></li>
 </ul>
 </li>
 </ul>
@@ -241,11 +255,11 @@
     <footer class="bg-dark pb-5">
         <div class="container text-center pt-5 pb-5 text-muted">
             
-                Last updated on Nov 28, 2019.
+                Last updated on Mar 05, 2020.
             
 
             
-                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.
             
         </div>
     </footer>

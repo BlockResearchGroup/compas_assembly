@@ -1,9 +1,9 @@
-********************************************************************************
+*******************
 Compute equilibrium
-********************************************************************************
+*******************
 
-.. plot:: ../examples/stack_equilibrium.py
+.. plot:: examples/stack/equilibrium.py
     :class: figure-img img-fluid
 
-.. literalinclude:: /../examples/stack_equilibrium.py
+.. literalinclude:: /examples/stack/equilibrium.py
     :language: python

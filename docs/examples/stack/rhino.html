@@ -61,27 +61,38 @@
 <div class="figure align-default">
 <img alt="../../_images/stack_rhino.jpg" class="figure-img img-fluid" src="../../_images/stack_rhino.jpg" />
 </div>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
-
-<span class="kn">import</span> <span class="nn">compas_assembly</span>
-
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
+<span class="kn">from</span> <span class="nn">compas_assembly.rhino</span> <span class="kn">import</span> <span class="n">AssemblyArtist</span>
 
-<span class="n">FILE</span> <span class="o">=</span> <span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;stack.json&#39;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+    <span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+
+<span class="n">DATA</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s1">&#39;../../../data&#39;</span><span class="p">)</span>
+<span class="n">FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DATA</span><span class="p">,</span> <span class="s1">&#39;stack.json&#39;</span><span class="p">)</span>
+
+
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># Load assembly from file</span>
+<span class="c1"># ==============================================================================</span>
 
 <span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">FILE</span><span class="p">)</span>
-<span class="n">assembly</span><span class="o">.</span><span class="n">draw</span><span class="p">({</span>
-    <span class="s1">&#39;layer&#39;</span><span class="p">:</span> <span class="s1">&#39;Assembly&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;show.vertices&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-    <span class="s1">&#39;show.interfaces&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-    <span class="s1">&#39;show.edges&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-    <span class="s1">&#39;show.forces&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
-    <span class="s1">&#39;show.forces_as_vectors&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
-    <span class="s1">&#39;mode.interface&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="s1">&#39;scale.force&#39;</span><span class="p">:</span> <span class="mf">1.0</span>
-<span class="p">})</span>
+
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># Visualize</span>
+<span class="c1"># ==============================================================================</span>
+
+<span class="n">artist</span> <span class="o">=</span> <span class="n">AssemblyArtist</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s2">&quot;Wall&quot;</span><span class="p">)</span>
+<span class="n">artist</span><span class="o">.</span><span class="n">clear_layer</span><span class="p">()</span>
+<span class="n">artist</span><span class="o">.</span><span class="n">draw_nodes</span><span class="p">()</span>
+<span class="n">artist</span><span class="o">.</span><span class="n">draw_edges</span><span class="p">()</span>
+<span class="n">artist</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">()</span>
+<span class="n">artist</span><span class="o">.</span><span class="n">draw_interfaces</span><span class="p">()</span>
+<span class="n">artist</span><span class="o">.</span><span class="n">draw_forces</span><span class="p">()</span>
+<span class="n">artist</span><span class="o">.</span><span class="n">redraw</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
@@ -159,11 +170,11 @@
     <footer class="bg-dark pb-5">
         <div class="container text-center pt-5 pb-5 text-muted">
             
-                Last updated on Nov 28, 2019.
+                Last updated on Mar 05, 2020.
             
 
             
-                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.
             
         </div>
     </footer>

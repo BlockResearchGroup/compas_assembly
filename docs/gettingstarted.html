@@ -58,46 +58,88 @@
 
                     <div class="section" id="getting-started">
 <h1>Getting Started</h1>
-<div class="admonition note">
+<div class="section" id="create-an-environment">
+<h2>Create an environment</h2>
+<div class="card">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#replace_python_windows">Windows</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#replace_python_osx">OSX</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="tab-content"><div class="tab-pane active" id="replace_python_windows"><div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>conda create -n dem <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7
+</code></pre></div>
+</div>
+</div>
+<div class="tab-pane" id="replace_python_osx"><div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>conda create -n dem <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7 python.app
+</code></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you intend to install <code class="docutils literal notranslate"><span class="pre">compas_assembly</span></code> in a virtual environment,
-which you should, make sure to activate the environment first.</p>
+<p>You can use any name you like for the environment, except <code class="docutils literal notranslate"><span class="pre">base</span></code>,
+which is the name of the root environment of your conda installation.
+In the instructions here, i have used the name “dem” of “Discrete Element Modeling”.</p>
+</div>
+</div>
+<div class="section" id="activate-the-environment">
+<h2>Activate the environment</h2>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>conda activate dem
+</code></pre></div>
+</div>
 </div>
 <div class="section" id="install-dependencies">
 <h2>Install dependencies</h2>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>conda install -c conda-forge COMPAS
 conda install -c conda-forge shapely
-conda install -c conda-forge PySide2
-conda install -c conda-forge PyOpenGL
-</code></pre></div>
-</div>
-<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>pip install git+https://github.com/compas-dev/compas_viewers.git#egg<span class="o">=</span>compas_viewers
 </code></pre></div>
 </div>
 </div>
 <div class="section" id="install-the-package">
 <h2>Install the package</h2>
+<p>To install directly from GitHub, do</p>
 <div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>pip install git+https://github.com/BlockResearchGroup/compas_assembly.git#egg<span class="o">=</span>compas_assembly
+</code></pre></div>
+</div>
+<p>To install from a local source repo, navigate to the root of the repo, and do</p>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>pip install -e .
 </code></pre></div>
 </div>
 </div>
 <div class="section" id="check-installation">
 <h2>Check installation</h2>
-<p>Start an interactive Python interpreter on the commad line and import the packages.</p>
+<p>Start an interactive Python interpreter on the commad line
+and import the packages to check if the installation procedure was successful.</p>
 <div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">shapely</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">PySide2</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">PyOpenGL</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas_viewers</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">compas_assembly</span>
 </code></pre></div>
 </div>
 </div>
 <div class="section" id="install-package-for-rhino">
 <h2>Install package for Rhino</h2>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">compas_rhino</span><span class="o">.</span><span class="n">install</span> <span class="o">-</span><span class="n">p</span> <span class="n">compas</span> <span class="n">compas_rhino</span> <span class="n">compas_assembly</span>
+<div class="language-bash notranslate"><div class="highlight"><pre><code><span></span>python -m compas_rhino.install -p compas compas_rhino compas_assembly
 </code></pre></div>
 </div>
+</div>
+<div class="section" id="install-equilibrium-solvers">
+<h2>Install equilibrium solvers</h2>
+<p>To compute the equilibrium of an assembly you will need a solver.
+<code class="docutils literal notranslate"><span class="pre">compas_assembly</span></code> is compatible with multiple solver packages:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">compas_rbe</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">compas_3dec</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">compas_prd</span></code></p></li>
+</ul>
+<p>Currently, only <code class="docutils literal notranslate"><span class="pre">compas_rbe</span></code> is publically available.
+Please follow the installation instructions in the <code class="docutils literal notranslate"><span class="pre">compas_rbe</span></code> docs:
+<a class="reference external" href="https://blockresearchgroup.github.io/compas_rbe/">https://blockresearchgroup.github.io/compas_rbe/</a></p>
 </div>
 </div>
 
@@ -153,10 +195,13 @@ conda install -c conda-forge PyOpenGL
 
                 <ul class="nav flex-column" id="compas-localnav">
 <li class="nav-item"><a class="nav-link reference internal" href="#">Getting Started</a><ul class="nav">
+<li class="nav-item"><a class="nav-link reference internal" href="#create-an-environment">Create an environment</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#activate-the-environment">Activate the environment</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#install-dependencies">Install dependencies</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#install-the-package">Install the package</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#check-installation">Check installation</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#install-package-for-rhino">Install package for Rhino</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#install-equilibrium-solvers">Install equilibrium solvers</a></li>
 </ul>
 </li>
 </ul>
@@ -170,11 +215,11 @@ conda install -c conda-forge PyOpenGL
     <footer class="bg-dark pb-5">
         <div class="container text-center pt-5 pb-5 text-muted">
             
-                Last updated on Nov 28, 2019.
+                Last updated on Mar 05, 2020.
             
 
             
-                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+                Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.3.
             
         </div>
     </footer>

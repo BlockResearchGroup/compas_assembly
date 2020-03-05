@@ -23,11 +23,9 @@ AssemblyArtist
         ~AssemblyArtist.clear_interfaces
         ~AssemblyArtist.clear_selfweight
         ~AssemblyArtist.color_interfaces
-        ~AssemblyArtist.draw_block_frame
         ~AssemblyArtist.draw_blocks
         ~AssemblyArtist.draw_forces
-        ~AssemblyArtist.draw_frictions
-        ~AssemblyArtist.draw_iframes
+        ~AssemblyArtist.draw_interface_frames
         ~AssemblyArtist.draw_interfaces
         ~AssemblyArtist.draw_selfweight
 
@@ -37,23 +35,22 @@ AssemblyArtist
         :toctree:
 
     
+        ~AssemblyArtist.build
         ~AssemblyArtist.clear
         ~AssemblyArtist.clear_edgelabels
         ~AssemblyArtist.clear_edges
         ~AssemblyArtist.clear_layer
-        ~AssemblyArtist.clear_vertexlabels
-        ~AssemblyArtist.clear_vertices
-        ~AssemblyArtist.draw_circles
+        ~AssemblyArtist.clear_nodelabels
+        ~AssemblyArtist.clear_nodes
+        ~AssemblyArtist.draw
         ~AssemblyArtist.draw_edgelabels
         ~AssemblyArtist.draw_edges
-        ~AssemblyArtist.draw_lines
-        ~AssemblyArtist.draw_points
-        ~AssemblyArtist.draw_polygons
-        ~AssemblyArtist.draw_polylines
-        ~AssemblyArtist.draw_vertexlabels
-        ~AssemblyArtist.draw_vertices
+        ~AssemblyArtist.draw_nodelabels
+        ~AssemblyArtist.draw_nodes
+        ~AssemblyArtist.from_data
         ~AssemblyArtist.redraw
-        ~AssemblyArtist.save
+        ~AssemblyArtist.register
+        ~AssemblyArtist.to_data
 
     
     
