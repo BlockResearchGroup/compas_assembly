@@ -7,7 +7,7 @@ from compas_plotters import NetworkPlotter
 from compas_plotters import MeshPlotter
 
 from compas.utilities import color_to_rgb
-from compas.geometry import bounding_box_xy
+from compas.geometry import oriented_bounding_box_xy_numpy
 
 
 __all__ = ['AssemblyPlotter']
@@ -92,16 +92,15 @@ class AssemblyPlotter(Plotter):
         fontsizedict  = valuedict(keys, fontsize,  self.block_plotter.defaults['face.fontsize'])
 
         polygons = []
-        for key, attr in self.assembly.nodes(True):
+        for key in self.assembly.nodes():
             block = self.assembly.blocks[key]
-            xyz = block.vertices_attributes('xyz')
-            box = bounding_box_xy(xyz)
-            polygons.append({
-                'points': box,
-                'edgecolor': edgecolordict[key],
-                'edgewidth': edgewidthdict[key],
-                'facecolor': facecolordict[key]
-            })
+            for fkey in block.faces():
+                polygons.append({
+                    'points': block.face_coordinates(fkey),
+                    'edgecolor': edgecolordict[key],
+                    'edgewidth': edgewidthdict[key],
+                    'facecolor': facecolordict[key]
+                })
         collection = self.draw_polygons(polygons)
         self.blockcollection = collection
         return collection

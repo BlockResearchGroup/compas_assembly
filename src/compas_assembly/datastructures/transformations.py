@@ -35,24 +35,10 @@ def assembly_transform(assembly, T):
         assembly_transform(assembly, R)
 
     """
-    points = []
     for key in assembly.nodes():
         block = assembly.blocks[key]
-        xyz = block.vertices_attributes('xyz')
-        points.extend(xyz)
-    points = transform_points(points, T)
-    k = 0
-    for i, (key, a) in enumerate(assembly.nodes(True)):
-        block = assembly.blocks[key]
-        for j, (_, b) in enumerate(block.vertices(True)):
-            b['x'] = points[k][0]
-            b['y'] = points[k][1]
-            b['z'] = points[k][2]
-            k += 1
-        cx, cy, cz = block.centroid()
-        a['x'] = cx
-        a['y'] = cy
-        a['z'] = cz
+        block.transform(T)
+        assembly.node_attributes(key, 'xyz', block.centroid())
 
 
 def assembly_transformed(assembly, T):
