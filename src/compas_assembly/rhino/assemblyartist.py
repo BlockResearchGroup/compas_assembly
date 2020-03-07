@@ -38,20 +38,16 @@ class AssemblyArtist(NetworkArtist):
         super(AssemblyArtist, self).__init__(assembly, layer=layer)
         self.settings.update({
             'color.vertex'            : (0, 0, 0),
-            'color.vertex:is_support' : (255, 0, 0),
+            'color.vertex:is_support' : (0, 0, 0),
             'color.edge'              : (0, 0, 0),
             'color.interface'         : (255, 255, 255),
             'color.force:compression' : (0, 0, 255),
             'color.force:tension'     : (255, 0, 0),
-            'color.force:friction'    : (255, 165, 0),
             'color.selfweight'        : (0, 255, 0),
             'scale.force'             : 0.1,
             'scale.selfweight'        : 0.1,
-            'scale.friction'          : 0.1,
             'eps.selfweight'          : 1e-3,
             'eps.force'               : 1e-3,
-            'eps.friction'            : 1e-3,
-            'range.friction'          : 5,
         })
 
     @property
@@ -63,30 +59,30 @@ class AssemblyArtist(NetworkArtist):
     def assembly(self, assembly):
         self.network = assembly
 
-    def _clear(self, name):
-        name = "{}.{}.*".format(self.assembly.name, name)
-        guids = compas_rhino.get_objects(name=name)
-        compas_rhino.delete_objects(guids)
+    # def _clear(self, name):
+    #     name = "{}.{}.*".format(self.assembly.name, name)
+    #     guids = compas_rhino.get_objects(name=name)
+    #     compas_rhino.delete_objects(guids)
 
-    def clear_blocks(self):
-        """Delete all previously drawn blocks."""
-        self._clear('block')
+    # def clear_blocks(self):
+    #     """Delete all previously drawn blocks."""
+    #     self._clear('block')
 
-    def clear_interfaces(self):
-        """Delete all previously drawn interfaces."""
-        self._clear('interface')
+    # def clear_interfaces(self):
+    #     """Delete all previously drawn interfaces."""
+    #     self._clear('interface')
 
-    def clear_selfweight(self):
-        """Delete all previously drawn self-weight vectors."""
-        self._clear('selfweight')
+    # def clear_selfweight(self):
+    #     """Delete all previously drawn self-weight vectors."""
+    #     self._clear('selfweight')
 
-    def clear_frictions(self):
-        """Delete all previously drawn friction vectors."""
-        self._clear('friction')
+    # def clear_forces(self):
+    #     """Delete all previously drawn force vectors."""
+    #     self._clear('force')
 
-    def clear_forces(self):
-        """Delete all previously drawn force vectors."""
-        self._clear('force')
+    # def clear_resultants(self):
+    #     """Delete all previously drawn resultant vectors."""
+    #     self._clear('resultant')
 
     def draw_blocks(self, keys=None, show_faces=False, show_vertices=False, show_edges=True):
         """Draw the blocks of the assembly.
@@ -162,15 +158,14 @@ class AssemblyArtist(NetworkArtist):
         """
         layer = "{}::Interfaces".format(self.layer) if self.layer else None
         faces = []
-
         keys = keys or list(self.assembly.edges())
         colordict = color_to_colordict(
             color,
             keys,
             default=self.settings.get('color.interface'),
             colorformat='rgb',
-            normalize=False)
-
+            normalize=False
+        )
         for (u, v), attr in self.assembly.edges(True):
             faces.append({
                 'points' : attr['interface_points'],
@@ -184,7 +179,7 @@ class AssemblyArtist(NetworkArtist):
         """
         layer = "{}::Interfaces::Frames".format(self.layer) if self.layer else None
         lines = []
-        for a, b, attr in self.assembly.edges(True):
+        for (a, b), attr in self.assembly.edges(True):
             o = attr['interface_origin']
             u, v, w = attr['interface_uvw']
             lines.append({
@@ -235,22 +230,16 @@ class AssemblyArtist(NetworkArtist):
         scale = scale or self.settings['scale.selfweight']
         eps = eps or self.settings['eps.selfweight']
         color = self.settings['color.selfweight']
-
         lines = []
-
         for key, attr in self.assembly.vertices(True):
             block = self.assembly.blocks[key]
             volume = block.volume()
-
             if volume * scale < eps:
                 continue
-
             vector = [0.0, 0.0, -1.0 * volume * scale]
-
             sp = block.centroid()
             ep = sp[:]
             ep[2] += vector[2]
-
             lines.append({
                 'start' : sp,
                 'end'   : ep,
@@ -258,7 +247,6 @@ class AssemblyArtist(NetworkArtist):
                 'color' : color,
                 'arrow' : 'end'
             })
-
         compas_rhino.draw_lines(lines, layer=layer, clear=False, redraw=False)
 
     def draw_forces(self, scale=None, eps=None, mode=0):
@@ -291,22 +279,16 @@ class AssemblyArtist(NetworkArtist):
         eps = eps or self.settings['eps.force']
         color_compression = self.settings['color.force:compression']
         color_tension = self.settings['color.force:tension']
-
         lines = []
-
         for (a, b), attr in self.assembly.edges(True):
             if attr['interface_forces'] is None:
                 continue
-
             w = attr['interface_uvw'][2]
-
             for i in range(len(attr['interface_points'])):
                 sp = attr['interface_points'][i]
                 c = attr['interface_forces'][i]['c_np']
                 t = attr['interface_forces'][i]['c_nn']
-
                 f = c - t
-
                 if f > 0.0:
                     if scale * f < eps:
                         continue
@@ -317,7 +299,6 @@ class AssemblyArtist(NetworkArtist):
                     color = color_tension
                 else:
                     continue
-
                 lines.append({
                     'start' : sp,
                     'end'   : [sp[axis] + scale * f * w[axis] for axis in range(3)],
@@ -325,216 +306,86 @@ class AssemblyArtist(NetworkArtist):
                     'name'  : "{0}.force.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
                     'arrow' : 'end'
                 })
-
         compas_rhino.draw_lines(lines, layer=layer, clear=False, redraw=False)
 
-    def color_interfaces(self, mode=0):
-        """Color the interfaces with shades of blue and red according to the forces at the corners.
-
-        Parameters
-        ----------
-        mode : int, optional
-            Mode to switch between normal forces(0) and frictions(1)
-            Default is 0.
-
-        Notes
-        -----
-        * Currently only normal forces are taken into account.
-        * Gradients should go from blue to red over white.
-        * White marks the neutral line (the axis of rotational equilibrium).
-        * ...
-
-        Examples
-        --------
-        >>>
+    def draw_resultants(self, scale=1.0, eps=1e-3):
         """
+        """
+        layer = "{}::Resultants".format(self.layer) if self.layer else None
+        scale = scale or self.settings['scale.force']
+        eps = eps or self.settings['eps.force']
+        color_compression = self.settings['color.force:compression']
+        color_tension = self.settings['color.force:tension']
+        eps2 = eps**2
+        lines = []
+        points = []
+        for key in self.assembly.edges():
+            u, v = key
+            corners = self.assembly.edge_attribute(key, 'interface_points')
+            forces = self.assembly.edge_attribute(key, 'interface_forces')
+            if not forces:
+                continue
+            n = self.assembly.edge_attribute(key, 'interface_uvw')[2]
+            cx, cy, cz = 0, 0, 0
+            p = len(corners)
+            R = 0
+            for point, force in zip(corners, forces):
+                c = force['c_np']
+                t = force['c_nn']
+                f = c - t
+                cx += point[0] * f
+                cy += point[1] * f
+                cz += point[2] * f
+                R += f
+            if R**2 < eps2:
+                continue
+            cx = cx / R
+            cy = cy / R
+            cz = cz / R
+            c = [cx, cy, cz]
+            sp = add_vectors(c, scale_vector(n, R * scale))
+            ep = add_vectors(c, scale_vector(n, -R * scale))
+            if R < 0:
+                color = color_tension
+            else:
+                color = color_compression
+            lines.append({'start': sp, 'end': ep, 'color': color, 'name': "{0}.resultant.{1}-{2}".format(self.assembly.name, u, v)})
+            points.append({'pos': c, 'color': color, 'name': "{0}.resultant.{1}-{2}".format(self.assembly.name, u, v)})
+        compas_rhino.draw_lines(lines, layer=layer, clear=False, redraw=False)
+        compas_rhino.draw_points(points, layer=layer, clear=False, redraw=False)
+
+    def color_interfaces(self, mode=0):
+        """"""
         if mode == 0:
-            # redraw the faces with a discretisation that makes sense for the neutral axis
-            # color the drawn meshes
-            for (u, v), attr in self.assembly.edges(True):
-                if not attr['interface_forces']:
+            return
+        if mode == 1:
+            color_compression = self.settings['color.force:compression']
+            color_tension = self.settings['color.force:tension']
+            resultants = []
+            for key in self.assembly.edges():
+                forces = self.assembly.edge_attribute(key, 'interface_forces')
+                if not forces:
+                    resultants.append(0)
                     continue
-
+                R = 0
+                for force in forces:
+                    c = force['c_np']
+                    t = force['c_nn']
+                    f = c - t
+                    R += f
+                resultants.append(R)
+            Rmax = max(resultants)
+            Rmin = min(resultants)
+            for index, key in enumerate(self.assembly.edges()):
+                u, v = key
                 name = "{}.interface.{}-{}".format(self.assembly.name, u, v)
                 guids = compas_rhino.get_objects(name=name)
                 if not guids:
                     continue
-
                 guid = guids[0]
-
-                forces = [f['c_np'] - f['c_nn'] for f in attr['interface_forces']]
-
-                fmin = min(forces)
-                fmax = max(forces)
-                fmax = max(abs(fmin), fmax)
-
-                colors = []
-
-                p = len(attr['interface_points'])
-
-                for i in range(p):
-                    f = forces[i]
-
-                    if f > 0.0:
-                        color = i_to_blue(f / fmax)
-                    elif f < 0.0:
-                        color = i_to_red(-f / fmax)
-                    else:
-                        color = (255, 255, 255)
-
-                    colors.append(color)
-
-                # this is obviously not correct
-                # just a visual reminder
-                if p > 4:
-                    colors.append((255, 255, 255))
-
-                compas_rhino.set_mesh_vertex_colors(guid, colors)
-
-        elif mode == 1:
-            for u, v, attr in self.assembly.edges(True):
-                if attr['interface_forces'] is None:
-                    continue
-
-                name = "{}.interface.{}-{}".format(self.assembly.name, u, v)
-                guids = compas_rhino.get_objects(name=name)
-                if not guids:
-                    continue
-
-                guid = guids[0]
-
-                iu, iv = attr['interface_uvw'][0], attr['interface_uvw'][1]
-
-                forces = [length_vector(add_vectors(scale_vector(iu, f['c_u']), scale_vector(iv, f['c_v'])))
-                          for f in attr['interface_forces']]
-
-                fmin = min(forces)
-                fmax = max(forces)
-                fmax = max(abs(fmin), fmax)
-                fmax = max(fmax, self.settings['range.friction'])
-
-                colors = []
-
-                p = len(attr['interface_points'])
-
-                for i in range(p):
-                    f = forces[i]
-
-                    if f > 0.0:
-                        color = i_to_red(f / fmax)
-                    else:
-                        color = (255, 255, 255)
-
-                    colors.append(color)
-
-                # this is obviously not correct
-                # just a visual reminder
-                if p > 4:
-                    colors.append((255, 255, 255))
-
-                compas_rhino.set_mesh_vertex_colors(guid, colors)
-
-        else:
-            print("please choose mode 0 or 1")
-
-    # def draw_frictions(self, scale=None, eps=None, mode=0):
-    #     """Draw the contact frictions at the interfaces.
-
-    #     Parameters
-    #     ----------
-    #     scale : float, optional
-    #         The scale at which the forces should be drawn.
-    #         Default is `0.1`.
-    #     eps : float, optional
-    #         A tolerance for drawing small force vectors.
-    #         Force vectors with a scaled length smaller than this tolerance are not drawn.
-    #         Default is `1e-3`.
-    #     mode : int, optional
-    #         Display mode: 0 normal, 1 resultant forces
-    #         Default is 0
-
-    #     Notes
-    #     -----
-    #     * Forces are drawn as lines with arrow heads.
-    #     * Forces are drawn on a sub-layer *Frictions* of the base layer, if a base layer was specified.
-    #     * Forces are named according to the following pattern:
-    #       ``"{assembly_name}.friction.{from block}-{to block}.{interface point}"``
-
-    #     """
-    #     layer = "{}::Frictions".format(self.layer) if self.layer else None
-    #     scale = scale or self.settings['scale.friction']
-    #     eps = eps or self.settings['eps.friction']
-    #     color_friction = self.settings['color.force:friction']
-
-    #     lines = []
-    #     resultant_lines = []
-
-    #     for (a, b), attr in self.assembly.edges(True):
-    #         if attr['interface_forces'] is None:
-    #             continue
-
-    #         u, v = attr['interface_uvw'][0], attr['interface_uvw'][1]
-
-    #         forces = []
-
-    #         for i in range(len(attr['interface_points'])):
-    #             sp = attr['interface_points'][i]
-    #             fr_u_unit = attr['interface_forces'][i]['c_u']
-    #             fr_v_unit = attr['interface_forces'][i]['c_v']
-
-    #             fr_u = scale_vector(u, fr_u_unit)
-    #             fr_v = scale_vector(v, fr_v_unit)
-    #             f = add_vectors(fr_u, fr_v)
-    #             f_l = length_vector(f)
-
-    #             if f_l > 0.0:
-    #                 if scale * f_l < eps:
-    #                     continue
-    #                 color = color_friction
-    #             else:
-    #                 continue
-
-    #             f = scale_vector(f, scale)
-
-    #             lines.append({
-    #                 'start' : sp,
-    #                 'end'   : [sp[axis] + f[axis] for axis in range(3)],
-    #                 'color' : color,
-    #                 'name'  : "{0}.friction.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
-    #                 'arrow' : 'end'
-    #             })
-
-    #             if mode == 1:
-    #                 forces.append(f)
-
-    #         if mode == 0:
-    #             continue
-
-    #         resultant_force = sum_vectors(forces)
-
-    #         if len(forces) == 0:
-    #             continue
-
-    #         resultant_pt = sum_vectors([
-    #             scale_vector(attr['interface_points'][i], (
-    #                 length_vector(forces[i]) / length_vector(resultant_force)))
-    #             for i in range(len(attr['interface_points']))
-    #         ])
-
-    #         resultant_lines.append({
-    #             'start' : resultant_pt,
-    #             'end'   : [resultant_pt[axis] + resultant_force[axis] for axis in range(3)],
-    #             'color' : color,
-    #             'name'  : "{0}.resultant-friction.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
-    #             'arrow' : 'end'
-    #         })
-
-    #     if mode == 0:
-    #         compas_rhino.draw_lines(
-    #             lines, layer=layer, clear=False, redraw=False)
-    #     else:
-    #         compas_rhino.draw_lines(
-    #             resultant_lines, layer=layer, clear=False, redraw=False)
+                R = resultants[index]
+                color = i_to_blue((R - Rmin) / (Rmax - Rmin))
+                compas_rhino.rs.ObjectColor(guid, color)
 
 
 # ==============================================================================

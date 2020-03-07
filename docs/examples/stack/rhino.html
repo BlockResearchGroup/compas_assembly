@@ -59,7 +59,7 @@
                     <div class="section" id="visualise-in-rhino">
 <h1>Visualise in Rhino</h1>
 <div class="figure align-default">
-<img alt="../../_images/stack_rhino.jpg" class="figure-img img-fluid" src="../../_images/stack_rhino.jpg" />
+<img alt="../../_images/stack_rhino.png" class="figure-img img-fluid" src="../../_images/stack_rhino.png" />
 </div>
 <div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
@@ -87,11 +87,10 @@
 
 <span class="n">artist</span> <span class="o">=</span> <span class="n">AssemblyArtist</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s2">&quot;Wall&quot;</span><span class="p">)</span>
 <span class="n">artist</span><span class="o">.</span><span class="n">clear_layer</span><span class="p">()</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_nodes</span><span class="p">()</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_edges</span><span class="p">()</span>
 <span class="n">artist</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">()</span>
 <span class="n">artist</span><span class="o">.</span><span class="n">draw_interfaces</span><span class="p">()</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_forces</span><span class="p">()</span>
+<span class="n">artist</span><span class="o">.</span><span class="n">draw_resultants</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">artist</span><span class="o">.</span><span class="n">color_interfaces</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">artist</span><span class="o">.</span><span class="n">redraw</span><span class="p">()</span>
 </code></pre></div>
 </div>
@@ -171,7 +170,7 @@
     <footer class="bg-dark pb-5">
         <div class="container text-center pt-5 pb-5 text-muted">
             
-                Last updated on Mar 05, 2020.
+                Last updated on Mar 06, 2020.
             
 
             

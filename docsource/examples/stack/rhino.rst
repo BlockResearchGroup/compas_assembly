@@ -2,7 +2,7 @@
 Visualise in Rhino
 ******************
 
-.. figure:: /_images/stack_rhino.jpg
+.. figure:: /_images/stack_rhino.png
     :figclass: figure
     :class: figure-img img-fluid
 

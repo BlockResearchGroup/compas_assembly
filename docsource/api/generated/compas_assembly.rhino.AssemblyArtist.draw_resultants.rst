@@ -1,8 +1,8 @@
 .. rst-class:: detail
 
-AssemblyArtist.clear_frictions
+AssemblyArtist.draw_resultants
 ====================================================
 
 .. currentmodule:: compas_assembly.rhino
 
-.. automethod:: AssemblyArtist.clear_frictions
+.. automethod:: AssemblyArtist.draw_resultants
