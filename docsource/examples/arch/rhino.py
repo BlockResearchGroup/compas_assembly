@@ -1,7 +1,6 @@
 import os
-
 from compas_assembly.datastructures import Assembly
-from compas_rbe.equilibrium import compute_interface_forces_cvx
+from compas_assembly.rhino import AssemblyArtist
 
 
 try:
@@ -10,24 +9,24 @@ except NameError:
     HERE = os.getcwd()
 
 DATA = os.path.join(HERE, '../../../data')
-FILE_I = os.path.join(DATA, 'wall_interfaces.json')
-FILE_O = os.path.join(DATA, 'wall_equilibrium.json')
+FILE = os.path.join(DATA, 'arch.json')
 
 
 # ==============================================================================
 # Load assembly from file
 # ==============================================================================
 
-assembly = Assembly.from_json(FILE_I)
+assembly = Assembly.from_json(FILE)
 
 # ==============================================================================
-# Interface forces
+# Visualize
 # ==============================================================================
 
-compute_interface_forces_cvx(assembly, solver='CVXOPT', verbose=True)
-
-# ==============================================================================
-# Export
-# ==============================================================================
-
-assembly.to_json(FILE_O)
+artist = AssemblyArtist(assembly, layer="Arch")
+artist.clear_layer()
+artist.draw_nodes()
+artist.draw_edges()
+artist.draw_blocks()
+artist.draw_interfaces()
+artist.draw_forces()
+artist.redraw()
