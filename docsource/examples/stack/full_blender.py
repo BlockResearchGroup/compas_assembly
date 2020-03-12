@@ -76,7 +76,7 @@ assembly.node_attribute(0, 'is_support', True)
 # Identify the interfaces
 # ==============================================================================
 
-assembly_interfaces_numpy(assembly, tmax=0.02)
+assembly_interfaces_numpy(assembly)
 
 # ==============================================================================
 # Compute interface forces
@@ -92,20 +92,7 @@ compas_blender.delete_all_objects()
 
 artist = AssemblyArtist(assembly, layer="Assembly")
 
-# blocks
-# ======
-
 artist.draw_nodes()
-
-artist.draw_blocks()
-
-# interfaces
-# ==========
-
 artist.draw_edges()
-
+artist.draw_blocks()
 artist.draw_interfaces()
-
-# forces
-# ======
-

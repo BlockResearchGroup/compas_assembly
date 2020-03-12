@@ -139,7 +139,7 @@
 <span class="c1"># Identify the interfaces</span>
 <span class="c1"># ==============================================================================</span>
 
-<span class="n">assembly_interfaces_numpy</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="mf">0.02</span><span class="p">)</span>
+<span class="n">assembly_interfaces_numpy</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
 
 <span class="c1"># ==============================================================================</span>
 <span class="c1"># Compute interface forces</span>
@@ -155,23 +155,10 @@
 
 <span class="n">artist</span> <span class="o">=</span> <span class="n">AssemblyArtist</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s2">&quot;Assembly&quot;</span><span class="p">)</span>
 
-<span class="c1"># blocks</span>
-<span class="c1"># ======</span>
-
 <span class="n">artist</span><span class="o">.</span><span class="n">draw_nodes</span><span class="p">()</span>
-
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">()</span>
-
-<span class="c1"># interfaces</span>
-<span class="c1"># ==========</span>
-
 <span class="n">artist</span><span class="o">.</span><span class="n">draw_edges</span><span class="p">()</span>
-
+<span class="n">artist</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">()</span>
 <span class="n">artist</span><span class="o">.</span><span class="n">draw_interfaces</span><span class="p">()</span>
-
-<span class="c1"># forces</span>
-<span class="c1"># ======</span>
-
 </code></pre></div>
 </div>
 </div>

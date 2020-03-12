@@ -11,3 +11,4 @@ Semi-circular arch
    arch/interfaces
    arch/equilibrium
    arch/rhino
+   arch/full_blender
