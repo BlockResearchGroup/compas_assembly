@@ -11,3 +11,4 @@ Stack of blocks
    stack/interfaces
    stack/equilibrium
    stack/rhino
+   stack/full_blender
