@@ -11,7 +11,7 @@ __all__ = ['BlockView', 'InterfaceView']
 
 
 class BlockView(object):
-    
+
     def __init__(self, block):
         self._block = None
         self._xyz = None
@@ -46,7 +46,7 @@ class BlockView(object):
         self._block = block
 
         key_index = block.key_index()
-        xyz = block.get_vertices_attributes('xyz')
+        xyz = block.vertices_attributes('xyz')
         faces = []
 
         for fkey in block.faces():

@@ -45,14 +45,13 @@ class AssemblyViewer(App):
 
 if __name__ == '__main__':
 
-    from compas_assembly.datastructures import Assembly
-    import compas_assembly
     import os
+    import compas_assembly
+    from compas_assembly.datastructures import Assembly
 
     assembly = Assembly.from_json(os.path.join(compas_assembly.DATA, 'stack.json'))
 
     viewer = AssemblyViewer()
-
     viewer.assembly = assembly
     viewer.show()
 
