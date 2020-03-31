@@ -86,10 +86,10 @@ def arch_from_rise_and_span(height, span, depth, thickness, n):
 # Assembly
 # ==============================================================================
 
-height = 3
+height = 5
 span = 10
-depth = 0.7
-thickness = 1
+depth = 0.5
+thickness = 0.7
 n = 40
 
 assembly = arch_from_rise_and_span(height, span, depth, thickness, n)
@@ -113,8 +113,11 @@ compute_interface_forces_cvx(assembly, solver='CPLEX')
 compas_blender.delete_all_objects()
 
 artist = AssemblyArtist(assembly, layer="Assembly")
+# artist = ArchArtist(arch, name="Arch")
+# node = blender.add(arch, name="Arch", settings={})
 
 artist.draw_nodes()
 artist.draw_edges()
-artist.draw_blocks()
-artist.draw_interfaces()
+artist.draw_blocks(show_faces=False, show_vertices=False, show_edges=True)
+artist.draw_interfaces(colormode='contact')
+artist.draw_resultants(scale=0.1)
