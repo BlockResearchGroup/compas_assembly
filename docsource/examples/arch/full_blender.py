@@ -3,7 +3,6 @@ import compas_blender
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import assembly_interfaces_numpy
 from compas_assembly.geometry import Arch
-
 from compas_assembly.blender import AssemblyArtist
 
 from compas_rbe.equilibrium import compute_interface_forces_cvx
@@ -18,7 +17,7 @@ depth = 0.5
 thickness = 0.7
 n = 40
 
-arch = Arch.from_rise_and_span(rise, span, thickness, n, depth)
+arch = Arch(rise, span, thickness, depth, n)
 assembly = Assembly.from_geometry(arch)
 
 assembly.node_attribute(0, 'is_support', True)
@@ -43,8 +42,6 @@ compute_interface_forces_cvx(assembly, solver='CPLEX')
 compas_blender.delete_all_objects()
 
 artist = AssemblyArtist(assembly, layer="Assembly")
-# artist = ArchArtist(arch, name="Arch")
-# node = blender.add(arch, name="Arch", settings={})
 
 artist.draw_nodes()
 artist.draw_edges()

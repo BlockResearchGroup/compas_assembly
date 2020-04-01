@@ -8,7 +8,10 @@ __all__ = ['Geometry']
 class Geometry(object):
 
     def __init__(self):
-        self.blocks = None
+        pass
+
+    def blocks(self):
+        raise NotImplementedError
 
 
 # ==============================================================================
