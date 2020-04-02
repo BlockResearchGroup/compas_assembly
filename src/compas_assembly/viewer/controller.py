@@ -109,11 +109,11 @@ class Controller(core.controller.Controller):
         self._assembly = assembly
 
         self._blocks = []
-        for key, attr in assembly.vertices(True):
+        for key, attr in assembly.nodes(True):
             self._blocks.append(BlockView(assembly.blocks[key]))
 
         self._interfaces = []
-        for u, v, attr in assembly.edges(True):
+        for (u, v), attr in assembly.edges(True):
             self._interfaces.append(InterfaceView(attr))
 
     @property
@@ -125,9 +125,9 @@ class Controller(core.controller.Controller):
         return self._interfaces
 
     def center_assembly(self):
-        xyz = self.assembly.get_vertices_attributes('xyz')
+        xyz = self.assembly.nodes_attributes('xyz')
         cx, cy, cz = centroid_points(xyz)
-        for key, attr in self.assembly.vertices(True):
+        for key, attr in self.assembly.nodes(True):
             attr['x'] -= cx
             attr['y'] -= cy
             attr['z'] -= cz

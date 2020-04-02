@@ -23,7 +23,7 @@ assembly = Assembly.from_json(FILE_I)
 # Equilibrium
 # ==============================================================================
 
-compute_interface_forces_cvx(assembly, solver='CPLEX', verbose=True)
+compute_interface_forces_cvx(assembly, solver='CPLEX', verbose=False)
 
 # ==============================================================================
 # Export

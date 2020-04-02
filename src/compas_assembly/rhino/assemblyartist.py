@@ -376,6 +376,8 @@ class AssemblyArtist(NetworkArtist):
                 resultants.append(R)
             Rmax = max(resultants)
             Rmin = min(resultants)
+            print(Rmax)
+            print(Rmin)
             for index, key in enumerate(self.assembly.edges()):
                 u, v = key
                 name = "{}.interface.{}-{}".format(self.assembly.name, u, v)

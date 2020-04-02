@@ -9,6 +9,7 @@ compas_assembly
 .. toctree::
     :maxdepth: 1
 
+    compas_assembly.blender
     compas_assembly.datastructures
     compas_assembly.plotter
     compas_assembly.rhino
