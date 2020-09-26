@@ -15,16 +15,16 @@ compas_assembly
     compas_assembly.rhino
 
 """
-
 from __future__ import print_function
+from __future__ import absolute_import
+from __future__ import division
 
 import os
 
-
-__author__    = ['Tom Van Mele <van.mele@arch.ethz.ch>']
+__author__ = ['Tom Van Mele <van.mele@arch.ethz.ch>']
 __copyright__ = 'Block Research Group - ETH Zurich'
-__license__   = 'MIT License'
-__email__     = 'van.mele@arch.ethz.ch'
+__license__ = 'MIT License'
+__email__ = 'van.mele@arch.ethz.ch'
 
 __version__ = '0.2.1'
 
