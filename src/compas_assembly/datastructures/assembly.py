@@ -43,4 +43,22 @@ class Assembly(BaseAssembly):
 # ==============================================================================
 
 if __name__ == '__main__':
-    pass
+
+    from compas_assembly.geometry import Arch
+    from compas_assembly.datastructures import Assembly
+
+    rise = 5
+    span = 10
+    depth = 0.5
+    thickness = 0.7
+
+    arch = Arch(rise, span, thickness, depth, n=40)
+
+    arch.rise = 7
+    arch.n = 20
+    assembly = Assembly.from_geometry(arch)
+
+    arch.n = 40
+    assembly = Assembly.from_geometry(arch)
+
+
