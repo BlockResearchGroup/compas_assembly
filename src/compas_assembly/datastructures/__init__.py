@@ -51,11 +51,13 @@ from .core import *
 from .assembly import Assembly
 
 from .hull import *
+
 if not compas.IPY:
     from .hull_numpy import *
+
 if not compas.IPY:
     from .interfaces_numpy import *
-# from .sequencing import *
+
 from .transformations import *
 
 
