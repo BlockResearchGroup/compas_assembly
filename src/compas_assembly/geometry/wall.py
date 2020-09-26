@@ -16,8 +16,6 @@ class Wall(Geometry):
 
     """
 
-    __module__ = 'compas_assembly.geometry'
-
     def __init__(self):
         super(Wall, self).__init__()
 

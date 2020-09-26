@@ -7,8 +7,6 @@ __all__ = ['Geometry']
 
 class Geometry(object):
 
-    __module__ = 'compas_assembly.geometry'
-
     def __init__(self):
         pass
 

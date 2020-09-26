@@ -39,8 +39,6 @@ class Arch(Geometry):
 
     """
 
-    __module__ = 'compas_assembly.geometry'
-
     def __init__(self, rise, span, thickness, depth, n=None):
         super(Arch, self).__init__()
         self.rise = rise

@@ -16,8 +16,6 @@ class Dome(Geometry):
 
     """
 
-    __module__ = 'compas_assembly.geometry'
-
     def __init__(self):
         super(Dome, self).__init__()
 
