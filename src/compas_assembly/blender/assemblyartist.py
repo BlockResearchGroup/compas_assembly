@@ -20,7 +20,7 @@ from compas.geometry import sum_vectors
 
 import compas_blender
 
-from compas_blender.artists import Artist
+from compas_blender.artists import BaseArtist
 from compas_blender.artists import MeshArtist
 from compas_blender.artists import NetworkArtist
 
@@ -28,85 +28,6 @@ from compas_assembly.blender.blockartist import BlockArtist
 
 
 __all__ = ['AssemblyArtist']
-
-
-def draw_points(points, collection):
-    add_point = compas_blender.bpy.ops.surface.primitive_nurbs_surface_sphere_add
-    objects = []
-    for point in points:
-        xyz = point['pos']
-        radius = point.get('radius', 0.03)
-        name = point['name']
-        color = list(point['color'])
-        add_point(radius=radius, location=xyz)
-        obj = compas_blender.bpy.context.active_object
-        obj.name = name
-        compas_blender.drawing.set_object_color(obj, color)
-        objects.append(obj)
-    for o in objects:
-        for c in obj.users_collection:
-            c.objects.unlink(o)
-        collection.objects.link(o)
-
-
-def draw_lines(lines, collection):
-    objects = []
-    for line in lines:
-        a = line['start']
-        b = line['end']
-        name = line['name']
-        color = list(line.get('color', [0.0, 0.0, 0.0]))
-        width = line.get('width', 0.01)
-        resolution = line.get('resolution', 8)
-        m = midpoint_point_point(a, b)
-        curve = compas_blender.bpy.data.curves.new(name, type='CURVE')
-        curve.dimensions = '3D'
-        curve.fill_mode = 'FULL'
-        curve.bevel_depth = width
-        curve.bevel_resolution = resolution
-        curve.use_fill_caps = True
-        spline = curve.splines.new('POLY')
-        spline.points.add(2)
-        spline.points[0].co = subtract_vectors(a, m) + [1.0]
-        spline.points[1].co = subtract_vectors(b, m) + [1.0]
-        spline.order_u = 2
-        obj = compas_blender.bpy.data.objects.new(name, curve)
-        obj.location = m
-        compas_blender.drawing.set_object_color(obj, color)
-        objects.append(obj)
-    for o in objects:
-        for c in o.users_collection:
-            c.objects.unlink(o)
-        collection.objects.link(o)
-
-
-def draw_meshes(meshes, collection):
-    pass
-
-
-def draw_faces(faces, collection):
-    pass
-
-
-def draw_spheres(spheres, collection):
-    add_sphere = compas_blender.bpy.ops.mesh.primitive_uv_sphere_add
-    objects = []
-    for sphere in spheres:
-        add_sphere(location=[0, 0, 0], radius=1.0, segments=10, ring_count=10)
-        pos = sphere['pos']
-        radius = sphere['radius']
-        name = sphere['name']
-        color = sphere['color']
-        obj = compas_blender.bpy.context.active_object
-        obj.location = pos
-        obj.scale = radius
-        obj.name = name
-        compas_blender.drawing.set_object_color(obj, color)
-        objects.apend(obj)
-    for o in objects_vertices:
-        for c in o.user_collection:
-            c.objects.unlink(o)
-        collection.objects.link(o)
 
 
 class AssemblyArtist(NetworkArtist):
@@ -125,28 +46,23 @@ class AssemblyArtist(NetworkArtist):
     >>>
     """
 
-    def __init__(self, assembly, layer=None):
-        super(AssemblyArtist, self).__init__(assembly, layer=layer)
-        self.settings = {
-            'color.vertex'            : (0, 0, 0),
-            'color.vertex:is_support' : (0, 0, 0),
-            'color.edge'              : (0, 0, 0),
-            'color.interface'         : (255, 255, 255),
-            'color.force:compression' : (0, 0, 255),
-            'color.force:tension'     : (255, 0, 0),
-            'color.selfweight'        : (0, 255, 0),
-            'scale.force'             : 0.1,
-            'scale.selfweight'        : 0.1,
-            'eps.selfweight'          : 1e-3,
-            'eps.force'               : 1e-3,
-        }
-        layer = layer or "Assembly"
-        self.assembly_collection = compas_blender.create_collection(layer)
-        self.node_collection = compas_blender.create_collection("Nodes", parent=self.assembly_collection)
-        self.link_collection = compas_blender.create_collection("Links", parent=self.assembly_collection)
-        self.block_collection = compas_blender.create_collection("Blocks", parent=self.assembly_collection)
-        self.interface_collection = compas_blender.create_collection("Interfaces", parent=self.assembly_collection)
-        self.resultant_collection = compas_blender.create_collection("Resultants", parent=self.assembly_collection)
+    def __init__(self, assembly):
+        super().__init__(assembly)
+        self._blockcollection = None
+        self._interfacecollection = None
+        self._resultantcollection = None
+        self._object_block = {}
+        self._object_interface = {}
+        self._object_resultant = {}
+        self.color_blocks = (1.0, 1.0, 1.0)
+        self.color_interfaces = (1.0, 1.0, 1.0)
+        self.color_compression = (0.0, 0.0, 1.0)
+        self.color_tension = (1.0, 0.0, 0.0)
+        self.color_selfweight = (0.0, 1.0, 0.0)
+        self.scale_forces = 0.1
+        self.scale_selfweight = 0.1
+        self.eps_selfweight = 1e-3
+        self.eps_forces = 1e-3
 
     @property
     def assembly(self):
@@ -157,184 +73,141 @@ class AssemblyArtist(NetworkArtist):
     def assembly(self, assembly):
         self.network = assembly
 
-    def draw_nodes(self, keys=None):
-        points = []
-        for key in self.assembly.nodes():
-            pos = self.assembly.node_attributes(key, 'xyz')
-            color = [1.0, 0.0, 0.0] if self.assembly.node_attribute(key, 'is_support') else [1.0, 1.0, 1.0]
-            name = "Assembly.node.{}".format(key)
-            points.append({'pos': pos, 'name': name, 'color': color, 'radius': 0.02})
-        draw_points(points, self.node_collection)
+    @property
+    def blockcollection(self):
+        path = f"{self.assembly.name}::Blocks"
+        if not self._blockcollection:
+            self._blockcollection = compas_blender.create_collections_from_path(path)[1]
+        return self._blockcollection
 
-    def draw_blocks(self, keys=None, show_faces=True, show_vertices=False, show_edges=False):
+    @property
+    def interfacecollection(self):
+        path = f"{self.assembly.name}::Interfaces"
+        if not self._interfacecollection:
+            self._interfacecollection = compas_blender.create_collections_from_path(path)[1]
+        return self._interfacecollection
+
+    @property
+    def resultantcollection(self):
+        path = f"{self.assembly.name}::Resultants"
+        if not self._resultantcollection:
+            self._resultantcollection = compas_blender.create_collections_from_path(path)[1]
+        return self._resultantcollection
+
+    @property
+    def object_block(self):
+        if not self._object_block:
+            self._object_block = {}
+        return self._object_block
+
+    @object_block.setter
+    def object_block(self, values):
+        self._object_block = dict(values)
+
+    @property
+    def object_interface(self):
+        if not self._object_interface:
+            self._object_interface = {}
+        return self._object_interface
+
+    @object_interface.setter
+    def object_interface(self, values):
+        self._object_interface = dict(values)
+
+    @property
+    def object_resultant(self):
+        if not self._object_resultant:
+            self._object_resultant = {}
+        return self._object_resultant
+
+    @object_resultant.setter
+    def object_resultant(self, values):
+        self._object_resultant = dict(values)
+
+    def clear(self):
+        super().clear()
+        objects = list(self.object_block)
+        compas_blender.delete_objects(objects, purge_data=True)
+        self._object_block = {}
+
+    def draw(self):
+        self.draw_nodes()
+        self.draw_edges()
+        self.draw_blocks()
+
+    def draw_blocks(self, nodes=None):
         """Draw the blocks of the assembly.
-
-        Parameters
-        ----------
-        show_faces : bool, optional
-            Draw the faces of the blocks.
-            Default is ``False``.
-        show_vertices : bool, optional
-            Draw the vertices of the blocks.
-            Default is ``False``.
-        show_edges : bool, optional
-            Draw the edges of the blocks.
-            Default is ``True``.
-
-        Notes
-        -----
-        * By default, blocks are drawn as wireframes.
-        * By default, blocks are drawn on a sublayer of the base layer, if a base layer was specified.
-        * Block names have the following pattern: ``"{assembly_name}.block.{block_id}"``
-        * Faces and vertices can be drawn using the corresponding flags.
-        * Block components have the following pattern:
-
-          * face: ``"{assembly_name}.block.{block_id}.face.{face_id}"``
-          * edge: ``"{assembly_name}.block.{block_id}.edge.{edge_id}"``
-          * vertex: ``"{assembly_name}.block.{block_id}.vertex.{vertex_id}"``
-
-        Examples
-        --------
-        >>>
         """
-        blocks = []
-        for key in self.assembly.nodes():
-            # data
-            block = self.assembly.blocks[key]
-            centroid = block.centroid()
-            T = Translation(subtract_vectors([0, 0, 0], centroid))
-            vertices = transform_points(block.vertices_attributes('xyz'), T)
-            edges = list(block.edges())
-            faces = [block.face_vertices(fkey) for fkey in block.faces()]
-            color = [1.0, 0.0, 0.0] if self.assembly.node_attribute(key, 'is_support') else [1.0, 1.0, 1.0]
-            # collections
-            name = "Assembly.block.{}".format(key)
-            collection = compas_blender.create_collection(name, parent=self.block_collection)
-            # vertices
-            if show_vertices:
-                collection_vertices = compas_blender.create_collection("{}.vertices".format(name), parent=collection)
-                points = []
-                for u in block.vertices():
-                    pos = block.vertex_attributes(u, 'xyz')
-                    name = "{}.vertex.{}".format(name, u)
-                    radius = 0.01
-                    points.append({'pos': pos, 'name': name, 'color': color, 'radius': radius})
-                draw_points(points, collection_vertices)
-            # faces
-            if show_faces:
-                collection_faces = compas_blender.create_collection("{}.faces".format(name), parent=collection)
-                objects_faces = []
-                mesh = compas_blender.bpy.data.meshes.new(name)
-                mesh.from_pydata(vertices, edges, faces)
-                obj = compas_blender.bpy.data.objects.new(name, mesh)
-                obj.show_wire = True
-                obj.location = centroid
-                objects_faces.append(obj)
-                for o in objects_faces:
-                    for c in o.users_collection:
-                        c.objects.unlink(o)
-                    collection_faces.objects.link(o)
-                    compas_blender.drawing.set_object_color(o, color)
-            # edges
-            if show_edges:
-                collection_edges = compas_blender.create_collection("{}.edges".format(name), parent=collection)
-                lines = []
-                for u, v in block.edges():
-                    start = block.vertex_attributes(u, 'xyz')
-                    end = block.vertex_attributes(v, 'xyz')
-                    name = "{}.edge.{}-{}".format(name, u, v)
-                    width = 0.01
-                    lines.append({'start': start, 'end': end, 'color': color, 'name': name, 'width': width})
-                draw_lines(lines, collection_edges)
+        nodes = nodes or list(self.assembly.nodes())
+        objects = []
+        for node in nodes:
+            block = self.assembly.blocks[node]
+            vertices, faces = block.to_vertices_and_faces()
+            obj = compas_blender.draw_mesh(vertices, faces, name=block.name, collection=self.blockcollection)
+            objects.append(obj)
+        self.object_block = zip(objects, nodes)
+        return objects
 
-    def draw_edges(self, keys=None):
-        lines = []
-        color = [0.0, 0.0, 0.0]
-        for key in self.assembly.edges():
-            u, v = key
-            name = "Assembly.edge.{}-{}".format(u, v)
-            a = self.assembly.node_attributes(u, 'xyz')
-            b = self.assembly.node_attributes(v, 'xyz')
-            lines.append({'start': a, 'end': b, 'name': name, 'color': color, 'width': 0.01})
-        draw_lines(lines, self.link_collection)
-
-    def draw_interfaces(self, keys=None, color=None):
+    def draw_interfaces(self, edges=None):
         """Draw the interfaces between the blocks.
-
-        Parameters
-        ----------
-        keys : list
-            A list of interface identifiers (i.e. assembly edge (u, v) tuples).
-            Default is ``None``, in which case all interfaces are drawn.
-        color : str, tuple, dict
-            The color specififcation for the interfaces.
-            Colors should be specified in the form of a string (hex colors) or
-            as a tuple of RGB components.
-            To apply the same color to all interfaces, provide a single color
-            specification. Individual colors can be assigned using a dictionary
-            of key-color pairs. Missing keys will be assigned the default interface
-            color (``self.settings['color.interface']``).
-            The default is ``None``, in which case all interfaces are assigned the
-            default interface color.
-
-        Notes
-        -----
-        * Interfaces are drawn as mesh faces.
-        * Interfaces are drawn on a sub-layer *Interfaces* of the base layer, if a base layer was provided.
-        * Interface names have the following pattern: ``"{assembly_name}.interface.{from block_id}-{to block_id}"``
-        * Interfaces have a direction, as suggested by the naming convention.
         """
-        interfaces = []
-        for key, attr in self.assembly.edges(True):
-            u, v = key
-            name = "Assembly.interface.{}-{}".format(u, v)
-            points = attr['interface_points']
-            base = attr['interface_origin']
-            T = Translation(subtract_vectors([0, 0, 0], base))
-            vertices = transform_points(points, T)
+        edges = edges or list(self.assembly.edges())
+        objects = []
+        for edge in edges:
+            name = f"Interface.{edge[0]}-{edge[1]}"
+            vertices = self.assembly.edge_attribute(edge, 'interface_points')
             faces = [list(range(len(vertices)))]
-            edges = list(pairwise(faces[0] + [0]))
-            mesh = compas_blender.bpy.data.meshes.new(name)
-            mesh.from_pydata(vertices, edges, faces)
-            obj = compas_blender.bpy.data.objects.new(name, mesh)
-            obj.location = base
-            compas_blender.drawing.set_object_color(obj, [0, 0, 1.0])
-            interfaces.append(obj)
-        for obj in interfaces:
-            for col in obj.users_collection:
-                col.objects.unlink(obj)
-            self.interface_collection.objects.link(obj)
+            obj = compas_blender.draw_mesh(vertices, faces, name=name, collection=self.interfacecollection)
+            objects.append(obj)
+        self.object_interface = zip(objects, edges)
+        return objects
 
-    # def draw_interface_frames(self):
-    #     """Draw the frames of the interfaces.
-    #     """
-    #     layer = "{}::Interfaces::Frames".format(self.layer) if self.layer else None
-    #     lines = []
-    #     for (a, b), attr in self.assembly.edges(True):
-    #         o = attr['interface_origin']
-    #         u, v, w = attr['interface_uvw']
-    #         lines.append({
-    #             'start' : o,
-    #             'end'   : add_vectors(o, u),
-    #             'name'  : "{}.iframe.{}-{}.u".format(self.assembly.name, a, b),
-    #             'color' : (255, 0, 0),
-    #             'arrow' : 'end'
-    #         })
-    #         lines.append({
-    #             'start' : o,
-    #             'end'   : add_vectors(o, v),
-    #             'name'  : "{}.iframe.{}-{}.v".format(self.assembly.name, a, b),
-    #             'color' : (0, 255, 0),
-    #             'arrow' : 'end'
-    #         })
-    #         lines.append({
-    #             'start' : o,
-    #             'end'   : add_vectors(o, w),
-    #             'name'  : "{}.iframe.{}-{}.w".format(self.assembly.name, a, b),
-    #             'color' : (0, 0, 255),
-    #             'arrow' : 'end'
-    #         })
-    #     self.draw_lines(lines, layer=layer, clear=True, redraw=True)
+    def draw_resultants(self, scale=1.0, eps=1e-3):
+        """
+        """
+        edges = list(self.assembly.edges())
+        scale = scale or self.scale_forces
+        eps = eps or self.eps_forces
+        eps2 = eps**2
+        points = []
+        # lines = []
+        for edge in edges:
+            u, v = edge
+            corners = self.assembly.edge_attribute(edge, 'interface_points')
+            forces = self.assembly.edge_attribute(edge, 'interface_forces')
+            if not forces:
+                continue
+            n = self.assembly.edge_attribute(edge, 'interface_uvw')[2]
+            cx, cy, cz = 0, 0, 0
+            p = len(corners)
+            R = 0
+            for point, force in zip(corners, forces):
+                c = force['c_np']
+                t = force['c_nn']
+                f = c - t
+                cx += point[0] * f
+                cy += point[1] * f
+                cz += point[2] * f
+                R += f
+            if R**2 < eps2:
+                continue
+            cx = cx / R
+            cy = cy / R
+            cz = cz / R
+            c = [cx, cy, cz]
+            sp = add_vectors(c, scale_vector(n, R * scale))
+            ep = add_vectors(c, scale_vector(n, -R * scale))
+            if R < 0:
+                color = self.color_tension
+                radius = -R * scale
+            else:
+                color = self.color_compression
+                radius = +R * scale
+            points.append({'pos': c, 'radius': radius, 'color': color, 'name': f"POA.{u}-{v}"})
+            # lines.append({'start': sp, 'end': ep, 'color': color, 'name': f"Force.{u}-{v}"})
+        objects = compas_blender.draw_points(points, self.resultantcollection)
+        # objects = compas_blender.draw_lines(lines, self.resultantcollection)
+        self.object_resultant = zip(objects, edges)
 
     # def draw_selfweight(self, scale=None, eps=None):
     #     """Draw vectors indicating the magnitude of the selfweight of the blocks.
@@ -438,51 +311,6 @@ class AssemblyArtist(NetworkArtist):
     #                 'arrow' : 'end'
     #             })
     #     compas_blender.draw_lines(lines, layer=layer, clear=False, redraw=False)
-
-    def draw_resultants(self, scale=1.0, eps=1e-3):
-        """
-        """
-        scale = scale or self.settings['scale.force']
-        eps = eps or self.settings['eps.force']
-        color_compression = self.settings['color.force:compression']
-        color_tension = self.settings['color.force:tension']
-        eps2 = eps**2
-        lines = []
-        points = []
-        for key in self.assembly.edges():
-            u, v = key
-            corners = self.assembly.edge_attribute(key, 'interface_points')
-            forces = self.assembly.edge_attribute(key, 'interface_forces')
-            if not forces:
-                continue
-            n = self.assembly.edge_attribute(key, 'interface_uvw')[2]
-            cx, cy, cz = 0, 0, 0
-            p = len(corners)
-            R = 0
-            for point, force in zip(corners, forces):
-                c = force['c_np']
-                t = force['c_nn']
-                f = c - t
-                cx += point[0] * f
-                cy += point[1] * f
-                cz += point[2] * f
-                R += f
-            if R**2 < eps2:
-                continue
-            cx = cx / R
-            cy = cy / R
-            cz = cz / R
-            c = [cx, cy, cz]
-            sp = add_vectors(c, scale_vector(n, R * scale))
-            ep = add_vectors(c, scale_vector(n, -R * scale))
-            if R < 0:
-                color = color_tension
-            else:
-                color = color_compression
-            lines.append({'start': sp, 'end': ep, 'color': color, 'name': "{0}.resultant.{1}-{2}".format(self.assembly.name, u, v)})
-            points.append({'pos': c, 'color': color, 'name': "{0}.resultant.{1}-{2}".format(self.assembly.name, u, v)})
-        draw_points(points, self.resultant_collection)
-        draw_lines(lines, self.resultant_collection)
 
     # def color_interfaces(self, mode=0):
     #     """"""

@@ -1,7 +1,3 @@
-from __future__ import print_function
-from __future__ import absolute_import
-from __future__ import division
-
 import compas_blender
 from compas_blender.artists import MeshArtist
 
@@ -12,13 +8,8 @@ __all__ = ['BlockArtist']
 class BlockArtist(MeshArtist):
     """An artist for painting blocks."""
 
-    def __init__(self, *args, **kwargs):
-        super(BlockArtist, self).__init__(*args, **kwargs)
-        # self.settings.update({
-        #     'color.vertex': (0, 0, 0),
-        #     'color.edge': (0, 0, 0),
-        #     'color.face': (255, 255, 255),
-        # })
+    def __init__(self, block):
+        super().__init__(block)
 
     @property
     def block(self):
@@ -30,7 +21,7 @@ class BlockArtist(MeshArtist):
 
 
 # ==============================================================================
-# Debugging
+# Main
 # ==============================================================================
 
 if __name__ == "__main__":
