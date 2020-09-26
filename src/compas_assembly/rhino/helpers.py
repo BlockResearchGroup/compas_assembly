@@ -6,13 +6,9 @@ from ast import literal_eval
 
 import compas
 
-try:
-    import clr
-    clr.AddReference('Rhino.UI')
-    import Rhino.UI
-
-except ImportError:
-    compas.raise_if_ironpython()
+import clr
+clr.AddReference('Rhino.UI')
+import Rhino.UI
 
 from compas_rhino.selectors import VertexSelector
 from compas_rhino.selectors import EdgeSelector
