@@ -16,18 +16,12 @@ from compas.geometry import angle_vectors
 from compas.datastructures import Mesh
 from compas.utilities import pairwise
 
-from compas_assembly.geometry._geometry import Geometry
+from ._geometry import Geometry
 
 
 __all__ = ['Arch']
 
 
-# perhaps it makes more sense that parameters such as rise, span, ...
-# are object attributes
-# and blocks can be generated on-the-fly
-# for different numbers of voussoirs (n)
-# for different thicknesses
-# for different ...
 class Arch(Geometry):
     """Create voussoir geometry for a semi-circular arch with given rise and span.
 
@@ -42,11 +36,12 @@ class Arch(Geometry):
     depth : float
         The depth of the arch.
     n : int
-        Number of voussoirs
 
     """
 
-    def __init__(self, rise, span, thickness, depth, n):
+    __module__ = 'compas_assembly.geometry'
+
+    def __init__(self, rise, span, thickness, depth, n=None):
         super(Arch, self).__init__()
         self.rise = rise
         self.span = span

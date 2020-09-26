@@ -2,18 +2,12 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-from compas_assembly.geometry._geometry import Geometry
+from ._geometry import Geometry
 
 
 __all__ = ['Wall']
 
 
-# perhaps it makes more sense that parameters such as rise, span, ...
-# are object attributes
-# and blocks can be generated on-the-fly
-# for different numbers of voussoirs (n)
-# for different thicknesses
-# for different ...
 class Wall(Geometry):
     """Create voussoirs for a typical brick wall.
 
@@ -21,6 +15,8 @@ class Wall(Geometry):
     ----------
 
     """
+
+    __module__ = 'compas_assembly.geometry'
 
     def __init__(self):
         super(Wall, self).__init__()
