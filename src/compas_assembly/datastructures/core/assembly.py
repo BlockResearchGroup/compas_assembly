@@ -2,10 +2,9 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-# import json
 from compas.datastructures import Network
 from .block import Block
-# from .interface import Interface
+from .interface import Interface
 
 
 __all__ = ['Assembly']
@@ -38,15 +37,6 @@ class Assembly(Network):
             'interface': None
         })
 
-    # @property
-    # def data(self):
-    #     """dict : The data representing the assembly."""
-    #     pass
-
-    # @data.setter
-    # def data(self, data):
-    #     pass
-
     def add_block(self, block, key=None, attr_dict=None, **kwattr):
         """Add a block to the assembly.
 
@@ -68,7 +58,13 @@ class Assembly(Network):
         The block is added as a node in the assembly data structure.
         The XYZ coordinates of the node are the coordinates of the centroid of the block.
         """
-        return self.add_node(key, block=block)
+        x, y, z = block.centroid()
+        return self.add_node(key, x=x, y=y, z=z, block=block)
+
+    def add_interface(self, u, v, itype, isize, ipoints, iframe):
+        """"""
+        interface = Interface(itype=itype, isize=isize, ipoints=ipoints, iframe=iframe)
+        return self.add_edge(u, v, interface=interface)
 
     def add_blocks_from_polysurfaces(self, guids):
         """Add multiple blocks from their representation as Rhino poly surfaces.
