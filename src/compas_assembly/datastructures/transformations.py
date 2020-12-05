@@ -2,8 +2,6 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-from compas.geometry import transform_points
-
 
 __all__ = [
     'assembly_transform',
@@ -35,10 +33,10 @@ def assembly_transform(assembly, T):
         assembly_transform(assembly, R)
 
     """
-    for key in assembly.nodes():
-        block = assembly.blocks[key]
+    for node in assembly.nodes():
+        block = assembly.node_attribute(node, 'block')
         block.transform(T)
-        assembly.node_attributes(key, 'xyz', block.centroid())
+        assembly.node_attributes(node, 'xyz', block.centroid())
 
 
 def assembly_transformed(assembly, T):
