@@ -168,8 +168,9 @@ def assembly_interfaces_numpy(assembly,
                                     itype='face_face',
                                     isize=area,
                                     ipoints=coords.tolist()[:-1],
-                                    iframe=(origin, uvw)
+                                    iframe=Frame(origin, uvw[0], uvw[1])
                                 )
+    return assembly
 
 
 # ==============================================================================
