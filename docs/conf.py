@@ -4,8 +4,8 @@
 #
 # needs_sphinx = '1.0'
 
-import sys
-import os
+# import sys
+# import os
 
 import sphinx_compas_theme
 

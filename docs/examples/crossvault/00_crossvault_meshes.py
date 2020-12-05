@@ -29,7 +29,7 @@ for guid in guids:
 
 compas.json_dump(meshes, FILE)
 
-compas_rhino.clear_layers(['Crossvault', 'Crossvault::Meshes'])
+compas_rhino.clear_layers(['Crossvault'])
 
 for mesh in meshes:
     artist = MeshArtist(mesh, layer="Crossvault::Meshes")
