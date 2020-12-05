@@ -34,72 +34,18 @@ class Assembly(Network):
         self.default_node_attributes.update({
             'block': None
         })
-        # self.default_edge_attributes.update({
-        #     'interface_points': None,
-        #     'interface_type': None,
-        #     'interface_size': None,
-        #     'interface_uvw': None,
-        #     'interface_origin': None,
-        #     'interface_forces': None
-        # })
         self.default_edge_attributes.update({
             'interface': None
         })
-        # self.blocks = {}
-        # self.interfaces = {}
 
-    # @classmethod
-    # def from_json(cls, filepath):
-    #     """Construct an assembly from the data contained in a JSON file.
+    # @property
+    # def data(self):
+    #     """dict : The data representing the assembly."""
+    #     pass
 
-    #     Parameters
-    #     ----------
-    #     filepath : str
-    #         Path to the file containing the data.
-
-    #     Returns
-    #     -------
-    #     Assembly
-    #         An assembly data structure.
-
-    #     Examples
-    #     --------
-    #     >>>
-    #     """
-    #     with open(filepath, 'r') as f:
-    #         data = json.load(f)
-    #         assembly = cls.from_data(data['assembly'])
-    #         assembly.blocks = {int(key): Block.from_data(data['blocks'][key]) for key in data['blocks']}
-    #     return assembly
-
-    # def to_json(self, filepath):
-    #     """Serialise the data dictionary representing an assembly to JSON and store in a file.
-
-    #     Parameters
-    #     ----------
-    #     filepath : str
-    #         Path to the file.
-
-    #     Examples
-    #     --------
-    #     >>>
-    #     """
-    #     data = {
-    #         'assembly': self.to_data(),
-    #         'blocks': {str(key): self.blocks[key].to_data() for key in self.blocks}}
-    #     with open(filepath, 'w') as fo:
-    #         json.dump(data, fo, indent=4, sort_keys=True)
-
-    # def copy(self):
-    #     """Make an independent copy of an assembly.
-
-    #     Examples
-    #     --------
-    #     >>>
-    #     """
-    #     assembly = super(Assembly, self).copy()
-    #     assembly.blocks = {key: self.blocks[key].copy() for key in self.nodes()}
-    #     return assembly
+    # @data.setter
+    # def data(self, data):
+    #     pass
 
     def add_block(self, block, key=None, attr_dict=None, **kwattr):
         """Add a block to the assembly.
@@ -190,7 +136,7 @@ class Assembly(Network):
         return sum(len(attr['interface_points']) for u, v, attr in self.edges(True))
 
     # def subset(self, keys):
-    #     """Create an assembly that is a subset of the urrent assembly.
+    #     """Create an assembly that is a subset of the current assembly.
 
     #     Parameters
     #     ----------
