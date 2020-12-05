@@ -29,6 +29,8 @@ for guid in guids:
 
 compas.json_dump(meshes, FILE)
 
+compas_rhino.clear_layers(['Crossvault', 'Crossvault::Blocks'])
+
 for mesh in meshes:
-    artist = MeshArtist(mesh)
+    artist = MeshArtist(mesh, layer="Crossvault::Blocks")
     artist.draw()
