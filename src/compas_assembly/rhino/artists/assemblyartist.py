@@ -2,20 +2,23 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
+from functools import partial
+
 from compas.utilities import color_to_colordict
 from compas.utilities import i_to_blue
-from compas.utilities import i_to_red
 from compas.geometry import add_vectors
 from compas.geometry import scale_vector
-from compas.geometry import length_vector
-from compas.geometry import sum_vectors
 
 import compas_rhino
 from compas_rhino.artists import NetworkArtist
+from compas_rhino.artists import FrameArtist
 from compas_assembly.rhino.blockartist import BlockArtist
 
 
 __all__ = ['AssemblyArtist']
+
+
+colordict = partial(color_to_colordict, colorformat='rgb', normalize=False)
 
 
 class AssemblyArtist(NetworkArtist):
@@ -37,17 +40,17 @@ class AssemblyArtist(NetworkArtist):
     def __init__(self, assembly, layer=None):
         super(AssemblyArtist, self).__init__(assembly, layer=layer)
         self.settings.update({
-            'color.vertex'            : (0, 0, 0),
-            'color.vertex:is_support' : (0, 0, 0),
-            'color.edge'              : (0, 0, 0),
-            'color.interface'         : (255, 255, 255),
-            'color.force:compression' : (0, 0, 255),
-            'color.force:tension'     : (255, 0, 0),
-            'color.selfweight'        : (0, 255, 0),
-            'scale.force'             : 0.1,
-            'scale.selfweight'        : 0.1,
-            'eps.selfweight'          : 1e-3,
-            'eps.force'               : 1e-3,
+            'color.vertex': (0, 0, 0),
+            'color.vertex:is_support': (0, 0, 0),
+            'color.edge': (0, 0, 0),
+            'color.interface': (255, 255, 255),
+            'color.force:compression': (0, 0, 255),
+            'color.force:tension': (255, 0, 0),
+            'color.selfweight': (0, 255, 0),
+            'scale.force': 0.1,
+            'scale.selfweight': 0.1,
+            'eps.selfweight': 1e-3,
+            'eps.force': 1e-3,
         })
 
     @property
@@ -59,32 +62,7 @@ class AssemblyArtist(NetworkArtist):
     def assembly(self, assembly):
         self.network = assembly
 
-    # def _clear(self, name):
-    #     name = "{}.{}.*".format(self.assembly.name, name)
-    #     guids = compas_rhino.get_objects(name=name)
-    #     compas_rhino.delete_objects(guids)
-
-    # def clear_blocks(self):
-    #     """Delete all previously drawn blocks."""
-    #     self._clear('block')
-
-    # def clear_interfaces(self):
-    #     """Delete all previously drawn interfaces."""
-    #     self._clear('interface')
-
-    # def clear_selfweight(self):
-    #     """Delete all previously drawn self-weight vectors."""
-    #     self._clear('selfweight')
-
-    # def clear_forces(self):
-    #     """Delete all previously drawn force vectors."""
-    #     self._clear('force')
-
-    # def clear_resultants(self):
-    #     """Delete all previously drawn resultant vectors."""
-    #     self._clear('resultant')
-
-    def draw_blocks(self, keys=None, show_faces=False, show_vertices=False, show_edges=True):
+    def draw_blocks(self, nodes=None, show_faces=False, show_vertices=False, show_edges=True):
         """Draw the blocks of the assembly.
 
         Parameters
@@ -115,22 +93,22 @@ class AssemblyArtist(NetworkArtist):
         --------
         >>>
         """
-        keys = keys or list(self.assembly.nodes())
+        nodes = nodes or list(self.assembly.nodes())
         layer = "{}::Blocks".format(self.layer) if self.layer else None
-        artist = BlockArtist(None, layer=layer)
-        for key in keys:
-            block = self.assembly.blocks[key]
-            block.name = "{}.block.{}".format(self.assembly.name, key)
-            artist.block = block
+        guids = []
+        for node in nodes:
+            block = self.assembly.node_attribute(node, 'block')
+            block.name = "{}.block.{}".format(self.assembly.name, node)
+            artist = BlockArtist(block, layer=layer)
             if show_edges:
-                artist.draw_edges()
+                guids += artist.draw_edges()
             if show_faces:
-                artist.draw_faces()
+                guids += artist.draw_faces()
             if show_vertices:
-                artist.draw_vertices()
-        artist.redraw()
+                guids += artist.draw_vertices()
+        return guids
 
-    def draw_interfaces(self, keys=None, color=None):
+    def draw_interfaces(self, edges=None, color=None):
         """Draw the interfaces between the blocks.
 
         Parameters
@@ -158,52 +136,28 @@ class AssemblyArtist(NetworkArtist):
         """
         layer = "{}::Interfaces".format(self.layer) if self.layer else None
         faces = []
-        keys = keys or list(self.assembly.edges())
-        colordict = color_to_colordict(
-            color,
-            keys,
-            default=self.settings.get('color.interface'),
-            colorformat='rgb',
-            normalize=False
-        )
-        for (u, v), attr in self.assembly.edges(True):
+        edges = edges or list(self.assembly.edges())
+        edge_color = colordict(color, edges, default=self.settings.get('color.interface'))
+        for edge in self.assembly.edges():
+            interface = self.assembly.edge_attribute(edge, 'interface')
             faces.append({
-                'points' : attr['interface_points'],
-                'name'   : "{}.interface.{}-{}".format(self.assembly.name, u, v),
-                'color'  : colordict[(u, v)]
+                'points': interface.points,
+                'name': "{}.interface.{}-{}".format(self.assembly.name, *edge),
+                'color': edge_color[edge]
             })
-        compas_rhino.draw_faces(faces, layer=layer, clear=False, redraw=False)
+        return compas_rhino.draw_faces(faces, layer=layer, clear=False, redraw=False)
 
     def draw_interface_frames(self):
         """Draw the frames of the interfaces.
         """
         layer = "{}::Interfaces::Frames".format(self.layer) if self.layer else None
-        lines = []
-        for (a, b), attr in self.assembly.edges(True):
-            o = attr['interface_origin']
-            u, v, w = attr['interface_uvw']
-            lines.append({
-                'start' : o,
-                'end'   : add_vectors(o, u),
-                'name'  : "{}.iframe.{}-{}.u".format(self.assembly.name, a, b),
-                'color' : (255, 0, 0),
-                'arrow' : 'end'
-            })
-            lines.append({
-                'start' : o,
-                'end'   : add_vectors(o, v),
-                'name'  : "{}.iframe.{}-{}.v".format(self.assembly.name, a, b),
-                'color' : (0, 255, 0),
-                'arrow' : 'end'
-            })
-            lines.append({
-                'start' : o,
-                'end'   : add_vectors(o, w),
-                'name'  : "{}.iframe.{}-{}.w".format(self.assembly.name, a, b),
-                'color' : (0, 0, 255),
-                'arrow' : 'end'
-            })
-        self.draw_lines(lines, layer=layer, clear=True, redraw=True)
+        compas_rhino.clear_layer(layer)
+        guids = []
+        for edge in self.assembly.edges():
+            interface = self.assembly.edge_attribute(edge, 'interface')
+            artist = FrameArtist(interface.frame, layer=layer)
+            guids += artist.draw()
+        return guids
 
     def draw_selfweight(self, scale=None, eps=None):
         """Draw vectors indicating the magnitude of the selfweight of the blocks.
@@ -231,8 +185,8 @@ class AssemblyArtist(NetworkArtist):
         eps = eps or self.settings['eps.selfweight']
         color = self.settings['color.selfweight']
         lines = []
-        for key, attr in self.assembly.vertices(True):
-            block = self.assembly.blocks[key]
+        for node in self.assembly.nodes():
+            block = self.assembly.node_attribute(node, 'block')
             volume = block.volume()
             if volume * scale < eps:
                 continue
@@ -241,13 +195,13 @@ class AssemblyArtist(NetworkArtist):
             ep = sp[:]
             ep[2] += vector[2]
             lines.append({
-                'start' : sp,
-                'end'   : ep,
-                'name'  : "{}.selfweight.{}".format(self.assembly.name, key),
-                'color' : color,
-                'arrow' : 'end'
+                'start': sp,
+                'end': ep,
+                'name': "{}.selfweight.{}".format(self.assembly.name, node),
+                'color': color,
+                'arrow': 'end'
             })
-        compas_rhino.draw_lines(lines, layer=layer, clear=False, redraw=False)
+        return compas_rhino.draw_lines(lines, layer=layer, clear=False, redraw=False)
 
     def draw_forces(self, scale=None, eps=None, mode=0):
         """Draw the contact forces at the interfaces.
@@ -280,14 +234,15 @@ class AssemblyArtist(NetworkArtist):
         color_compression = self.settings['color.force:compression']
         color_tension = self.settings['color.force:tension']
         lines = []
-        for (a, b), attr in self.assembly.edges(True):
-            if attr['interface_forces'] is None:
+        for edge in self.assembly.edges():
+            interface = self.assembly.edge_attribute(edge, 'interface')
+            if not interface.forces:
                 continue
-            w = attr['interface_uvw'][2]
-            for i in range(len(attr['interface_points'])):
-                sp = attr['interface_points'][i]
-                c = attr['interface_forces'][i]['c_np']
-                t = attr['interface_forces'][i]['c_nn']
+            w = interface.frame.zaxis
+            for i in range(len(interface.points)):
+                sp = interface.points[i]
+                c = interface.forces[i]['c_np']
+                t = interface.forces[i]['c_nn']
                 f = c - t
                 if f > 0.0:
                     if scale * f < eps:
@@ -300,13 +255,13 @@ class AssemblyArtist(NetworkArtist):
                 else:
                     continue
                 lines.append({
-                    'start' : sp,
-                    'end'   : [sp[axis] + scale * f * w[axis] for axis in range(3)],
-                    'color' : color,
-                    'name'  : "{0}.force.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
-                    'arrow' : 'end'
+                    'start': sp,
+                    'end': [sp[axis] + scale * f * w[axis] for axis in range(3)],
+                    'color': color,
+                    'name': "{0}.force.{1}-{2}.{3}".format(self.assembly.name, *edge, i),
+                    'arrow': 'end'
                 })
-        compas_rhino.draw_lines(lines, layer=layer, clear=False, redraw=False)
+        return compas_rhino.draw_lines(lines, layer=layer, clear=False, redraw=False)
 
     def draw_resultants(self, scale=1.0, eps=1e-3):
         """
@@ -319,15 +274,15 @@ class AssemblyArtist(NetworkArtist):
         eps2 = eps**2
         lines = []
         points = []
-        for key in self.assembly.edges():
-            u, v = key
-            corners = self.assembly.edge_attribute(key, 'interface_points')
-            forces = self.assembly.edge_attribute(key, 'interface_forces')
+        for edge in self.assembly.edges():
+            u, v = edge
+            interface = self.assembly.edge_attribute(edge, 'interface')
+            corners = interface.points
+            forces = interface.forces
             if not forces:
                 continue
-            n = self.assembly.edge_attribute(key, 'interface_uvw')[2]
+            n = interface.frame.zaxis
             cx, cy, cz = 0, 0, 0
-            p = len(corners)
             R = 0
             for point, force in zip(corners, forces):
                 c = force['c_np']
@@ -351,19 +306,19 @@ class AssemblyArtist(NetworkArtist):
                 color = color_compression
             lines.append({'start': sp, 'end': ep, 'color': color, 'name': "{0}.resultant.{1}-{2}".format(self.assembly.name, u, v)})
             points.append({'pos': c, 'color': color, 'name': "{0}.resultant.{1}-{2}".format(self.assembly.name, u, v)})
-        compas_rhino.draw_lines(lines, layer=layer, clear=False, redraw=False)
-        compas_rhino.draw_points(points, layer=layer, clear=False, redraw=False)
+        guids = compas_rhino.draw_lines(lines, layer=layer, clear=False, redraw=False)
+        guids += compas_rhino.draw_points(points, layer=layer, clear=False, redraw=False)
+        return guids
 
     def color_interfaces(self, mode=0):
         """"""
         if mode == 0:
             return
         if mode == 1:
-            color_compression = self.settings['color.force:compression']
-            color_tension = self.settings['color.force:tension']
             resultants = []
-            for key in self.assembly.edges():
-                forces = self.assembly.edge_attribute(key, 'interface_forces')
+            for edge in self.assembly.edges():
+                interface = self.assembly.edge_attribute(edge, 'interface')
+                forces = interface.forces
                 if not forces:
                     resultants.append(0)
                     continue
@@ -378,8 +333,8 @@ class AssemblyArtist(NetworkArtist):
             Rmin = min(resultants)
             print(Rmax)
             print(Rmin)
-            for index, key in enumerate(self.assembly.edges()):
-                u, v = key
+            for index, edge in enumerate(self.assembly.edges()):
+                u, v = edge
                 name = "{}.interface.{}-{}".format(self.assembly.name, u, v)
                 guids = compas_rhino.get_objects(name=name)
                 if not guids:

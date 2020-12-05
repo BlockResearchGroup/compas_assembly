@@ -1,4 +1,3 @@
-import compas_blender
 from compas_blender.artists import MeshArtist
 
 

@@ -2,16 +2,16 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-from compas.utilities import color_to_colordict
-from compas.utilities import i_to_blue
-from compas.utilities import i_to_red
+# from compas.utilities import color_to_colordict
+# from compas.utilities import i_to_blue
+# from compas.utilities import i_to_red
 
-from compas.geometry import add_vectors
-from compas.geometry import scale_vector
-from compas.geometry import length_vector
-from compas.geometry import sum_vectors
+# from compas.geometry import add_vectors
+# from compas.geometry import scale_vector
+# from compas.geometry import length_vector
+# from compas.geometry import sum_vectors
 
-import compas_rhino
+# import compas_rhino
 
 from compas_ghpython.artists import MeshArtist
 from compas_ghpython.artists import NetworkArtist
@@ -42,21 +42,21 @@ class AssemblyArtist(NetworkArtist):
     def __init__(self, assembly):
         super(AssemblyArtist, self).__init__(assembly)
         self.defaults.update({
-            'color.vertex'            : (0, 0, 0),
-            'color.vertex:is_support' : (255, 0, 0),
-            'color.edge'              : (0, 0, 0),
-            'color.interface'         : (255, 255, 255),
-            'color.force:compression' : (0, 0, 255),
-            'color.force:tension'     : (255, 0, 0),
-            'color.force:friction'    : (255, 165, 0),
-            'color.selfweight'        : (0, 255, 0),
-            'scale.force'             : 0.1,
-            'scale.selfweight'        : 0.1,
-            'scale.friction'          : 0.1,
-            'eps.selfweight'          : 1e-3,
-            'eps.force'               : 1e-3,
-            'eps.friction'            : 1e-3,
-            'range.friction'          : 5,
+            'color.vertex': (0, 0, 0),
+            'color.vertex:is_support': (255, 0, 0),
+            'color.edge': (0, 0, 0),
+            'color.interface': (255, 255, 255),
+            'color.force:compression': (0, 0, 255),
+            'color.force:tension': (255, 0, 0),
+            'color.force:friction': (255, 165, 0),
+            'color.selfweight': (0, 255, 0),
+            'scale.force': 0.1,
+            'scale.selfweight': 0.1,
+            'scale.friction': 0.1,
+            'eps.selfweight': 1e-3,
+            'eps.force': 1e-3,
+            'eps.friction': 1e-3,
+            'range.friction': 5,
         })
 
     @property
@@ -106,11 +106,11 @@ class AssemblyArtist(NetworkArtist):
             artist.block = block
             # if not show_faces and not show_vertices:
             #     show_edges = True
-            #if show_edges:
+            # if show_edges:
             #    edges = artist.draw_edges()
-            #if show_faces:
+            # if show_faces:
             #    faces = artist.draw_faces()
-            #if show_vertices:
+            # if show_vertices:
             #    vertices = artist.draw_vertices()
             meshes.append(artist.draw())
         return meshes

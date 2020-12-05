@@ -161,7 +161,6 @@ class AssemblyArtist(NetworkArtist):
         nodes = nodes or list(self.assembly.nodes())
         objects = []
         for node in nodes:
-            # block = self.assembly.blocks[node]
             block = self.assembly.node_attribute(node, 'block')
             vertices, faces = block.to_vertices_and_faces()
             obj = compas_blender.draw_mesh(vertices, faces, name=block.name, collection=self.blockcollection)
@@ -176,7 +175,8 @@ class AssemblyArtist(NetworkArtist):
         objects = []
         for edge in edges:
             name = f"Interface.{edge[0]}-{edge[1]}"
-            vertices = self.assembly.edge_attribute(edge, 'interface_points')
+            interface = self.assembly.edge_attribute(edge, 'interface')
+            vertices = interface.points
             faces = [list(range(len(vertices)))]
             obj = compas_blender.draw_mesh(vertices, faces, name=name, collection=self.interfacecollection)
             objects.append(obj)
@@ -191,16 +191,14 @@ class AssemblyArtist(NetworkArtist):
         eps = eps or self.eps_forces
         eps2 = eps**2
         points = []
-        # lines = []
         for edge in edges:
             u, v = edge
-            corners = self.assembly.edge_attribute(edge, 'interface_points')
-            forces = self.assembly.edge_attribute(edge, 'interface_forces')
+            interface = self.assembly.edge_attribute(edge, 'interface')
+            corners = interface.points
+            forces = interface.forces
             if not forces:
                 continue
-            # n = self.assembly.edge_attribute(edge, 'interface_uvw')[2]
             cx, cy, cz = 0, 0, 0
-            # p = len(corners)
             R = 0
             for point, force in zip(corners, forces):
                 c = force['c_np']
@@ -216,8 +214,6 @@ class AssemblyArtist(NetworkArtist):
             cy = cy / R
             cz = cz / R
             c = [cx, cy, cz]
-            # sp = add_vectors(c, scale_vector(n, R * scale))
-            # ep = add_vectors(c, scale_vector(n, -R * scale))
             if R < 0:
                 color = self.color_tension
                 radius = -R * scale
@@ -225,152 +221,12 @@ class AssemblyArtist(NetworkArtist):
                 color = self.color_compression
                 radius = +R * scale
             points.append({'pos': c, 'radius': radius, 'color': color, 'name': f"POA.{u}-{v}"})
-            # lines.append({'start': sp, 'end': ep, 'color': color, 'name': f"Force.{u}-{v}"})
         objects = compas_blender.draw_points(points, self.resultantcollection)
-        # objects = compas_blender.draw_lines(lines, self.resultantcollection)
         self.object_resultant = zip(objects, edges)
-
-    # def draw_selfweight(self, scale=None, eps=None):
-    #     """Draw vectors indicating the magnitude of the selfweight of the blocks.
-
-    #     Parameters
-    #     ----------
-    #     scale : float, optional
-    #         The scale at which the selfweight vectors should be drawn.
-    #         Default is `0.1`.
-    #     eps : float, optional
-    #         A tolerance for drawing small vectors.
-    #         Selfweight vectors with a scaled length smaller than this tolerance are not drawn.
-    #         Default is `1e-3`.
-
-    #     Notes
-    #     -----
-    #     * Selfweight vectors are drawn as Blender lines with arrow heads.
-    #     * The default color is *green*: `'#00ff00'` or `(0, 255, 0)`.
-    #     * Selfweight vectors are drawn in a sub-layer *Selfweight* of the base layer, if a base layer was specified.
-    #     * Selfweight vectors are named according to the following pattern: `"{assembly name}.selfweight.{block id}"`.
-
-    #     """
-    #     layer = "{}::Selfweight".format(self.layer) if self.layer else None
-    #     scale = scale or self.settings['scale.selfweight']
-    #     eps = eps or self.settings['eps.selfweight']
-    #     color = self.settings['color.selfweight']
-    #     lines = []
-    #     for key, attr in self.assembly.vertices(True):
-    #         block = self.assembly.blocks[key]
-    #         volume = block.volume()
-    #         if volume * scale < eps:
-    #             continue
-    #         vector = [0.0, 0.0, -1.0 * volume * scale]
-    #         sp = block.centroid()
-    #         ep = sp[:]
-    #         ep[2] += vector[2]
-    #         lines.append({
-    #             'start' : sp,
-    #             'end'   : ep,
-    #             'name'  : "{}.selfweight.{}".format(self.assembly.name, key),
-    #             'color' : color,
-    #             'arrow' : 'end'
-    #         })
-    #     compas_blender.draw_lines(lines, layer=layer, clear=False, redraw=False)
-
-    # def draw_forces(self, scale=None, eps=None, mode=0):
-    #     """Draw the contact forces at the interfaces.
-
-    #     Parameters
-    #     ----------
-    #     scale : float, optional
-    #         The scale at which the forces should be drawn.
-    #         Default is `0.1`.
-    #     eps : float, optional
-    #         A tolerance for drawing small force vectors.
-    #         Force vectors with a scaled length smaller than this tolerance are not drawn.
-    #         Default is `1e-3`.
-    #     mode : int, optional
-    #         Display mode: 0 normal, 1 resultant forces
-    #         Default is 0
-
-    #     Notes
-    #     -----
-    #     * Forces are drawn as lines with arrow heads.
-    #     * Forces are drawn on a sub-layer *Forces* of the base layer, if a base layer was specified.
-    #     * At every interface point there can be a *compression* force (blue) and a *tension* force (red).
-    #     * Forces are named according to the following pattern:
-    #       ``"{assembly_name}.force.{from block}-{to block}.{interface point}"``
-
-    #     """
-    #     layer = "{}::Forces".format(self.layer) if self.layer else None
-    #     scale = scale or self.settings['scale.force']
-    #     eps = eps or self.settings['eps.force']
-    #     color_compression = self.settings['color.force:compression']
-    #     color_tension = self.settings['color.force:tension']
-    #     lines = []
-    #     for (a, b), attr in self.assembly.edges(True):
-    #         if attr['interface_forces'] is None:
-    #             continue
-    #         w = attr['interface_uvw'][2]
-    #         for i in range(len(attr['interface_points'])):
-    #             sp = attr['interface_points'][i]
-    #             c = attr['interface_forces'][i]['c_np']
-    #             t = attr['interface_forces'][i]['c_nn']
-    #             f = c - t
-    #             if f > 0.0:
-    #                 if scale * f < eps:
-    #                     continue
-    #                 color = color_compression
-    #             elif f < 0.0:
-    #                 if -scale * f < eps:
-    #                     continue
-    #                 color = color_tension
-    #             else:
-    #                 continue
-    #             lines.append({
-    #                 'start' : sp,
-    #                 'end'   : [sp[axis] + scale * f * w[axis] for axis in range(3)],
-    #                 'color' : color,
-    #                 'name'  : "{0}.force.{1}-{2}.{3}".format(self.assembly.name, a, b, i),
-    #                 'arrow' : 'end'
-    #             })
-    #     compas_blender.draw_lines(lines, layer=layer, clear=False, redraw=False)
-
-    # def color_interfaces(self, mode=0):
-    #     """"""
-    #     if mode == 0:
-    #         return
-    #     if mode == 1:
-    #         color_compression = self.settings['color.force:compression']
-    #         color_tension = self.settings['color.force:tension']
-    #         resultants = []
-    #         for key in self.assembly.edges():
-    #             forces = self.assembly.edge_attribute(key, 'interface_forces')
-    #             if not forces:
-    #                 resultants.append(0)
-    #                 continue
-    #             R = 0
-    #             for force in forces:
-    #                 c = force['c_np']
-    #                 t = force['c_nn']
-    #                 f = c - t
-    #                 R += f
-    #             resultants.append(R)
-    #         Rmax = max(resultants)
-    #         Rmin = min(resultants)
-    #         print(Rmax)
-    #         print(Rmin)
-    #         for index, key in enumerate(self.assembly.edges()):
-    #             u, v = key
-    #             name = "{}.interface.{}-{}".format(self.assembly.name, u, v)
-    #             guids = compas_blender.get_objects(name=name)
-    #             if not guids:
-    #                 continue
-    #             guid = guids[0]
-    #             R = resultants[index]
-    #             color = i_to_blue((R - Rmin) / (Rmax - Rmin))
-    #             compas_blender.rs.ObjectColor(guid, color)
 
 
 # ==============================================================================
-# Debugging
+# Main
 # ==============================================================================
 
 if __name__ == "__main__":
