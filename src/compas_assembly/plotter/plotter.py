@@ -6,8 +6,8 @@ from compas_plotters import Plotter
 from compas_plotters import NetworkPlotter
 from compas_plotters import MeshPlotter
 
-from compas.utilities import color_to_rgb
-from compas.geometry import oriented_bounding_box_xy_numpy
+# from compas.utilities import color_to_rgb
+# from compas.geometry import oriented_bounding_box_xy_numpy
 
 
 __all__ = ['AssemblyPlotter']
@@ -70,7 +70,7 @@ class AssemblyPlotter(Plotter):
             self.blockcollection.remove()
 
     def draw_blocks(self,
-                    keys=None,
+                    nodes=None,
                     facecolor=None,
                     edgecolor=None,
                     edgewidth=None,
@@ -83,23 +83,21 @@ class AssemblyPlotter(Plotter):
         The blocks are drawn as the boundaing boxes of their vertices.
 
         """
-        keys = keys or list(self.assembly.nodes())
+        nodes = nodes or list(self.assembly.nodes())
 
-        facecolordict = valuedict(keys, facecolor, self.block_plotter.defaults['face.facecolor'])
-        edgecolordict = valuedict(keys, edgecolor, self.block_plotter.defaults['face.edgecolor'])
-        edgewidthdict = valuedict(keys, edgewidth, self.block_plotter.defaults['face.edgewidth'])
-        textcolordict = valuedict(keys, textcolor, self.block_plotter.defaults['face.textcolor'])
-        fontsizedict  = valuedict(keys, fontsize,  self.block_plotter.defaults['face.fontsize'])
+        node_facecolor = valuedict(nodes, facecolor, self.block_plotter.defaults['face.facecolor'])
+        node_edgecolor = valuedict(nodes, edgecolor, self.block_plotter.defaults['face.edgecolor'])
+        node_edgewidth = valuedict(nodes, edgewidth, self.block_plotter.defaults['face.edgewidth'])
 
         polygons = []
-        for key in self.assembly.nodes():
-            block = self.assembly.blocks[key]
-            for fkey in block.faces():
+        for node in nodes:
+            block = self.assembly.node_attribute(node, 'block')
+            for face in block.faces():
                 polygons.append({
-                    'points': block.face_coordinates(fkey),
-                    'edgecolor': edgecolordict[key],
-                    'edgewidth': edgewidthdict[key],
-                    'facecolor': facecolordict[key]
+                    'points': block.face_coordinates(face),
+                    'edgecolor': node_edgecolor[node],
+                    'edgewidth': node_edgewidth[node],
+                    'facecolor': node_facecolor[node]
                 })
         collection = self.draw_polygons(polygons)
         self.blockcollection = collection
