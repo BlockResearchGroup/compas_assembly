@@ -7,6 +7,7 @@ from compas_assembly.rhino import AssemblyArtist
 from compas.rpc import Proxy
 
 proxy = Proxy()
+proxy.restart_server()
 
 try:
     HERE = os.path.dirname(__file__)
@@ -48,16 +49,9 @@ assembly = proxy.assembly_interfaces_numpy(assembly, tmax=0.02)
 # Compute interface forces
 # ==============================================================================
 
-# proxy.package = 'compas_rbe.equilibrium'
+proxy.package = 'compas_rbe.equilibrium'
 
-# data = {
-#     'assembly': assembly.to_data(),
-#     'blocks': {str(key): assembly.blocks[key].to_data() for key in assembly.blocks}}
-
-# data = proxy.compute_interface_forces_xfunc(data, backend='CVX', solver='CPLEX')
-
-# assembly.data = data['assembly']
-# assembly.blocks = {int(key): Block.from_data(data['blocks'][key]) for key in data['blocks']}
+assembly = proxy.compute_interface_forces_cvx(assembly, solver='CPLEX')
 
 # ==============================================================================
 # Visualize
@@ -70,5 +64,5 @@ artist.draw_nodes(color={key: (255, 0, 0) for key in assembly.nodes_where({'is_s
 artist.draw_edges()
 artist.draw_blocks()
 artist.draw_interfaces()
-# artist.draw_resultants()
+artist.draw_resultants(scale=0.1)
 # artist.color_interfaces(mode=1)
