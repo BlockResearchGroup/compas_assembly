@@ -5,11 +5,7 @@ compas_assembly.blender
 
 .. currentmodule:: compas_assembly.blender
 
-This package defines various classes and functions for working with assemblies
-in blender.
-
-
-Classes
+Artists
 =======
 
 .. autosummary::
@@ -21,8 +17,7 @@ Classes
 
 """
 
-# from .blockartist import *
-from .assemblyartist import *
+from .assemblyartist import *  # noqa: F401 F403
 
 
 __all__ = [name for name in dir() if not name.startswith('_')]

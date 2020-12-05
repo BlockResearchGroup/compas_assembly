@@ -2,29 +2,32 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-from compas.utilities import color_to_colordict
-from compas.utilities import i_to_blue
-from compas.utilities import i_to_red
-from compas.utilities import pairwise
+from functools import partial
 
-from compas.geometry import Box
-from compas.geometry import Translation
-from compas.geometry import Rotation
-from compas.geometry import subtract_vectors
-from compas.geometry import midpoint_point_point
-from compas.geometry import transform_points
-from compas.geometry import add_vectors
-from compas.geometry import scale_vector
-from compas.geometry import length_vector
-from compas.geometry import sum_vectors
+from compas.utilities import color_to_colordict
+# from compas.utilities import i_to_blue
+# from compas.utilities import i_to_red
+# from compas.utilities import pairwise
+
+# from compas.geometry import Box
+# from compas.geometry import Translation
+# from compas.geometry import Rotation
+# from compas.geometry import subtract_vectors
+# from compas.geometry import midpoint_point_point
+# from compas.geometry import transform_points
+# from compas.geometry import add_vectors
+# from compas.geometry import scale_vector
+# from compas.geometry import length_vector
+# from compas.geometry import sum_vectors
 
 import compas_blender
-
-from compas_blender.artists import BaseArtist
-from compas_blender.artists import MeshArtist
+# from compas_blender.artists import BaseArtist
+# from compas_blender.artists import MeshArtist
 from compas_blender.artists import NetworkArtist
 
-from compas_assembly.blender.blockartist import BlockArtist
+# from .blockartist import BlockArtist
+
+colordict = partial(color_to_colordict, colorformat='rgb', normalize=True)
 
 
 __all__ = ['AssemblyArtist']
@@ -135,13 +138,31 @@ class AssemblyArtist(NetworkArtist):
         self.draw_edges()
         self.draw_blocks()
 
+    def draw_nodes(self, nodes=None, color=None):
+        """Draw the blocks of the assembly.
+        """
+        nodes = nodes or list(self.assembly.nodes())
+        node_color = colordict(color, nodes, default=self.color_nodes)
+        points = []
+        for node in nodes:
+            block = self.assembly.node_attribute(node, 'block')
+            points.append({
+                'pos': block.centroid(),
+                'name': f"{self.assembly.name}.node.{node}",
+                'color': node_color[node],
+                'radius': 0.05})
+        objects = compas_blender.draw_points(points, self.nodecollection)
+        self.object_node = zip(objects, nodes)
+        return objects
+
     def draw_blocks(self, nodes=None):
         """Draw the blocks of the assembly.
         """
         nodes = nodes or list(self.assembly.nodes())
         objects = []
         for node in nodes:
-            block = self.assembly.blocks[node]
+            # block = self.assembly.blocks[node]
+            block = self.assembly.node_attribute(node, 'block')
             vertices, faces = block.to_vertices_and_faces()
             obj = compas_blender.draw_mesh(vertices, faces, name=block.name, collection=self.blockcollection)
             objects.append(obj)
@@ -177,9 +198,9 @@ class AssemblyArtist(NetworkArtist):
             forces = self.assembly.edge_attribute(edge, 'interface_forces')
             if not forces:
                 continue
-            n = self.assembly.edge_attribute(edge, 'interface_uvw')[2]
+            # n = self.assembly.edge_attribute(edge, 'interface_uvw')[2]
             cx, cy, cz = 0, 0, 0
-            p = len(corners)
+            # p = len(corners)
             R = 0
             for point, force in zip(corners, forces):
                 c = force['c_np']
@@ -195,8 +216,8 @@ class AssemblyArtist(NetworkArtist):
             cy = cy / R
             cz = cz / R
             c = [cx, cy, cz]
-            sp = add_vectors(c, scale_vector(n, R * scale))
-            ep = add_vectors(c, scale_vector(n, -R * scale))
+            # sp = add_vectors(c, scale_vector(n, R * scale))
+            # ep = add_vectors(c, scale_vector(n, -R * scale))
             if R < 0:
                 color = self.color_tension
                 radius = -R * scale

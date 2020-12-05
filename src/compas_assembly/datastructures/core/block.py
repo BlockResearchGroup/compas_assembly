@@ -4,6 +4,7 @@ from __future__ import division
 
 from compas.geometry import centroid_points
 from compas.geometry import cross_vectors
+from compas.geometry import dot_vectors
 from compas.geometry import normalize_vector
 from compas.geometry import centroid_polyhedron
 from compas.geometry import volume_polyhedron
@@ -28,11 +29,8 @@ class Block(Mesh):
     >>>
     """
 
-    __module__ = 'compas_assembly.datastructures'
-
     def __init__(self):
         super(Block, self).__init__()
-        self.attributes.update({'name': 'Block'})
 
     @classmethod
     def from_polysurface(cls, guid):
@@ -57,7 +55,7 @@ class Block(Mesh):
         """
         from compas_rhino.geometry import RhinoSurface
         surface = RhinoSurface.from_guid(guid)
-        return surface.brep_to_compas(cls)
+        return surface.to_compas(cls)
 
     @classmethod
     def from_rhinomesh(cls, guid):
@@ -126,15 +124,11 @@ class Block(Mesh):
         -------
         int
             The identifier of the face.
-
-        Notes
-        -----
-        The face with the highest centroid is considered the *top* face.
         """
-        frames = self.frames()
-        fkey_centroid = {fkey: self.face_center(fkey) for fkey in self.faces()}
-        fkey, _ = sorted(fkey_centroid.items(), key=lambda x: x[1][2])[-1]
-        return fkey
+        z = [0, 0, 1]
+        faces = list(self.faces())
+        normals = [self.face_norma(face) for face in faces]
+        return sorted(zip(faces, normals), key=lambda x: dot_vectors(x[1], z))[-1][0]
 
     def center(self):
         """Compute the center of mass of the block.
@@ -163,7 +157,7 @@ class Block(Mesh):
 
 
 # ==============================================================================
-# Debugging
+# Main
 # ==============================================================================
 
 if __name__ == "__main__":
