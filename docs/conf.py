@@ -23,10 +23,10 @@ source_suffix = ['.rst', ]
 templates_path = ['_templates', ]
 exclude_patterns = []
 
-pygments_style   = 'sphinx'
-show_authors     = True
+pygments_style = 'sphinx'
+show_authors = True
 add_module_names = True
-language         = None
+language = None
 
 
 # -- Extension configuration ------------------------------------------------
@@ -98,9 +98,9 @@ html_theme = 'compaspkg'
 html_theme_path = sphinx_compas_theme.get_html_theme_path()
 
 html_theme_options = {
-    "package_name"    : "compas_assembly",
-    "package_title"   : project,
-    "package_version" : release,
+    "package_name": "compas_assembly",
+    "package_title": project,
+    "package_version": release,
 }
 
 html_context = {}

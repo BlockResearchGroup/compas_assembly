@@ -1,7 +1,7 @@
 import os
-
 import compas
 import compas_rhino
+
 from compas_rhino.geometry import RhinoSurface
 from compas_rhino.artists import MeshArtist
 
@@ -14,7 +14,7 @@ def filterfunc(face):
     return False
 
 
-FILE = os.path.join(os.path.dirname(__file__), 'crossvault.json')
+FILE = os.path.join(os.path.dirname(__file__), 'crossvault_meshes.json')
 
 guids = []
 for guid in compas_rhino.select_surfaces():
@@ -29,8 +29,8 @@ for guid in guids:
 
 compas.json_dump(meshes, FILE)
 
-compas_rhino.clear_layers(['Crossvault', 'Crossvault::Blocks'])
+compas_rhino.clear_layers(['Crossvault', 'Crossvault::Meshes'])
 
 for mesh in meshes:
-    artist = MeshArtist(mesh, layer="Crossvault::Blocks")
+    artist = MeshArtist(mesh, layer="Crossvault::Meshes")
     artist.draw()

@@ -1,6 +1,6 @@
 from __future__ import print_function
 
-import contextlib
+# import contextlib
 import glob
 import os
 import sys
@@ -74,8 +74,7 @@ def clean(ctx, docs=True, bytecode=True, builds=True):
                 dirs.remove('.git')
     folders = []
     if docs:
-        folders.append('docs')
-        folders.append('docsource/api/generated')
+        folders.append('docs/api/generated')
     folders.append('dist/')
     if bytecode:
         folders.append('src/compas_assembly/__pycache__')
@@ -94,10 +93,10 @@ def docs(ctx, doctest=False, rebuild=True, check_links=False):
     if rebuild:
         clean(ctx)
     if doctest:
-        ctx.run('sphinx-build -b doctest docsource docs')
-    ctx.run('sphinx-build -b html docsource docs')
+        ctx.run('sphinx-build -b doctest docs dist/docs')
+    ctx.run('sphinx-build -b html docs dist/docs')
     if check_links:
-        ctx.run('sphinx-build -b linkcheck docsource docs')
+        ctx.run('sphinx-build -b linkcheck docs dist/docs')
 
 
 @task()
