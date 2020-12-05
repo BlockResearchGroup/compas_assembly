@@ -3,18 +3,18 @@ from __future__ import absolute_import
 from __future__ import division
 
 from math import radians
-from math import pi
-from compas.geometry import Box
-from compas.geometry import Translation
+# from math import pi
+# from compas.geometry import Box
+# from compas.geometry import Translation
 from compas.geometry import Rotation
-from compas.geometry import scale_vector
+# from compas.geometry import scale_vector
 from compas.geometry import add_vectors
 from compas.geometry import subtract_vectors
-from compas.geometry import midpoint_point_point
+# from compas.geometry import midpoint_point_point
 from compas.geometry import transform_points
 from compas.geometry import angle_vectors
 from compas.datastructures import Mesh
-from compas.utilities import pairwise
+# from compas.utilities import pairwise
 
 from ._geometry import Geometry
 
@@ -65,7 +65,7 @@ class Arch(Geometry):
             raise Exception("Not a semicircular arch.")
 
         radius = self.rise / 2 + self.span**2 / (8 * self.rise)
-        base = [0.0, 0.0, 0.0]
+        # base = [0.0, 0.0, 0.0]
         top = [0.0, 0.0, self.rise]
         left = [- self.span / 2, 0.0, 0.0]
         center = [0.0, 0.0, self.rise - radius]
