@@ -28,6 +28,9 @@ assembly = Assembly.from_json(FILE_I)
 
 assembly_interfaces_numpy(assembly, tmax=0.02)
 
+# for edge in assembly.edges():
+#     interface = assembly.edge_attribute(edge, 'interface')
+
 # ==============================================================================
 # Export
 # ==============================================================================
