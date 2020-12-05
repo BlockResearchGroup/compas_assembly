@@ -36,9 +36,9 @@ DATA = os.path.abspath(os.path.join(HOME, 'data'))
 TEMP = os.path.abspath(os.path.join(HERE, '__temp'))
 
 
+__all__ = ['DATA', 'TEMP']
+
+
 def get(filename):
     filename = filename.strip('/')
     return os.path.abspath(os.path.join(DATA, filename))
-
-
-__all__ = ['DATA', 'TEMP']

@@ -46,15 +46,15 @@ from __future__ import print_function
 
 import compas
 
-from .block import Block   # noqa: F401 F403
-from .interface import Interface   # noqa: F401 F403
-from .assembly import Assembly   # noqa: F401 F403
+from .block import Block  # noqa: F401
+from .interface import Interface  # noqa: F401
+from .assembly import Assembly  # noqa: F401
 
-from .hull import *   # noqa: F401 F403
+from .hull import *  # noqa: F401 F403
 
 if not compas.IPY:
-    from .hull_numpy import *   # noqa: F401 F403
-    from .interfaces_numpy import *   # noqa: F401 F403
+    from .hull_numpy import *  # noqa: F401 F403
+    from .interfaces_numpy import *  # noqa: F401 F403
 
 
 __all__ = [name for name in dir() if not name.startswith('_')]
