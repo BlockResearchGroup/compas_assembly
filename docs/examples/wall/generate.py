@@ -69,14 +69,14 @@ for i in range(number_of_courses):
         # add (number_of_even_bricks) full bricks
         for j in range(number_of_even_bricks):
             dx = 0.5 * width + j * (width + gap)
-            T = Translation([dx, 0, dy])
+            T = Translation.from_vector([dx, 0, dy])
             block = brick.copy()
             block.transform(T)
             assembly.add_block(block)
     else:
         # add a half brick
         dx = 0.25 * (width - gap)
-        T = Translation([dx, 0, dy])
+        T = Translation.from_vector([dx, 0, dy])
         block = halfbrick.copy()
         block.transform(T)
         assembly.add_block(block)
@@ -84,14 +84,14 @@ for i in range(number_of_courses):
         # add (number_of_even_bricks - 1) full bricks
         for j in range(number_of_even_bricks - 1):
             dx = 0.5 * width + (0.5 + j) * (width + gap)
-            T = Translation([dx, 0, dy])
+            T = Translation.from_vector([dx, 0, dy])
             block = brick.copy()
             block.transform(T)
             assembly.add_block(block)
 
         # add a half brick
         dx = 0.25 * (width - gap) + (0.5 + j + 1) * (width + gap)
-        T = Translation([dx, 0, dy])
+        T = Translation.from_vector([dx, 0, dy])
         block = halfbrick.copy()
         block.transform(T)
         assembly.add_block(block)

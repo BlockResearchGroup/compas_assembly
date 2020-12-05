@@ -28,7 +28,7 @@ def shift(block):
     scale = choice([+0.01, -0.01, +0.05, -0.05, +0.1, -0.1])
     axis = choice([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]])
     vector = scale_vector(axis, scale)
-    T = Translation(vector)
+    T = Translation.from_vector(vector)
     block.transform(T)
 
 
@@ -63,7 +63,7 @@ brick = Block.from_shape(box)
 
 for i in range(N):
     block = brick.copy()
-    block.transform(Translation([0, 0, 0.5 * H + i * H]))
+    block.transform(Translation.from_vector([0, 0, 0.5 * H + i * H]))
     shift(block)
     assembly.add_block(block)
 
