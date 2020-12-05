@@ -58,7 +58,7 @@ class Interface(Base):
         --------
         >>>
         """
-        return cls(*data)
+        return cls(itype=data['type'], isize=data['size'], ipoints=data['points'], iframe=data['frame'], iforces=data['forces'])
 
     @classmethod
     def from_json(cls, filepath):
