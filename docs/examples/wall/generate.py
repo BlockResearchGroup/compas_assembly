@@ -4,7 +4,6 @@ from math import pi
 from compas.geometry import Box
 from compas.geometry import Translation
 from compas.geometry import Rotation
-from compas.datastructures import mesh_transform
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import Block
 from compas_assembly.plotter import AssemblyPlotter
