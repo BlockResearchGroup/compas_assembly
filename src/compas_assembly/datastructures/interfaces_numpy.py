@@ -8,8 +8,6 @@ from shapely.geometry import Polygon
 
 from compas.geometry import Frame
 from compas.geometry import local_to_world_coordinates_numpy
-# from compas.geometry import project_points_plane
-# from compas.geometry import centroid_points
 
 
 __all__ = [
@@ -71,11 +69,13 @@ def assembly_interfaces_numpy(assembly,
         pass
 
     """
-    key_index = assembly.key_index()
-    index_key = assembly.index_key()
+    node_index = assembly.key_index()
+    index_node = assembly.index_key()
 
-    blocks = [assembly.blocks[key] for key in assembly.nodes()]
+    blocks = assembly.nodes_attribute('block')
+
     nmax = min(nmax, len(blocks))
+
     block_cloud = assembly.nodes_attributes('xyz')
     block_nnbrs = _find_nearest_neighbours(block_cloud, nmax)
 
@@ -103,11 +103,11 @@ def assembly_interfaces_numpy(assembly,
     # rst1: local coordinates of the nodes of f1, with respect to the frame of f0
     # p1:   2D polygon of f1 in local coordinates
 
-    for k in assembly.nodes():
+    for node in assembly.nodes():
 
-        i = key_index[k]
+        i = node_index[node]
 
-        block = assembly.blocks[k]
+        block = blocks[i]
         nbrs = block_nnbrs[i][1]
 
         frames = block.frames()
@@ -126,18 +126,18 @@ def assembly_interfaces_numpy(assembly,
                 p0 = Polygon(rst0)
 
                 for j in nbrs:
-                    n = index_key[j]
+                    n = index_node[j]
 
-                    if n == k:
+                    if n == node:
                         continue
 
-                    if k in assembly.edge and n in assembly.edge[k]:
+                    if node in assembly.edge and n in assembly.edge[node]:
                         continue
 
-                    if n in assembly.edge and k in assembly.edge[n]:
+                    if n in assembly.edge and node in assembly.edge[n]:
                         continue
 
-                    nbr = assembly.blocks[n]
+                    nbr = blocks[j]
                     k_i = {key: index for index, key in enumerate(nbr.vertices())}
                     xyz = array(nbr.vertices_attributes('xyz'), dtype=float64).reshape((-1, 3)).T
                     rst = solve(A.T, xyz - o).T.tolist()
@@ -162,18 +162,13 @@ def assembly_interfaces_numpy(assembly,
 
                             if area >= amin:
                                 coords = [[x, y, 0.0] for x, y, z in intersection.exterior.coords]
-                                # coords = global_coords_numpy(o, A, coords)
                                 coords = local_to_world_coordinates_numpy(Frame(o, A[0], A[1]), coords)
-
-                                attr = {
-                                    'interface_type': 'face_face',
-                                    'interface_size': area,
-                                    'interface_points': coords.tolist()[:-1],
-                                    'interface_origin': origin,
-                                    'interface_uvw': uvw,
-                                }
-
-                                assembly.add_edge(k, n, attr_dict=attr)
+                                assembly.add_interface(
+                                    node, n,
+                                    itype='face_face',
+                                    isize=area,
+                                    ipoints=coords.tolist()[:-1],
+                                    iframe=(origin, uvw))
 
 
 # def assembly_interfaces_bestfit(assembly,
@@ -220,8 +215,8 @@ def assembly_interfaces_numpy(assembly,
 #     --------
 #     >>>
 #     """
-#     key_index = {key: index for index, key in enumerate(assembly.nodes())}
-#     index_key = {index: key for index, key in enumerate(assembly.nodes())}
+#     node_index = {key: index for index, key in enumerate(assembly.nodes())}
+#     index_node = {index: key for index, key in enumerate(assembly.nodes())}
 
 #     blocks = [assembly.blocks[key] for key in assembly.nodes()]
 #     nmax = min(nmax, len(blocks))
@@ -256,7 +251,7 @@ def assembly_interfaces_numpy(assembly,
 
 #     for k in assembly.nodes():
 
-#         i = key_index[k]
+#         i = node_index[k]
 
 #         block = assembly.blocks[k]
 #         nbrs = block_nnbrs[i][1]
@@ -278,7 +273,7 @@ def assembly_interfaces_numpy(assembly,
 #                 p0 = Polygon(rst0)
 
 #                 for j in nbrs:
-#                     n = index_key[j]
+#                     n = index_node[j]
 
 #                     if n == k:
 #                         continue
@@ -407,8 +402,8 @@ def assembly_interfaces_numpy(assembly,
 #         assembly.halfedge[key] = {}
 #     # replace
 
-#     key_index = {key: index for index, key in enumerate(assembly.nodes())}
-#     index_key = {index: key for index, key in enumerate(assembly.nodes())}
+#     node_index = {key: index for index, key in enumerate(assembly.nodes())}
+#     index_node = {index: key for index, key in enumerate(assembly.nodes())}
 
 #     blocks = [assembly.blocks[key] for key in assembly.nodes()]
 #     nmax = min(nmax, len(blocks))
@@ -443,7 +438,7 @@ def assembly_interfaces_numpy(assembly,
 
 #     for k in assembly.nodes():
 
-#         i = key_index[k]
+#         i = node_index[k]
 
 #         block = assembly.blocks[k]
 #         nbrs = block_nnbrs[i][1]
@@ -465,7 +460,7 @@ def assembly_interfaces_numpy(assembly,
 #                 p0 = Polygon(rst0)
 
 #                 for j in nbrs:
-#                     n = index_key[j]
+#                     n = index_node[j]
 
 #                     if n == k:
 #                         continue
