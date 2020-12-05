@@ -13,11 +13,11 @@ class BlockArtist(MeshArtist):
 
     def __init__(self, *args, **kwargs):
         super(BlockArtist, self).__init__(*args, **kwargs)
-        self.settings.update({
+        self.settings = {
             'color.vertex': (0, 0, 0),
             'color.edge': (0, 0, 0),
             'color.face': (255, 255, 255),
-        })
+        }
 
     @property
     def block(self):

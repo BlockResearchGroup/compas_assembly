@@ -12,7 +12,8 @@ from compas.geometry import scale_vector
 import compas_rhino
 from compas_rhino.artists import NetworkArtist
 from compas_rhino.artists import FrameArtist
-from compas_assembly.rhino.blockartist import BlockArtist
+
+from .blockartist import BlockArtist
 
 
 __all__ = ['AssemblyArtist']
@@ -39,7 +40,7 @@ class AssemblyArtist(NetworkArtist):
 
     def __init__(self, assembly, layer=None):
         super(AssemblyArtist, self).__init__(assembly, layer=layer)
-        self.settings.update({
+        self.settings = {
             'color.vertex': (0, 0, 0),
             'color.vertex:is_support': (0, 0, 0),
             'color.edge': (0, 0, 0),
@@ -51,7 +52,7 @@ class AssemblyArtist(NetworkArtist):
             'scale.selfweight': 0.1,
             'eps.selfweight': 1e-3,
             'eps.force': 1e-3,
-        })
+        }
 
     @property
     def assembly(self):
@@ -258,7 +259,7 @@ class AssemblyArtist(NetworkArtist):
                     'start': sp,
                     'end': [sp[axis] + scale * f * w[axis] for axis in range(3)],
                     'color': color,
-                    'name': "{0}.force.{1}-{2}.{3}".format(self.assembly.name, *edge, i),
+                    'name': "{0}.force.{1}-{2}.{3}".format(self.assembly.name, edge[0], edge[1], i),
                     'arrow': 'end'
                 })
         return compas_rhino.draw_lines(lines, layer=layer, clear=False, redraw=False)
