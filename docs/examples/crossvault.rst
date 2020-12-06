@@ -34,7 +34,3 @@ Crossvault
 .. figure:: /_images/crossvault_02_interfaces.png
     :figclass: figure
     :class: figure-img img-fluid
-
-
-4. Compute Equilibrium
-======================

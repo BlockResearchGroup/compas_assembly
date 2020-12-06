@@ -18,12 +18,6 @@ __all__ = ['Block']
 class Block(Mesh):
     """A data structure for the individual blocks of a discrete element assembly.
 
-    Parameters
-    ----------
-
-    Attributes
-    ----------
-
     Examples
     --------
     >>>

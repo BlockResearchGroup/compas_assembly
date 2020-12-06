@@ -18,12 +18,6 @@ class Assembly(Network):
     Each node of the network represents an element of the assembly.
     Each edge of the network represents an interface between two assembly elements.
 
-    Parameters
-    ----------
-
-    Attributes
-    ----------
-
     Examples
     --------
     >>>

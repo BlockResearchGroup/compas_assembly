@@ -34,7 +34,3 @@ Armadillo Vault
 .. figure:: /_images/armadillo_02_interfaces.png
     :figclass: figure
     :class: figure-img img-fluid
-
-
-4. Compute Equilibrium
-======================
