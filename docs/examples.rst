@@ -7,3 +7,4 @@ Examples
    :titlesonly:
 
    examples/crossvault
+   examples/armadillo

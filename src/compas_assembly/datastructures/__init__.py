@@ -36,8 +36,6 @@ Functions
     assembly_hull
     assembly_hull_numpy
     assembly_interfaces_numpy
-    assembly_transform
-    assembly_transformed
 
 """
 from __future__ import absolute_import

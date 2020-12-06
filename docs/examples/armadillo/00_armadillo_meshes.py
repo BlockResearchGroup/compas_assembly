@@ -10,7 +10,7 @@ def filterfunc(face):
     return True
 
 
-FILE = os.path.join(os.path.dirname(__file__), 'armadillo.json')
+FILE = os.path.join(os.path.dirname(__file__), 'armadillo_meshes.json')
 
 guids = []
 for guid in compas_rhino.select_surfaces():
@@ -25,8 +25,8 @@ for guid in guids:
 
 compas.json_dump(meshes, FILE)
 
-compas_rhino.clear_layers(['Armadillo', 'Armadillo::Blocks'])
+compas_rhino.clear_layers(['Armadillo'])
 
 for mesh in meshes:
-    artist = MeshArtist(mesh, layer="Armadillo::Blocks")
+    artist = MeshArtist(mesh, layer="Armadillo::Meshes")
     artist.draw()
