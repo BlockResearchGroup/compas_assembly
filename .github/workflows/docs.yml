@@ -1,37 +1,32 @@
-name: Build docs
+name: Build and deploy docs
 
 on:
   push:
     branches:
       - master
-  # pull_request:
-  #   branches:
-  #     - master
-
-defaults:
-  run:
-    shell: bash -l {0}
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
     name: build and deploy docs
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
-
       - uses: actions/checkout@v2
-
-      - uses: conda-incubator/setup-miniconda@v2.0.0
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
         with:
-          miniconda-version: "latest"
-          activate-environment: assembly
-          channels: conda-forge
-          python-version: 3.7
-
+          python-version: 3.8
       - name: Install dependencies
         run: |
-          conda install COMPAS=0.18.1
-          pip install -r requirements-dev.txt
-
+          python -m pip install --upgrade pip
+          python -m pip install cython --install-option="--no-cython-compile"
+      - name: Install
+        run: |
+          python -m pip install --no-cache-dir -r requirements-dev.txt
       - name: Generate docs
         if: ${{ success() }}
         run: |
@@ -42,7 +37,7 @@ jobs:
               if [[ $BASH_REMATCH = pull* ]]; then
                   echo This is a pull request
                   FOLDER_NAME=pull_${BASH_REMATCH##*/}
-              elif [[ $BASH_REMATCH = tags/* ]]; then
+              elif [[ $BASH_REMATCH = tags* ]]; then
                   echo This is a version tag
                   FOLDER_NAME=${BASH_REMATCH##*/v}
               else
@@ -50,12 +45,12 @@ jobs:
                   FOLDER_NAME=latest
               fi;
           fi;
-          echo "Docs will be deployed to https://github.com/blockresearchgroup/compas_assembly/$FOLDER_NAME"
+          echo "Docs will be deployed to https://blockresearchgroup.github.io/compas_assembly/$FOLDER_NAME"
           mkdir -p deploy/$BRANCH_OR_TAG && mv -T dist/docs deploy/$FOLDER_NAME/
-
       - name: Deploy docs
         if: success()
         uses: crazy-max/ghaction-github-pages@v2
+        continue-on-error: true
         with:
           target_branch: gh-pages
           build_dir: deploy
@@ -95,3 +90,4 @@ jobs:
           keep_history: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
