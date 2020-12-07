@@ -4,13 +4,10 @@ prune .github
 
 prune data
 prune docs
-prune docsource
 prune examples
-prune models
 prune scripts
 prune temp
 prune tests
-prune ui
 
 include LICENSE
 include README.md
