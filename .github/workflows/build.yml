@@ -1,4 +1,4 @@
-name: build
+name: Build source
 
 on:
   push:
@@ -33,6 +33,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          conda install COMPAS=0.18.1
           pip install -r requirements-dev.txt
 
       - name: Lint with flake8

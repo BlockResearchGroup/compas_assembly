@@ -1,4 +1,4 @@
-name: docs
+name: Build docs
 
 on:
   push:
@@ -29,6 +29,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          conda install COMPAS=0.18.1
           pip install -r requirements-dev.txt
 
       - name: Generate docs
