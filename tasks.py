@@ -100,15 +100,34 @@ def docs(ctx, doctest=False, rebuild=True, check_links=False):
 
 
 @task()
+def lint(ctx):
+    """Check the consistency of coding style."""
+    log.write('Running flake8 python linter...')
+    ctx.run('flake8 src')
+
+
+@task()
+def testdocs(ctx, rebuild=False):
+    """Test the examples in the docstrings."""
+    log.write('Running doctest...')
+    opts = '-E' if rebuild else ''
+    ctx.run('sphinx-build {} -b doctest docs dist/docs'.format(opts))
+
+
+@task()
+def linkcheck(ctx, rebuild=False):
+    """Check links in documentation."""
+    log.write('Running link check...')
+    opts = '-E' if rebuild else ''
+    ctx.run('sphinx-build {} -b linkcheck docs dist/docs'.format(opts))
+
+
+@task()
 def check(ctx):
     log.write('Checking MANIFEST.in...')
     ctx.run('check-manifest')
     log.write('Checking metadata...')
     ctx.run('python setup.py check --strict --metadata')
-    # log.write('Running flake8 python linter...')
-    # ctx.run('flake8 src tests setup.py')
-    # log.write('Checking python imports...')
-    # ctx.run('isort --check-only --diff --recursive src tests setup.py')
 
 
 @task(help={
@@ -128,7 +147,7 @@ def release(ctx, release_type):
     if release_type not in ('patch', 'minor', 'major'):
         raise Exit('The release type parameter is invalid.\nMust be one of: major, minor, patch')
     ctx.run('invoke check test')
-    ctx.run('bumpversion %s --verbose' % release_type)
+    ctx.run('bump2version %s --verbose' % release_type)
     ctx.run('python setup.py clean --all sdist bdist_wheel')
     if confirm('You are about to upload the release to pypi.org. Are you sure? [y/N]'):
         files = ['dist/*.whl', 'dist/*.gz', 'dist/*.zip']
