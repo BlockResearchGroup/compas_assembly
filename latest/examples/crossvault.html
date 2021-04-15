@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>COMPAS Assembly</title>
+  
+  <title>compas_assembly - Crossvault</title>
+  
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -19,23 +21,12 @@
   
     <link rel="next" title="Armadillo Vault" href="armadillo.html" />
   
-  
+
   
     <link rel="prev" title="Semi-circular arch" href="arch.html" />
   
 
   <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
-  <style>
-    .footer-text,
-    .footer-link,
-    .footer-title {
-      color: rgba(255, 255, 255, 0.25);
-    }
-    .footer-link:hover {
-      color: rgba(255, 255, 255, 0.5);
-    }
-    </style>
 </head>
 
 <body data-spy="scroll" data-target="#compas-toc">
@@ -53,6 +44,7 @@
       </ul>
       <!-- primary -->
       <ul class="navbar-nav d-none d-md-flex ml-md-auto">
+        <!-- version -->
         
         <!-- version -->
         <!-- social -->
@@ -75,12 +67,24 @@
   <div class="container-fluid">
     <div class="row">
       <!-- main -->
-      <main class="col-12 col-md-9 col-xl-7 px-2 px-md-5 py-5 compas-content" role="main">
+      <main class="col-12 col-md-9 col-xl-7 px-2 px-md-5 pt-2 pb-5 compas-content" role="main">
+        
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-3 bg-white px-0">
+            <li class="breadcrumb-item"><a href="../index.html">docs</a></li>
+            
+              <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
+            
+            <li class="breadcrumb-item active" aria-current="page">Crossvault</li>
+          </ol>
+        </nav>
+        
+
         
         
-        <div class="section" id="crossvault">
-<h1 class="display-4 p-0 mb-5">Crossvault</h1>
-<div class="section" id="load-meshes-from-polysurfaces">
+        <section id="crossvault">
+<h1>Crossvault</h1>
+<section id="load-meshes-from-polysurfaces">
 <h2>1. Load Meshes from Polysurfaces</h2>
 <div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">compas</span>
@@ -120,18 +124,18 @@
     <span class="n">artist</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
 </code></pre></div>
 </div>
-<div class="figure align-default">
+<figure class="figure align-default">
 <img alt="../_images/crossvault_00_meshes.png" class="figure-img img-fluid" src="../_images/crossvault_00_meshes.png" />
-</div>
-</div>
-<div class="section" id="create-assembly-and-add-blocks">
+</figure>
+</section>
+<section id="create-assembly-and-add-blocks">
 <h2>2. Create Assembly and Add Blocks</h2>
 <div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">compas</span>
 
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Block</span>
-<span class="kn">from</span> <span class="nn">compas_assembly.rhino</span> <span class="kn">import</span> <span class="n">AssemblyArtist</span>
+<span class="c1"># from compas_assembly.rhino import AssemblyArtist</span>
 
 <span class="n">FILE_I</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;crossvault_meshes.json&#39;</span><span class="p">)</span>
 <span class="n">FILE_O</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;crossvault_assembly.json&#39;</span><span class="p">)</span>
@@ -145,18 +149,18 @@
 
 <span class="n">compas</span><span class="o">.</span><span class="n">json_dump</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">FILE_O</span><span class="p">)</span>
 
-<span class="n">artist</span> <span class="o">=</span> <span class="n">AssemblyArtist</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s2">&quot;Crossvault::Assembly&quot;</span><span class="p">)</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">clear_layer</span><span class="p">()</span>
+<span class="c1"># artist = AssemblyArtist(assembly, layer=&quot;Crossvault::Assembly&quot;)</span>
+<span class="c1"># artist.clear_layer()</span>
 
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_nodes</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">nodes_where</span><span class="p">({</span><span class="s1">&#39;is_support&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})})</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">()</span>
+<span class="c1"># artist.draw_nodes(color={key: (255, 0, 0) for key in assembly.nodes_where({&#39;is_support&#39;: True})})</span>
+<span class="c1"># artist.draw_blocks()</span>
 </code></pre></div>
 </div>
-<div class="figure align-default">
+<figure class="figure align-default">
 <img alt="../_images/crossvault_01_assembly.png" class="figure-img img-fluid" src="../_images/crossvault_01_assembly.png" />
-</div>
-</div>
-<div class="section" id="identify-interfaces">
+</figure>
+</section>
+<section id="identify-interfaces">
 <h2>3. Identify Interfaces</h2>
 <div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">compas</span>
@@ -185,17 +189,17 @@
 <span class="n">artist</span><span class="o">.</span><span class="n">draw_interfaces</span><span class="p">()</span>
 </code></pre></div>
 </div>
-<div class="figure align-default">
+<figure class="figure align-default">
 <img alt="../_images/crossvault_02_interfaces.png" class="figure-img img-fluid" src="../_images/crossvault_02_interfaces.png" />
-</div>
-</div>
-</div>
+</figure>
+</section>
+</section>
 
         
       </main>
       <!-- content -->
       <!-- sidebar -->
-      <div class="col-12 col-md-3 compas-sidebar" role="navigation"> 
+      <div class="col-12 col-md-3 compas-sidebar" role="navigation">
         <form id="search" class="d-flex align-items-center compas-searchbox" action="../search.html" method="get">
           <input class="form-control" type="text" name="q" placeholder="Search docs" />
           <input type="hidden" name="check_keywords" value="yes" />
@@ -243,24 +247,48 @@
   </div>
   <!-- main -->
   <!-- footer -->
+  <footer class="compas-footer">
+    <nav class="nav p-2">
+      
+        <a href="arch.html" title="Semi-circular arch" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
+          <div class="nav-button p-2 m-2"><i class="fas fa-arrow-left"></i></div>
+          <div class="nav-title flex-grow-1 align-self-center">
+            <div class="nav-direction small font-weight-light">Previous</div>
+            Semi-circular arch
+          </div>
+        </a>
+      
+
+      
+        <a href="armadillo.html" title="Armadillo Vault" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
+          <div class="nav-title footer-link flex-grow-1 align-self-center">
+            <div class="nav-direction small font-weight-light">Next</div>
+            Armadillo Vault
+          </div>
+          <div class="nav-button p-2 m-2"><i class="fas fa-arrow-right"></i></div>
+        </a>
+      
+    </nav>  
+  </footer>
   <!-- footer -->
+  <!-- below -->
   <div class="below py-5" style="background-color: #222;">
     <div class="container">
       <div class="row flex-column">
       <div class="col-12 col-md-6 mx-md-auto text-center">
-        <h4 class="pb-3 footer-text">COMPAS</h4>
-        <p class="footer-text">
+        <h4 class="pb-3 below-text">COMPAS</h4>
+        <p class="below-text">
           A computational framework for collaboration and research
           in Architecture, Engineering, Fabrication, and Construction.
         </p>
         <nav class="nav justify-content-center pb-3">
-          <a class="nav-link mx-2 px-0 footer-link" href="http://github.com/compas-dev" target="_blank">
+          <a class="nav-link mx-2 px-0 below-link" href="http://github.com/compas-dev" target="_blank">
             <span class="fab fa-github fa-1x"></span>
           </a>
-          <a class="nav-link mx-2 px-0 footer-link" href="http://forum.compas-framework.org" target="_blank">
+          <a class="nav-link mx-2 px-0 below-link" href="http://forum.compas-framework.org" target="_blank">
             <span class="fab fa-discourse fa-1x"></span>
           </a>
-          <a class="nav-link mx-2 px-0 footer-link" href="https://pypi.org/project/COMPAS/" target="_blank">
+          <a class="nav-link mx-2 px-0 below-link" href="https://pypi.org/project/COMPAS/" target="_blank">
             <span class="fab fa-python fa-1x"></span>
           </a>
         </nav>
@@ -268,12 +296,13 @@
       </div>
       <div class="row">
       <div class="col text-center">
-        <p class="p-0 m-0 footer-text">Copyright &copy; 2017-2020 compas-dev</p>
+        <p class="p-0 m-0 below-text">Copyright &copy; 2017-2021 compas-dev</p>
       </div>
       </div>
     </div>
   </div>
-
+  <!-- below -->
+  <!-- scripts -->
   <script type="text/javascript">
   var DOCUMENTATION_OPTIONS = {
   URL_ROOT          : '',
@@ -326,8 +355,8 @@
       });
     })
   }
-
   </script>
+  <!-- scripts -->
   
   
 </body>

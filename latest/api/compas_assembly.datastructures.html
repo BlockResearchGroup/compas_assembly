@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>COMPAS Assembly</title>
+  
+  <title>compas_assembly - compas_assembly.datastructures</title>
+  
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -17,25 +19,14 @@
   <link rel="stylesheet" type="text/css" href="../_static/css/compas-reference.css" />
 
   
-    <link rel="next" title="Publications" href="../publications.html" />
+    <link rel="next" title="Assembly" href="generated/compas_assembly.datastructures.Assembly.html" />
   
-  
+
   
     <link rel="prev" title="compas_assembly" href="compas_assembly.html" />
   
 
   <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
-  <style>
-    .footer-text,
-    .footer-link,
-    .footer-title {
-      color: rgba(255, 255, 255, 0.25);
-    }
-    .footer-link:hover {
-      color: rgba(255, 255, 255, 0.5);
-    }
-    </style>
 </head>
 
 <body data-spy="scroll" data-target="#compas-toc">
@@ -53,6 +44,7 @@
       </ul>
       <!-- primary -->
       <ul class="navbar-nav d-none d-md-flex ml-md-auto">
+        <!-- version -->
         
         <!-- version -->
         <!-- social -->
@@ -75,15 +67,78 @@
   <div class="container-fluid">
     <div class="row">
       <!-- main -->
-      <main class="col-12 col-md-9 col-xl-7 px-2 px-md-5 py-5 compas-content" role="main">
+      <main class="col-12 col-md-9 col-xl-7 px-2 px-md-5 pt-2 pb-5 compas-content" role="main">
+        
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-3 bg-white px-0">
+            <li class="breadcrumb-item"><a href="../index.html">docs</a></li>
+            
+              <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+            
+              <li class="breadcrumb-item"><a href="compas_assembly.html">compas_assembly</a></li>
+            
+            <li class="breadcrumb-item active" aria-current="page">compas_assembly.datastructures</li>
+          </ol>
+        </nav>
+        
+
         
         
-        
+        <span class="target" id="module-compas_assembly.datastructures"></span><section id="compas-assembly-datastructures">
+<h1>compas_assembly.datastructures</h1>
+<p>This package defines various data structures for the representation
+of discrete/distinct-element assemblies.
+The individual elements of an assembly are represented by customised versions of the COMPAS
+mesh data structure (<code class="xref py py-class docutils literal notranslate"><span class="pre">compas.datastructures.Mesh</span></code>).
+The relationships between the elements in the assembly are represented by
+customised versions of the COMPAS network data structure (<code class="xref py py-class docutils literal notranslate"><span class="pre">compas.datastructures.Network</span></code>).</p>
+<section id="classes">
+<h2>Classes</h2>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/compas_assembly.datastructures.Assembly.html#compas_assembly.datastructures.Assembly" title="compas_assembly.datastructures.Assembly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Assembly</span></code></a></p></td>
+<td><p>A data structure for discrete element assemblies.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/compas_assembly.datastructures.Block.html#compas_assembly.datastructures.Block" title="compas_assembly.datastructures.Block"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Block</span></code></a></p></td>
+<td><p>A data structure for the individual blocks of a discrete element assembly.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/compas_assembly.datastructures.Interface.html#compas_assembly.datastructures.Interface" title="compas_assembly.datastructures.Interface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Interface</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h2>Functions</h2>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/compas_assembly.datastructures.assembly_hull.html#compas_assembly.datastructures.assembly_hull" title="compas_assembly.datastructures.assembly_hull"><code class="xref py py-obj docutils literal notranslate"><span class="pre">assembly_hull</span></code></a></p></td>
+<td><p>Construct the convex hull of an assembly.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/compas_assembly.datastructures.assembly_hull_numpy.html#compas_assembly.datastructures.assembly_hull_numpy" title="compas_assembly.datastructures.assembly_hull_numpy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">assembly_hull_numpy</span></code></a></p></td>
+<td><p>Construct the convex hull of an assembly.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/compas_assembly.datastructures.assembly_interfaces_numpy.html#compas_assembly.datastructures.assembly_interfaces_numpy" title="compas_assembly.datastructures.assembly_interfaces_numpy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">assembly_interfaces_numpy</span></code></a></p></td>
+<td><p>Identify the interfaces between the blocks of an assembly.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
         
       </main>
       <!-- content -->
       <!-- sidebar -->
-      <div class="col-12 col-md-3 compas-sidebar" role="navigation"> 
+      <div class="col-12 col-md-3 compas-sidebar" role="navigation">
         <form id="search" class="d-flex align-items-center compas-searchbox" action="../search.html" method="get">
           <input class="form-control" type="text" name="q" placeholder="Search docs" />
           <input type="hidden" name="check_keywords" value="yes" />
@@ -95,11 +150,17 @@
         
         
           <div id="compas-navigation" class="collapse compas-navigation">
-          <ul class="nav flex-column">
+          <ul class="nav flex-column active">
 <li class="nav-item"><a class="nav-link reference internal" href="../intro.html">Introduction</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../gettingstarted.html">Getting Started</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../examples.html">Examples</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="../api.html">API Reference</a></li>
+<li class="nav-item active"><a class="nav-link reference internal" href="../api.html">API Reference</a><ul class="nav flex-column active">
+<li class="nav-item active"><a class="nav-link reference internal" href="compas_assembly.html">compas_assembly</a><ul class="nav flex-column active">
+<li class="nav-item active"><a class="nav-link active current reference internal" href="#">compas_assembly.datastructures</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="nav-item"><a class="nav-link reference internal" href="../publications.html">Publications</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="../license.html">License</a></li>
 </ul>
@@ -111,7 +172,12 @@
       <!-- toc -->
       <div class="d-none d-xl-block col-xl-2 compas-toc" role="toc">
         
-        <ul class="simple">
+        <ul class="nav flex-column" id="compas-toc">
+<li class="nav-item"><a class="nav-link reference internal" href="#">compas_assembly.datastructures</a><ul class="nav flex-column">
+<li class="nav-item"><a class="nav-link reference internal" href="#classes">Classes</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#functions">Functions</a></li>
+</ul>
+</li>
 </ul>
 
       </div>
@@ -120,24 +186,48 @@
   </div>
   <!-- main -->
   <!-- footer -->
+  <footer class="compas-footer">
+    <nav class="nav p-2">
+      
+        <a href="compas_assembly.html" title="compas_assembly" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
+          <div class="nav-button p-2 m-2"><i class="fas fa-arrow-left"></i></div>
+          <div class="nav-title flex-grow-1 align-self-center">
+            <div class="nav-direction small font-weight-light">Previous</div>
+            compas_assembly
+          </div>
+        </a>
+      
+
+      
+        <a href="generated/compas_assembly.datastructures.Assembly.html" title="Assembly" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
+          <div class="nav-title footer-link flex-grow-1 align-self-center">
+            <div class="nav-direction small font-weight-light">Next</div>
+            Assembly
+          </div>
+          <div class="nav-button p-2 m-2"><i class="fas fa-arrow-right"></i></div>
+        </a>
+      
+    </nav>  
+  </footer>
   <!-- footer -->
+  <!-- below -->
   <div class="below py-5" style="background-color: #222;">
     <div class="container">
       <div class="row flex-column">
       <div class="col-12 col-md-6 mx-md-auto text-center">
-        <h4 class="pb-3 footer-text">COMPAS</h4>
-        <p class="footer-text">
+        <h4 class="pb-3 below-text">COMPAS</h4>
+        <p class="below-text">
           A computational framework for collaboration and research
           in Architecture, Engineering, Fabrication, and Construction.
         </p>
         <nav class="nav justify-content-center pb-3">
-          <a class="nav-link mx-2 px-0 footer-link" href="http://github.com/compas-dev" target="_blank">
+          <a class="nav-link mx-2 px-0 below-link" href="http://github.com/compas-dev" target="_blank">
             <span class="fab fa-github fa-1x"></span>
           </a>
-          <a class="nav-link mx-2 px-0 footer-link" href="http://forum.compas-framework.org" target="_blank">
+          <a class="nav-link mx-2 px-0 below-link" href="http://forum.compas-framework.org" target="_blank">
             <span class="fab fa-discourse fa-1x"></span>
           </a>
-          <a class="nav-link mx-2 px-0 footer-link" href="https://pypi.org/project/COMPAS/" target="_blank">
+          <a class="nav-link mx-2 px-0 below-link" href="https://pypi.org/project/COMPAS/" target="_blank">
             <span class="fab fa-python fa-1x"></span>
           </a>
         </nav>
@@ -145,12 +235,13 @@
       </div>
       <div class="row">
       <div class="col text-center">
-        <p class="p-0 m-0 footer-text">Copyright &copy; 2017-2020 compas-dev</p>
+        <p class="p-0 m-0 below-text">Copyright &copy; 2017-2021 compas-dev</p>
       </div>
       </div>
     </div>
   </div>
-
+  <!-- below -->
+  <!-- scripts -->
   <script type="text/javascript">
   var DOCUMENTATION_OPTIONS = {
   URL_ROOT          : '',
@@ -203,8 +294,8 @@
       });
     })
   }
-
   </script>
+  <!-- scripts -->
   
   
 </body>
