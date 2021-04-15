@@ -74,11 +74,11 @@ class Assembly(Network):
         The XYZ coordinates of the node are the coordinates of the centroid of the block.
         """
         x, y, z = block.centroid()
-        return self.add_node(key, x=x, y=y, z=z, block=block)
+        return self.add_node(key, x=x, y=y, z=z, block=block, attr_dict=attr_dict, **kwattr)
 
-    def add_interface(self, u, v, itype, isize, ipoints, iframe):
+    def add_interface(self, edge, interface):
         """"""
-        interface = Interface(itype=itype, isize=isize, ipoints=ipoints, iframe=iframe)
+        u, v = edge
         return self.add_edge(u, v, interface=interface)
 
     def add_blocks_from_polysurfaces(self, guids):

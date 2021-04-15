@@ -1,1 +1,2 @@
-COMPAS>=0.18.1
+COMPAS>=1.0
+shapely

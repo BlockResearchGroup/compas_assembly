@@ -9,6 +9,8 @@ from shapely.geometry import Polygon
 from compas.geometry import Frame
 from compas.geometry import local_to_world_coordinates_numpy
 
+from .interface import Interface
+
 
 __all__ = [
     'assembly_interfaces_numpy',
@@ -163,13 +165,11 @@ def assembly_interfaces_numpy(assembly,
                             if area >= amin:
                                 coords = [[x, y, 0.0] for x, y, z in intersection.exterior.coords]
                                 coords = local_to_world_coordinates_numpy(Frame(o, A[0], A[1]), coords)
-                                assembly.add_interface(
-                                    node, n,
-                                    itype='face_face',
-                                    isize=area,
-                                    ipoints=coords.tolist()[:-1],
-                                    iframe=Frame(origin, uvw[0], uvw[1])
-                                )
+                                interface = Interface(itype='face_face',
+                                                      isize=area,
+                                                      ipoints=coords.tolist()[:-1],
+                                                      iframe=Frame(origin, uvw[0], uvw[1]))
+                                assembly.add_interface((node, n), interface)
     return assembly
 
 
