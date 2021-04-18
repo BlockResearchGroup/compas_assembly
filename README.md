@@ -22,6 +22,12 @@ conda activate assembly
 pip install compas_assembly
 ```
 
+To use the viewer for visualisation of assemblies outside of CAD software, install `compas_view2`.
+
+```bash
+conda install compas_view2
+```
+
 ## Getting Started
 
 <https://blockresearchgroup.github.io/compas_asssembly/gettingstarted.html>
