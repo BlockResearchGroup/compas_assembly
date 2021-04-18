@@ -1,6 +1,6 @@
 # compas_assembly Assembly
 
-[![GitHub - License](https://img.shields.io/github/license/blockresearchgroup/compas_assembly.svg)](https://github.com/blockresearchgroup/compas_assembly)
+[![GitHub - License](https://img.shields.io/github/license/blockresearchgroup/compas_assembly.svg)](https://github.com/blockresearchgroup/compas_assembly/LICENSE)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/compas_assembly.svg)](https://pypi.python.org/project/compas_assembly)
 [![PyPI - Latest Release](https://img.shields.io/pypi/v/compas_assembly.svg)](https://pypi.python.org/project/compas_assembly)
 
