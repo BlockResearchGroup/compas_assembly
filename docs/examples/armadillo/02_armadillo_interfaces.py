@@ -1,7 +1,7 @@
 import os
 import compas
 
-from compas.geometry import Point, Polygon
+from compas.geometry import Point, Line, Polygon
 from compas.datastructures import Mesh
 
 from compas_assembly.datastructures import Assembly, Block
@@ -20,7 +20,7 @@ FILE_O = os.path.join(os.path.dirname(__file__), 'armadillo_interfaces.json')
 
 assembly = compas.json_load(FILE_I)
 
-assembly_interfaces_numpy(assembly, tmax=0.02, amin=0.0001)
+assembly_interfaces_numpy(assembly, tmax=0.05, amin=0.0001)
 
 # ==============================================================================
 # Export
@@ -37,6 +37,7 @@ viewer = App()
 nodes = []
 blocks = []
 interfaces = []
+interactions = []
 
 for node in assembly.nodes():
     nodes.append(Point(* assembly.node_coordinates(node)))
@@ -47,8 +48,14 @@ for edge in assembly.edges():
     polygon = Polygon(interface.points)
     interfaces.append(Mesh.from_polygons([polygon]))
 
+for edge in assembly.edges():
+    a = Point(* assembly.node_coordinates(edge[0]))
+    b = Point(* assembly.node_coordinates(edge[1]))
+    interactions.append(Line(a, b))
+
 viewer.add(Collection(nodes))
 viewer.add(Collection(blocks), show_faces=False, show_edges=True)
-viewer.add(Collection(interfaces), show_edges=False)
+viewer.add(Collection(interfaces), show_edges=False, color=(0, 0, 1), opacity=0.5)
+viewer.add(Collection(interactions))
 
 viewer.run()

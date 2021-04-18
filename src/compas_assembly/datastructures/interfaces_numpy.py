@@ -8,6 +8,7 @@ from shapely.geometry import Polygon
 
 from compas.geometry import Frame
 from compas.geometry import local_to_world_coordinates_numpy
+from compas.geometry import dot_vectors
 
 from .interface import Interface
 
@@ -133,8 +134,8 @@ def assembly_interfaces_numpy(assembly,
                     if n == node:
                         continue
 
-                    if node in assembly.edge and n in assembly.edge[node]:
-                        continue
+                    # if node in assembly.edge and n in assembly.edge[node]:
+                    #     continue
 
                     if n in assembly.edge and node in assembly.edge[n]:
                         continue
@@ -145,7 +146,11 @@ def assembly_interfaces_numpy(assembly,
                     rst = solve(A.T, xyz - o).T.tolist()
                     rst = {key: rst[k_i[key]] for key in nbr.vertices()}
 
-                    for f1 in nbr.faces():
+                    faces = sorted(nbr.faces(), key=lambda face: dot_vectors(nbr.face_normal(face), uvw[2]))[:2]
+
+                    for f1 in faces:
+
+                    # for f1 in nbr.faces():
 
                         rst1 = [rst[key] for key in nbr.face_vertices(f1)]
 

@@ -23,12 +23,6 @@ assembly = compas.json_load(FILE_I)
 # Flatness
 # ==============================================================================
 
-# sides = []
-
-# for node in assembly.nodes():
-#     block = assembly.node_attribute(node, 'block')
-#     faces = sorted(block.faces(), key=lambda face: block.face_area(face))[:-2]
-
 # ==============================================================================
 # Export
 # ==============================================================================
