@@ -8,7 +8,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-  <meta name="author" content="" />
+  <meta name="author" content="compas-dev" />
   <meta name="description" content="" />
 
   <link rel="shortcut icon" href="../../_static/images/compas.ico" type="image/x-icon">
@@ -34,22 +34,31 @@
   <header id="header" class="compas-header d-flex align-items-center">
     <nav class="navbar navbar-expand navbar-dark col flex-column flex-md-row text-center">
       <!-- brand -->
-      <a class="navbar-brand" href="">
+      <a class="navbar-brand" href="https://blockresearchgroup.github.io/compas_assembly">
         <img src="../../_static/images/compas_icon_white.png" alt="COMPAS Assembly" width="48px" height="48px" />
       </a>
       <!-- brand -->
       <!-- primary -->
       <ul class="navbar-nav">
-        <li class="nav-item active"><a class="nav-link" href="">COMPAS Assembly</a></li>
+        <li class="nav-item active"><a class="nav-link" href="https://blockresearchgroup.github.io/compas_assembly">COMPAS Assembly</a></li>
       </ul>
       <!-- primary -->
       <ul class="navbar-nav d-none d-md-flex ml-md-auto">
         <!-- version -->
         
+        <meta id="doc_versions" data-url="https://github.com/blockresearchgroup/compas_assembly/doc_versions.txt" data-docs="https://blockresearchgroup.github.io/compas_assembly">
+        <li class="nav-item nav-versions dropdown">
+          <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            0.3.0
+          </a>
+          <div id="doc_version_list" class="dropdown-menu dropdown-menu-md-right" aria-labelledby="bd-versions"></div>
+        </li>
+        
         <!-- version -->
         <!-- social -->
         <li class="nav-item">
-          <a class="nav-link" href="" target="_blank">
+          <a class="nav-link" href="https://github.com/blockresearchgroup/compas_assembly" target="_blank">
             <span class="fab fa-github fa-1x"></span>
           </a>
         </li>
@@ -92,7 +101,7 @@
 <h1>Block.slice_plane</h1>
 <dl class="method">
 <dt id="compas_assembly.datastructures.Block.slice_plane">
-<code class="sig-prename descclassname">Block.</code><code class="sig-name descname">slice_plane</code><span class="sig-paren">(</span><em class="sig-param">plane</em><span class="sig-paren">)</span></dt>
+<code class="sig-prename descclassname">Block.</code><code class="sig-name descname">slice_plane</code><span class="sig-paren">(</span><em class="sig-param">plane</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/block.py#L10"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Slice a mesh with a plane and construct the resulting submeshes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -102,7 +111,7 @@
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>None or tuple of <code class="xref py py-class docutils literal notranslate"><span class="pre">compas.datastructures.Mesh</span></code> – If the mesh and plane do not intersect,
+<dd class="field-even"><p>None or tuple of <a class="reference external" href="https://compas.dev/compas/latest/api/generated/compas.datastructures.Mesh.html#compas.datastructures.Mesh" title="(in COMPAS v1.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas.datastructures.Mesh</span></code></a> – If the mesh and plane do not intersect,
 or if the intersection is degenerate (point or line),
 the function returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.
 Otherwise, the “positive” and “negative” submeshes are returned.</p>

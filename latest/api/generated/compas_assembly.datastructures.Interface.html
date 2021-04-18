@@ -8,7 +8,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-  <meta name="author" content="" />
+  <meta name="author" content="compas-dev" />
   <meta name="description" content="" />
 
   <link rel="shortcut icon" href="../../_static/images/compas.ico" type="image/x-icon">
@@ -19,11 +19,11 @@
   <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
   
-    <link rel="next" title="Interface.__init__" href="compas_assembly.datastructures.Interface.__init__.html" />
+    <link rel="next" title="Interface.copy" href="compas_assembly.datastructures.Interface.copy.html" />
   
 
   
-    <link rel="prev" title="Block.vertices_where_predicate" href="compas_assembly.datastructures.Block.vertices_where_predicate.html" />
+    <link rel="prev" title="Block.volume" href="compas_assembly.datastructures.Block.volume.html" />
   
 
   <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -34,22 +34,31 @@
   <header id="header" class="compas-header d-flex align-items-center">
     <nav class="navbar navbar-expand navbar-dark col flex-column flex-md-row text-center">
       <!-- brand -->
-      <a class="navbar-brand" href="">
+      <a class="navbar-brand" href="https://blockresearchgroup.github.io/compas_assembly">
         <img src="../../_static/images/compas_icon_white.png" alt="COMPAS Assembly" width="48px" height="48px" />
       </a>
       <!-- brand -->
       <!-- primary -->
       <ul class="navbar-nav">
-        <li class="nav-item active"><a class="nav-link" href="">COMPAS Assembly</a></li>
+        <li class="nav-item active"><a class="nav-link" href="https://blockresearchgroup.github.io/compas_assembly">COMPAS Assembly</a></li>
       </ul>
       <!-- primary -->
       <ul class="navbar-nav d-none d-md-flex ml-md-auto">
         <!-- version -->
         
+        <meta id="doc_versions" data-url="https://github.com/blockresearchgroup/compas_assembly/doc_versions.txt" data-docs="https://blockresearchgroup.github.io/compas_assembly">
+        <li class="nav-item nav-versions dropdown">
+          <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            0.3.0
+          </a>
+          <div id="doc_version_list" class="dropdown-menu dropdown-menu-md-right" aria-labelledby="bd-versions"></div>
+        </li>
+        
         <!-- version -->
         <!-- social -->
         <li class="nav-item">
-          <a class="nav-link" href="" target="_blank">
+          <a class="nav-link" href="https://github.com/blockresearchgroup/compas_assembly" target="_blank">
             <span class="fab fa-github fa-1x"></span>
           </a>
         </li>
@@ -90,8 +99,8 @@
 <h1>Interface</h1>
 <dl class="class">
 <dt id="compas_assembly.datastructures.Interface">
-<em class="property">class </em><code class="sig-prename descclassname">compas_assembly.datastructures.</code><code class="sig-name descname">Interface</code><span class="sig-paren">(</span><em class="sig-param">itype=None</em>, <em class="sig-param">isize=None</em>, <em class="sig-param">ipoints=None</em>, <em class="sig-param">iframe=None</em>, <em class="sig-param">iforces=None</em><span class="sig-paren">)</span></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">compas.base.Base</span></code></p>
+<em class="property">class </em><code class="sig-prename descclassname">compas_assembly.datastructures.</code><code class="sig-name descname">Interface</code><span class="sig-paren">(</span><em class="sig-param">itype=None</em>, <em class="sig-param">isize=None</em>, <em class="sig-param">ipoints=None</em>, <em class="sig-param">iframe=None</em>, <em class="sig-param">iforces=None</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/interface.py#L15"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://compas.dev/compas/latest/api/generated/compas.base.Base.html#compas.base.Base" title="(in COMPAS v1.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas.base.Base</span></code></a></p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -99,37 +108,25 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.__init__.html#compas_assembly.datastructures.Interface.__init__" title="compas_assembly.datastructures.Interface.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([itype, isize, ipoints, iframe, …])</p></td>
-<td><p>Initialize self.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.copy.html#compas_assembly.datastructures.Interface.copy" title="compas_assembly.datastructures.Interface.copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.copy.html#compas_assembly.datastructures.Interface.copy" title="compas_assembly.datastructures.Interface.copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code></a>()</p></td>
 <td><p>Makes a copy of this interface.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.from_data.html#compas_assembly.datastructures.Interface.from_data" title="compas_assembly.datastructures.Interface.from_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_data</span></code></a>(data)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.from_data.html#compas_assembly.datastructures.Interface.from_data" title="compas_assembly.datastructures.Interface.from_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_data</span></code></a>(data)</p></td>
 <td><p>Construct an interface from a data dict.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.from_json.html#compas_assembly.datastructures.Interface.from_json" title="compas_assembly.datastructures.Interface.from_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code></a>(filepath)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.from_json.html#compas_assembly.datastructures.Interface.from_json" title="compas_assembly.datastructures.Interface.from_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code></a>(filepath)</p></td>
 <td><p>Construct an interface from structured data contained in a json file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.to_data.html#compas_assembly.datastructures.Interface.to_data" title="compas_assembly.datastructures.Interface.to_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_data</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.to_data.html#compas_assembly.datastructures.Interface.to_data" title="compas_assembly.datastructures.Interface.to_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_data</span></code></a>()</p></td>
 <td><p>Returns the data dictionary that represents the interface.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.to_json.html#compas_assembly.datastructures.Interface.to_json" title="compas_assembly.datastructures.Interface.to_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code></a>(filepath)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.to_json.html#compas_assembly.datastructures.Interface.to_json" title="compas_assembly.datastructures.Interface.to_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code></a>(filepath)</p></td>
 <td><p>Serialise the structured data representing the interface to json.</p></td>
 </tr>
-</tbody>
-</table>
-<p class="rubric">Inherited Methods</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.validate_data.html#compas_assembly.datastructures.Interface.validate_data" title="compas_assembly.datastructures.Interface.validate_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_data</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.validate_data.html#compas_assembly.datastructures.Interface.validate_data" title="compas_assembly.datastructures.Interface.validate_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_data</span></code></a>()</p></td>
 <td><p>Validate the data of this object against its data schema (<cite>self.DATASCHEMA</cite>).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.validate_json.html#compas_assembly.datastructures.Interface.validate_json" title="compas_assembly.datastructures.Interface.validate_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_json</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.validate_json.html#compas_assembly.datastructures.Interface.validate_json" title="compas_assembly.datastructures.Interface.validate_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_json</span></code></a>()</p></td>
 <td><p>Validate the data loaded from a JSON representation of the data of this object against its data schema (<cite>self.DATASCHEMA</cite>).</p></td>
 </tr>
 </tbody>
@@ -177,9 +174,7 @@
       <div class="d-none d-xl-block col-xl-2 compas-toc" role="toc">
         
         <ul class="nav flex-column" id="compas-toc">
-<li class="nav-item"><a class="nav-link reference internal" href="#">Interface</a><ul class="nav flex-column">
-</ul>
-</li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">Interface</a></li>
 </ul>
 
       </div>
@@ -191,20 +186,20 @@
   <footer class="compas-footer">
     <nav class="nav p-2">
       
-        <a href="compas_assembly.datastructures.Block.vertices_where_predicate.html" title="Block.vertices_where_predicate" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
+        <a href="compas_assembly.datastructures.Block.volume.html" title="Block.volume" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
           <div class="nav-button p-2 m-2"><i class="fas fa-arrow-left"></i></div>
           <div class="nav-title flex-grow-1 align-self-center">
             <div class="nav-direction small font-weight-light">Previous</div>
-            Block.vertices_where_predicate
+            Block.volume
           </div>
         </a>
       
 
       
-        <a href="compas_assembly.datastructures.Interface.__init__.html" title="Interface.__init__" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
+        <a href="compas_assembly.datastructures.Interface.copy.html" title="Interface.copy" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
           <div class="nav-title footer-link flex-grow-1 align-self-center">
             <div class="nav-direction small font-weight-light">Next</div>
-            Interface.__init__
+            Interface.copy
           </div>
           <div class="nav-button p-2 m-2"><i class="fas fa-arrow-right"></i></div>
         </a>
