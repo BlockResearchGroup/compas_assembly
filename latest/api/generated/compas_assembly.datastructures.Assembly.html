@@ -144,7 +144,7 @@ Each edge of the network represents an interface between two assembly elements.<
 <td><p>Return the edges connected to a node.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.copy.html#compas_assembly.datastructures.Assembly.copy" title="compas_assembly.datastructures.Assembly.copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code></a>([cls])</p></td>
-<td><p>Make an independent copy of the datastructure object.</p></td>
+<td><p>Make an independent copy of the data object.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.degree.html#compas_assembly.datastructures.Assembly.degree" title="compas_assembly.datastructures.Assembly.degree"><code class="xref py py-obj docutils literal notranslate"><span class="pre">degree</span></code></a>(key)</p></td>
 <td><p>Return the number of neighbors of a node.</p></td>
@@ -201,7 +201,7 @@ Each edge of the network represents an interface between two assembly elements.<
 <td><p>Get edges for which a certain condition or set of conditions is true using a lambda function.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.from_data.html#compas_assembly.datastructures.Assembly.from_data" title="compas_assembly.datastructures.Assembly.from_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_data</span></code></a>(data)</p></td>
-<td><p>Construct a datastructure from structured data.</p></td>
+<td><p>Construct an object of this type from the provided data.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.from_edges.html#compas_assembly.datastructures.Assembly.from_edges" title="compas_assembly.datastructures.Assembly.from_edges"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_edges</span></code></a>(edges)</p></td>
 <td><p></p></td>
@@ -210,7 +210,7 @@ Each edge of the network represents an interface between two assembly elements.<
 <td><p>Construct an assembly of blocks from a particular type of assembly geometry.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.from_json.html#compas_assembly.datastructures.Assembly.from_json" title="compas_assembly.datastructures.Assembly.from_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code></a>(filepath)</p></td>
-<td><p>Construct a datastructure from structured data contained in a json file.</p></td>
+<td><p>Construct an object from serialized data contained in a JSON file.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.from_lines.html#compas_assembly.datastructures.Assembly.from_lines" title="compas_assembly.datastructures.Assembly.from_lines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_lines</span></code></a>(lines[, precision])</p></td>
 <td><p>Construct a network from a set of lines represented by their start and end point coordinates.</p></td>
@@ -339,10 +339,10 @@ Each edge of the network represents an interface between two assembly elements.<
 <td><p>Print a summary of the graph.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.to_data.html#compas_assembly.datastructures.Assembly.to_data" title="compas_assembly.datastructures.Assembly.to_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_data</span></code></a>()</p></td>
-<td><p>Returns a dictionary of structured data representing the data structure.</p></td>
+<td><p>Convert an object to its native data representation.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.to_json.html#compas_assembly.datastructures.Assembly.to_json" title="compas_assembly.datastructures.Assembly.to_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code></a>(filepath[, pretty])</p></td>
-<td><p>Serialise the structured data representing the datastructure to json.</p></td>
+<td><p>Serialize the data representation of an object to a JSON file.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Assembly.to_lines.html#compas_assembly.datastructures.Assembly.to_lines" title="compas_assembly.datastructures.Assembly.to_lines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_lines</span></code></a>()</p></td>
 <td><p>Return the lines of the network as pairs of start and end point coordinates.</p></td>

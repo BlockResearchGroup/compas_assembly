@@ -101,11 +101,15 @@
 <h1>Assembly.to_json</h1>
 <dl class="method">
 <dt id="compas_assembly.datastructures.Assembly.to_json">
-<code class="sig-prename descclassname">Assembly.</code><code class="sig-name descname">to_json</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">pretty=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/assembly.py#L88"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>Serialise the structured data representing the datastructure to json.</p>
+<code class="sig-prename descclassname">Assembly.</code><code class="sig-name descname">to_json</code><span class="sig-paren">(</span><em class="sig-param">filepath</em>, <em class="sig-param">pretty=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/assembly.py#L150"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Serialize the data representation of an object to a JSON file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em>) – The path to the json file.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>path string or file-like object</em>) – The path or file-like object to the file containing the data.</p></li>
+<li><p><strong>pretty</strong> (<em>bool, optional</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> serialize a pretty representation of the data.
+Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
