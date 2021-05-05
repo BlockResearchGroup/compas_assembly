@@ -150,7 +150,7 @@ def assembly_interfaces_numpy(assembly,
 
                     for f1 in faces:
 
-                    # for f1 in nbr.faces():
+                        # for f1 in nbr.faces():
 
                         rst1 = [rst[key] for key in nbr.face_vertices(f1)]
 

@@ -5,7 +5,6 @@ from __future__ import division
 from compas.datastructures import Network
 
 from .block import Block
-from .interface import Interface
 
 
 __all__ = ['Assembly']
