@@ -37,6 +37,6 @@ compas.json_dump(assembly, FILE_O)
 viewer = App()
 
 for mesh in meshes:
-    viewer.add(mesh, show_faces=False, show_edges=True)
+    viewer.add(mesh)
 
 viewer.run()
