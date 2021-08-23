@@ -1,11 +1,7 @@
-from __future__ import print_function
 from __future__ import absolute_import
-from __future__ import division
 
-from ._geometry import Geometry  # noqa: F401
+import warnings
 
-from .arch import Arch  # noqa: F401
-from .dome import Dome  # noqa: F401
-from .wall import Wall  # noqa: F401
+from compas_assembly.templates import *
 
-__all__ = [name for name in dir() if not name.startswith('_')]
+warnings.warn("Importing assembly templates from this module is deprecated. Use :mod:`compas_assembly.templates` instead.")
