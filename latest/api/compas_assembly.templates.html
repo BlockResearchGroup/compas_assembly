@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   
-  <title>compas_assembly - compas_assembly.rhino</title>
+  <title>compas_assembly - compas_assembly.templates</title>
   
 
   <meta charset="utf-8" />
@@ -19,7 +19,7 @@
   <link rel="stylesheet" type="text/css" href="../_static/css/compas-reference.css" />
 
   
-    <link rel="next" title="Publications" href="../publications.html" />
+    <link rel="next" title="Geometry" href="generated/compas_assembly.templates.Geometry.html" />
   
 
   
@@ -86,28 +86,35 @@
             
               <li class="breadcrumb-item"><a href="compas_assembly.html">compas_assembly</a></li>
             
-            <li class="breadcrumb-item active" aria-current="page">compas_assembly.rhino</li>
+            <li class="breadcrumb-item active" aria-current="page">compas_assembly.templates</li>
           </ol>
         </nav>
         
 
         
         
-        <span class="target" id="module-compas_assembly.rhino"></span><section id="compas-assembly-rhino">
-<h1>compas_assembly.rhino</h1>
-<section id="artists">
-<h2>Artists</h2>
+        <span class="target" id="module-compas_assembly.templates"></span><section id="compas-assembly-templates">
+<h1>compas_assembly.templates</h1>
+<p>Generate assemblies from templates for well-known typologies.</p>
+<section id="classes">
+<h2>Classes</h2>
 <table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/compas_assembly.rhino.BlockArtist.html#compas_assembly.rhino.BlockArtist" title="compas_assembly.rhino.BlockArtist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BlockArtist</span></code></a></p></td>
-<td><p>An artist for painting blocks.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/compas_assembly.templates.Geometry.html#compas_assembly.templates.Geometry" title="compas_assembly.templates.Geometry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Geometry</span></code></a></p></td>
+<td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/compas_assembly.rhino.AssemblyArtist.html#compas_assembly.rhino.AssemblyArtist" title="compas_assembly.rhino.AssemblyArtist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AssemblyArtist</span></code></a></p></td>
-<td><p>An artist for visualisation of assemblies in Rhino.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/compas_assembly.templates.Arch.html#compas_assembly.templates.Arch" title="compas_assembly.templates.Arch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Arch</span></code></a></p></td>
+<td><p>Create voussoir geometry for a semi-circular arch with given rise and span.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/compas_assembly.templates.Dome.html#compas_assembly.templates.Dome" title="compas_assembly.templates.Dome"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dome</span></code></a></p></td>
+<td><p>Create voussoirs for a spherical dome geometry with given rise and span.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/compas_assembly.templates.Wall.html#compas_assembly.templates.Wall" title="compas_assembly.templates.Wall"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Wall</span></code></a></p></td>
+<td><p>Create voussoirs for a typical brick wall.</p></td>
 </tr>
 </tbody>
 </table>
@@ -138,10 +145,10 @@
 <li class="nav-item active"><a class="nav-link reference internal" href="compas_assembly.html">compas_assembly</a><ul class="nav flex-column active">
 <li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.blender.html">compas_assembly.blender</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.ghpython.html">compas_assembly.plotter</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.ghpython.html">compas_assembly.ghpython</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.plotter.html">compas_assembly.plotter</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="compas_assembly.rhino.html">compas_assembly.rhino</a></li>
-<li class="nav-item active"><a class="nav-link active current reference internal" href="#">compas_assembly.rhino</a></li>
+<li class="nav-item active"><a class="nav-link active current reference internal" href="#">compas_assembly.templates</a></li>
 </ul>
 </li>
 </ul>
@@ -158,8 +165,8 @@
       <div class="d-none d-xl-block col-xl-2 compas-toc" role="toc">
         
         <ul class="nav flex-column" id="compas-toc">
-<li class="nav-item"><a class="nav-link reference internal" href="#">compas_assembly.rhino</a><ul class="nav flex-column">
-<li class="nav-item"><a class="nav-link reference internal" href="#artists">Artists</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">compas_assembly.templates</a><ul class="nav flex-column">
+<li class="nav-item"><a class="nav-link reference internal" href="#classes">Classes</a></li>
 </ul>
 </li>
 </ul>
@@ -183,10 +190,10 @@
       
 
       
-        <a href="../publications.html" title="Publications" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
+        <a href="generated/compas_assembly.templates.Geometry.html" title="Geometry" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
           <div class="nav-title footer-link flex-grow-1 align-self-center">
             <div class="nav-direction small font-weight-light">Next</div>
-            Publications
+            Geometry
           </div>
           <div class="nav-button p-2 m-2"><i class="fas fa-arrow-right"></i></div>
         </a>
