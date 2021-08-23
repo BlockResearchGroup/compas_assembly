@@ -2,8 +2,8 @@
 Getting Started
 ********************************************************************************
 
-Create an environment
-=====================
+Installation
+============
 
 We highly recommend to install ``compas_assembly`` and related packages in a
 separate conda environment. In this guide, we will create and use an
@@ -12,82 +12,26 @@ environmenment based on Python 3.7 with the name "dem", referring to
 (except for "base", which is the name of the root environment of your conda
 installation).
 
-.. raw:: html
-
-    <div class="card">
-        <div class="card-header">
-            <ul class="nav nav-tabs card-header-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#replace_python_windows">Windows</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#replace_python_osx">OSX</a>
-                </li>
-            </ul>
-        </div>
-        <div class="card-body">
-            <div class="tab-content">
-
-.. raw:: html
-
-    <div class="tab-pane active" id="replace_python_windows">
-
 .. code-block:: bash
 
     conda create -n dem -c conda-forge python=3.7 COMPAS shapely
-
-.. raw:: html
-
-    </div>
-    <div class="tab-pane" id="replace_python_osx">
-
-.. code-block:: bash
-
-    conda create -n dem -c conda-forge python=3.7 python.app COMPAS shapely
-
-.. raw:: html
-
-    </div>
-    </div>
-    </div>
-    </div>
-
-
-Activate the environment
-========================
-
-The root environment is active by default.
-Therefore, you should not forget to activate the "dem" environment whenever
-you want to work with ``compas_assembly`` and its related packages.
-
-.. code-block:: bash
-
     conda activate dem
+    pip install compas_assembly
 
-
-Install compas_assembly
-=======================
-
-There are no released versions of ``compas_assembly`` yet.
-To install ``compas_assembly`` directly from GitHub, do
+To install ``compas_assembly`` directly from GitHub, replace the last line with
 
 .. code-block:: bash
 
     pip install git+https://github.com/BlockResearchGroup/compas_assembly.git#egg=compas_assembly
 
-
-To install from a local source repo, navigate to the root of the repo, and do
+Or, to install from a local source repo, navigate to the root of the repo, and do
 
 .. code-block:: bash
 
     pip install -e .
 
-
-Check installation
-==================
-
-Start an interactive Python interpreter on the commad line
-and import the packages to check if the installation procedure was successful.
+To verify that the procedure was successful,
+start an interactive Python interpreter on the commad line and import the packages.
 
 .. code-block:: python
 
@@ -95,62 +39,52 @@ and import the packages to check if the installation procedure was successful.
     >>> import compas_assembly
 
 
-Also check the version of COMPAS
+Install the viewer
+==================
 
-.. code-block:: python
+If you don't need the functionality of CAD software,
+but simply want to be able to visualize assemblies and various aspects related to their stability and collapse behaviour,
+you can use the COMPAS viewer instead.
 
-    >>> compas.__version__
-    '0.15.4'
+.. code-block:: bash
+
+    conda install -n dem compas_view2
+
+For more information about the viewer, `check out the docs <https://compas.dev/compas_view2/latest/index.html>`_.
 
 
-Install compas_assembly for Rhino
-=================================
+Install :mod:`compas_assembly` for Rhino
+==========================================
+
+:mod:`compas_assembly` can be installed in Rhino like any other COMPAS package.
+See the `Getting Started instructions for Rhino <https://compas.dev/compas/latest/gettingstarted/rhino.html>`_ in the main COMPAS docs for more information.
 
 .. code-block:: bash
 
     python -m compas_rhino.install -p compas compas_rhino compas_assembly
 
-
-Install compas_rbe
-==================
-
-``compas_rbe`` is an equilibrium solver for ``compas_assembly``.
-To install ``compas_rbe`` directly from GitHub, do
-
-.. code-block:: bash
-
-    pip install git+https://github.com/BlockResearchGroup/compas_rbe.git#egg=compas_rbe
+Note that, if Rhino was running while the above command was executed, you have to restart Rhino before the changes have an effect.
 
 
-To install ``compas_rbe`` from a local source repo,
-navigate to the root of the repo and do
+Install :mod:`compas_assembly` for Blender
+==========================================
 
-.. code-block:: bash
-
-    pip install -e .
-
-
-Finally, ``compas_rbe`` supports multiple backends for solving the quadratic
-optimisation problem formulated in the Rigid Block Equilibrium problem.
-
-.. code-block:: bash
-
-    conda install -c conda-forge cvxpy cvxopt
-    conda install -c ibmdecisionoptimization cplex
+To use :mod:`compas_assembly` in Blender, you have to install it in your COMPAS Blender environment,
+`as described here <https://compas.dev/compas/latest/gettingstarted/blender.html>`_.
 
 
-Note that the CPLEX installed via conda-forge is the Community Edition,
-which means it is limited to 1000 variables and constraints.
-Although this sounds like a lot, with ``compas_rbe`` you will hit these limits
-quite quickly. Since the CPLEX backend is by far the fastest and most robust
-option for ``compas_rbe``, we recommend installing the Academic Edition
-if you are affiliated to an academic institution.
+Install equilibrium solvers
+===========================
 
-Instructions for installing CPLEX and it's Python API can be found here:
+:mod:`compas_assembly` provides data structures and algorithms for managing the relationships between the individual elements of an assembly.
+However, it doesn't provide any solvers for assessing the stability of assemblies or, for example, for assessing the impact on stability of the application
+of external loads or differential settlements at the support.
+To enable this kind of functionality, you have to install additional packages.
+Currently, the following equilibrium solvers are compatible with :mod:`compas_assembly`.
 
-https://www.ibm.com/support/knowledgecenter/SSSA5P_12.8.0/ilog.odms.cplex.help/CPLEX/GettingStarted/topics/set_up/setup_overview.html
+* :mod:`compas_rbe`
+* :mod:`compas_cra`
+* :mod:`compas_prd`
+* :mod:`compas_3dec`
 
-If you have problems with the installation of the Academic Edition,
-some solutions can be found here:
-
-https://github.com/compas-Workshops/WS_Taubman/issues/1
+Installation instructions are available on the respective project pages.
