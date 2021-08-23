@@ -1,2 +1,2 @@
 
-.. automodule:: compas_assembly.plotter
+.. automodule:: compas_assembly.ghpython

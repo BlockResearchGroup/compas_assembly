@@ -1,2 +1,2 @@
 
-.. automodule:: compas_assembly.rhino
+.. automodule:: compas_assembly.templates
