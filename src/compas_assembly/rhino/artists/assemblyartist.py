@@ -344,11 +344,3 @@ class AssemblyArtist(NetworkArtist):
                 R = resultants[index]
                 color = i_to_blue((R - Rmin) / (Rmax - Rmin))
                 compas_rhino.rs.ObjectColor(guid, color)
-
-
-# ==============================================================================
-# Debugging
-# ==============================================================================
-
-if __name__ == "__main__":
-    pass
