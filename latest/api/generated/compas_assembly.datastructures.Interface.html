@@ -97,10 +97,10 @@
         
         <section class="detail" id="interface">
 <h1>Interface</h1>
-<dl class="class">
-<dt id="compas_assembly.datastructures.Interface">
-<em class="property">class </em><code class="sig-prename descclassname">compas_assembly.datastructures.</code><code class="sig-name descname">Interface</code><span class="sig-paren">(</span><em class="sig-param">itype=None</em>, <em class="sig-param">isize=None</em>, <em class="sig-param">ipoints=None</em>, <em class="sig-param">iframe=None</em>, <em class="sig-param">iforces=None</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/interface.py#L15"><span class="viewcode-link">[source]</span></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">compas.data.data.Data</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="compas_assembly.datastructures.Interface">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">compas_assembly.datastructures.</span></span><span class="sig-name descname"><span class="pre">Interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">itype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ipoints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iframe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iforces</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/interface.py#L12"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://compas.dev/compas/latest/api/generated/compas.data.Data.html#compas.data.Data" title="(in COMPAS v1.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas.data.data.Data</span></code></a></p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -117,17 +117,23 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.from_json.html#compas_assembly.datastructures.Interface.from_json" title="compas_assembly.datastructures.Interface.from_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_json</span></code></a>(filepath)</p></td>
 <td><p>Construct an interface from structured data contained in a json file.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.to_data.html#compas_assembly.datastructures.Interface.to_data" title="compas_assembly.datastructures.Interface.to_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_data</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.from_jsonstring.html#compas_assembly.datastructures.Interface.from_jsonstring" title="compas_assembly.datastructures.Interface.from_jsonstring"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_jsonstring</span></code></a>(string)</p></td>
+<td><p>Construct an object from serialized data contained in a JSON string.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.to_data.html#compas_assembly.datastructures.Interface.to_data" title="compas_assembly.datastructures.Interface.to_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_data</span></code></a>()</p></td>
 <td><p>Returns the data dictionary that represents the interface.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.to_json.html#compas_assembly.datastructures.Interface.to_json" title="compas_assembly.datastructures.Interface.to_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code></a>(filepath)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.to_json.html#compas_assembly.datastructures.Interface.to_json" title="compas_assembly.datastructures.Interface.to_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_json</span></code></a>(filepath)</p></td>
 <td><p>Serialise the structured data representing the interface to json.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.to_jsonstring.html#compas_assembly.datastructures.Interface.to_jsonstring" title="compas_assembly.datastructures.Interface.to_jsonstring"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_jsonstring</span></code></a>([pretty])</p></td>
+<td><p>Serialize the data representation of an object to a JSON string.</p></td>
+</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.validate_data.html#compas_assembly.datastructures.Interface.validate_data" title="compas_assembly.datastructures.Interface.validate_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_data</span></code></a>()</p></td>
-<td><p>Validate the data of this object against its data schema (<cite>self.DATASCHEMA</cite>).</p></td>
+<td><p>Validate the object’s data against its data schema (<cite>self.DATASCHEMA</cite>).</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.datastructures.Interface.validate_json.html#compas_assembly.datastructures.Interface.validate_json" title="compas_assembly.datastructures.Interface.validate_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_json</span></code></a>()</p></td>
-<td><p>Validate the data loaded from a JSON representation of the data of this object against its data schema (<cite>self.DATASCHEMA</cite>).</p></td>
+<td><p>Validate the object’s data against its json schema (<cite>self.JSONSCHEMA</cite>).</p></td>
 </tr>
 </tbody>
 </table>
@@ -157,7 +163,12 @@
 <li class="nav-item"><a class="nav-link reference internal" href="../../examples.html">Examples</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav flex-column active">
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.html">compas_assembly</a><ul class="nav flex-column active">
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.blender.html">compas_assembly.blender</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.ghpython.html">compas_assembly.plotter</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.plotter.html">compas_assembly.plotter</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.templates.html">compas_assembly.rhino</a></li>
 </ul>
 </li>
 </ul>

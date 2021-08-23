@@ -99,9 +99,9 @@
         
         <section class="detail" id="block-bounding-box">
 <h1>Block.bounding_box</h1>
-<dl class="method">
-<dt id="compas_assembly.datastructures.Block.bounding_box">
-<code class="sig-prename descclassname">Block.</code><code class="sig-name descname">bounding_box</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/block.py#L16"><span class="viewcode-link">[source]</span></a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="compas_assembly.datastructures.Block.bounding_box">
+<span class="sig-prename descclassname"><span class="pre">Block.</span></span><span class="sig-name descname"><span class="pre">bounding_box</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/block.py#L16"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Compute the (axis aligned) bounding box of a mesh.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -112,7 +112,9 @@
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest language-python notranslate"><div class="highlight"><pre><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mesh_bounding_box</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span>
+<div class="doctest language-python notranslate"><div class="highlight"><pre><code><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">compas.datastructures</span> <span class="kn">import</span> <span class="n">Mesh</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mesh</span> <span class="o">=</span> <span class="n">Mesh</span><span class="o">.</span><span class="n">from_obj</span><span class="p">(</span><span class="n">compas</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;faces.obj&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mesh_bounding_box</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span>
 <span class="go">[[0.0, 0.0, 0.0], [10.0, 0.0, 0.0], [10.0, 10.0, 0.0], [0.0, 10.0, 0.0], [0.0, 0.0, 0.0], [10.0, 0.0, 0.0], [10.0, 10.0, 0.0], [0.0, 10.0, 0.0]]</span>
 </code></pre></div>
 </div>
@@ -142,7 +144,12 @@
 <li class="nav-item"><a class="nav-link reference internal" href="../../examples.html">Examples</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav flex-column active">
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.html">compas_assembly</a><ul class="nav flex-column active">
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.blender.html">compas_assembly.blender</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.ghpython.html">compas_assembly.plotter</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.plotter.html">compas_assembly.plotter</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../compas_assembly.templates.html">compas_assembly.rhino</a></li>
 </ul>
 </li>
 </ul>

@@ -96,52 +96,17 @@
 <figure class="figure align-default">
 <img alt="../_images/crossvault_02_interfaces.png" class="figure-img img-fluid" src="../_images/crossvault_02_interfaces.png" />
 </figure>
-<section id="load-meshes-from-polysurfaces">
-<h2>1. Load Meshes from Polysurfaces</h2>
-<figure class="figure align-default">
-<img alt="../_images/crossvault_00_meshes.png" class="figure-img img-fluid" src="../_images/crossvault_00_meshes.png" />
-</figure>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">compas</span>
-<span class="kn">import</span> <span class="nn">compas_rhino</span>
-
-<span class="kn">from</span> <span class="nn">compas_rhino.geometry</span> <span class="kn">import</span> <span class="n">RhinoSurface</span>
-<span class="kn">from</span> <span class="nn">compas_rhino.artists</span> <span class="kn">import</span> <span class="n">MeshArtist</span>
-
-
-<span class="k">def</span> <span class="nf">filterfunc</span><span class="p">(</span><span class="n">face</span><span class="p">):</span>
-    <span class="n">success</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">face</span><span class="o">.</span><span class="n">GetSurfaceSize</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">w</span> <span class="o">&gt;</span> <span class="mi">10</span> <span class="ow">and</span> <span class="n">h</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">return</span> <span class="kc">False</span>
-
-
-<span class="n">FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;crossvault_meshes.json&#39;</span><span class="p">)</span>
-
-<span class="n">guids</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">guid</span> <span class="ow">in</span> <span class="n">compas_rhino</span><span class="o">.</span><span class="n">select_surfaces</span><span class="p">():</span>
-    <span class="k">if</span> <span class="n">compas_rhino</span><span class="o">.</span><span class="n">rs</span><span class="o">.</span><span class="n">IsPolysurface</span><span class="p">(</span><span class="n">guid</span><span class="p">):</span>
-        <span class="n">guids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">guid</span><span class="p">)</span>
-
-<span class="n">meshes</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">guid</span> <span class="ow">in</span> <span class="n">guids</span><span class="p">:</span>
-    <span class="n">surf</span> <span class="o">=</span> <span class="n">RhinoSurface</span><span class="o">.</span><span class="n">from_guid</span><span class="p">(</span><span class="n">guid</span><span class="p">)</span>
-    <span class="n">mesh</span> <span class="o">=</span> <span class="n">surf</span><span class="o">.</span><span class="n">to_compas</span><span class="p">(</span><span class="n">facefilter</span><span class="o">=</span><span class="n">filterfunc</span><span class="p">)</span>
-    <span class="n">meshes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span>
-
-<span class="n">compas</span><span class="o">.</span><span class="n">json_dump</span><span class="p">(</span><span class="n">meshes</span><span class="p">,</span> <span class="n">FILE</span><span class="p">)</span>
-
-<span class="n">compas_rhino</span><span class="o">.</span><span class="n">clear_layers</span><span class="p">([</span><span class="s1">&#39;Crossvault&#39;</span><span class="p">])</span>
-
-<span class="k">for</span> <span class="n">mesh</span> <span class="ow">in</span> <span class="n">meshes</span><span class="p">:</span>
-    <span class="n">artist</span> <span class="o">=</span> <span class="n">MeshArtist</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s2">&quot;Crossvault::Meshes&quot;</span><span class="p">)</span>
-    <span class="n">artist</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
-</code></pre></div>
-</div>
-</section>
+<p>Construct an assembly data structure of a cross-vault that can be used for equilibrium calculations, generation of fabrication data, or assembly simulationos.
+The procedure consists of two steps</p>
+<ol class="arabic simple">
+<li><p>Create an empty assembly and add block meshes.</p></li>
+<li><p>Identify the interfaces between the blocks.</p></li>
+</ol>
+<p>The required input for step 1 can be downloaded here:
+<a class="reference download internal" download="" href="../_downloads/6d5c1fa0c2419da6d75241aa5f3694fe/crossvault_meshes.json"><code class="xref download docutils literal notranslate"><span class="pre">crossvault_meshes.json</span></code></a>.
+If you place this file in the same folder as the script, the code will work as-is…</p>
 <section id="create-assembly-and-add-blocks">
-<h2>2. Create Assembly and Add Blocks</h2>
+<h2>Create Assembly and Add Blocks</h2>
 <figure class="figure align-default">
 <img alt="../_images/crossvault_01_assembly.png" class="figure-img img-fluid" src="../_images/crossvault_01_assembly.png" />
 </figure>
@@ -200,7 +165,7 @@
 </div>
 </section>
 <section id="identify-interfaces">
-<h2>3. Identify Interfaces</h2>
+<h2>Identify Interfaces</h2>
 <figure class="figure align-default">
 <img alt="../_images/crossvault_02_interfaces.png" class="figure-img img-fluid" src="../_images/crossvault_02_interfaces.png" />
 </figure>
@@ -317,9 +282,8 @@
         
         <ul class="nav flex-column" id="compas-toc">
 <li class="nav-item"><a class="nav-link reference internal" href="#">Crossvault</a><ul class="nav flex-column">
-<li class="nav-item"><a class="nav-link reference internal" href="#load-meshes-from-polysurfaces">1. Load Meshes from Polysurfaces</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#create-assembly-and-add-blocks">2. Create Assembly and Add Blocks</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#identify-interfaces">3. Identify Interfaces</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#create-assembly-and-add-blocks">Create Assembly and Add Blocks</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#identify-interfaces">Identify Interfaces</a></li>
 </ul>
 </li>
 </ul>
