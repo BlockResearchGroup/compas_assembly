@@ -7,8 +7,8 @@ Semi-circular arch
     :class: figure-img img-fluid
 
 
-1. Create Assembly and Add Blocks
-=================================
+Create Assembly and Add Blocks
+==============================
 
 .. figure:: /_images/arch_01_assembly.png
     :figclass: figure
@@ -18,8 +18,8 @@ Semi-circular arch
     :language: python
 
 
-2. Identify Interfaces
-======================
+Identify Interfaces
+===================
 
 .. figure:: /_images/arch_02_interfaces.png
     :figclass: figure
@@ -29,8 +29,8 @@ Semi-circular arch
     :language: python
 
 
-3. Compute Equilibrium
-======================
+Compute Equilibrium
+===================
 
 .. figure:: /_images/arch_03_equilibrium.png
     :figclass: figure

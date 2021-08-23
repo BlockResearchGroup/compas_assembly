@@ -72,7 +72,18 @@ def setup(app):
 # autosummary options
 
 autosummary_generate = True
-
+autosummary_mock_imports = [
+    "System",
+    "clr",
+    "Eto",
+    "Rhino",
+    "Grasshopper",
+    "scriptcontext",
+    "rhinoscriptsyntax",
+    "bpy",
+    "bmesh",
+    "mathutils"
+]
 # napoleon options
 
 napoleon_google_docstring = False
@@ -174,5 +185,5 @@ html_last_updated_fmt = ""
 html_copy_source = False
 html_show_sourcelink = False
 html_permalinks = False
-html_add_permalinks = None
+html_permalinks_icon = None
 html_compact_lists = True
