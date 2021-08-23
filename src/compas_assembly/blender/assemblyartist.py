@@ -1,31 +1,9 @@
-from __future__ import print_function
-from __future__ import absolute_import
-from __future__ import division
-
 from functools import partial
 
 from compas.utilities import color_to_colordict
-# from compas.utilities import i_to_blue
-# from compas.utilities import i_to_red
-# from compas.utilities import pairwise
-
-# from compas.geometry import Box
-# from compas.geometry import Translation
-# from compas.geometry import Rotation
-# from compas.geometry import subtract_vectors
-# from compas.geometry import midpoint_point_point
-# from compas.geometry import transform_points
-# from compas.geometry import add_vectors
-# from compas.geometry import scale_vector
-# from compas.geometry import length_vector
-# from compas.geometry import sum_vectors
 
 import compas_blender
-# from compas_blender.artists import BaseArtist
-# from compas_blender.artists import MeshArtist
 from compas_blender.artists import NetworkArtist
-
-# from .blockartist import BlockArtist
 
 colordict = partial(color_to_colordict, colorformat='rgb', normalize=True)
 
@@ -223,11 +201,3 @@ class AssemblyArtist(NetworkArtist):
             points.append({'pos': c, 'radius': radius, 'color': color, 'name': f"POA.{u}-{v}"})
         objects = compas_blender.draw_points(points, self.resultantcollection)
         self.object_resultant = zip(objects, edges)
-
-
-# ==============================================================================
-# Main
-# ==============================================================================
-
-if __name__ == "__main__":
-    pass

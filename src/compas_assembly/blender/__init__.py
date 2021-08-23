@@ -17,7 +17,11 @@ Artists
 
 """
 
-from .assemblyartist import *  # noqa: F401 F403
+from .blockartist import BlockArtist  # noqa: F401
+from .assemblyartist import AssemblyArtist  # noqa: F401
 
 
-__all__ = [name for name in dir() if not name.startswith('_')]
+__all__ = [
+    'BlockArtist',
+    'AssemblyArtist'
+]
