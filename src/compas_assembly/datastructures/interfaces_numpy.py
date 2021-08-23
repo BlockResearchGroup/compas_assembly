@@ -13,11 +13,6 @@ from compas.geometry import dot_vectors
 from .interface import Interface
 
 
-__all__ = [
-    'assembly_interfaces_numpy',
-]
-
-
 def _find_nearest_neighbours(cloud, nmax):
     tree = cKDTree(cloud)
     nnbrs = [tree.query(root, nmax) for root in cloud]

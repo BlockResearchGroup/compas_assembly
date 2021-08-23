@@ -7,9 +7,6 @@ from compas.datastructures import Network
 from .block import Block
 
 
-__all__ = ['Assembly']
-
-
 class Assembly(Network):
     """A data structure for discrete element assemblies.
 

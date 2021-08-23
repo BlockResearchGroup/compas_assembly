@@ -2,22 +2,8 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-# from compas.utilities import color_to_colordict
-# from compas.utilities import i_to_blue
-# from compas.utilities import i_to_red
-
-# from compas.geometry import add_vectors
-# from compas.geometry import scale_vector
-# from compas.geometry import length_vector
-# from compas.geometry import sum_vectors
-
-# import compas_rhino
-
 from compas_ghpython.artists import MeshArtist
 from compas_ghpython.artists import NetworkArtist
-
-
-__all__ = ['AssemblyArtist', 'BlockArtist']
 
 
 class AssemblyArtist(NetworkArtist):

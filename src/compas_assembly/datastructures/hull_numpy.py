@@ -2,9 +2,6 @@ from compas.geometry import convex_hull_numpy
 from compas.topology import unify_cycles
 
 
-__all__ = ['assembly_hull_numpy']
-
-
 def assembly_hull_numpy(assembly, keys=None, unify=True):
     """Construct the convex hull of an assembly.
 

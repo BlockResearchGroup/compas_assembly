@@ -9,9 +9,6 @@ from compas.utilities import DataEncoder
 from compas.base import Base
 
 
-__all__ = ['Interface']
-
-
 class Interface(Base):
     """"""
 

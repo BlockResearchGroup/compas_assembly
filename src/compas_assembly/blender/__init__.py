@@ -17,8 +17,8 @@ Artists
 
 """
 
-from .blockartist import BlockArtist  # noqa: F401
-from .assemblyartist import AssemblyArtist  # noqa: F401
+from .blockartist import BlockArtist
+from .assemblyartist import AssemblyArtist
 
 
 __all__ = [

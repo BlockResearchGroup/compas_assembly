@@ -39,20 +39,27 @@ Functions
 
 """
 from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
 import compas
 
-from .block import Block  # noqa: F401
-from .interface import Interface  # noqa: F401
-from .assembly import Assembly  # noqa: F401
+from .block import Block
+from .interface import Interface
+from .assembly import Assembly
 
-from .hull import *  # noqa: F401 F403
+from .hull import assembly_hull
+
+__all__ = [
+    'Block',
+    'Interface',
+    'Assembly',
+    'assembly_hull'
+]
 
 if not compas.IPY:
-    from .hull_numpy import *  # noqa: F401 F403
-    from .interfaces_numpy import *  # noqa: F401 F403
+    from .hull_numpy import assembly_hull_numpy
+    from .interfaces_numpy import assembly_interfaces_numpy
 
-
-__all__ = [name for name in dir() if not name.startswith('_')]
+    __all__ += [
+        'assembly_hull_numpy',
+        'assembly_interfaces_numpy'
+    ]

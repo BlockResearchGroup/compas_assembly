@@ -1,16 +1,6 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
 from compas_plotters import Plotter
 from compas_plotters import NetworkPlotter
 from compas_plotters import MeshPlotter
-
-# from compas.utilities import color_to_rgb
-# from compas.geometry import oriented_bounding_box_xy_numpy
-
-
-__all__ = ['AssemblyPlotter']
 
 
 def valuedict(keys, value, default):

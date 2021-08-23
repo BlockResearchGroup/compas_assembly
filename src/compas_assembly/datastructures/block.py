@@ -12,9 +12,6 @@ from compas.geometry import volume_polyhedron
 from compas.datastructures import Mesh
 
 
-__all__ = ['Block']
-
-
 class Block(Mesh):
     """A data structure for the individual blocks of a discrete element assembly.
 
