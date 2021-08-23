@@ -176,11 +176,3 @@ def assembly_interfaces_numpy(assembly,
                                                       iframe=Frame(origin, uvw[0], uvw[1]))
                                 assembly.add_interface((node, n), interface)
     return assembly
-
-
-# ==============================================================================
-# Main
-# ==============================================================================
-
-if __name__ == "__main__":
-    pass

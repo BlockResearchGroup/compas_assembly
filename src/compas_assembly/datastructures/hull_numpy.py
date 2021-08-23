@@ -50,24 +50,3 @@ def assembly_hull_numpy(assembly, keys=None, unify=True):
         faces = unify_cycles(vertices, faces)
 
     return vertices, faces
-
-
-# ==============================================================================
-# Main
-# ==============================================================================
-
-if __name__ == '__main__':
-
-    import compas_assembly
-    from compas.datastructures import Mesh
-    from compas_viewers.meshviewer import MeshViewer
-    from compas_assembly.datastructures import Assembly
-
-    assembly = Assembly.from_json(compas_assembly.get('wall_interfaces.json'))
-
-    vertices, faces = assembly_hull_numpy(assembly)
-    hull = Mesh.from_vertices_and_faces(vertices, faces)
-
-    viewer = MeshViewer()
-    viewer.mesh = hull
-    viewer.show()

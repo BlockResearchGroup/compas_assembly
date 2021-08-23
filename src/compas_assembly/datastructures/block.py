@@ -148,11 +148,3 @@ class Block(Mesh):
         faces = [self.face_vertices(fkey) for fkey in self.faces()]
         v = volume_polyhedron((vertices, faces))
         return v
-
-
-# ==============================================================================
-# Main
-# ==============================================================================
-
-if __name__ == "__main__":
-    pass

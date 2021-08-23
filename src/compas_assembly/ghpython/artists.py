@@ -134,11 +134,3 @@ class BlockArtist(MeshArtist):
     @block.setter
     def block(self, block):
         self.datastructure = block
-
-
-# ==============================================================================
-# Debugging
-# ==============================================================================
-
-if __name__ == "__main__":
-    pass

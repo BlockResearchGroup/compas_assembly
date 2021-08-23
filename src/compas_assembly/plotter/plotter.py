@@ -102,11 +102,3 @@ class AssemblyPlotter(Plotter):
         collection = self.draw_polygons(polygons)
         self.blockcollection = collection
         return collection
-
-
-# ==============================================================================
-# Main
-# ==============================================================================
-
-if __name__ == '__main__':
-    pass
