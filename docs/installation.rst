@@ -1,12 +1,12 @@
 ********************************************************************************
-Getting Started
+Installation
 ********************************************************************************
 
-Installation
-============
+Basic Installation
+==================
 
-We highly recommend to install ``compas_assembly`` and related packages in a
-separate conda environment. In this guide, we will create and use an
+We highly recommend to install :mod:`compas_assembly` in a
+separate ``conda`` environment. In this guide, we will create and use an
 environmenment based on Python 3.7 with the name "dem", referring to
 "Discrete Element Modelling", but you can use any other name you like
 (except for "base", which is the name of the root environment of your conda
@@ -18,7 +18,17 @@ installation).
     conda activate dem
     pip install compas_assembly
 
-To install ``compas_assembly`` directly from GitHub, replace the last line with
+To verify that the procedure was successful, import the installed package.
+That's it! If no errors appear, you are ready to start working.
+
+.. code-block:: python
+
+    python -c "import compas_assembly"
+
+Alternatives
+------------
+
+If you prefer installing ``compas_assembly`` directly from GitHub, replace ``pip install compas_assembly`` with
 
 .. code-block:: bash
 
@@ -29,14 +39,6 @@ Or, to install from a local source repo, navigate to the root of the repo, and d
 .. code-block:: bash
 
     pip install -e .
-
-To verify that the procedure was successful,
-start an interactive Python interpreter on the commad line and import the packages.
-
-.. code-block:: python
-
-    >>> import compas
-    >>> import compas_assembly
 
 
 Install the viewer
