@@ -34,7 +34,7 @@ class Assembly(Network):
 
         Parameters
         ----------
-        geometry : compas_assembly.geometry.Geometry
+        geometry : compas_assembly.geometry.Template
             A geometry object.
 
         Returns
@@ -47,6 +47,8 @@ class Assembly(Network):
         for mesh in geometry.blocks():
             assembly.add_block(mesh.copy(cls=Block))
         return assembly
+
+    from_template = from_geometry
 
     def add_block(self, block, key=None, attr_dict=None, **kwattr):
         """Add a block to the assembly.
