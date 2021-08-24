@@ -1,39 +1,16 @@
-*****************
+**********
 Crossvault
-*****************
+**********
 
-.. figure:: /_images/crossvault_02_interfaces.png
+.. figure:: /_images/crossvault.png
     :figclass: figure
     :class: figure-img img-fluid
+
+.. rst-class:: lead
 
 Construct an assembly data structure of a cross-vault that can be used for equilibrium calculations, generation of fabrication data, or assembly simulationos.
-The procedure consists of two steps
+We construct the assembly from a list oof meshes representing the blocks.
+The JSON file containing the meshes is available here: :download:`crossvault.json <crossvault.json>`.
 
-1. Create an empty assembly and add block meshes.
-2. Identify the interfaces between the blocks.
-
-The required input for step 1 can be downloaded here:
-:download:`crossvault_meshes.json <crossvault/crossvault_meshes.json>`.
-If you place this file in the same folder as the script, the code will work as-is...
-
-
-Create Assembly and Add Blocks
-==============================
-
-.. figure:: /_images/crossvault_01_assembly.png
-    :figclass: figure
-    :class: figure-img img-fluid
-
-.. literalinclude:: crossvault/01_crossvault_assembly.py
-    :language: python
-
-
-Identify Interfaces
-===================
-
-.. figure:: /_images/crossvault_02_interfaces.png
-    :figclass: figure
-    :class: figure-img img-fluid
-
-.. literalinclude:: crossvault/02_crossvault_interfaces.py
+.. literalinclude:: crossvault.py
     :language: python

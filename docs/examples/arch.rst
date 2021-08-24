@@ -1,40 +1,10 @@
 ********************************************************************************
-Semi-circular arch
+Arch
 ********************************************************************************
 
-.. figure:: /_images/arch_03_equilibrium.png
+.. figure:: /_images/arch.png
     :figclass: figure
     :class: figure-img img-fluid
 
-
-Create Assembly and Add Blocks
-==============================
-
-.. figure:: /_images/arch_01_assembly.png
-    :figclass: figure
-    :class: figure-img img-fluid
-
-.. literalinclude:: arch/01_arch_assembly.py
-    :language: python
-
-
-Identify Interfaces
-===================
-
-.. figure:: /_images/arch_02_interfaces.png
-    :figclass: figure
-    :class: figure-img img-fluid
-
-.. literalinclude:: arch/02_arch_interfaces.py
-    :language: python
-
-
-Compute Equilibrium
-===================
-
-.. figure:: /_images/arch_03_equilibrium.png
-    :figclass: figure
-    :class: figure-img img-fluid
-
-.. literalinclude:: arch/03_arch_equilibrium.py
+.. literalinclude:: arch.py
     :language: python

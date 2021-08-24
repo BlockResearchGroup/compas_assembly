@@ -185,5 +185,5 @@ html_last_updated_fmt = ""
 html_copy_source = False
 html_show_sourcelink = False
 html_permalinks = False
-html_permalinks_icon = None
+html_permalinks_icon = ""
 html_compact_lists = True
