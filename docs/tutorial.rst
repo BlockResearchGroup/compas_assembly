@@ -35,29 +35,29 @@ For example, here we create an assembly of two blocks stacked on top of each oth
     assembly.add_block(b1)
     assembly.add_block(b2)
 
+    assembly.to_json('assembly.json')
+
 
 Visualization
 =============
 
-To visualize an assembly in Rhino or Blender, you can use the corresponding artists.
-For visualization outside of a CAD environment, you can use the COMPAS viewer.
+The assembly from the code above can be visualized in Rhino/GH or Blender using artists.
+At this point, the assembly contains the added blocks, but no information is available about the interfaces.
+There for the network (graph) representing the assembly has nodes (one per block),
+but no edges, because the relationship between the blocks is not yet known.
 
 Rhino
 -----
 
 .. code-block:: python
 
-    import compas_rhino
     from compas_assembly.rhino import AssemblyArtist
 
-    compas_rhino.clear()
-
-    artist = AssemblyArtist(assembly)
+    artist = AssemblyArtist(assembly, layer='Assembly')
+    artist.clear_layer()
 
     artist.draw_nodes()
     artist.draw_blocks()
-    artist.draw_edges()
-    artist.draw_interfaces()
 
 .. figure:: /_images/
     :figclass: figure
@@ -78,29 +78,21 @@ Blender
 
     artist.draw_nodes()
     artist.draw_blocks()
-    artist.draw_edges()
-    artist.draw_interfaces()
 
 .. figure:: /_images/
     :figclass: figure
     :class: figure-img img-fluid
 
 
-Viewer
-------
+COMPAS Viewer
+-------------
 
-The assembly viewer is a work in progress and adds a thin layer around the standard COMPAS viewer.
-With the standard viewer, you can visualize an assembly as follows.
+The COMPAS viewer doesn't provide direct support for assemblies yet,
+but they can be visualized using a combination of a NetworkObject and multiple MeshObjects.
 
 .. code-block:: python
 
-    from compas_assembly.datastructures import Block
-    from compas_assembly.datastructures import Assembly
-
-    from compas_view2.objects import Object
-    from compas_view2.objects import NetworkObject
-    from compas_view2.objects import MeshObject
-    from compas_view2.objects import Collection
+    from compas_view2.objects import Object, NetworkObject, MeshObject
     from compas_view2.app import App
 
     Object.register(Block, MeshObject)
@@ -117,25 +109,19 @@ With the standard viewer, you can visualize an assembly as follows.
     :figclass: figure
     :class: figure-img img-fluid
 
-The assembly viewer provides a more user-friendly experience.
-However, the viewer is still in early stages of developmenbt and therefore the API and usage patterns are subject to frequent change...
-
-.. code-block:: python
-
-    from compas_assembly.viewer import Viewer
-
-    viewer = Viewer()
-    viewer.add(assembly)
-    viewer.show()
-
 
 Interfaces
 ==========
 
 The 2-block assembly above is simply a collection of blocks.
-Relationships between the blocks have not been established yet.
-This is done using interface detection.
-Note that currently only face-face interfaces are supported.
+Relationships between the blocks have not been established, yet.
+This can be done manually, if the relationships are know,
+or using interface detection with :func:`assembly_identify_interfaces_numpy`.
+Note that only face-face interfaces are supported.
+
+The interface identification algorithm uses ``numpy`` in the background (hence the suffix ``_numpy``).
+In CPython environments the function can be used directly.
+For example, in Blender or in combination with View2.
 
 .. code-block:: python
 
@@ -143,15 +129,7 @@ Note that currently only face-face interfaces are supported.
 
     assembly_identify_interfaces_numpy(assembly)
 
-Note that the interface identification algorithm uses Numpy in the background (hence the suffix ``_numpy``).
-In CPython environments this is not a problem and the function can be used directly.
-For example, in Blender.
-
-.. code-block:: python
-
-    assembly_identify_interfaces_numpy(assembly)
-
-In Rhino, Numpy based algorithms have to be used through the Remote Procedure Calls of :mod:`compas.rpc`.
+In Rhino, ``numpy`` based algorithms have to be used through a RPC proxy of :mod:`compas.rpc`.
 For more information, see `the main COMPAS docs <https://compas.dev/compas/latest/tutorial/rpc.html>`_.
 
 .. code-block:: python
@@ -159,12 +137,13 @@ For more information, see `the main COMPAS docs <https://compas.dev/compas/lates
     from compas.rpc import Proxy
 
     proxy = Proxy('compas_assembly.datastructures')
-    assembly_identify_interfaces = proxy.assembly_identify_interfaces_numpy
 
-    assembly = assembly_identify_interfaces(assembly)
+    # proxy objects can't (yet) update objects in place
+    # it always returns the result
+    assembly = proxy.assembly_identify_interfaces(assembly)
 
 In both cases, the relationships between the blocks are now encoded on the edges of the
-assembly network or graph, and the interface geometry can be visualised.
+assembly network, and the block connectivity and interface geometry can be visualised.
 
 .. code-block:: python
 
@@ -178,18 +157,6 @@ assembly network or graph, and the interface geometry can be visualised.
 .. figure:: /_images/
     :figclass: figure
     :class: figure-img img-fluid
-
-
-Equilibrium Calculations
-========================
-
-With the interfaces identified, only the support conditions still need to be defined before the equilibrium
-of an assembly can be computed using one of the available solvers.
-In our example we select the bottom block.
-
-.. code-block:: python
-
-    assembly.node_attribute(0, 'is_support', True)
 
 
 Data and Serialization
@@ -240,3 +207,5 @@ Next Steps
 
 Check out the `Examples <https://blockresearchgroup.github.io/compas_assembly/latest/examples>`_ section of the docs
 for examples of more elaborate assemblies.
+
+Or have a look at the openMasonry project and some of the equilibrium solvers compatible with :mod:`compas_assembly`.
