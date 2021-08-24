@@ -2,13 +2,13 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-from ._geometry import Geometry
+from ._template import Template
 
 
 __all__ = ['Wall']
 
 
-class Wall(Geometry):
+class Wall(Template):
     """Create voussoirs for a typical brick wall.
 
     Parameters

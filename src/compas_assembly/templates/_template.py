@@ -2,10 +2,10 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-__all__ = ['Geometry']
+__all__ = ['Template']
 
 
-class Geometry(object):
+class Template(object):
 
     def __init__(self):
         pass
@@ -17,13 +17,13 @@ class Geometry(object):
         raise NotImplementedError
 
     def to_blocks_and_interfaces(self):
-        """Convert the geometry to a list of block meshes,
+        """Convert the template to a list of block meshes,
         and a list of block index pairs representing connections or interfaces.
 
         Returns
         -------
         tuple
             0. List of meshes representing the block geometries.
-            1.
+            1. List of block index pairs representing connections or interfaces.
         """
         raise NotImplementedError

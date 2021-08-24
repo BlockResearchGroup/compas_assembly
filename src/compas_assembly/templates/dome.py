@@ -2,13 +2,13 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-from ._geometry import Geometry
+from ._template import Template
 
 
 __all__ = ['Dome']
 
 
-class Dome(Geometry):
+class Dome(Template):
     """Create voussoirs for a spherical dome geometry with given rise and span.
 
     Parameters

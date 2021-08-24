@@ -3,26 +3,20 @@ from __future__ import absolute_import
 from __future__ import division
 
 from math import radians
-# from math import pi
-# from compas.geometry import Box
-# from compas.geometry import Translation
 from compas.geometry import Rotation
-# from compas.geometry import scale_vector
 from compas.geometry import add_vectors
 from compas.geometry import subtract_vectors
-# from compas.geometry import midpoint_point_point
 from compas.geometry import transform_points
 from compas.geometry import angle_vectors
 from compas.datastructures import Mesh
-# from compas.utilities import pairwise
 
-from ._geometry import Geometry
+from ._template import Template
 
 
 __all__ = ['Arch']
 
 
-class Arch(Geometry):
+class Arch(Template):
     """Create voussoir geometry for a semi-circular arch with given rise and span.
 
     Parameters
