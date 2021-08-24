@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   
-  <title>compas_assembly - Semi-circular arch</title>
+  <title>compas_assembly - Arch</title>
   
 
   <meta charset="utf-8" />
@@ -84,124 +84,77 @@
             
               <li class="breadcrumb-item"><a href="../examples.html">Examples</a></li>
             
-            <li class="breadcrumb-item active" aria-current="page">Semi-circular arch</li>
+            <li class="breadcrumb-item active" aria-current="page">Arch</li>
           </ol>
         </nav>
         
 
         
         
-        <section id="semi-circular-arch">
-<h1>Semi-circular arch</h1>
+        <section id="arch">
+<h1>Arch</h1>
 <figure class="figure align-default">
-<img alt="../_images/arch_03_equilibrium.png" class="figure-img img-fluid" src="../_images/arch_03_equilibrium.png" />
+<img alt="../_images/arch.png" class="figure-img img-fluid" src="../_images/arch.png" />
 </figure>
-<section id="create-assembly-and-add-blocks">
-<h2>Create Assembly and Add Blocks</h2>
-<figure class="figure align-default">
-<img alt="../_images/arch_01_assembly.png" class="figure-img img-fluid" src="../_images/arch_01_assembly.png" />
-</figure>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">Line</span>
+<span class="kn">from</span> <span class="nn">compas.datastructures</span> <span class="kn">import</span> <span class="n">Mesh</span>
 
-<span class="kn">import</span> <span class="nn">compas</span>
+<span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Block</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
-<span class="kn">from</span> <span class="nn">compas_assembly.geometry</span> <span class="kn">import</span> <span class="n">Arch</span>
-<span class="kn">from</span> <span class="nn">compas_assembly.rhino</span> <span class="kn">import</span> <span class="n">AssemblyArtist</span>
+<span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">assembly_interfaces_numpy</span>
+<span class="kn">from</span> <span class="nn">compas_assembly.templates</span> <span class="kn">import</span> <span class="n">Arch</span>
 
+<span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span> <span class="nn">compas_view2.objects</span> <span class="kn">import</span> <span class="n">Object</span>
+<span class="kn">from</span> <span class="nn">compas_view2.objects</span> <span class="kn">import</span> <span class="n">MeshObject</span>
 
-<span class="n">FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;arch_assembly.json&#39;</span><span class="p">)</span>
+<span class="c1"># construct an arch assembly</span>
 
-<span class="n">rise</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">span</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">thickness</span> <span class="o">=</span> <span class="mf">0.7</span>
-<span class="n">depth</span> <span class="o">=</span> <span class="mf">0.5</span>
-<span class="n">n</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">arch</span> <span class="o">=</span> <span class="n">Arch</span><span class="p">(</span><span class="n">rise</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">span</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">thickness</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span><span class="n">arch</span><span class="p">)</span>
 
-<span class="n">arch</span> <span class="o">=</span> <span class="n">Arch</span><span class="p">(</span><span class="n">rise</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">thickness</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
-<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_geometry</span><span class="p">(</span><span class="n">arch</span><span class="p">)</span>
+<span class="c1"># define the boundary conditions</span>
 
 <span class="n">assembly</span><span class="o">.</span><span class="n">node_attribute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;is_support&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">assembly</span><span class="o">.</span><span class="n">node_attribute</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;is_support&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">assembly</span><span class="o">.</span><span class="n">node_attribute</span><span class="p">(</span><span class="mi">39</span><span class="p">,</span> <span class="s1">&#39;is_support&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 
-<span class="n">compas</span><span class="o">.</span><span class="n">json_dump</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">FILE</span><span class="p">)</span>
+<span class="c1"># identify the interfaces</span>
 
-<span class="n">artist</span> <span class="o">=</span> <span class="n">AssemblyArtist</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s2">&quot;Arch::Assembly&quot;</span><span class="p">)</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">clear_layer</span><span class="p">()</span>
+<span class="n">assembly_interfaces_numpy</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
 
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_nodes</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">nodes_where</span><span class="p">({</span><span class="s1">&#39;is_support&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})})</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">()</span>
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># Visualisation</span>
+<span class="c1"># ==============================================================================</span>
+
+<span class="n">Object</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Block</span><span class="p">,</span> <span class="n">MeshObject</span><span class="p">)</span>
+
+<span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+    <span class="n">point</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="o">*</span> <span class="n">assembly</span><span class="o">.</span><span class="n">node_attributes</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;xyz&#39;</span><span class="p">))</span>
+    <span class="n">block</span> <span class="o">=</span> <span class="n">assembly</span><span class="o">.</span><span class="n">node_attribute</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;block&#39;</span><span class="p">)</span>
+
+    <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+    <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">block</span><span class="p">,</span>
+               <span class="n">show_faces</span><span class="o">=</span><span class="n">assembly</span><span class="o">.</span><span class="n">node_attribute</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;is_support&#39;</span><span class="p">),</span>
+               <span class="n">show_edges</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+               <span class="n">facecolor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">edges</span><span class="p">():</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">Line</span><span class="p">(</span><span class="o">*</span> <span class="n">assembly</span><span class="o">.</span><span class="n">edge_coordinates</span><span class="p">(</span><span class="o">*</span><span class="n">edge</span><span class="p">))</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="n">assembly</span><span class="o">.</span><span class="n">edge_attribute</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="s1">&#39;interface&#39;</span><span class="p">)</span>
+
+    <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+    <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Mesh</span><span class="o">.</span><span class="n">from_polygons</span><span class="p">([</span><span class="n">interface</span><span class="o">.</span><span class="n">points</span><span class="p">]),</span>
+               <span class="n">show_edges</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+               <span class="n">facecolor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+               <span class="n">linecolor</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+
+<span class="n">viewer</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
-</section>
-<section id="identify-interfaces">
-<h2>Identify Interfaces</h2>
-<figure class="figure align-default">
-<img alt="../_images/arch_02_interfaces.png" class="figure-img img-fluid" src="../_images/arch_02_interfaces.png" />
-</figure>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">compas</span>
-
-<span class="kn">from</span> <span class="nn">compas.rpc</span> <span class="kn">import</span> <span class="n">Proxy</span>
-<span class="kn">from</span> <span class="nn">compas_assembly.rhino</span> <span class="kn">import</span> <span class="n">AssemblyArtist</span>
-
-
-<span class="n">proxy</span> <span class="o">=</span> <span class="n">Proxy</span><span class="p">(</span><span class="s1">&#39;compas_assembly.datastructures&#39;</span><span class="p">)</span>
-
-<span class="n">FILE_I</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;arch_assembly.json&#39;</span><span class="p">)</span>
-<span class="n">FILE_O</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;arch_interfaces.json&#39;</span><span class="p">)</span>
-
-<span class="n">assembly</span> <span class="o">=</span> <span class="n">compas</span><span class="o">.</span><span class="n">json_load</span><span class="p">(</span><span class="n">FILE_I</span><span class="p">)</span>
-
-<span class="n">assembly</span> <span class="o">=</span> <span class="n">proxy</span><span class="o">.</span><span class="n">assembly_interfaces_numpy</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="mf">0.02</span><span class="p">)</span>
-
-<span class="n">compas</span><span class="o">.</span><span class="n">json_dump</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">FILE_O</span><span class="p">)</span>
-
-<span class="n">artist</span> <span class="o">=</span> <span class="n">AssemblyArtist</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s2">&quot;Arch::Interfaces&quot;</span><span class="p">)</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">clear_layer</span><span class="p">()</span>
-
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_nodes</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">nodes_where</span><span class="p">({</span><span class="s1">&#39;is_support&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})})</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_edges</span><span class="p">()</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">()</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_interfaces</span><span class="p">()</span>
-</code></pre></div>
-</div>
-</section>
-<section id="compute-equilibrium">
-<h2>Compute Equilibrium</h2>
-<figure class="figure align-default">
-<img alt="../_images/arch_03_equilibrium.png" class="figure-img img-fluid" src="../_images/arch_03_equilibrium.png" />
-</figure>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">compas</span>
-
-<span class="kn">from</span> <span class="nn">compas.rpc</span> <span class="kn">import</span> <span class="n">Proxy</span>
-<span class="kn">from</span> <span class="nn">compas_assembly.rhino</span> <span class="kn">import</span> <span class="n">AssemblyArtist</span>
-
-
-<span class="n">proxy</span> <span class="o">=</span> <span class="n">Proxy</span><span class="p">(</span><span class="s1">&#39;compas_rbe.equilibrium&#39;</span><span class="p">)</span>
-<span class="n">proxy</span><span class="o">.</span><span class="n">restart_server</span><span class="p">()</span>
-
-<span class="n">FILE_I</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;arch_interfaces.json&#39;</span><span class="p">)</span>
-<span class="n">FILE_O</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;arch_equilibrium.json&#39;</span><span class="p">)</span>
-
-<span class="n">assembly</span> <span class="o">=</span> <span class="n">compas</span><span class="o">.</span><span class="n">json_load</span><span class="p">(</span><span class="n">FILE_I</span><span class="p">)</span>
-
-<span class="n">assembly</span> <span class="o">=</span> <span class="n">proxy</span><span class="o">.</span><span class="n">compute_interface_forces_cvx</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;CPLEX&#39;</span><span class="p">)</span>
-
-<span class="n">compas</span><span class="o">.</span><span class="n">json_dump</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">FILE_O</span><span class="p">)</span>
-
-<span class="n">artist</span> <span class="o">=</span> <span class="n">AssemblyArtist</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s2">&quot;Arch::Resultants&quot;</span><span class="p">)</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">clear_layer</span><span class="p">()</span>
-
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_nodes</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">nodes_where</span><span class="p">({</span><span class="s1">&#39;is_support&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})})</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_edges</span><span class="p">()</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">()</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_interfaces</span><span class="p">()</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_resultants</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-</code></pre></div>
-</div>
-</section>
 </section>
 
         
@@ -222,9 +175,10 @@
           <div id="compas-navigation" class="collapse compas-navigation">
           <ul class="nav flex-column active">
 <li class="nav-item"><a class="nav-link reference internal" href="../intro.html">Introduction</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="../gettingstarted.html">Getting Started</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../installation.html">Installation</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../tutorial.html">Tutorial</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../examples.html">Examples</a><ul class="nav flex-column active">
-<li class="nav-item active"><a class="nav-link active current reference internal" href="#">Semi-circular arch</a></li>
+<li class="nav-item active"><a class="nav-link active current reference internal" href="#">Arch</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="crossvault.html">Crossvault</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="armadillo.html">Armadillo Vault</a></li>
 </ul>
@@ -242,12 +196,7 @@
       <div class="d-none d-xl-block col-xl-2 compas-toc" role="toc">
         
         <ul class="nav flex-column" id="compas-toc">
-<li class="nav-item"><a class="nav-link reference internal" href="#">Semi-circular arch</a><ul class="nav flex-column">
-<li class="nav-item"><a class="nav-link reference internal" href="#create-assembly-and-add-blocks">Create Assembly and Add Blocks</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#identify-interfaces">Identify Interfaces</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#compute-equilibrium">Compute Equilibrium</a></li>
-</ul>
-</li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">Arch</a></li>
 </ul>
 
       </div>

@@ -23,7 +23,7 @@
   
 
   
-    <link rel="prev" title="Semi-circular arch" href="arch.html" />
+    <link rel="prev" title="Arch" href="arch.html" />
   
 
   <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -94,153 +94,50 @@
         <section id="crossvault">
 <h1>Crossvault</h1>
 <figure class="figure align-default">
-<img alt="../_images/crossvault_02_interfaces.png" class="figure-img img-fluid" src="../_images/crossvault_02_interfaces.png" />
+<img alt="../_images/crossvault.png" class="figure-img img-fluid" src="../_images/crossvault.png" />
 </figure>
-<p>Construct an assembly data structure of a cross-vault that can be used for equilibrium calculations, generation of fabrication data, or assembly simulationos.
-The procedure consists of two steps</p>
-<ol class="arabic simple">
-<li><p>Create an empty assembly and add block meshes.</p></li>
-<li><p>Identify the interfaces between the blocks.</p></li>
-</ol>
-<p>The required input for step 1 can be downloaded here:
-<a class="reference download internal" download="" href="../_downloads/6d5c1fa0c2419da6d75241aa5f3694fe/crossvault_meshes.json"><code class="xref download docutils literal notranslate"><span class="pre">crossvault_meshes.json</span></code></a>.
-If you place this file in the same folder as the script, the code will work as-is…</p>
-<section id="create-assembly-and-add-blocks">
-<h2>Create Assembly and Add Blocks</h2>
-<figure class="figure align-default">
-<img alt="../_images/crossvault_01_assembly.png" class="figure-img img-fluid" src="../_images/crossvault_01_assembly.png" />
-</figure>
+<p class="lead">Construct an assembly data structure of a cross-vault that can be used for equilibrium calculations, generation of fabrication data, or assembly simulationos.
+We construct the assembly from a list oof meshes representing the blocks.
+The JSON file containing the meshes is available here: <a class="reference download internal" download="" href="../_downloads/dae7588fdc7ca80711372fbfcbae869e/crossvault.json"><code class="xref download docutils literal notranslate"><span class="pre">crossvault.json</span></code></a>.</p>
 <div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">compas</span>
+<span class="kn">import</span> <span class="nn">compas_blender</span>
 
-<span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Block</span>
+<span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">assembly_interfaces_numpy</span>
+<span class="kn">from</span> <span class="nn">compas_assembly.blender</span> <span class="kn">import</span> <span class="n">AssemblyArtist</span>
 
-<span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
-<span class="kn">from</span> <span class="nn">compas_view2.objects</span> <span class="kn">import</span> <span class="n">Collection</span>
+<span class="c1"># load meshes</span>
 
-<span class="n">FILE_I</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;crossvault_meshes.json&#39;</span><span class="p">)</span>
-<span class="n">FILE_O</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;crossvault_assembly.json&#39;</span><span class="p">)</span>
+<span class="n">FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;crossvault.json&#39;</span><span class="p">)</span>
+<span class="n">meshes</span> <span class="o">=</span> <span class="n">compas</span><span class="o">.</span><span class="n">json_load</span><span class="p">(</span><span class="n">FILE</span><span class="p">)</span>
 
-<span class="c1"># ==============================================================================</span>
-<span class="c1"># Load meshes</span>
-<span class="c1"># ==============================================================================</span>
-
-<span class="n">meshes</span> <span class="o">=</span> <span class="n">compas</span><span class="o">.</span><span class="n">json_load</span><span class="p">(</span><span class="n">FILE_I</span><span class="p">)</span>
-
-<span class="c1"># ==============================================================================</span>
-<span class="c1"># Construct assembly</span>
-<span class="c1"># ==============================================================================</span>
+<span class="c1"># construct assembly</span>
 
 <span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">mesh</span> <span class="ow">in</span> <span class="n">meshes</span><span class="p">:</span>
     <span class="n">block</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">cls</span><span class="o">=</span><span class="n">Block</span><span class="p">)</span>
     <span class="n">assembly</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
 
-<span class="c1"># ==============================================================================</span>
-<span class="c1"># Export</span>
-<span class="c1"># ==============================================================================</span>
+<span class="c1"># identify interfaces</span>
 
-<span class="n">compas</span><span class="o">.</span><span class="n">json_dump</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">FILE_O</span><span class="p">)</span>
+<span class="n">assembly_interfaces_numpy</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">amin</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">)</span>
 
 <span class="c1"># ==============================================================================</span>
-<span class="c1"># Viz</span>
+<span class="c1"># Visualization</span>
 <span class="c1"># ==============================================================================</span>
 
-<span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
+<span class="n">compas_blender</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
-<span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">blocks</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">artist</span> <span class="o">=</span> <span class="n">AssemblyArtist</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
-    <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="o">*</span> <span class="n">assembly</span><span class="o">.</span><span class="n">node_coordinates</span><span class="p">(</span><span class="n">node</span><span class="p">)))</span>
-    <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">assembly</span><span class="o">.</span><span class="n">node_attribute</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;block&#39;</span><span class="p">))</span>
-
-<span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Collection</span><span class="p">(</span><span class="n">nodes</span><span class="p">))</span>
-<span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Collection</span><span class="p">(</span><span class="n">blocks</span><span class="p">),</span> <span class="n">show_faces</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_edges</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">linecolor</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-
-<span class="n">viewer</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">artist</span><span class="o">.</span><span class="n">draw_nodes</span><span class="p">()</span>
+<span class="n">artist</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">()</span>
+<span class="n">artist</span><span class="o">.</span><span class="n">draw_edges</span><span class="p">()</span>
+<span class="n">artist</span><span class="o">.</span><span class="n">draw_interfaces</span><span class="p">()</span>
 </code></pre></div>
 </div>
-</section>
-<section id="identify-interfaces">
-<h2>Identify Interfaces</h2>
-<figure class="figure align-default">
-<img alt="../_images/crossvault_02_interfaces.png" class="figure-img img-fluid" src="../_images/crossvault_02_interfaces.png" />
-</figure>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">compas</span>
-
-<span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">Line</span><span class="p">,</span> <span class="n">Polygon</span>
-<span class="kn">from</span> <span class="nn">compas.datastructures</span> <span class="kn">import</span> <span class="n">Mesh</span>
-
-<span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span><span class="p">,</span> <span class="n">Block</span>
-<span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">assembly_interfaces_numpy</span>
-
-<span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
-<span class="kn">from</span> <span class="nn">compas_view2.objects</span> <span class="kn">import</span> <span class="n">Object</span><span class="p">,</span> <span class="n">NetworkObject</span><span class="p">,</span> <span class="n">MeshObject</span>
-<span class="kn">from</span> <span class="nn">compas_view2.objects</span> <span class="kn">import</span> <span class="n">Collection</span>
-
-<span class="n">Object</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Assembly</span><span class="p">,</span> <span class="n">NetworkObject</span><span class="p">)</span>
-<span class="n">Object</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Block</span><span class="p">,</span> <span class="n">MeshObject</span><span class="p">)</span>
-
-
-<span class="n">FILE_I</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;crossvault_assembly.json&#39;</span><span class="p">)</span>
-<span class="n">FILE_O</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;crossvault_interfaces.json&#39;</span><span class="p">)</span>
-
-<span class="c1"># ==============================================================================</span>
-<span class="c1"># Load assembly</span>
-<span class="c1"># ==============================================================================</span>
-
-<span class="n">assembly</span> <span class="o">=</span> <span class="n">compas</span><span class="o">.</span><span class="n">json_load</span><span class="p">(</span><span class="n">FILE_I</span><span class="p">)</span>
-
-<span class="c1"># ==============================================================================</span>
-<span class="c1"># Identify interfaces</span>
-<span class="c1"># ==============================================================================</span>
-
-<span class="n">assembly_interfaces_numpy</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="mf">0.02</span><span class="p">)</span>
-
-<span class="c1"># ==============================================================================</span>
-<span class="c1"># Export</span>
-<span class="c1"># ==============================================================================</span>
-
-<span class="n">compas</span><span class="o">.</span><span class="n">json_dump</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">FILE_O</span><span class="p">)</span>
-
-<span class="c1"># ==============================================================================</span>
-<span class="c1"># Viz</span>
-<span class="c1"># ==============================================================================</span>
-
-<span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
-
-<span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">blocks</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">interfaces</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">interactions</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
-    <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="o">*</span> <span class="n">assembly</span><span class="o">.</span><span class="n">node_coordinates</span><span class="p">(</span><span class="n">node</span><span class="p">)))</span>
-    <span class="n">blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">assembly</span><span class="o">.</span><span class="n">node_attribute</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;block&#39;</span><span class="p">))</span>
-
-<span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">edges</span><span class="p">():</span>
-    <span class="n">interface</span> <span class="o">=</span> <span class="n">assembly</span><span class="o">.</span><span class="n">edge_attribute</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="s1">&#39;interface&#39;</span><span class="p">)</span>
-    <span class="n">polygon</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">(</span><span class="n">interface</span><span class="o">.</span><span class="n">points</span><span class="p">)</span>
-    <span class="n">interfaces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Mesh</span><span class="o">.</span><span class="n">from_polygons</span><span class="p">([</span><span class="n">polygon</span><span class="p">]))</span>
-
-<span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">edges</span><span class="p">():</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="o">*</span> <span class="n">assembly</span><span class="o">.</span><span class="n">node_coordinates</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="o">*</span> <span class="n">assembly</span><span class="o">.</span><span class="n">node_coordinates</span><span class="p">(</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-    <span class="n">interactions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Line</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
-
-<span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Collection</span><span class="p">(</span><span class="n">nodes</span><span class="p">))</span>
-<span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Collection</span><span class="p">(</span><span class="n">blocks</span><span class="p">),</span> <span class="n">show_faces</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_edges</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Collection</span><span class="p">(</span><span class="n">interfaces</span><span class="p">),</span> <span class="n">show_edges</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Collection</span><span class="p">(</span><span class="n">interactions</span><span class="p">))</span>
-
-<span class="n">viewer</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</code></pre></div>
-</div>
-</section>
 </section>
 
         
@@ -261,9 +158,10 @@ If you place this file in the same folder as the script, the code will work as-i
           <div id="compas-navigation" class="collapse compas-navigation">
           <ul class="nav flex-column active">
 <li class="nav-item"><a class="nav-link reference internal" href="../intro.html">Introduction</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="../gettingstarted.html">Getting Started</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../installation.html">Installation</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="../tutorial.html">Tutorial</a></li>
 <li class="nav-item active"><a class="nav-link reference internal" href="../examples.html">Examples</a><ul class="nav flex-column active">
-<li class="nav-item"><a class="nav-link reference internal" href="arch.html">Semi-circular arch</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="arch.html">Arch</a></li>
 <li class="nav-item active"><a class="nav-link active current reference internal" href="#">Crossvault</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="armadillo.html">Armadillo Vault</a></li>
 </ul>
@@ -281,11 +179,7 @@ If you place this file in the same folder as the script, the code will work as-i
       <div class="d-none d-xl-block col-xl-2 compas-toc" role="toc">
         
         <ul class="nav flex-column" id="compas-toc">
-<li class="nav-item"><a class="nav-link reference internal" href="#">Crossvault</a><ul class="nav flex-column">
-<li class="nav-item"><a class="nav-link reference internal" href="#create-assembly-and-add-blocks">Create Assembly and Add Blocks</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#identify-interfaces">Identify Interfaces</a></li>
-</ul>
-</li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">Crossvault</a></li>
 </ul>
 
       </div>
@@ -297,11 +191,11 @@ If you place this file in the same folder as the script, the code will work as-i
   <footer class="compas-footer">
     <nav class="nav p-2">
       
-        <a href="arch.html" title="Semi-circular arch" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
+        <a href="arch.html" title="Arch" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
           <div class="nav-button p-2 m-2"><i class="fas fa-arrow-left"></i></div>
           <div class="nav-title flex-grow-1 align-self-center">
             <div class="nav-direction small font-weight-light">Previous</div>
-            Semi-circular arch
+            Arch
           </div>
         </a>
       
