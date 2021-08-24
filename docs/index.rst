@@ -7,7 +7,8 @@ compas_assembly
    :titlesonly:
 
    intro
-   gettingstarted
+   installation
+   tutorial
    examples
    api
    publications
