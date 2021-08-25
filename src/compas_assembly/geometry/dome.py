@@ -2,14 +2,14 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
-from ._template import Template
+from ._geometry import Geometry
 
 
-__all__ = ['Wall']
+__all__ = ['Dome']
 
 
-class Wall(Template):
-    """Create voussoirs for a typical brick wall.
+class Dome(Geometry):
+    """Create voussoirs for a spherical dome geometry with given rise and span.
 
     Parameters
     ----------
@@ -17,7 +17,7 @@ class Wall(Template):
     """
 
     def __init__(self):
-        super(Wall, self).__init__()
+        super(Dome, self).__init__()
 
     def blocks(self):
         """Compute the blocks.

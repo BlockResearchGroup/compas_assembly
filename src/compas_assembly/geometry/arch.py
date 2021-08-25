@@ -10,13 +10,13 @@ from compas.geometry import transform_points
 from compas.geometry import angle_vectors
 from compas.datastructures import Mesh
 
-from ._template import Template
+from ._geometry import Geometry
 
 
 __all__ = ['Arch']
 
 
-class Arch(Template):
+class Arch(Geometry):
     """Create voussoir geometry for a semi-circular arch with given rise and span.
 
     Parameters

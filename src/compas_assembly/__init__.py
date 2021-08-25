@@ -11,10 +11,10 @@ compas_assembly
 
     compas_assembly.blender
     compas_assembly.datastructures
+    compas_assembly.geometry
     compas_assembly.ghpython
     compas_assembly.plotter
     compas_assembly.rhino
-    compas_assembly.templates
 
 """
 from __future__ import print_function

@@ -4,7 +4,7 @@ from compas.datastructures import Mesh
 from compas_assembly.datastructures import Block
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import assembly_interfaces_numpy
-from compas_assembly.templates import Arch
+from compas_assembly.geometry import Arch
 
 from compas_view2.app import App
 from compas_view2.objects import Object
@@ -12,8 +12,8 @@ from compas_view2.objects import MeshObject
 
 # construct an arch assembly
 
-arch = Arch(rise=4, span=10, thickness=0.7, depth=0.5, n=40)
-assembly = Assembly.from_template(arch)
+arch = Arch(rise=5, span=10, thickness=0.7, depth=0.5, n=40)
+assembly = Assembly.from_geometry(arch)
 
 # define the boundary conditions
 
