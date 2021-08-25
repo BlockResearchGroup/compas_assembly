@@ -92,18 +92,17 @@
         <section id="tutorial">
 <h1>Tutorial</h1>
 <p class="lead"><a class="reference internal" href="api/compas_assembly.html#module-compas_assembly" title="compas_assembly"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code></a> contains data structures and algorithms for modelling the individual
-elements of Discrete Element Assemblies or Models, and the interactions and relationships between them.
-The package itself <strong>DOES NOT</strong> provide tools or solvers for computing contact forces between the element
-or for analysing the stability of entire assemblies.
+elements of Discrete Element Assemblies or Models, and the connections and relationships between them.
+The package itself <strong>DOES NOT</strong> provide tools or solvers for computing contact forces between the elements,
+nor for analysing the stability of entire assemblies.
 To enable such calculations, you have to install additional solver packages such as <code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_rbe</span></code>.</p>
-<section id="construct-an-assembly">
-<h2>Construct an Assembly</h2>
-<p>The most basic usage of <a class="reference internal" href="api/compas_assembly.html#module-compas_assembly" title="compas_assembly"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code></a> is to create an empty assembly and add blocks.
+<section id="constructing-an-assembly">
+<h2>Constructing an Assembly</h2>
+<p>The most straightforward usage of <a class="reference internal" href="api/compas_assembly.html#module-compas_assembly" title="compas_assembly"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code></a> is to create an empty assembly and add blocks.
 For example, here we create an assembly of two blocks stacked on top of each other.</p>
 <div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">radians</span>
 <span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Box</span><span class="p">,</span> <span class="n">Translation</span><span class="p">,</span> <span class="n">Rotation</span>
-<span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Block</span>
-<span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
+<span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Block</span><span class="p">,</span> <span class="n">Assembly</span>
 
 <span class="n">b1</span> <span class="o">=</span> <span class="n">Block</span><span class="o">.</span><span class="n">from_shape</span><span class="p">(</span><span class="n">Box</span><span class="o">.</span><span class="n">from_width_height_depth</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 
@@ -116,30 +115,26 @@ For example, here we create an assembly of two blocks stacked on top of each oth
 
 <span class="n">assembly</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">b1</span><span class="p">)</span>
 <span class="n">assembly</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">b2</span><span class="p">)</span>
-
-<span class="n">assembly</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="s1">&#39;assembly.json&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </section>
 <section id="visualization">
 <h2>Visualization</h2>
-<p>The assembly from the code above can be visualized in Rhino/GH or Blender using artists.
-At this point, the assembly contains the added blocks, but no information is available about the interfaces.
-There for the network (graph) representing the assembly has nodes (one per block),
-but no edges, because the relationship between the blocks is not yet known.</p>
+<p>The assembly can be visualized in Rhino/GH or Blender using artists.</p>
 <section id="rhino">
 <h3>Rhino</h3>
 <div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">compas_assembly.rhino</span> <span class="kn">import</span> <span class="n">AssemblyArtist</span>
 
+<span class="c1"># ...</span>
+
 <span class="n">artist</span> <span class="o">=</span> <span class="n">AssemblyArtist</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s1">&#39;Assembly&#39;</span><span class="p">)</span>
 <span class="n">artist</span><span class="o">.</span><span class="n">clear_layer</span><span class="p">()</span>
 
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_nodes</span><span class="p">()</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">()</span>
+<span class="n">artist</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">(</span><span class="n">show_faces</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <figure class="figure align-default">
-<img alt="_images/_images" class="figure-img img-fluid" src="_images/_images" />
+<img alt="_images/two-blocks_rhino.png" class="figure-img img-fluid" src="_images/two-blocks_rhino.png" />
 </figure>
 </section>
 <section id="blender">
@@ -147,70 +142,53 @@ but no edges, because the relationship between the blocks is not yet known.</p>
 <div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">import</span> <span class="nn">compas_blender</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.blender</span> <span class="kn">import</span> <span class="n">AssemblyArtist</span>
 
+<span class="c1"># ...</span>
+
 <span class="n">compas_blender</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
 <span class="n">artist</span> <span class="o">=</span> <span class="n">AssemblyArtist</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
-
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_nodes</span><span class="p">()</span>
 <span class="n">artist</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">()</span>
 </code></pre></div>
 </div>
 <figure class="figure align-default">
-<img alt="_images/_images" class="figure-img img-fluid" src="_images/_images" />
-</figure>
-</section>
-<section id="compas-viewer">
-<h3>COMPAS Viewer</h3>
-<p>The COMPAS viewer doesn’t provide direct support for assemblies yet,
-but they can be visualized using a combination of a NetworkObject and multiple MeshObjects.</p>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">compas_view2.objects</span> <span class="kn">import</span> <span class="n">Object</span><span class="p">,</span> <span class="n">NetworkObject</span><span class="p">,</span> <span class="n">MeshObject</span>
-<span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
-
-<span class="n">Object</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Block</span><span class="p">,</span> <span class="n">MeshObject</span><span class="p">)</span>
-<span class="n">Object</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Assembly</span><span class="p">,</span> <span class="n">NetworkObject</span><span class="p">)</span>
-
-<span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
-<span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
-    <span class="n">block</span> <span class="o">=</span> <span class="n">assembly</span><span class="o">.</span><span class="n">node_attributes</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;block&#39;</span><span class="p">)</span>
-    <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
-<span class="n">viewer</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-</div>
-<figure class="figure align-default">
-<img alt="_images/_images" class="figure-img img-fluid" src="_images/_images" />
+<img alt="_images/two-blocks_blender.png" class="figure-img img-fluid" src="_images/two-blocks_blender.png" />
 </figure>
 </section>
 </section>
 <section id="interfaces">
 <h2>Interfaces</h2>
-<p>The 2-block assembly above is simply a collection of blocks.
-Relationships between the blocks have not been established, yet.
-This can be done manually, if the relationships are know,
-or using interface detection with <code class="xref py py-func docutils literal notranslate"><span class="pre">assembly_identify_interfaces_numpy()</span></code>.
-Note that only face-face interfaces are supported.</p>
-<p>The interface identification algorithm uses <code class="docutils literal notranslate"><span class="pre">numpy</span></code> in the background (hence the suffix <code class="docutils literal notranslate"><span class="pre">_numpy</span></code>).
-In CPython environments the function can be used directly.
-For example, in Blender or in combination with View2.</p>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">assembly_identify_interfaces_numpy</span>
+<p>At the moment, our 2-block assembly above is still simply a collection of blocks.
+Connections between the blocks have not been established, yet.
+Therefore, the graph representation of the assembly has only nodes (one per block), and no edges.
+The interfaces can be defined manually, if the connections and their properties are know,
+or using interface detection with <code class="xref py py-func docutils literal notranslate"><span class="pre">assembly_identify_interfaces_numpy()</span></code>.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">assembly_interfaces_numpy</span>
 
-<span class="n">assembly_identify_interfaces_numpy</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
+<span class="c1"># ...</span>
+
+<span class="n">assembly_interfaces_numpy</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
 </code></pre></div>
 </div>
-<p>In Rhino, <code class="docutils literal notranslate"><span class="pre">numpy</span></code> based algorithms have to be used through a RPC proxy of <a class="reference external" href="https://compas.dev/compas/latest/api/compas.rpc.html#module-compas.rpc" title="(in COMPAS v1.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas.rpc</span></code></a>.
+<p>The interface identification algorithm uses <code class="docutils literal notranslate"><span class="pre">numpy</span></code> in the background (hence the suffix <code class="docutils literal notranslate"><span class="pre">_numpy</span></code>).
+In CPython environments (e.g. Blender) the function can be used directly.
+In Rhino, however, <code class="docutils literal notranslate"><span class="pre">numpy</span></code> based algorithms have to be used through a RPC proxy of <a class="reference external" href="https://compas.dev/compas/latest/api/compas.rpc.html#module-compas.rpc" title="(in COMPAS v1.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas.rpc</span></code></a>.
 For more information, see <a class="reference external" href="https://compas.dev/compas/latest/tutorial/rpc.html">the main COMPAS docs</a>.</p>
 <div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">compas.rpc</span> <span class="kn">import</span> <span class="n">Proxy</span>
 
 <span class="n">proxy</span> <span class="o">=</span> <span class="n">Proxy</span><span class="p">(</span><span class="s1">&#39;compas_assembly.datastructures&#39;</span><span class="p">)</span>
 
-<span class="c1"># proxy objects can&#39;t (yet) update objects in place</span>
-<span class="c1"># it always returns the result</span>
-<span class="n">assembly</span> <span class="o">=</span> <span class="n">proxy</span><span class="o">.</span><span class="n">assembly_identify_interfaces</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
+<span class="c1"># ...</span>
+
+<span class="c1"># proxy objects can&#39;t (yet) update objects in-place</span>
+<span class="c1"># they always return the result</span>
+<span class="n">assembly</span> <span class="o">=</span> <span class="n">proxy</span><span class="o">.</span><span class="n">assembly_interfaces</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
 </code></pre></div>
 </div>
-<p>In both cases, the relationships between the blocks are now encoded on the edges of the
-assembly network, and the block connectivity and interface geometry can be visualised.</p>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="n">artist</span> <span class="o">=</span> <span class="n">AssemblyArtist</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
+<p>In both cases, the connections between the blocks are now encoded on the edges of the
+assembly network, and can be visualised.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="c1"># in Rhino</span>
+
+<span class="n">artist</span> <span class="o">=</span> <span class="n">AssemblyArtist</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
 
 <span class="n">artist</span><span class="o">.</span><span class="n">draw_nodes</span><span class="p">()</span>
 <span class="n">artist</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">(</span><span class="n">show_faces</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -219,14 +197,45 @@ assembly network, and the block connectivity and interface geometry can be visua
 </code></pre></div>
 </div>
 <figure class="figure align-default">
-<img alt="_images/_images" class="figure-img img-fluid" src="_images/_images" />
+<img alt="_images/two-blocks-interfaces_rhino.png" class="figure-img img-fluid" src="_images/two-blocks-interfaces_rhino.png" />
 </figure>
 </section>
-<section id="data-and-serialization">
-<h2>Data and Serialization</h2>
+<section id="accessing-the-data">
+<h2>Accessing the Data</h2>
+<p>In the assembly data structure, blocks are stored as attributes of the nodes of the underlying graph or network.
+Each block is itself a customised mesh data structure and can be used as such to sore and retrieve data about individual elements.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="n">assembly</span><span class="o">.</span><span class="n">number_of_nodes</span><span class="p">()</span>  <span class="c1"># -&gt; the number of blocks</span>
+
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+    <span class="n">block</span> <span class="o">=</span> <span class="n">assembly</span><span class="o">.</span><span class="n">node_attribute</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;block&#39;</span><span class="p">)</span>
+
+    <span class="n">centroid</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">centroid</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">face</span> <span class="ow">in</span> <span class="n">block</span><span class="o">.</span><span class="n">faces</span><span class="p">():</span>
+        <span class="n">point</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">face_centroid</span><span class="p">(</span><span class="n">face</span><span class="p">)</span>
+        <span class="n">normal</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">face_normal</span><span class="p">(</span><span class="n">face</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<p>The connections between the blocks are represented by the edges of the network,
+and the properties of the interfaces between them are stored as interface objects in the corresponding edge data attributes.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="n">assembly</span><span class="o">.</span><span class="n">number_of_edges</span><span class="p">()</span>  <span class="c1"># -&gt; number of connections/interfaces</span>
+
+<span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">edges</span><span class="p">():</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="n">assembly</span><span class="o">.</span><span class="n">edge_attribute</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="s1">&#39;interface&#39;</span><span class="p">)</span>
+
+    <span class="n">interface</span><span class="o">.</span><span class="n">points</span>
+    <span class="n">interface</span><span class="o">.</span><span class="n">type</span>
+    <span class="n">interface</span><span class="o">.</span><span class="n">size</span>
+    <span class="n">interface</span><span class="o">.</span><span class="n">frame</span>
+    <span class="n">interface</span><span class="o">.</span><span class="n">forces</span>  <span class="c1"># -&gt; this is empty as long as equilibrium calculations have not been performed</span>
+</code></pre></div>
+</div>
+</section>
+<section id="serialization">
+<h2>Serialization</h2>
 <p>Both the assembly and the individual blocks implement the COMPAS data framework.
 This means that entire assemblies can be saved to or loaded from a JSON file,
-and used in combination with Remote Procedure Calls from <a class="reference external" href="https://compas.dev/compas/latest/api/compas.rpc.html#module-compas.rpc" title="(in COMPAS v1.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas.rpc</span></code></a> as we have seen earlier.</p>
+and can be used in combination with Remote Procedure Calls from <a class="reference external" href="https://compas.dev/compas/latest/api/compas.rpc.html#module-compas.rpc" title="(in COMPAS v1.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas.rpc</span></code></a> as we have seen earlier.</p>
 <div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="c1"># script A</span>
 
 <span class="n">assembly</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="s1">&#39;assembly.json&#39;</span><span class="p">)</span>
@@ -237,31 +246,68 @@ and used in combination with Remote Procedure Calls from <a class="reference ext
 <span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="s1">&#39;assembly.json&#39;</span><span class="p">)</span>
 </code></pre></div>
 </div>
-</section>
-<section id="assembly-templates">
-<h2>Assembly Templates</h2>
-<p>In a research context, it is often useful to be able to generate variations of assemblies of well-known
-structural typpologies, for example to generate sample data during the development of a new algorithm.
-For this, <a class="reference internal" href="api/compas_assembly.html#module-compas_assembly" title="compas_assembly"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code></a> includes a growing library of templates.</p>
-<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="n">rise</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">span</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">thickness</span> <span class="o">=</span> <span class="mf">0.7</span>
-<span class="n">depth</span> <span class="o">=</span> <span class="mf">0.5</span>
-<span class="n">n</span> <span class="o">=</span> <span class="mi">40</span>
+<p>Assemblies can also be stored as part of larger session files,
+for example to store the state of various analyses.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="c1"># script A</span>
 
-<span class="n">arch</span> <span class="o">=</span> <span class="n">Arch</span><span class="p">(</span><span class="n">rise</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">thickness</span><span class="p">,</span> <span class="n">depth</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
-<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span><span class="n">arch</span><span class="p">)</span>
+<span class="n">session</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;assembly&#39;</span><span class="p">:</span> <span class="n">assembly</span><span class="p">,</span>
+    <span class="s1">&#39;solver&#39;</span><span class="p">:</span> <span class="s1">&#39;CRA&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;solver.settings&#39;</span><span class="p">:</span> <span class="p">{</span><span class="o">...</span><span class="p">},</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+
+<span class="n">compas</span><span class="o">.</span><span class="n">json_dump</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="s1">&#39;session.json&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="c1"># script B</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">compas</span><span class="o">.</span><span class="n">json_load</span><span class="p">(</span><span class="s1">&#39;session.json&#39;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</section>
+<section id="assembly-template-geometries">
+<h2>Assembly Template Geometries</h2>
+<p>In a research context, it is often useful to be able to generate variations of assemblies of well-known
+structural typologies, for example to generate sample data during the development of a new algorithm.
+For this, <a class="reference internal" href="api/compas_assembly.html#module-compas_assembly" title="compas_assembly"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code></a> includes a growing library of geometry geometries.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="n">arch</span> <span class="o">=</span> <span class="n">Arch</span><span class="p">(</span><span class="n">rise</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">span</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">thickness</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_geometry</span><span class="p">(</span><span class="n">arch</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <figure class="figure align-default">
-<img alt="_images/_images" class="figure-img img-fluid" src="_images/_images" />
+<img alt="_images/arch_blender.png" class="figure-img img-fluid" src="_images/arch_blender.png" />
+</figure>
+</section>
+<section id="compas-viewer">
+<h2>COMPAS Viewer</h2>
+<p>The COMPAS viewer doesn’t provide direct support for assemblies yet,
+but they can be visualized using a combination of a NetworkObject and multiple MeshObjects.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><code><span></span><span class="kn">from</span> <span class="nn">compas_view2.objects</span> <span class="kn">import</span> <span class="n">Object</span><span class="p">,</span> <span class="n">NetworkObject</span><span class="p">,</span> <span class="n">MeshObject</span>
+<span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
+
+<span class="n">Object</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Block</span><span class="p">,</span> <span class="n">MeshObject</span><span class="p">)</span>
+<span class="n">Object</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Assembly</span><span class="p">,</span> <span class="n">NetworkObject</span><span class="p">)</span>
+
+<span class="c1"># ...</span>
+
+<span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+    <span class="n">block</span> <span class="o">=</span> <span class="n">assembly</span><span class="o">.</span><span class="n">node_attribute</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;block&#39;</span><span class="p">)</span>
+    <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+<figure class="figure align-default">
+<img alt="_images/viewer-basic.png" class="figure-img img-fluid" src="_images/viewer-basic.png" />
 </figure>
 </section>
 <section id="next-steps">
 <h2>Next Steps</h2>
 <p>Check out the <a class="reference external" href="https://blockresearchgroup.github.io/compas_assembly/latest/examples">Examples</a> section of the docs
-for examples of more elaborate assemblies.</p>
-<p>Or have a look at the openMasonry project and some of the equilibrium solvers compatible with <a class="reference internal" href="api/compas_assembly.html#module-compas_assembly" title="compas_assembly"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code></a>.</p>
+for examples of more elaborate assemblies.
+Or have a look at the openMasonry project and some of the equilibrium solvers compatible with <a class="reference internal" href="api/compas_assembly.html#module-compas_assembly" title="compas_assembly"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code></a>.</p>
 </section>
 </section>
 
@@ -300,16 +346,17 @@ for examples of more elaborate assemblies.</p>
         
         <ul class="nav flex-column" id="compas-toc">
 <li class="nav-item"><a class="nav-link reference internal" href="#">Tutorial</a><ul class="nav flex-column">
-<li class="nav-item"><a class="nav-link reference internal" href="#construct-an-assembly">Construct an Assembly</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#constructing-an-assembly">Constructing an Assembly</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#visualization">Visualization</a><ul class="nav flex-column">
 <li class="nav-item"><a class="nav-link reference internal" href="#rhino">Rhino</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#blender">Blender</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#compas-viewer">COMPAS Viewer</a></li>
 </ul>
 </li>
 <li class="nav-item"><a class="nav-link reference internal" href="#interfaces">Interfaces</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#data-and-serialization">Data and Serialization</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#assembly-templates">Assembly Templates</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#accessing-the-data">Accessing the Data</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#serialization">Serialization</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#assembly-template-geometries">Assembly Template Geometries</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#compas-viewer">COMPAS Viewer</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#next-steps">Next Steps</a></li>
 </ul>
 </li>
