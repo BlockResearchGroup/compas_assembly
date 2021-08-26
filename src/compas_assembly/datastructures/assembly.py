@@ -142,34 +142,33 @@ class Assembly(Network):
         """
         return sum(len(attr['interface_points']) for u, v, attr in self.edges(True))
 
-    # def subset(self, keys):
-    #     """Create an assembly that is a subset of the current assembly.
+    def subset(self, nodes):
+        """Create an assembly that is a subset of the current assembly.
 
-    #     Parameters
-    #     ----------
-    #     keys : list
-    #         Identifiers of the blocks that should be included in the subset.
+        Parameters
+        ----------
+        nodes : list
+            Identifiers of the blocks that should be included in the subset.
 
-    #     Returns
-    #     -------
-    #     Assembly
-    #         The sub-assembly.
+        Returns
+        -------
+        Assembly
+            The sub-assembly.
 
-    #     Examples
-    #     --------
-    #     >>>
-    #     """
-    #     cls = type(self)
-    #     sub = cls()
-    #     for key, attr in self.nodes(True):
-    #         if key in keys:
-    #             block = self.blocks[key].copy()
-    #             sub.add_node(key=key, **attr)
-    #             sub.blocks[key] = block
-    #     for u, v, attr in self.edges(True):
-    #         if u in keys and v in keys:
-    #             sub.add_edge(u, v, **attr)
-    #     return sub
+        Examples
+        --------
+        >>>
+        """
+        cls = type(self)
+        sub = cls()
+        for node in self.nodes():
+            if node in nodes:
+                attr = self.node_attributes()
+                sub.add_node(key=node, **attr)
+        for u, v in self.edges():
+            if u in nodes and v in nodes:
+                sub.add_edge(u, v, **attr)
+        return sub
 
     def transform(self, T):
         """Transform this assembly by the given transformation matrix.
