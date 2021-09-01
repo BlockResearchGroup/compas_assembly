@@ -5,6 +5,7 @@ compas_assembly.datastructures
 
 .. currentmodule:: compas_assembly.datastructures
 
+.. rst-class:: lead
 
 This package defines various data structures for the representation
 of discrete/distinct-element assemblies.
