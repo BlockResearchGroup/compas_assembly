@@ -1,4 +1,4 @@
-# compas_assembly Assembly
+# COMPAS Assembly
 
 [![GitHub - License](https://img.shields.io/github/license/blockresearchgroup/compas_assembly.svg)](./LICENSE)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/compas_assembly.svg)](https://pypi.python.org/project/compas_assembly)
@@ -27,10 +27,6 @@ To use the viewer for visualisation of assemblies outside of CAD software, insta
 ```bash
 conda install compas_view2
 ```
-
-## Getting Started
-
-<https://blockresearchgroup.github.io/compas_asssembly/gettingstarted.html>
 
 ## First Steps
 
