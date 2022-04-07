@@ -5,9 +5,6 @@ from __future__ import division
 from ._geometry import Geometry
 
 
-__all__ = ['Dome']
-
-
 class Dome(Geometry):
     """Create voussoirs for a spherical dome geometry with given rise and span.
 

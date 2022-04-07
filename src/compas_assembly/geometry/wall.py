@@ -5,9 +5,6 @@ from __future__ import division
 from ._geometry import Geometry
 
 
-__all__ = ['Wall']
-
-
 class Wall(Geometry):
     """Create voussoirs for a typical brick wall.
 

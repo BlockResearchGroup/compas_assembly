@@ -13,9 +13,6 @@ from compas.datastructures import Mesh
 from ._geometry import Geometry
 
 
-__all__ = ['Arch']
-
-
 class Arch(Geometry):
     """Create voussoir geometry for a semi-circular arch with given rise and span.
 
@@ -61,7 +58,7 @@ class Arch(Geometry):
         radius = self.rise / 2 + self.span**2 / (8 * self.rise)
         # base = [0.0, 0.0, 0.0]
         top = [0.0, 0.0, self.rise]
-        left = [- self.span / 2, 0.0, 0.0]
+        left = [-self.span / 2, 0.0, 0.0]
         center = [0.0, 0.0, self.rise - radius]
         vector = subtract_vectors(left, center)
         springing = angle_vectors(vector, [-1.0, 0.0, 0.0])
@@ -81,7 +78,14 @@ class Arch(Geometry):
             R = Rotation.from_axis_and_angle([0, 1.0, 0], -angle, center)
             top = transform_points(bottom, R)
             vertices = bottom + top
-            faces = [[0, 1, 2, 3], [7, 6, 5, 4], [3, 7, 4, 0], [6, 2, 1, 5], [7, 3, 2, 6], [5, 1, 0, 4]]
+            faces = [
+                [0, 1, 2, 3],
+                [7, 6, 5, 4],
+                [3, 7, 4, 0],
+                [6, 2, 1, 5],
+                [7, 3, 2, 6],
+                [5, 1, 0, 4],
+            ]
             mesh = Mesh.from_vertices_and_faces(vertices, faces)
             blocks.append(mesh)
             bottom = top

@@ -9,19 +9,31 @@ from compas.geometry import normalize_vector
 from compas.geometry import centroid_polyhedron
 from compas.geometry import volume_polyhedron
 
+from compas.geometry import Point
+from compas.geometry import Frame
+
 from compas.datastructures import Mesh
 
 
 class Block(Mesh):
-    """A data structure for the individual blocks of a discrete element assembly.
+    """A data structure for the individual blocks of a discrete element assembly."""
 
-    Examples
-    --------
-    >>>
-    """
-
-    def __init__(self):
+    def __init__(self, node=None):
         super(Block, self).__init__()
+        self.attributes.update({"node": None})
+        self.node = node
+
+    @property
+    def node(self):
+        return self.attributes["node"]
+
+    @node.setter
+    def node(self, node):
+        self.attributes["node"] = node
+
+    # ==========================================================================
+    # constructors
+    # ==========================================================================
 
     @classmethod
     def from_polysurface(cls, guid):
@@ -43,10 +55,12 @@ class Block(Mesh):
         the individual sub-surfaces produce normal vectors that point out of the
         enclosed volume. The normal vectors of the faces of the mesh, therefore
         also point "out" of the enclosed volume.
+
         """
-        from compas_rhino.geometry import RhinoSurface
+        from compas_rhino.conversions import RhinoSurface
+
         surface = RhinoSurface.from_guid(guid)
-        return surface.to_compas(cls)
+        return surface.to_compas_mesh(cls)
 
     @classmethod
     def from_rhinomesh(cls, guid):
@@ -61,8 +75,10 @@ class Block(Mesh):
         -------
         Block
             The block corresponding to the Rhino mesh.
+
         """
-        from compas_rhino.geometry import RhinoMesh
+        from compas_rhino.conversions import RhinoMesh
+
         mesh = RhinoMesh.from_guid(guid)
         return mesh.to_compas(cls)
 
@@ -71,11 +87,13 @@ class Block(Mesh):
 
         Returns
         -------
-        point
-            The XYZ location of the centroid.
+        :class:`compas.geometry.Point`
+
         """
-        return centroid_points(
-            [self.vertex_coordinates(key) for key in self.vertices()])
+        x, y, z = centroid_points(
+            [self.vertex_coordinates(key) for key in self.vertices()]
+        )
+        return Point(x, y, z)
 
     def frames(self):
         """Compute the local frame of each face of the block.
@@ -84,29 +102,31 @@ class Block(Mesh):
         -------
         dict
             A dictionary mapping face identifiers to face frames.
-        """
-        return {fkey: self.frame(fkey) for fkey in self.faces()}
 
-    def frame(self, fkey):
+        """
+        return {face: self.frame(face) for face in self.faces()}
+
+    def frame(self, face):
         """Compute the frame of a specific face.
 
         Parameters
         ----------
-        fkey : hashable
+        face : int
             The identifier of the frame.
 
         Returns
         -------
-        frame
-            The frame of the specified face.
+        :class:`compas.geometry.Frame`
+
         """
-        xyz = self.face_coordinates(fkey)
-        o = self.face_center(fkey)
-        w = self.face_normal(fkey)
-        u = [xyz[1][i] - xyz[0][i] for i in range(3)]  # align with longest edge instead?
+        xyz = self.face_coordinates(face)
+        o = self.face_center(face)
+        w = self.face_normal(face)
+        u = [
+            xyz[1][i] - xyz[0][i] for i in range(3)
+        ]  # align with longest edge instead?
         v = cross_vectors(w, u)
-        uvw = normalize_vector(u), normalize_vector(v), normalize_vector(w)
-        return o, uvw
+        return Frame(o, u, v)
 
     def top(self):
         """Identify the *top* face of the block.
@@ -115,10 +135,11 @@ class Block(Mesh):
         -------
         int
             The identifier of the face.
+
         """
         z = [0, 0, 1]
         faces = list(self.faces())
-        normals = [self.face_norma(face) for face in faces]
+        normals = [self.face_normal(face) for face in faces]
         return sorted(zip(faces, normals), key=lambda x: dot_vectors(x[1], z))[-1][0]
 
     def center(self):
@@ -126,12 +147,17 @@ class Block(Mesh):
 
         Returns
         -------
-        point
-            The center of mass of the block.
+        :class:`compas.geometry.Point`
+
         """
-        vertices = [self.vertex_coordinates(key) for key in self.vertices()]
-        faces = [self.face_vertices(fkey) for fkey in self.faces()]
-        return centroid_polyhedron((vertices, faces))
+        vertex_index = {vertex: index for index, vertex in enumerate(self.vertices())}
+        vertices = [self.vertex_coordinates(vertex) for vertex in self.vertices()]
+        faces = [
+            [vertex_index[vertex] for vertex in self.face_vertices(face)]
+            for face in self.faces()
+        ]
+        x, y, z = centroid_polyhedron((vertices, faces))
+        return Point(x, y, z)
 
     def volume(self):
         """Compute the volume of the block.
@@ -140,8 +166,13 @@ class Block(Mesh):
         -------
         float
             The volume of the block.
+
         """
-        vertices = [self.vertex_coordinates(key) for key in self.vertices()]
-        faces = [self.face_vertices(fkey) for fkey in self.faces()]
+        vertex_index = {vertex: index for index, vertex in enumerate(self.vertices())}
+        vertices = [self.vertex_coordinates(vertex) for vertex in self.vertices()]
+        faces = [
+            [vertex_index[vertex] for vertex in self.face_vertices(face)]
+            for face in self.faces()
+        ]
         v = volume_polyhedron((vertices, faces))
         return v

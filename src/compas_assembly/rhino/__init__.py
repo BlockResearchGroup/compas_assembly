@@ -1,29 +1,12 @@
-"""
-********************************************************************************
-compas_assembly.rhino
-********************************************************************************
-
-.. currentmodule:: compas_assembly.rhino
-
-Artists
-=======
-
-.. autosummary::
-    :toctree: generated/
-    :nosignatures:
-
-    BlockArtist
-    AssemblyArtist
-
-"""
 from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
 
-from .artists.blockartist import BlockArtist
-from .artists.assemblyartist import AssemblyArtist
+from compas.plugins import plugin
+from compas.artists import Artist
 
-__all__ = [
-    'BlockArtist',
-    'AssemblyArtist'
-]
+from compas_assembly.datastructures import Assembly
+from .assemblyartist import RhinoAssemblyArtist
+
+
+@plugin(category="factories", requires=["Rhino"])
+def register_artists():
+    Artist.register(Assembly, RhinoAssemblyArtist, context="Rhino")
