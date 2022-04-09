@@ -9,8 +9,8 @@ proxy = Proxy("compas_assembly.algorithms")
 # proxy.restart_server()
 
 HERE = os.path.dirname(__file__)
-FILE = os.path.join(HERE, "..", "data", "curvedwall.json")
-FILE = "/Users/vanmelet/Desktop/Assembly.json"
+FILE = os.path.join(HERE, "..", "data", "ursula.json")
+# FILE = "/Users/vanmelet/Desktop/Assembly.json"
 
 # data = compas.json_load(FILE)
 
@@ -22,8 +22,7 @@ FILE = "/Users/vanmelet/Desktop/Assembly.json"
 #     assembly.add_block(block, node=node, attr_dict=attr)
 
 assembly = Assembly.from_json(FILE)
-
-assembly = proxy.assembly_interfaces_numpy(assembly, tmax=0.1, nmax=100)
+#assembly = proxy.assembly_interfaces_numpy(assembly)
 
 Artist.clear()
 

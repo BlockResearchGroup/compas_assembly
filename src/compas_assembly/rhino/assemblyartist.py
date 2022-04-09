@@ -26,7 +26,7 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
             Default is None, in which case all nodes are drawn.
         color : :class:`~compas.colors.Color` | dict[hashable, :class:`~compas.colors.Color`], optional
             Color of the nodes.
-            The default color is :attr:`NetworkArtist.default_nodecolor`.
+            The default color is :attr:`AssemblyArtist.default_nodecolor`.
         text : str | dict[hashable, str], optional
             Text labels for the nodes.
 
@@ -70,7 +70,7 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
             The default is None, in which case all edges are drawn.
         color : :class:`~compas.colors.Color` | dict[tuple[hashable, hashable], :class:`~compas.colors.Color`], optional
             Color of the edges.
-            The default color is :attr:`NetworkArtist.default_edgecolor`.
+            The default color is :attr:`AssemblyArtist.default_edgecolor`.
         text : str | dict[hashable, str], optional
             Text labels for the edges.
 
@@ -105,11 +105,16 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
             pass
         return guids
 
-    def draw_blocks(self, show_faces=True, show_edges=False, show_vertices=False):
+    def draw_blocks(
+        self, color=None, show_faces=True, show_edges=False, show_vertices=False
+    ):
         """Draw the blocks of the assembly.
 
         Parameters
         ----------
+        color : :class:`~compas.colors.Color` | dict[hashable, :class:`~compas.colors.Color`], optional
+            Color of the blocks.
+            The default color is :attr:`AssemblyArtist.default_nodecolor`.
         show_faces : bool, optional
             If True, draw the faces of the blocks.
         show_edges : bool, optional
@@ -122,6 +127,7 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
         list[System.Guid]
 
         """
+        self.node_color = color
         guids = []
         for node in self.nodes:
             block = self.assembly.node_block(node)
@@ -135,11 +141,14 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
                 guids += artist.draw_vertices(color=color)
         return guids
 
-    def draw_interfaces(self, show_frames=False):
+    def draw_interfaces(self, color=None, show_frames=False):
         """Draw the interfaces of the assembly.
 
         Parameters
         ----------
+        color : :class:`~compas.colors.Color` | dict[hashable, :class:`~compas.colors.Color`], optional
+            Color of the interfaces.
+            The default color is :attr:`AssemblyArtist.default_edgecolor`.
         show_frames : bool, optional
             If True, draw the local interface frames.
 
@@ -148,17 +157,19 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
         list[System.Guid]
 
         """
+        self.edge_color = color
         guids = []
         for edge in self.edges:
             interface = self.assembly.edge_interface(edge)
             artist = Artist(Polygon(interface.points))
-            guids += artist.draw(color=self.edge_color[edge].rgb255)
+            color = self.edge_color[edge].rgb255
+            guids += artist.draw(color=color)
             if show_frames:
                 artist = Artist(interface.frame, scale=0.1)
                 guids += artist.draw()
         return guids
 
-    def draw_selfweight(self, scale=1.0, tol=1e-3):
+    def draw_selfweight(self, color=None, scale=1.0, tol=1e-3):
         """Draw the vectors representing the selfweight of the blocks of the assembly.
 
         Parameters
@@ -174,7 +185,8 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
 
         """
         guids = []
-        color = Color.magenta().rgb255
+        color = color or self.default_selfweightcolor
+        color = color.rgb255
         for node in self.nodes:
             block = self.assembly.node_block(node)
             volume = block.volume()

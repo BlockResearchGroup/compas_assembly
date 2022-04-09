@@ -8,7 +8,9 @@ from abc import abstractmethod
 class AssemblyArtist(Artist):
 
     default_nodecolor = Color.from_hex("#0092D2")
-    default_edgecolor = Color.from_hex("#0092D2")
+    default_edgecolor = Color.white()
+
+    default_selfweightcolor = Color.magenta()
 
     node_color = ColorDict()
     edge_color = ColorDict()
@@ -17,6 +19,7 @@ class AssemblyArtist(Artist):
         super(AssemblyArtist, self).__init__()
         self._default_nodecolor = None
         self._default_edgecolor = None
+        self._default_selfweightcolor = None
         self._assembly = None
         self._nodes = None
         self._edges = None
@@ -123,25 +126,25 @@ class AssemblyArtist(Artist):
         pass
 
     @abstractmethod
-    def draw_blocks(self, show_faces=True, show_edges=False, show_vertices=False):
+    def draw_blocks(self):
         pass
 
     @abstractmethod
-    def draw_interfaces(self, show_frames=False):
+    def draw_interfaces(self):
         pass
 
     @abstractmethod
-    def draw_selfweight(self, scale=1.0, tol=1e-3):
+    def draw_selfweight(self):
         pass
 
     @abstractmethod
-    def draw_forces(self, scale=1.0, tol=1e-3):
+    def draw_forces(self):
         pass
 
     @abstractmethod
-    def draw_resultants(self, scale=1.0, tol=1e-3):
+    def draw_resultants(self):
         pass
 
     @abstractmethod
-    def draw_reactions(self, scale=1.0, tol=1e-3):
+    def draw_reactions(self):
         pass
