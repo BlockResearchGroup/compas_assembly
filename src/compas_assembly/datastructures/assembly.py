@@ -39,7 +39,7 @@ class Assembly(Datastructure):
         self.attributes = {"name": name or "Assembly"}
         self.attributes.update(kwargs)
         self.graph = Graph()
-        self.graph.update_default_node_attributes({"block": None})
+        self.graph.update_default_node_attributes({"block": None, "is_support": False})
         self.graph.update_default_edge_attributes({"interface": None})
 
     # ==========================================================================
@@ -256,8 +256,7 @@ class Assembly(Datastructure):
 
         """
         for node in self.graph.nodes():
-            block = self.graph.node_attribute(node, "block")
-            yield block
+            yield self.node_block(node)
 
     def interfaces(self):
         """Yield the interfaces of the assembly.
@@ -268,8 +267,7 @@ class Assembly(Datastructure):
 
         """
         for edge in self.graph.edges():
-            interface = self.graph.edge_attribute(edge, "interface")
-            yield interface
+            yield self.edge_interface(edge)
 
     def node_block(self, node):
         """Retrieve the block corresponding to a graph node.
