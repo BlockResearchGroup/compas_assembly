@@ -132,6 +132,7 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
         for node in self.nodes:
             block = self.assembly.node_block(node)
             artist = Artist(block)
+            artist.layer = self.layer
             color = self.node_color[node].rgb255
             if show_faces:
                 guids += artist.draw_faces(color=color, join_faces=True)
@@ -162,10 +163,12 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
         for edge in self.edges:
             interface = self.assembly.edge_interface(edge)
             artist = Artist(Polygon(interface.points))
+            artist.layer = self.layer
             color = self.edge_color[edge].rgb255
             guids += artist.draw(color=color)
             if show_frames:
                 artist = Artist(interface.frame, scale=0.1)
+                artist.layer = self.layer
                 guids += artist.draw()
         return guids
 
@@ -195,6 +198,7 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
             point = block.centroid()
             vector = Vector(0, 0, -volume * scale)
             artist = Artist(vector)
+            artist.layer = self.layer
             guids += artist.draw(color=color, point=point)
         return guids
 
@@ -210,7 +214,7 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
 
         Returns
         -------
-        list[Sysyem.Guid]
+        list[System.Guid]
 
         """
         guids = []
@@ -228,11 +232,14 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
                     continue
                 color = tension if force > 0 else compression
                 artist = Artist(vector)
+                artist.layer = self.layer
                 guids += artist.draw(color=color, point=point)
         return guids
 
     def draw_resultants(self, scale=1.0, tol=1e-3):
-        pass
+        guids = []
+        return guids
 
     def draw_reactions(self, scale=1.0, tol=1e-3):
-        pass
+        guids = []
+        return guids
