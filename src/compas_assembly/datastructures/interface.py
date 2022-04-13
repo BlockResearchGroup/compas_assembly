@@ -6,11 +6,8 @@ from compas.data import Data
 
 
 class Interface(Data):
-    def __init__(
-        self, edge=None, type=None, size=None, points=None, frame=None, forces=None
-    ):
+    def __init__(self, type=None, size=None, points=None, frame=None, forces=None):
         super(Interface, self).__init__()
-        self.edge = edge
         self.points = points
         self.type = type
         self.size = size
@@ -20,7 +17,6 @@ class Interface(Data):
     @property
     def data(self):
         return {
-            "edge": self.edge,
             "points": self.points,
             "type": self.type,
             "size": self.size,
@@ -30,7 +26,6 @@ class Interface(Data):
 
     @data.setter
     def data(self, data):
-        self.edge = data["edge"]
         self.points = data["points"]
         self.type = data["type"]
         self.size = data["size"]
@@ -52,7 +47,6 @@ class Interface(Data):
 
         """
         return cls(
-            edge=data["edge"],
             type=data["type"],
             size=data["size"],
             points=data["points"],
