@@ -130,6 +130,9 @@ def assembly_interfaces_numpy(
                     if assembly.graph.has_edge(n, node):
                         continue
 
+                    if assembly.graph.node_attribute(node, 'is_support') and assembly.graph.node_attribute(n, 'is_support'):
+                        continue
+
                     nbr = blocks[j]
                     k_i = {key: index for index, key in enumerate(nbr.vertices())}
                     xyz = (
@@ -140,10 +143,11 @@ def assembly_interfaces_numpy(
                     rst = solve(A.T, xyz - o).T.tolist()
                     rst = {key: rst[k_i[key]] for key in nbr.vertices()}
 
-                    faces = sorted(
-                        nbr.faces(),
-                        key=lambda face: dot_vectors(nbr.face_normal(face), uvw[2]),
-                    )[:2]
+                    faces = nbr.faces()
+                    # faces = sorted(
+                    #     nbr.faces(),
+                    #     key=lambda face: dot_vectors(nbr.face_normal(face), uvw[2]),
+                    # )[:2]
 
                     for f1 in faces:
 
@@ -175,12 +179,15 @@ def assembly_interfaces_numpy(
                         interface = Interface(
                             type="face_face",
                             size=area,
-                            points=coords,
-                            frame=Frame(
-                                centroid_points(coords),
-                                frame.xaxis,
-                                frame.yaxis,
-                            ),
-                        )
-                        assembly.add_interface(block, nbr, interface)
+                            points=coords.tolist(),
+                            frame=Frame(origin, uvw[0], uvw[1]))
+                        if not assembly.graph.has_edge(node, n):
+                            assembly.graph.add_edge(node, n, interface=[interface])
+                        else:
+                            interfaces = assembly.graph.edge_attribute((node, n), "interface")
+                            interfaces.append(interface)
+                            assembly.graph.edge_attribute((node, n), "interface", interfaces)
+
+
+
     return assembly

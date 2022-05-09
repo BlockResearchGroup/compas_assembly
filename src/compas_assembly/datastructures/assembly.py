@@ -40,7 +40,7 @@ class Assembly(Datastructure):
         self.attributes.update(kwargs)
         self.graph = Graph()
         self.graph.update_default_node_attributes({"block": None})
-        self.graph.update_default_edge_attributes({"interface": None})
+        self.graph.update_default_edge_attributes({"interface": []})
 
     # ==========================================================================
     # data

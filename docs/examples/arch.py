@@ -50,7 +50,7 @@ for edge in assembly.edges():
 
     viewer.add(line, linewidth=3, color=(0, 0.7, 0))
 
-    viewer.add(Mesh.from_polygons([interface.points]),
+    viewer.add(Mesh.from_polygons([interface[i].points for i in range(len(interface))]),
                show_edges=False,
                facecolor=(0.5, 0.5, 1.0),
                linecolor=(0, 0, 1.0))
