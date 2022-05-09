@@ -86,25 +86,25 @@ class Assembly(Datastructure):
         tpl = "<Assembly with {} blocks and {} interfaces>"
         return tpl.format(self.graph.number_of_nodes(), self.graph.number_of_edges())
 
-    # @classmethod
-    # def from_geometry(cls, geometry):
-    #     """Construct an assembly of blocks from a particular type of assembly geometry.
+    @classmethod
+    def from_geometry(cls, geometry):
+        """Construct an assembly of blocks from a particular type of assembly geometry.
 
-    #     Parameters
-    #     ----------
-    #     geometry : compas_assembly.geometry.Geometry
-    #         A geometry object.
+        Parameters
+        ----------
+        geometry : compas_assembly.geometry.Geometry
+            A geometry object.
 
-    #     Returns
-    #     -------
-    #     assembly : compas_assembly.datastructures.Assembly
-    #         The resulting assembly data structure.
+        Returns
+        -------
+        assembly : compas_assembly.datastructures.Assembly
+            The resulting assembly data structure.
 
-    #     """
-    #     assembly = cls()
-    #     for mesh in geometry.blocks():
-    #         assembly.add_block(mesh.copy(cls=Block))
-    #     return assembly
+        """
+        assembly = cls()
+        for mesh in geometry.blocks():
+            assembly.add_block(mesh.copy(cls=Block))
+        return assembly
 
     # ==========================================================================
     # builders
@@ -332,6 +332,22 @@ class Assembly(Datastructure):
         """
         u, v = edge
         return self.node_block(u), self.node_block(v)
+
+    def edge_coordinates(self, edge):
+        """Retrieve two points representing the location of the edge nodes.
+
+        Parameters
+        ----------
+        edge : tuple[hashable, hashable]
+            the identifier of the edge.
+
+        Returns
+        -------
+        tuple[:class:`compas.geometry.Point`, :class:`compas.geometry.Point`]
+
+        """
+        u, v = edge
+        return self.node_point(u), self.node_point(v)
 
     # ==========================================================================
     # methods
