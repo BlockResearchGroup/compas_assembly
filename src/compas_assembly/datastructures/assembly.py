@@ -2,6 +2,8 @@ from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
+from compas.geometry import Point
+from compas.geometry import Line
 from compas.datastructures import Datastructure
 from compas.datastructures import Graph
 
@@ -36,11 +38,12 @@ class Assembly(Datastructure):
     def __init__(self, name=None, **kwargs):
         super(Assembly, self).__init__()
 
+        self._blocks = {}
         self.attributes = {"name": name or "Assembly"}
         self.attributes.update(kwargs)
         self.graph = Graph()
         self.graph.update_default_node_attributes({"block": None, "is_support": False})
-        self.graph.update_default_edge_attributes({"interface": None})
+        self.graph.update_default_edge_attributes({"interfaces": None})
 
     # ==========================================================================
     # data
@@ -63,16 +66,19 @@ class Assembly(Datastructure):
 
     @property
     def data(self):
-        data = {
+        return {
             "attributes": self.attributes,
             "graph": self.graph.data,
         }
-        return data
 
     @data.setter
     def data(self, data):
         self.attributes.update(data["attributes"] or {})
         self.graph.data = data["graph"]
+        self._blocks = {}
+        for node in self.graph.nodes():
+            block = self.graph.node_attribute(node, "block")
+            self._blocks[block.guid] = node
 
     # ==========================================================================
     # properties
@@ -86,25 +92,71 @@ class Assembly(Datastructure):
         tpl = "<Assembly with {} blocks and {} interfaces>"
         return tpl.format(self.graph.number_of_nodes(), self.graph.number_of_edges())
 
-    # @classmethod
-    # def from_geometry(cls, geometry):
-    #     """Construct an assembly of blocks from a particular type of assembly geometry.
+    # ==========================================================================
+    # constructors
+    # ==========================================================================
 
-    #     Parameters
-    #     ----------
-    #     geometry : compas_assembly.geometry.Geometry
-    #         A geometry object.
+    @classmethod
+    def from_template(cls, template, **kwargs):
+        """Construct an assembly from a parameteric template.
 
-    #     Returns
-    #     -------
-    #     assembly : compas_assembly.datastructures.Assembly
-    #         The resulting assembly data structure.
+        Returns
+        -------
+        :class:`Assembly`
 
-    #     """
-    #     assembly = cls()
-    #     for mesh in geometry.blocks():
-    #         assembly.add_block(mesh.copy(cls=Block))
-    #     return assembly
+        """
+        raise NotImplementedError
+
+    @classmethod
+    def from_polysurfaces(cls, guids, identify_interfaces=False):
+        """Construct an assembly from Rhino polysurfaces.
+
+        Parameters
+        ----------
+        guids : list[str]
+            A list of GUIDs identifying the poly-surfaces representing the blocks of the assembly.
+
+        Returns
+        -------
+        :class:`Assembly`
+
+        Examples
+        --------
+        >>> assembly = Assembly()
+        >>> guids = compas_rhino.select_surfaces()
+        >>> assembly.add_blocks_from_polysurfaces(guids)
+
+        """
+        assembly = cls()
+        for guid in guids:
+            block = Block.from_polysurface(guid)
+            assembly.add_block(block)
+        return assembly
+
+    def from_rhinomeshes(cls, guids, identify_interfaces=False):
+        """Construct an assembly from Rhino meshes.
+
+        Parameters
+        ----------
+        guids : list[str]
+            A list of GUIDs identifying the meshes representing the blocks of the assembly.
+
+        Returns
+        -------
+        :class:`Assembly`
+
+        Examples
+        --------
+        >>> assembly = Assembly()
+        >>> guids = compas_rhino.select_meshes()
+        >>> assembly.add_blocks_from_rhinomeshes(guids)
+
+        """
+        assembly = cls()
+        for guid in guids:
+            block = Block.from_rhinomesh(guid)
+            assembly.add_block(block)
+        return assembly
 
     # ==========================================================================
     # builders
@@ -131,8 +183,10 @@ class Assembly(Datastructure):
             The identifier of the node in the graph corresponding to the block.
 
         """
+        if self.has_block(block):
+            raise Exception("Block already exists in this assembly.")
         node = self.graph.add_node(node, block=block, attr_dict=attr_dict, **kwattr)
-        block.node = node
+        self._blocks[block.guid] = node
         return node
 
     def add_interface(self, a, b, interface):
@@ -158,68 +212,53 @@ class Assembly(Datastructure):
             If at least one of the blocks is not part of the assembly.
 
         """
-        if a.node is None or b.node is None:
-            raise AssemblyError("Both blocks have to be part of the assembly.")
-        if not self.graph.has_node(a.node) or not self.graph.has_node(b.node):
-            raise AssemblyError("Both blocks have to be part of the assembly.")
+        if not self.has_block(a):
+            raise AssemblyError("Block A is not part of the assembly.")
+        if not self.has_block(b):
+            raise AssemblyError("Block B is not part of the assembly.")
 
-        edge = self.graph.add_edge(a.node, b.node, interface=interface)
-        interface.edge = edge
+        u = self.block_node(a)
+        v = self.block_node(b)
+
+        edge = self.graph.add_edge(u, v, interface=interface)
         return edge
 
-    def add_blocks_from_polysurfaces(self, guids):
-        """Add multiple blocks from their representation as Rhino poly surfaces.
+    # ==========================================================================
+    # verification
+    # ==========================================================================
+
+    def has_block(self, block):
+        """Verify that the assembly contains a given block.
 
         Parameters
         ----------
-        guids : list[str]
-            A list of GUIDs identifying the poly-surfaces representing the blocks of the assembly.
+        block : :class:`compas_assembly.datastructures.Block`
 
         Returns
         -------
-        list[hashable]
-            The identifiers of the nodes in the graph corresponding to the added blocks.
-
-        Examples
-        --------
-        >>> assembly = Assembly()
-        >>> guids = compas_rhino.select_surfaces()
-        >>> assembly.add_blocks_from_polysurfaces(guids)
+        bool
 
         """
-        nodes = []
-        for guid in guids:
-            block = Block.from_polysurface(guid)
-            node = self.add_block(block)
-            nodes.append(node)
-        return nodes
+        if block.guid not in self._blocks:
+            return False
+        node = self._blocks[block.guid]
+        if not self.graph.has_node(node):
+            return False
+        return True
 
-    def add_blocks_from_rhinomeshes(self, guids):
-        """Add multiple blocks from their representation as as Rhino meshes.
+    def has_interface(self, interface):
+        """Verify that the assembly contains a given interface.
 
         Parameters
         ----------
-        guids : list[str]
-            A list of GUIDs identifying the meshes representing the blocks of the assembly.
+        interface : :class:`compas_assembly.datastructures.Interface`
 
         Returns
         -------
-        list[hashable]
-            The identifiers of the nodes in the graph corresponding to the added blocks.
-
-        Examples
-        --------
-        >>> assembly = Assembly()
-        >>> guids = compas_rhino.select_meshes()
-        >>> assembly.add_blocks_from_rhinomeshes(guids)
+        bool
 
         """
-        nodes = []
-        for guid in guids:
-            block = Block.from_rhinomesh(guid)
-            node = self.add_block(block)
-            nodes.append(node)
-        return nodes
+        raise NotImplementedError
 
     # ==========================================================================
     # accessors
@@ -228,24 +267,22 @@ class Assembly(Datastructure):
     def nodes(self):
         """Iterate over the nodes of the graph of the assembly.
 
-        Yields
-        ------
-        hashable
+        Returns
+        -------
+        Generator[hashable, None, None]
 
         """
-        for node in self.graph.nodes():
-            yield node
+        return self.graph.nodes()
 
     def edges(self):
         """Iterate over the edges of the graph of the assembly.
 
-        Yields
-        ------
-        tuple[hashable, hashable]
+        Returns
+        -------
+        Generator[tuple[hashable, hashable], None, None]
 
         """
-        for edge in self.graph.edges():
-            yield edge
+        return self.graph.edges()
 
     def blocks(self):
         """Iterate over the blocks of the assembly.
@@ -284,21 +321,19 @@ class Assembly(Datastructure):
         """
         return self.graph.node_attribute(node, "block")
 
-    def node_point(self, node):
-        """Retrieve a point representing the location of the node.
+    def block_node(self, block):
+        """Retrieve the graph node corresponding to a block.
 
         Parameters
         ----------
-        node : hashable
-            the identifier of the node.
+        block : :class:`compas_assembly.datastructures.Block`
 
         Returns
         -------
-        :class:`compas.geometry.Point`
+        hashable
 
         """
-        block = self.node_block(node)
-        return block.centroid()
+        return self._blocks[block.guid]
 
     def edge_interface(self, edge):
         """Retrieve the interface corresponding to a graph edge.
@@ -330,6 +365,44 @@ class Assembly(Datastructure):
         """
         u, v = edge
         return self.node_block(u), self.node_block(v)
+
+    # ==========================================================================
+    # geometry
+    # ==========================================================================
+
+    def node_point(self, node):
+        """Retrieve a point representing the location of the node.
+
+        Parameters
+        ----------
+        node : hashable
+            the identifier of the node.
+
+        Returns
+        -------
+        :class:`compas.geometry.Point`
+
+        """
+        block = self.node_block(node)
+        return Point(*block.centroid())
+
+    def edge_line(self, edge):
+        """Retrieve the line segment between the nodes of the edge.
+
+        Parameters
+        ----------
+        edge : tuple[hashable, hashable]
+            The identifier of the edge.
+
+        Returns
+        -------
+        :class:`compas.geometry.Line`
+
+        """
+        u, v = edge
+        a = self.node_point(u)
+        b = self.node_point(v)
+        return Line(a, b)
 
     # ==========================================================================
     # methods
@@ -381,42 +454,3 @@ class Assembly(Datastructure):
         assembly = self.copy()
         assembly.transform(T)
         return assembly
-
-    # def number_of_interface_nodes(self):
-    #     """Compute the total number of interface nodes.
-
-    #     Returns
-    #     -------
-    #     int
-    #         The number of nodes.
-
-    #     """
-    #     return sum(len(attr["interface_points"]) for u, v, attr in self.edges(True))
-
-    # def subset(self, nodes):
-    #     """Create an assembly that is a subset of the current assembly.
-
-    #     Parameters
-    #     ----------
-    #     nodes : list
-    #         Identifiers of the blocks that should be included in the subset.
-
-    #     Returns
-    #     -------
-    #     Assembly
-    #         The sub-assembly.
-
-    #     Examples
-    #     --------
-    #     >>>
-    #     """
-    #     cls = type(self)
-    #     sub = cls()
-    #     for node in self.nodes():
-    #         if node in nodes:
-    #             attr = self.node_attributes()
-    #             sub.add_node(key=node, **attr)
-    #     for u, v in self.edges():
-    #         if u in nodes and v in nodes:
-    #             sub.add_edge(u, v, **attr)
-    #     return sub
