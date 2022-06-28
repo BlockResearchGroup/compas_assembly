@@ -101,23 +101,20 @@
 <h1>Block.to_vertices_and_faces</h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="compas_assembly.datastructures.Block.to_vertices_and_faces">
-<span class="sig-prename descclassname"><span class="pre">Block.</span></span><span class="sig-name descname"><span class="pre">to_vertices_and_faces</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/block.py#L491"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Block.</span></span><span class="sig-name descname"><span class="pre">to_vertices_and_faces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">triangulated</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/block.py#L476"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Return the vertices and faces of a mesh.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><p><em>tuple</em> – A 2-tuple containing</p>
-<ul class="simple">
-<li><p>a list of vertices, represented by their XYZ coordinates, and</p></li>
-<li><p>a list of faces.</p></li>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>triangulated</strong> (<em>bool, optional</em>) – If True, triangulate the faces.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>list[list[float]]</em> – The vertices as a list of XYZ coordinates.</p></li>
+<li><p><em>list[list[int]]</em> – The faces as a list of lists of vertex indices.</p></li>
 </ul>
-<p>Each face is a list of indices referencing the list of vertex coordinates.</p>
 </p>
 </dd>
 </dl>
-<p class="rubric">Examples</p>
-<div class="doctest language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="go">&gt;&gt;&gt;</span>
-</code></pre></div>
-</div>
 </dd></dl>
 
 </section>
@@ -150,11 +147,8 @@
 </li>
 <li class="toctree-l1 nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav flex-column collapse show active">
 <li class="toctree-l2 nav-item active"><a class="nav-link reference internal" href="../compas_assembly.html">compas_assembly</a><ul class="nav flex-column collapse show active">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.blender.html">compas_assembly.blender</a></li>
 <li class="toctree-l3 nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
 <li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.geometry.html">compas_assembly.geometry</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.ghpython.html">compas_assembly.ghpython</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
 </ul>
 </li>
 </ul>

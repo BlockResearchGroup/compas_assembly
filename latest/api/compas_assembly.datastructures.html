@@ -24,7 +24,7 @@
   
 
   
-  <link rel="prev" title="AssemblyArtist.register" href="generated/compas_assembly.blender.AssemblyArtist.register.html" />
+  <link rel="prev" title="&lt;no title&gt;" href="compas_assembly.blender.html" />
   
 
   <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -95,48 +95,18 @@
         
         <span class="target" id="module-compas_assembly.datastructures"></span><section id="compas-assembly-datastructures">
 <h1>compas_assembly.datastructures</h1>
-<p class="lead">This package defines various data structures for the representation
-of discrete/distinct-element assemblies.
-The individual elements of an assembly are represented by customised versions of the COMPAS
-mesh data structure (<a class="reference external" href="https://compas.dev/compas/latest/api/generated/compas.datastructures.Mesh.html#compas.datastructures.Mesh" title="(in COMPAS v1.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas.datastructures.Mesh</span></code></a>).
-The relationships between the elements in the assembly are represented by
-customised versions of the COMPAS network data structure (<a class="reference external" href="https://compas.dev/compas/latest/api/generated/compas.datastructures.Network.html#compas.datastructures.Network" title="(in COMPAS v1.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas.datastructures.Network</span></code></a>).</p>
 <section id="classes">
 <h2>Classes</h2>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/compas_assembly.datastructures.Assembly.html#compas_assembly.datastructures.Assembly" title="compas_assembly.datastructures.Assembly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Assembly</span></code></a></p></td>
-<td><p>A data structure for discrete element assemblies.</p></td>
+<td><p>A data structure for managing the connections between different parts of an assembly.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="generated/compas_assembly.datastructures.Block.html#compas_assembly.datastructures.Block" title="compas_assembly.datastructures.Block"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Block</span></code></a></p></td>
 <td><p>A data structure for the individual blocks of a discrete element assembly.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/compas_assembly.datastructures.Interface.html#compas_assembly.datastructures.Interface" title="compas_assembly.datastructures.Interface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Interface</span></code></a></p></td>
 <td><p></p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="functions">
-<h2>Functions</h2>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/compas_assembly.datastructures.assembly_hull.html#compas_assembly.datastructures.assembly_hull" title="compas_assembly.datastructures.assembly_hull"><code class="xref py py-obj docutils literal notranslate"><span class="pre">assembly_hull</span></code></a></p></td>
-<td><p>Construct the convex hull of an assembly.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/compas_assembly.datastructures.assembly_hull_numpy.html#compas_assembly.datastructures.assembly_hull_numpy" title="compas_assembly.datastructures.assembly_hull_numpy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">assembly_hull_numpy</span></code></a></p></td>
-<td><p>Construct the convex hull of an assembly.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/compas_assembly.datastructures.assembly_interfaces_numpy.html#compas_assembly.datastructures.assembly_interfaces_numpy" title="compas_assembly.datastructures.assembly_interfaces_numpy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">assembly_interfaces_numpy</span></code></a></p></td>
-<td><p>Identify the interfaces between the blocks of an assembly.</p></td>
 </tr>
 </tbody>
 </table>
@@ -171,11 +141,8 @@ customised versions of the COMPAS network data structure (<a class="reference ex
 </li>
 <li class="toctree-l1 nav-item active"><a class="nav-link reference internal" href="../api.html">API Reference</a><ul class="nav flex-column collapse show active">
 <li class="toctree-l2 nav-item active"><a class="nav-link reference internal" href="compas_assembly.html">compas_assembly</a><ul class="nav flex-column collapse show active">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_assembly.blender.html">compas_assembly.blender</a></li>
 <li class="toctree-l3 nav-item active"><a class="nav-link active reference internal" href="#">compas_assembly.datastructures</a></li>
 <li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_assembly.geometry.html">compas_assembly.geometry</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_assembly.ghpython.html">compas_assembly.ghpython</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="compas_assembly.rhino.html">compas_assembly.rhino</a></li>
 </ul>
 </li>
 </ul>
@@ -194,7 +161,6 @@ customised versions of the COMPAS network data structure (<a class="reference ex
         <ul class="nav flex-column" id="compas-toc">
 <li class="nav-item"><a class="nav-link reference internal" href="#">compas_assembly.datastructures</a><ul class="nav flex-column">
 <li class="nav-item"><a class="nav-link reference internal" href="#classes">Classes</a></li>
-<li class="nav-item"><a class="nav-link reference internal" href="#functions">Functions</a></li>
 </ul>
 </li>
 </ul>
@@ -208,11 +174,11 @@ customised versions of the COMPAS network data structure (<a class="reference ex
   <footer class="compas-footer">
     <nav class="nav p-2">
       
-      <a href="generated/compas_assembly.blender.AssemblyArtist.register.html" title="AssemblyArtist.register" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
+      <a href="compas_assembly.blender.html" title="&lt;no title&gt;" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
         <div class="nav-button p-2 m-2"><i class="fas fa-arrow-left"></i></div>
         <div class="nav-title flex-grow-1 align-self-center">
           <div class="nav-direction small font-weight-light">Previous</div>
-          AssemblyArtist.register
+          &lt;no title&gt;
         </div>
       </a>
       

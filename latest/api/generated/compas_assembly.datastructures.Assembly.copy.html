@@ -20,11 +20,11 @@
   <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
   
-  <link rel="next" title="Assembly.count_crossings" href="compas_assembly.datastructures.Assembly.count_crossings.html" />
+  <link rel="next" title="Assembly.from_data" href="compas_assembly.datastructures.Assembly.from_data.html" />
   
 
   
-  <link rel="prev" title="Assembly.connectivity_matrix" href="compas_assembly.datastructures.Assembly.connectivity_matrix.html" />
+  <link rel="prev" title="Assembly.ToString" href="compas_assembly.datastructures.Assembly.ToString.html" />
   
 
   <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -101,15 +101,15 @@
 <h1>Assembly.copy</h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="compas_assembly.datastructures.Assembly.copy">
-<span class="sig-prename descclassname"><span class="pre">Assembly.</span></span><span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/assembly.py#L232"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Assembly.</span></span><span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/assembly.py#L319"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Make an independent copy of the data object.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>cls</strong> (<a class="reference external" href="https://compas.dev/compas/latest/api/generated/compas.data.Data.html#compas.data.Data" title="(in COMPAS v1.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas.data.Data</span></code></a>, optional) – The type of data object to return.
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cls</strong> (Type[<a class="reference external" href="https://compas.dev/compas/latest/api/generated/compas.data.Data.html#compas.data.Data" title="(in COMPAS v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Data</span></code></a>], optional) – The type of data object to return.
 Defaults to the type of the current data object.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><a class="reference external" href="https://compas.dev/compas/latest/api/generated/compas.data.Data.html#compas.data.Data" title="(in COMPAS v1.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas.data.Data</span></code></a> – A separate, but identical data object.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://compas.dev/compas/latest/api/generated/compas.data.Data.html#compas.data.Data" title="(in COMPAS v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Data</span></code></a> – An independent copy of this object.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -144,11 +144,8 @@ Defaults to the type of the current data object.</p>
 </li>
 <li class="toctree-l1 nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav flex-column collapse show active">
 <li class="toctree-l2 nav-item active"><a class="nav-link reference internal" href="../compas_assembly.html">compas_assembly</a><ul class="nav flex-column collapse show active">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.blender.html">compas_assembly.blender</a></li>
 <li class="toctree-l3 nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
 <li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.geometry.html">compas_assembly.geometry</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.ghpython.html">compas_assembly.ghpython</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
 </ul>
 </li>
 </ul>
@@ -177,20 +174,20 @@ Defaults to the type of the current data object.</p>
   <footer class="compas-footer">
     <nav class="nav p-2">
       
-      <a href="compas_assembly.datastructures.Assembly.connectivity_matrix.html" title="Assembly.connectivity_matrix" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
+      <a href="compas_assembly.datastructures.Assembly.ToString.html" title="Assembly.ToString" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
         <div class="nav-button p-2 m-2"><i class="fas fa-arrow-left"></i></div>
         <div class="nav-title flex-grow-1 align-self-center">
           <div class="nav-direction small font-weight-light">Previous</div>
-          Assembly.connectivity_matrix
+          Assembly.ToString
         </div>
       </a>
       
 
       
-      <a href="compas_assembly.datastructures.Assembly.count_crossings.html" title="Assembly.count_crossings" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
+      <a href="compas_assembly.datastructures.Assembly.from_data.html" title="Assembly.from_data" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
         <div class="nav-title footer-link flex-grow-1 align-self-center">
           <div class="nav-direction small font-weight-light">Next</div>
-          Assembly.count_crossings
+          Assembly.from_data
         </div>
         <div class="nav-button p-2 m-2"><i class="fas fa-arrow-right"></i></div>
       </a>

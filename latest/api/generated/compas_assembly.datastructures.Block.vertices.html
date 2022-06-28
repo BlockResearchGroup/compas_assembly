@@ -101,15 +101,15 @@
 <h1>Block.vertices</h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="compas_assembly.datastructures.Block.vertices">
-<span class="sig-prename descclassname"><span class="pre">Block.</span></span><span class="sig-name descname"><span class="pre">vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/block.py#L546"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Block.</span></span><span class="sig-name descname"><span class="pre">vertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/block.py#L536"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Iterate over the vertices of the mesh.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>bool, optional</em>) – Return the vertex data as well as the vertex keys.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>bool, optional</em>) – If True, yield the vertex attributes in addition to the vertex identifiers.</p>
 </dd>
-<dt class="field-even">Yields</dt>
-<dd class="field-even"><p><em>int or tuple</em> – The next vertex identifier, if <code class="docutils literal notranslate"><span class="pre">data</span></code> is false.
-The next vertex as a (key, attr) tuple, if <code class="docutils literal notranslate"><span class="pre">data</span></code> is true.</p>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>int | tuple[int, dict[str, Any]]</em> – If <cite>data</cite> is False, the next vertex identifier.
+If <cite>data</cite> is True, the next vertex as a (key, attr) tuple.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -144,11 +144,8 @@ The next vertex as a (key, attr) tuple, if <code class="docutils literal notrans
 </li>
 <li class="toctree-l1 nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav flex-column collapse show active">
 <li class="toctree-l2 nav-item active"><a class="nav-link reference internal" href="../compas_assembly.html">compas_assembly</a><ul class="nav flex-column collapse show active">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.blender.html">compas_assembly.blender</a></li>
 <li class="toctree-l3 nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
 <li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.geometry.html">compas_assembly.geometry</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.ghpython.html">compas_assembly.ghpython</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
 </ul>
 </li>
 </ul>

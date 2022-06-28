@@ -20,11 +20,11 @@
   <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
   
-  <link rel="next" title="Assembly.from_geometry" href="compas_assembly.datastructures.Assembly.from_geometry.html" />
+  <link rel="next" title="Assembly.block_node" href="compas_assembly.datastructures.Assembly.block_node.html" />
   
 
   
-  <link rel="prev" title="Assembly.add_blocks_from_rhinomeshes" href="compas_assembly.datastructures.Assembly.add_blocks_from_rhinomeshes.html" />
+  <link rel="prev" title="Assembly.add_block" href="compas_assembly.datastructures.Assembly.add_block.html" />
   
 
   <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -101,8 +101,24 @@
 <h1>Assembly.add_interface</h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="compas_assembly.datastructures.Assembly.add_interface">
-<span class="sig-prename descclassname"><span class="pre">Assembly.</span></span><span class="sig-name descname"><span class="pre">add_interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interface</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/assembly.py#L75"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">Assembly.</span></span><span class="sig-name descname"><span class="pre">add_interface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interface</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/assembly.py#L192"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Add an interface between two blocks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<a class="reference internal" href="compas_assembly.datastructures.Block.html#compas_assembly.datastructures.Block" title="compas_assembly.datastructures.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas_assembly.datastructures.Block</span></code></a>) – The “from” block.</p></li>
+<li><p><strong>b</strong> (<a class="reference internal" href="compas_assembly.datastructures.Block.html#compas_assembly.datastructures.Block" title="compas_assembly.datastructures.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas_assembly.datastructures.Block</span></code></a>) – The “to” block.</p></li>
+<li><p><strong>interface</strong> (<a class="reference internal" href="compas_assembly.datastructures.Interface.html#compas_assembly.datastructures.Interface" title="compas_assembly.datastructures.Interface"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas_assembly.datastructures.Interface</span></code></a>) – The interface.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>tuple[hashable, hashable]</em> – the identifier of the edge in the graph corresponding to the interface.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>AssemblyError</strong> – If at least one of the blocks is not part of the assembly.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 
@@ -134,11 +150,8 @@
 </li>
 <li class="toctree-l1 nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav flex-column collapse show active">
 <li class="toctree-l2 nav-item active"><a class="nav-link reference internal" href="../compas_assembly.html">compas_assembly</a><ul class="nav flex-column collapse show active">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.blender.html">compas_assembly.blender</a></li>
 <li class="toctree-l3 nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
 <li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.geometry.html">compas_assembly.geometry</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.ghpython.html">compas_assembly.ghpython</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
 </ul>
 </li>
 </ul>
@@ -167,20 +180,20 @@
   <footer class="compas-footer">
     <nav class="nav p-2">
       
-      <a href="compas_assembly.datastructures.Assembly.add_blocks_from_rhinomeshes.html" title="Assembly.add_blocks_from_rhinomeshes" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
+      <a href="compas_assembly.datastructures.Assembly.add_block.html" title="Assembly.add_block" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
         <div class="nav-button p-2 m-2"><i class="fas fa-arrow-left"></i></div>
         <div class="nav-title flex-grow-1 align-self-center">
           <div class="nav-direction small font-weight-light">Previous</div>
-          Assembly.add_blocks_from_rhinomeshes
+          Assembly.add_block
         </div>
       </a>
       
 
       
-      <a href="compas_assembly.datastructures.Assembly.from_geometry.html" title="Assembly.from_geometry" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
+      <a href="compas_assembly.datastructures.Assembly.block_node.html" title="Assembly.block_node" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
         <div class="nav-title footer-link flex-grow-1 align-self-center">
           <div class="nav-direction small font-weight-light">Next</div>
-          Assembly.from_geometry
+          Assembly.block_node
         </div>
         <div class="nav-button p-2 m-2"><i class="fas fa-arrow-right"></i></div>
       </a>

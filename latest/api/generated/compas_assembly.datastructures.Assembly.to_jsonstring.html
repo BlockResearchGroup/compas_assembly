@@ -20,7 +20,7 @@
   <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
   
-  <link rel="next" title="Assembly.to_lines" href="compas_assembly.datastructures.Assembly.to_lines.html" />
+  <link rel="next" title="Assembly.validate_data" href="compas_assembly.datastructures.Assembly.validate_data.html" />
   
 
   
@@ -101,15 +101,14 @@
 <h1>Assembly.to_jsonstring</h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="compas_assembly.datastructures.Assembly.to_jsonstring">
-<span class="sig-prename descclassname"><span class="pre">Assembly.</span></span><span class="sig-name descname"><span class="pre">to_jsonstring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pretty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/assembly.py#L216"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Assembly.</span></span><span class="sig-name descname"><span class="pre">to_jsonstring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pretty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/assembly.py#L303"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Serialize the data representation of an object to a JSON string.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>pretty</strong> (<em>bool, optional</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> serialize a pretty representation of the data.
-Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pretty</strong> (<em>bool, optional</em>) – If True serialize a pretty representation of the data.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><em>str</em> – A JSON string representation of the data.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>str</em> – The object’s data dict in JSON string format.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -144,11 +143,8 @@ Default is <code class="docutils literal notranslate"><span class="pre">False</s
 </li>
 <li class="toctree-l1 nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav flex-column collapse show active">
 <li class="toctree-l2 nav-item active"><a class="nav-link reference internal" href="../compas_assembly.html">compas_assembly</a><ul class="nav flex-column collapse show active">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.blender.html">compas_assembly.blender</a></li>
 <li class="toctree-l3 nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
 <li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.geometry.html">compas_assembly.geometry</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.ghpython.html">compas_assembly.ghpython</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
 </ul>
 </li>
 </ul>
@@ -187,10 +183,10 @@ Default is <code class="docutils literal notranslate"><span class="pre">False</s
       
 
       
-      <a href="compas_assembly.datastructures.Assembly.to_lines.html" title="Assembly.to_lines" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
+      <a href="compas_assembly.datastructures.Assembly.validate_data.html" title="Assembly.validate_data" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
         <div class="nav-title footer-link flex-grow-1 align-self-center">
           <div class="nav-direction small font-weight-light">Next</div>
-          Assembly.to_lines
+          Assembly.validate_data
         </div>
         <div class="nav-button p-2 m-2"><i class="fas fa-arrow-right"></i></div>
       </a>

@@ -20,7 +20,7 @@
   <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
   
-  <link rel="next" title="Assembly.add_blocks_from_polysurfaces" href="compas_assembly.datastructures.Assembly.add_blocks_from_polysurfaces.html" />
+  <link rel="next" title="Assembly.add_interface" href="compas_assembly.datastructures.Assembly.add_interface.html" />
   
 
   
@@ -101,23 +101,22 @@
 <h1>Assembly.add_block</h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="compas_assembly.datastructures.Assembly.add_block">
-<span class="sig-prename descclassname"><span class="pre">Assembly.</span></span><span class="sig-name descname"><span class="pre">add_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwattr</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/assembly.py#L51"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<span class="sig-prename descclassname"><span class="pre">Assembly.</span></span><span class="sig-name descname"><span class="pre">add_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attr_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwattr</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/assembly.py#L165"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Add a block to the assembly.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>block</strong> (<em>compas_assembly.datastructures.Block</em>) – The block to add.</p></li>
-<li><p><strong>attr_dict</strong> (<em>dict, optional</em>) – A dictionary of block attributes.
-Default is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>block</strong> (<a class="reference internal" href="compas_assembly.datastructures.Block.html#compas_assembly.datastructures.Block" title="compas_assembly.datastructures.Block"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas_assembly.datastructures.Block</span></code></a>) – The block to add.</p></li>
+<li><p><strong>node</strong> (<em>hashable, optional</em>) – The identifier of the corresponding node in the connectivity graph.
+If no value is provided, the identifier will be generated automatically by the graph.</p></li>
+<li><p><strong>attr_dict</strong> (<em>dict, optional</em>) – A dictionary of block attributes.</p></li>
+<li><p><strong>**kwatr</strong> (<em>dict, optional</em>) – Additional attributes in the form of named function parameters.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><em>hashable</em> – The identifier of the block.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>hashable</em> – The identifier of the node in the graph corresponding to the block.</p>
 </dd>
 </dl>
-<p class="rubric">Notes</p>
-<p>The block is added as a node in the assembly data structure.
-The XYZ coordinates of the node are the coordinates of the centroid of the block.</p>
 </dd></dl>
 
 </section>
@@ -150,11 +149,8 @@ The XYZ coordinates of the node are the coordinates of the centroid of the block
 </li>
 <li class="toctree-l1 nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav flex-column collapse show active">
 <li class="toctree-l2 nav-item active"><a class="nav-link reference internal" href="../compas_assembly.html">compas_assembly</a><ul class="nav flex-column collapse show active">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.blender.html">compas_assembly.blender</a></li>
 <li class="toctree-l3 nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
 <li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.geometry.html">compas_assembly.geometry</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.ghpython.html">compas_assembly.ghpython</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
 </ul>
 </li>
 </ul>
@@ -193,10 +189,10 @@ The XYZ coordinates of the node are the coordinates of the centroid of the block
       
 
       
-      <a href="compas_assembly.datastructures.Assembly.add_blocks_from_polysurfaces.html" title="Assembly.add_blocks_from_polysurfaces" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
+      <a href="compas_assembly.datastructures.Assembly.add_interface.html" title="Assembly.add_interface" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
         <div class="nav-title footer-link flex-grow-1 align-self-center">
           <div class="nav-direction small font-weight-light">Next</div>
-          Assembly.add_blocks_from_polysurfaces
+          Assembly.add_interface
         </div>
         <div class="nav-button p-2 m-2"><i class="fas fa-arrow-right"></i></div>
       </a>
