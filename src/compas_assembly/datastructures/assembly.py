@@ -304,7 +304,8 @@ class Assembly(Datastructure):
 
         """
         for edge in self.graph.edges():
-            yield self.edge_interface(edge)
+            for interface in self.edge_interfaces(edge):
+                yield interface
 
     def node_block(self, node):
         """Retrieve the block corresponding to a graph node.
@@ -335,8 +336,8 @@ class Assembly(Datastructure):
         """
         return self._blocks[block.guid]
 
-    def edge_interface(self, edge):
-        """Retrieve the interface corresponding to a graph edge.
+    def edge_interfaces(self, edge):
+        """Retrieve the interfaces corresponding to a graph edge.
 
         Parameters
         ----------
@@ -345,10 +346,10 @@ class Assembly(Datastructure):
 
         Returns
         -------
-        :class:`compas_assembly.datastructures.Interface`
+        [:class:`compas_assembly.datastructures.Interface`]
 
         """
-        return self.graph.edge_attribute(edge, "interface")
+        return self.graph.edge_attribute(edge, "interfaces")
 
     def edge_blocks(self, edge):
         """Retrieve the two blocks corresponding to a graph edge.
