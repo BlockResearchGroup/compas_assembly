@@ -15,7 +15,9 @@ Functions
 
     assembly_hull
     assembly_hull_numpy
+    assembly_interfaces
     assembly_interfaces_numpy
+    mesh_mesh_interfaces
 
 """
 from __future__ import absolute_import
@@ -28,6 +30,12 @@ __all__ = ["assembly_hull"]
 
 if not compas.IPY:
     from .hull_numpy import assembly_hull_numpy
+    from .interfaces import assembly_interfaces
+    from .interfaces import mesh_mesh_interfaces
     from .interfaces_numpy import assembly_interfaces_numpy
 
-    __all__ += ["assembly_hull_numpy", "assembly_interfaces_numpy"]
+    __all__ += [
+        "assembly_hull_numpy",
+        "assembly_interfaces",
+        "assembly_interfaces_numpy",
+    ]
