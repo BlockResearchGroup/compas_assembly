@@ -7,7 +7,14 @@ from compas.data import Data
 
 class Interface(Data):
     def __init__(
-        self, type=None, size=None, points=None, frame=None, forces=None, viewmesh=None
+        self,
+        type=None,
+        size=None,
+        points=None,
+        frame=None,
+        forces=None,
+        viewmesh=None,
+        interaction=None,
     ):
         super(Interface, self).__init__()
         self.points = points
@@ -16,6 +23,7 @@ class Interface(Data):
         self.frame = frame
         self.forces = forces
         self.viewmesh = viewmesh
+        self.interaction = interaction
 
     @property
     def data(self):
@@ -26,6 +34,7 @@ class Interface(Data):
             "frame": self.frame,
             "forces": self.forces,
             "viewmesh": self.viewmesh,
+            "interaction": self.interaction,
         }
 
     @data.setter
@@ -36,6 +45,7 @@ class Interface(Data):
         self.frame = data["frame"]
         self.forces = data["forces"]
         self.viewmesh = data["viewmesh"]
+        self.interaction = data["interaction"]
 
     @classmethod
     def from_data(cls, data):
@@ -51,11 +61,4 @@ class Interface(Data):
         :class:`compas_assembly.datastructures.Interface`
 
         """
-        return cls(
-            type=data["type"],
-            size=data["size"],
-            points=data["points"],
-            frame=data["frame"],
-            forces=data["forces"],
-            viewmesh=data["viewmesh"],
-        )
+        return cls(**data)

@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Added `compas_assembly.algorithms.assembly_interfaces`.
 * Added `compas_assembly.datastructures.Interface`.
+* Added `compas_assembly.datastructures.Assembly.default_node_attributes['mesh_size']`.
+* Added `compas_assembly.datastructures.Assembly.default_node_attributes['section']`.
+* Added `compas_assembly.datastructures.Interface.interaction`.
 
 ### Changed
 

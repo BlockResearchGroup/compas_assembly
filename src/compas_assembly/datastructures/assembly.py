@@ -42,8 +42,19 @@ class Assembly(Datastructure):
         self.attributes = {"name": name or "Assembly"}
         self.attributes.update(kwargs)
         self.graph = Graph()
-        self.graph.update_default_node_attributes({"block": None, "is_support": False})
-        self.graph.update_default_edge_attributes({"interfaces": None})
+        self.graph.update_default_node_attributes(
+            {
+                "block": None,
+                "is_support": False,
+                "section": None,
+                "mesh_size": None,
+            }
+        )
+        self.graph.update_default_edge_attributes(
+            {
+                "interfaces": None,
+            }
+        )
 
     # ==========================================================================
     # data
