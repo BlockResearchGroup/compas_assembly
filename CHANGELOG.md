@@ -9,7 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Added `compas_assembly.algorithms.assembly_interfaces`.
+* Added `compas_assembly.datastructures.Interface`.
+
 ### Changed
+
+* Changed `compas_assembly.algorithms.assembly_interfaces_numpy` to find all interfaces between two blocks.
+* Changed `compas_assembly.datastructures.Assembly` do manage multiple interfaces per edge.
 
 ### Removed
 
