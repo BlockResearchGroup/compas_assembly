@@ -131,6 +131,11 @@ class Assembly(Datastructure):
         for guid in guids:
             block = Block.from_polysurface(guid)
             assembly.add_block(block)
+
+        if identify_interfaces:
+            from compas_assembly.algorithms import assembly_interfaces
+
+            assembly_interfaces(assembly)
         return assembly
 
     def from_rhinomeshes(cls, guids, identify_interfaces=False):
@@ -156,6 +161,11 @@ class Assembly(Datastructure):
         for guid in guids:
             block = Block.from_rhinomesh(guid)
             assembly.add_block(block)
+
+        if identify_interfaces:
+            from compas_assembly.algorithms import assembly_interfaces
+
+            assembly_interfaces(assembly)
         return assembly
 
     # ==========================================================================
@@ -189,7 +199,7 @@ class Assembly(Datastructure):
         self._blocks[block.guid] = node
         return node
 
-    def add_interface(self, a, b, interface):
+    def add_block_block_interfaces(self, a, b, interfaces):
         """Add an interface between two blocks.
 
         Parameters
@@ -198,7 +208,7 @@ class Assembly(Datastructure):
             The "from" block.
         b : :class:`compas_assembly.datastructures.Block`
             The "to" block.
-        interface : :class:`compas_assembly.datastructures.Interface`
+        interfaces : List[:class:`compas_assembly.datastructures.Interface`]
             The interface.
 
         Returns
@@ -220,7 +230,7 @@ class Assembly(Datastructure):
         u = self.block_node(a)
         v = self.block_node(b)
 
-        edge = self.graph.add_edge(u, v, interface=interface)
+        edge = self.graph.add_edge(u, v, interfaces=interfaces)
         return edge
 
     # ==========================================================================
@@ -335,7 +345,7 @@ class Assembly(Datastructure):
         """
         return self._blocks[block.guid]
 
-    def edge_interface(self, edge):
+    def edge_interfaces(self, edge):
         """Retrieve the interface corresponding to a graph edge.
 
         Parameters
@@ -345,10 +355,10 @@ class Assembly(Datastructure):
 
         Returns
         -------
-        :class:`compas_assembly.datastructures.Interface`
+        List[:class:`compas_assembly.datastructures.Interface`]
 
         """
-        return self.graph.edge_attribute(edge, "interface")
+        return self.graph.edge_attribute(edge, "interfaces")
 
     def edge_blocks(self, edge):
         """Retrieve the two blocks corresponding to a graph edge.
