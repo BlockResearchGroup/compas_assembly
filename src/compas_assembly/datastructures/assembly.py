@@ -89,7 +89,8 @@ class Assembly(Datastructure):
         self._blocks = {}
         for node in self.graph.nodes():
             block = self.graph.node_attribute(node, "block")
-            self._blocks[block.guid] = node
+            if block:
+                self._blocks[block.guid] = node
 
     # ==========================================================================
     # properties
