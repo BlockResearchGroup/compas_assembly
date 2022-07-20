@@ -326,7 +326,10 @@ class Assembly(Datastructure):
 
         """
         for edge in self.graph.edges():
-            yield self.edge_interface(edge)
+            interfaces = self.edge_interfaces(edge)
+            if interfaces:
+                for interface in interfaces:
+                    yield interface
 
     def node_block(self, node):
         """Retrieve the block corresponding to a graph node.
