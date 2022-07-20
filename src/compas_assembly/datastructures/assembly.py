@@ -326,7 +326,8 @@ class Assembly(Datastructure):
 
         """
         for edge in self.graph.edges():
-            if (interfaces := self.edge_interfaces(edge)):
+            interfaces = self.edge_interfaces(edge)
+            if interfaces:
                 for interface in interfaces:
                     yield interface
 
