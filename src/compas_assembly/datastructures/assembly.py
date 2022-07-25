@@ -109,7 +109,7 @@ class Assembly(Datastructure):
     # ==========================================================================
 
     @classmethod
-    def from_template(cls, template, **kwargs):
+    def from_template(cls, template, identify_interfaces=False, **kwargs):
         """Construct an assembly from a parameteric template.
 
         Returns
@@ -117,10 +117,20 @@ class Assembly(Datastructure):
         :class:`Assembly`
 
         """
-        raise NotImplementedError
+        assembly = cls()
+        for mesh in template.blocks():
+            block = mesh.copy(cls=Block)
+            x, y, z = block.centroid()
+            assembly.add_block(block, x=x, y=y, z=z)
+
+        if identify_interfaces:
+            from compas_assembly.algorithms import assembly_interfaces
+
+            assembly_interfaces(assembly)
+        return assembly
 
     @classmethod
-    def from_polysurfaces(cls, guids, identify_interfaces=False):
+    def from_polysurfaces(cls, guids, identify_interfaces=False, **kwargs):
         """Construct an assembly from Rhino polysurfaces.
 
         Parameters
