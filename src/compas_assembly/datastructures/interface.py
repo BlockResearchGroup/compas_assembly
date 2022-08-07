@@ -13,6 +13,7 @@ class Interface(Data):
         points=None,
         frame=None,
         forces=None,
+        mesh=None,
         viewmesh=None,
         interaction=None,
     ):
@@ -22,6 +23,7 @@ class Interface(Data):
         self.size = size
         self.frame = frame
         self.forces = forces
+        self.mesh = mesh
         self.viewmesh = viewmesh
         self.interaction = interaction
 
@@ -33,6 +35,7 @@ class Interface(Data):
             "size": self.size,
             "frame": self.frame,
             "forces": self.forces,
+            "mesh": self.mesh,
             "viewmesh": self.viewmesh,
             "interaction": self.interaction,
         }
@@ -44,6 +47,7 @@ class Interface(Data):
         self.size = data["size"]
         self.frame = data["frame"]
         self.forces = data["forces"]
+        self.mesh = data["mesh"]
         self.viewmesh = data["viewmesh"]
         self.interaction = data["interaction"]
 
