@@ -62,7 +62,7 @@ def assembly_interfaces(
                 # a block has no interfaces with itself
                 continue
 
-            if assembly.graph.has_edge(n, node):
+            if assembly.graph.has_edge(n, node, directed=False):
                 # the interfaces between these two blocks have already been identified
                 continue
 
