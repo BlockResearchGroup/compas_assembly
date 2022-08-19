@@ -1,13 +1,23 @@
 from typing import List
 
 from math import fabs
+from random import shuffle
 
 from shapely.geometry import Polygon as ShapelyPolygon
 
 from compas.geometry import Frame, Transformation
 from compas.geometry import centroid_polygon
-from compas.geometry import bestfit_frame_numpy, transform_points
+from compas.geometry import bestfit_frame_numpy
+from compas.geometry import transform_points
+from compas.geometry import Plane
+from compas.geometry import is_coplanar
+from compas.geometry import is_colinear
+from compas.geometry import Polygon
+
+from compas.utilities import window
+
 from compas.datastructures import Mesh
+from compas.datastructures import mesh_merge_faces
 
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import Block
@@ -128,14 +138,14 @@ def mesh_mesh_interfaces(
                 continue
 
             coords = [[x, y, 0.0] for x, y, _ in intersection.exterior.coords]
-            coords = transform_points(coords, matrix.inverted())
+            coords = transform_points(coords, matrix.inverted())[:-1]
 
             interface = Interface(
                 type="face_face",
                 size=area,
                 points=coords,
                 frame=Frame(
-                    centroid_polygon(coords[:-1]),
+                    centroid_polygon(coords),
                     frame.xaxis,
                     frame.yaxis,
                 ),
@@ -144,3 +154,87 @@ def mesh_mesh_interfaces(
             interfaces.append(interface)
 
     return interfaces
+
+
+def merge_coplanar_interfaces(assembly, tol=1e-6):
+    """Merge connected coplanar interfaces between pairs of blocks.
+
+    Parameters
+    ----------
+    assembly : :class:`compas_assembly.datastructures.Assembly`
+        An assembly of blocks with identified interfaces.
+    tol : float, optional
+        The tolerance for coplanarity.
+
+    Returns
+    -------
+    None
+
+    """
+    for edge in assembly.edges():
+        interfaces: List[Interface] = assembly.graph.edge_attribute(edge, "interfaces")
+
+        if interfaces:
+            polygons = []
+            for interface in interfaces:
+                points = []
+                for a, b, c in window(interface.points + interface.points[:2], 3):
+                    if not is_colinear(a, b, c):
+                        points.append(b)
+
+                polygons.append(Polygon(points))
+
+            temp = Mesh.from_polygons(polygons)
+            try:
+                temp.unify_cycles()
+            except:
+                continue
+
+            reconstruct = False
+
+            while True:
+                if temp.number_of_faces() < 2:
+                    break
+
+                has_merged = False
+
+                for face in temp.faces():
+                    nbrs = temp.face_neighbors(face)
+                    points = temp.face_coordinates(face)
+                    vertices = temp.face_vertices(face)
+
+                    for nbr in nbrs:
+                        for vertex in temp.face_vertices(nbr):
+                            if vertex not in vertices:
+                                points.append(temp.vertex_coordinates(vertex))
+
+                        if is_coplanar(points, tol=tol):
+                            mesh_merge_faces(temp, [face, nbr])
+                            has_merged = True
+                            reconstruct = True
+                            break
+
+                    if has_merged:
+                        break
+
+                if not has_merged:
+                    break
+
+            if reconstruct:
+                interfaces = []
+                for face in temp.faces():
+                    points = temp.face_coordinates(face)
+                    area = temp.face_area(face)
+                    frame = Frame.from_plane(
+                        Plane(temp.face_centroid(face), temp.face_normal(face))
+                    )
+                    interface = Interface(
+                        type="face_face",
+                        size=area,
+                        points=points,
+                        frame=frame,
+                        mesh=Mesh.from_polygons([points]),
+                    )
+                    interfaces.append(interface)
+
+                assembly.graph.edge_attribute(edge, "interfaces", interfaces)
