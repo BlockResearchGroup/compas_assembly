@@ -1,37 +1,41 @@
 import os
 import compas
-import compas_blender
-
+from compas.geometry import Polygon
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import Block
-from compas_assembly.datastructures import assembly_interfaces_numpy
-from compas_assembly.blender import AssemblyArtist
+from compas_assembly.algorithms import assembly_interfaces
+from compas_view2.app import App
 
-# load meshes
+HERE = os.path.dirname(__file__)
+FILE = os.path.join(HERE, "crossvault.json")
 
-FILE = os.path.join(os.path.dirname(__file__), 'crossvault.json')
 meshes = compas.json_load(FILE)
-
-# construct assembly
 
 assembly = Assembly()
 for mesh in meshes:
     block = mesh.copy(cls=Block)
     assembly.add_block(block)
 
-# identify interfaces
+# =============================================================================
+# Interfaces
+# =============================================================================
 
-assembly_interfaces_numpy(assembly, tmax=0.02, amin=0.0001)
+assembly_interfaces(assembly, nmax=20, tmax=1e-2)
 
-# ==============================================================================
-# Visualization
-# ==============================================================================
+# =============================================================================
+# Viz
+# =============================================================================
 
-compas_blender.clear()
+viewer = App()
 
-artist = AssemblyArtist(assembly)
+for block in assembly.blocks():
+    viewer.add(block, opacity=0.2)
 
-artist.draw_nodes()
-artist.draw_blocks()
-artist.draw_edges()
-artist.draw_interfaces()
+for node in assembly.nodes():
+    viewer.add(assembly.node_point(node), size=20)
+
+for edge in assembly.edges():
+    for interface in assembly.edge_interfaces(edge):
+        viewer.add(Polygon(interface.points))
+
+viewer.run()
