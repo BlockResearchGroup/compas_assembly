@@ -1,7 +1,6 @@
 from typing import List
 
 from math import fabs
-from random import shuffle
 
 from shapely.geometry import Polygon as ShapelyPolygon
 
@@ -187,7 +186,7 @@ def merge_coplanar_interfaces(assembly, tol=1e-6):
             temp = Mesh.from_polygons(polygons)
             try:
                 temp.unify_cycles()
-            except:
+            except Exception:
                 continue
 
             reconstruct = False

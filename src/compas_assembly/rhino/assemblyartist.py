@@ -2,7 +2,6 @@ import compas_rhino
 
 from compas.geometry import Point
 from compas.geometry import Vector
-from compas.geometry import Line
 from compas.geometry import Polygon
 from compas.colors import Color
 from compas.artists import Artist

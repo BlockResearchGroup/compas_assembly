@@ -5,7 +5,6 @@ from __future__ import division
 from compas.geometry import centroid_points
 from compas.geometry import cross_vectors
 from compas.geometry import dot_vectors
-from compas.geometry import normalize_vector
 from compas.geometry import centroid_polyhedron
 from compas.geometry import volume_polyhedron
 
