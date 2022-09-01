@@ -23,7 +23,7 @@ optional_requirements = {}
 
 setup(
     name='compas_assembly',
-    version='0.4.2',
+    version='0.4.3',
     description='Assembly data structures for the COMPAS framework.',
     long_description=long_description,
     long_description_content_type='text/markdown',
