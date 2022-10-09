@@ -6,8 +6,7 @@ from compas.geometry import Pointcloud
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import Block
 from compas_assembly.algorithms import assembly_interfaces
-from compas_view2.app import App
-from compas_view2.objects import Collection
+from compas_assembly.viewer import DEMViewer
 
 HERE = os.path.dirname(__file__)
 FILE_I = os.path.join(HERE, "crossvault_meshes_from_rhino.json")
@@ -48,23 +47,8 @@ compas.json_dump(assembly, FILE_O)
 # Viz
 # =============================================================================
 
-viewer = App()
+viewer = DEMViewer()
 
-for block in assembly.blocks():
-    viewer.add(block, opacity=0.2)
-
-points = []
-for node in assembly.nodes():
-    points.append(assembly.node_point(node))
-
-viewer.add(Pointcloud(points))
-# viewer.add(Collection(points), size=[20] * len(points))
-
-interfaces = []
-for edge in assembly.edges():
-    for interface in assembly.edge_interfaces(edge):
-        interfaces.append(Polygon(interface.points))
-
-viewer.add(Collection(interfaces))
+viewer.add_assembly(assembly)
 
 viewer.run()
