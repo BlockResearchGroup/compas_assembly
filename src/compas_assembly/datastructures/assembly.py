@@ -48,6 +48,7 @@ class Assembly(Datastructure):
                 "is_support": False,
                 "section": None,
                 "mesh_size": None,
+                "displacement": [0, 0, 0, 0, 0, 0],
             }
         )
         self.graph.update_default_edge_attributes(
