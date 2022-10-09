@@ -18,8 +18,7 @@ CONFIG = os.path.join(HERE, "config.json")
 class DEMController(Controller):
     def show_interfaces(self, *args, **kwargs):
         state = args[0]
-        for o in self.app.interfaces:
-            o.is_visible = state
+        self.app.interfaces.is_visible = state
         self.app.view.update()
 
     def show_frictionforces(self, *args, **kwargs):
@@ -99,35 +98,34 @@ class DEMViewer(App):
         color_support=Color.red(),
         color_block=Color.grey(),
     ):
-        self.blocks = []
+        blocks = []
+        properties = []
         for node in assembly.graph.nodes():
             block = assembly.graph.node_attribute(node, "block")
             is_support = assembly.graph.node_attribute(node, "is_support")
             color = color_support if is_support else color_block
-            o = self.add(
-                block,
-                facecolor=color.lightened(50),
-                linecolor=color,
-                linewidth=linewidth,
-                opacity=opacity,
-                show_faces=show_faces,
-                show_lines=show_lines,
-                show_points=show_points,
+            blocks.append(block)
+            properties.append(
+                {
+                    "facecolor": color.lightened(50),
+                    "linecolor": color,
+                    "linewidth": linewidth,
+                    "show_faces": show_faces,
+                    "show_lines": show_lines,
+                    "show_points": show_points,
+                }
             )
-            self.blocks.append(o)
+        self.blocks = self.add(Collection(blocks, properties), opacity=opacity)
 
-        self.interfaces = []
+        interfaces = []
+        properties = []
         for edge in assembly.graph.edges():
-            interfaces: List[Interface] = assembly.graph.edge_attribute(
-                edge, "interfaces"
-            )
-            for interface in interfaces:
-                o = self.add(
-                    interface.polygon,
-                    is_visible=show_interfaces,
-                    linewidth=linewidth,
+            for interface in assembly.graph.edge_attribute(edge, "interfaces"):
+                interfaces.append(interface.polygon)
+                properties.append(
+                    {"is_visible": show_interfaces, "linewidth": linewidth}
                 )
-                self.interfaces.append(o)
+        self.interfaces = self.add(Collection(interfaces, properties))
 
         compression = []
         tension = []
