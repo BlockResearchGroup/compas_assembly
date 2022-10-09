@@ -171,7 +171,7 @@ or using interface detection with <code class="xref py py-func docutils literal 
 </div>
 <p>The interface identification algorithm uses <code class="docutils literal notranslate"><span class="pre">numpy</span></code> in the background (hence the suffix <code class="docutils literal notranslate"><span class="pre">_numpy</span></code>).
 In CPython environments (e.g. Blender) the function can be used directly.
-In Rhino, however, <code class="docutils literal notranslate"><span class="pre">numpy</span></code> based algorithms have to be used through a RPC proxy of <a class="reference external" href="https://compas.dev/compas/latest/api/compas.rpc.html#module-compas.rpc" title="(in COMPAS v1.16)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas.rpc</span></code></a>.
+In Rhino, however, <code class="docutils literal notranslate"><span class="pre">numpy</span></code> based algorithms have to be used through a RPC proxy of <a class="reference external" href="https://compas.dev/compas/latest/api/compas.rpc.html#module-compas.rpc" title="(in COMPAS v1.17)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas.rpc</span></code></a>.
 For more information, see <a class="reference external" href="https://compas.dev/compas/latest/tutorial/rpc.html">the main COMPAS docs</a>.</p>
 <div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="kn">from</span> <span class="nn">compas.rpc</span> <span class="kn">import</span> <span class="n">Proxy</span>
 
@@ -235,7 +235,7 @@ and the properties of the interfaces between them are stored as interface object
 <h2>Serialization</h2>
 <p>Both the assembly and the individual blocks implement the COMPAS data framework.
 This means that entire assemblies can be saved to or loaded from a JSON file,
-and can be used in combination with Remote Procedure Calls from <a class="reference external" href="https://compas.dev/compas/latest/api/compas.rpc.html#module-compas.rpc" title="(in COMPAS v1.16)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas.rpc</span></code></a> as we have seen earlier.</p>
+and can be used in combination with Remote Procedure Calls from <a class="reference external" href="https://compas.dev/compas/latest/api/compas.rpc.html#module-compas.rpc" title="(in COMPAS v1.17)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas.rpc</span></code></a> as we have seen earlier.</p>
 <div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="c1"># script A</span>
 
 <span class="n">assembly</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="s1">&#39;assembly.json&#39;</span><span class="p">)</span>
