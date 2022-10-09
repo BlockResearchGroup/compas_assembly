@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Added `compas_assembly.viewer.app.DEMViewer`.
+* Added `compas_assembly.viewer.app.DEMController`.
+* Added `compas_assembly.viewer.config.json`.
+* Added `compas_assembly.datastructures.interface.Interface.polygon`.
+* Added `compas_assembly.datastructures.interface.Interface.contactforces`.
+* Added `compas_assembly.datastructures.interface.Interface.compressionforces`.
+* Added `compas_assembly.datastructures.interface.Interface.tensionforces`.
+* Added `compas_assembly.datastructures.interface.Interface.frictionforces`.
+* Added `compas_assembly.datastructures.interface.Interface.resultantforce`.
+
 ### Changed
 
 ### Removed
