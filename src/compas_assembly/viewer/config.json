@@ -1,0 +1,127 @@
+{
+    "messages": {
+        "about": "COMPAS DEM provides a user interface for working with Discrete Element Models."
+    },
+    "menubar": [
+        {
+            "type": "menu",
+            "text": "COMPAS DEM",
+            "items": [
+                {
+                    "type": "action",
+                    "text": "About",
+                    "action": "about"
+                },
+                {
+                    "type": "separator"
+                },
+                {
+                    "type": "action",
+                    "text": "OpenGL Version",
+                    "action": "opengl_version"
+                },
+                {
+                    "type": "action",
+                    "text": "GLSL Version",
+                    "action": "glsl_version"
+                }
+            ]
+        },
+        {
+            "type": "menu",
+            "text": "View",
+            "items": [
+                {
+                    "type": "radio",
+                    "items": [
+                        {
+                            "type": "action",
+                            "text": "Shaded",
+                            "checked": true,
+                            "action": "view_shaded"
+                        },
+                        {
+                            "type": "action",
+                            "text": "Ghosted",
+                            "checked": false,
+                            "action": "view_ghosted"
+                        },
+                        {
+                            "type": "action",
+                            "text": "Wireframe",
+                            "checked": false,
+                            "action": "view_wireframe"
+                        },
+                        {
+                            "type": "action",
+                            "text": "Lighted",
+                            "checked": false,
+                            "action": "view_lighted"
+                        }
+                    ]
+                },
+                {
+                    "type": "separator"
+                },
+                {
+                    "type": "action",
+                    "text": "Capture",
+                    "action": "view_capture"
+                },
+                {
+                    "type": "separator"
+                },
+                {
+                    "type": "action",
+                    "text": "Front",
+                    "action": "view_front"
+                },
+                {
+                    "type": "action",
+                    "text": "Right",
+                    "action": "view_right"
+                },
+                {
+                    "type": "action",
+                    "text": "Top",
+                    "action": "view_top"
+                },
+                {
+                    "type": "action",
+                    "text": "Perspective",
+                    "action": "view_perspective"
+                }
+            ]
+        }
+    ],
+    "toolbar": [],
+    "sidebar": [
+        {
+            "type": "checkbox",
+            "text": "Show Interfaces",
+            "action": "show_interfaces",
+            "checked": true
+        },
+        {
+            "type": "checkbox",
+            "text": "Show Friction",
+            "action": "show_frictionforces",
+            "checked": true
+        },
+        {
+            "type": "checkbox",
+            "text": "Show Normal Forces",
+            "action": "show_normalforces",
+            "checked": true
+        },
+        {
+            "type": "slider",
+            "annotation": "Scale Contact Forces",
+            "action": "scale_contactforces",
+            "minval": 1,
+            "maxval": 100,
+            "step": 1,
+            "value": 50
+        }
+    ]
+}
