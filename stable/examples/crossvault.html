@@ -46,7 +46,7 @@
         <meta id="doc_versions" data-url="https://github.com/blockresearchgroup/compas_assembly/doc_versions.txt" data-docs="https://blockresearchgroup.github.io/compas_assembly">
         <li class="nav-item nav-versions dropdown">
           <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            0.4.3
+            0.5.0
           </a>
           <div id="doc_version_list" class="dropdown-menu dropdown-menu-md-right" aria-labelledby="bd-versions"></div>
         </li>
@@ -92,47 +92,29 @@
 </figure>
 <p class="lead">Construct an assembly data structure of a cross-vault that can be used for equilibrium calculations, generation of fabrication data, or assembly simulationos.
 We construct the assembly from a list oof meshes representing the blocks.
-The JSON file containing the meshes is available here: <a class="reference download internal" download="" href="../_downloads/dae7588fdc7ca80711372fbfcbae869e/crossvault.json"><code class="xref download docutils literal notranslate"><span class="pre">crossvault.json</span></code></a>.</p>
-<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">compas</span>
-<span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Polygon</span>
+The JSON file containing the meshes is available here: <code class="xref download docutils literal notranslate"><span class="pre">crossvault.json</span></code>.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="kn">import</span> <span class="nn">compas</span>
+<span class="kn">import</span> <span class="nn">compas_assembly</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Block</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.algorithms</span> <span class="kn">import</span> <span class="n">assembly_interfaces</span>
-<span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span> <span class="nn">compas_assembly.viewer</span> <span class="kn">import</span> <span class="n">DEMViewer</span>
 
-<span class="n">HERE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
-<span class="n">FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">HERE</span><span class="p">,</span> <span class="s2">&quot;crossvault.json&quot;</span><span class="p">)</span>
-
-<span class="n">meshes</span> <span class="o">=</span> <span class="n">compas</span><span class="o">.</span><span class="n">json_load</span><span class="p">(</span><span class="n">FILE</span><span class="p">)</span>
+<span class="n">meshes</span> <span class="o">=</span> <span class="n">compas</span><span class="o">.</span><span class="n">json_load</span><span class="p">(</span><span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;crossvault.json&quot;</span><span class="p">))</span>
 
 <span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">mesh</span> <span class="ow">in</span> <span class="n">meshes</span><span class="p">:</span>
     <span class="n">block</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">cls</span><span class="o">=</span><span class="n">Block</span><span class="p">)</span>
     <span class="n">assembly</span><span class="o">.</span><span class="n">add_block</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
 
-<span class="c1"># =============================================================================</span>
-<span class="c1"># Interfaces</span>
-<span class="c1"># =============================================================================</span>
-
-<span class="n">assembly_interfaces</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">nmax</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">)</span>
+<span class="n">assembly_interfaces</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">nmax</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">amin</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">)</span>
 
 <span class="c1"># =============================================================================</span>
 <span class="c1"># Viz</span>
 <span class="c1"># =============================================================================</span>
 
-<span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
-
-<span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">blocks</span><span class="p">():</span>
-    <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
-    <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">assembly</span><span class="o">.</span><span class="n">node_point</span><span class="p">(</span><span class="n">node</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">edges</span><span class="p">():</span>
-    <span class="k">for</span> <span class="n">interface</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">edge_interfaces</span><span class="p">(</span><span class="n">edge</span><span class="p">):</span>
-        <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Polygon</span><span class="p">(</span><span class="n">interface</span><span class="o">.</span><span class="n">points</span><span class="p">))</span>
-
+<span class="n">viewer</span> <span class="o">=</span> <span class="n">DEMViewer</span><span class="p">()</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">add_assembly</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
 <span class="n">viewer</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </code></pre></div>
 </div>
@@ -161,8 +143,11 @@ The JSON file containing the meshes is available here: <a class="reference downl
 <li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../api.html">API Reference</a><ul class="nav flex-column collapse">
 <li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../api/compas_assembly.html">compas_assembly</a><ul class="nav flex-column collapse">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../api/compas_assembly.algorithms.html">compas_assembly.algorithms</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../api/compas_assembly.artists.html">compas_assembly.artists</a></li>
 <li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../api/compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
 <li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../api/compas_assembly.geometry.html">compas_assembly.geometry</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../api/compas_assembly.rhino.html">compas_assembly.rhino</a></li>
 </ul>
 </li>
 </ul>

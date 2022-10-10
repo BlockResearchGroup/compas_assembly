@@ -50,7 +50,7 @@
         <meta id="doc_versions" data-url="https://github.com/blockresearchgroup/compas_assembly/doc_versions.txt" data-docs="https://blockresearchgroup.github.io/compas_assembly">
         <li class="nav-item nav-versions dropdown">
           <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            0.4.3
+            0.5.0
           </a>
           <div id="doc_version_list" class="dropdown-menu dropdown-menu-md-right" aria-labelledby="bd-versions"></div>
         </li>
@@ -100,10 +100,10 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="compas_assembly.geometry.Arch">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">compas_assembly.geometry.</span></span><span class="sig-name descname"><span class="pre">Arch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rise</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">span</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thickness</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/geometry/arch.py#L16"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
-<dd><p>Bases: <a class="reference internal" href="compas_assembly.geometry.Geometry.html#compas_assembly.geometry.Geometry" title="compas_assembly.geometry._geometry.Geometry"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geometry</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="compas_assembly.geometry.Geometry.html#compas_assembly.geometry.Geometry" title="compas_assembly.geometry._geometry.Geometry"><code class="xref py py-class docutils literal notranslate"><span class="pre">compas_assembly.geometry._geometry.Geometry</span></code></a></p>
 <p>Create voussoir geometry for a semi-circular arch with given rise and span.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>rise</strong> (<em>float</em>) – The distance between the base of the arch and the highest point of the intrados.</p></li>
 <li><p><strong>span</strong> (<em>float</em>) – The distance between opposite intrados points at the base.</p></li>
@@ -115,6 +115,10 @@
 </dl>
 <p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.geometry.Arch.blocks.html#compas_assembly.geometry.Arch.blocks" title="compas_assembly.geometry.Arch.blocks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">blocks</span></code></a></p></td>
 <td><p>Compute the blocks.</p></td>
@@ -123,6 +127,10 @@
 </table>
 <p class="rubric">Inherited Methods</p>
 <table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="compas_assembly.geometry.Arch.interfaces.html#compas_assembly.geometry.Arch.interfaces" title="compas_assembly.geometry.Arch.interfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">interfaces</span></code></a></p></td>
 <td><p></p></td>
@@ -159,8 +167,11 @@
 <li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../examples.html">Examples</a></li>
 <li class="toctree-l1 nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav flex-column collapse show active">
 <li class="toctree-l2 nav-item active"><a class="nav-link reference internal" href="../compas_assembly.html">compas_assembly</a><ul class="nav flex-column collapse show active">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.algorithms.html">compas_assembly.algorithms</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.artists.html">compas_assembly.artists</a></li>
 <li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
 <li class="toctree-l3 nav-item active"><a class="nav-link reference internal" href="../compas_assembly.geometry.html">compas_assembly.geometry</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
 </ul>
 </li>
 </ul>
