@@ -66,6 +66,10 @@ class DEMController(Controller):
 
 
 class DEMViewer(App):
+    """
+    Viewer for the interactive visualisation of discrete element models.
+    """
+
     def __init__(self, *args, **kwargs):
         super().__init__(
             *args,

@@ -13,25 +13,27 @@ import importlib
 import sphinx_compas_theme
 from sphinx.ext.napoleon.docstring import NumpyDocstring
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../src'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../src"))
 
 # -- General configuration ------------------------------------------------
 
-project = 'COMPAS Assembly'
-copyright = 'Block Research Group - ETH Zurich'
-author = 'Tom Van Mele'
-release = '0.4.3'
-version = '.'.join(release.split('.')[0:2])
+project = "COMPAS Assembly"
+copyright = "Block Research Group - ETH Zurich"
+author = "Tom Van Mele"
+release = "0.4.3"
+version = ".".join(release.split(".")[0:2])
 
-master_doc = 'index'
-source_suffix = ['.rst', ]
+master_doc = "index"
+source_suffix = [
+    ".rst",
+]
 templates_path = sphinx_compas_theme.get_autosummary_templates_path()
 exclude_patterns = []
 
-pygments_style   = "sphinx"
-show_authors     = True
+pygments_style = "sphinx"
+show_authors = True
 add_module_names = True
-language         = None
+language = None
 
 
 # -- Extension configuration ------------------------------------------------
@@ -61,13 +63,16 @@ autodoc_member_order = "alphabetical"
 
 autoclass_content = "class"
 
+
 def skip(app, what, name, obj, would_skip, options):
-    if name.startswith('_'):
+    if name.startswith("_"):
         return True
     return would_skip
 
+
 def setup(app):
     app.connect("autodoc-skip-member", skip)
+
 
 # autosummary options
 
@@ -82,7 +87,7 @@ autosummary_mock_imports = [
     "rhinoscriptsyntax",
     "bpy",
     "bmesh",
-    "mathutils"
+    "mathutils",
 ]
 # napoleon options
 
@@ -105,14 +110,18 @@ plot_html_show_formats = False
 
 # docstring sections
 
+
 def parse_attributes_section(self, section):
     return self._format_fields("Attributes", self._consume_fields())
 
+
 NumpyDocstring._parse_attributes_section = parse_attributes_section
+
 
 def patched_parse(self):
     self._sections["attributes"] = self._parse_attributes_section
     self._unpatched_parse()
+
 
 NumpyDocstring._unpatched_parse = NumpyDocstring._parse
 NumpyDocstring._parse = patched_parse
@@ -126,31 +135,32 @@ intersphinx_mapping = {
 
 # linkcode
 
+
 def linkcode_resolve(domain, info):
-    if domain != 'py':
+    if domain != "py":
         return None
-    if not info['module']:
+    if not info["module"]:
         return None
-    if not info['fullname']:
-        return None
-
-    package = info['module'].split('.')[0]
-    if not package.startswith('compas_assembly'):
+    if not info["fullname"]:
         return None
 
-    module = importlib.import_module(info['module'])
-    parts = info['fullname'].split('.')
+    package = info["module"].split(".")[0]
+    if not package.startswith("compas_assembly"):
+        return None
+
+    module = importlib.import_module(info["module"])
+    parts = info["fullname"].split(".")
 
     if len(parts) == 1:
-        obj = getattr(module, info['fullname'])
-        filename = inspect.getmodule(obj).__name__.replace('.', '/')
+        obj = getattr(module, info["fullname"])
+        filename = inspect.getmodule(obj).__name__.replace(".", "/")
         lineno = inspect.getsourcelines(obj)[1]
     elif len(parts) == 2:
         obj_name, attr_name = parts
         obj = getattr(module, obj_name)
         attr = getattr(obj, attr_name)
         if inspect.isfunction(attr):
-            filename = inspect.getmodule(obj).__name__.replace('.', '/')
+            filename = inspect.getmodule(obj).__name__.replace(".", "/")
             lineno = inspect.getsourcelines(attr)[1]
         else:
             return None
@@ -159,23 +169,24 @@ def linkcode_resolve(domain, info):
 
     return f"https://github.com/blockresearchgroup/compas_assembly/blob/master/src/{filename}.py#L{lineno}"
 
+
 # extlinks
 
 extlinks = {}
 
 # -- Options for HTML output ----------------------------------------------
 
-html_theme = 'compaspkg'
+html_theme = "compaspkg"
 html_theme_path = sphinx_compas_theme.get_html_theme_path()
 
 html_theme_options = {
     "package_name": "compas_assembly",
-    "package_title"   : project,
-    "package_version" : release,
-    "package_author"  : "compas-dev",
-    "package_docs"    : "https://blockresearchgroup.github.io/compas_assembly",
-    "package_repo"    : "https://github.com/blockresearchgroup/compas_assembly",
-    "package_old_versions_txt": "https://github.com/blockresearchgroup/compas_assembly/doc_versions.txt"
+    "package_title": project,
+    "package_version": release,
+    "package_author": "compas-dev",
+    "package_docs": "https://blockresearchgroup.github.io/compas_assembly",
+    "package_repo": "https://github.com/blockresearchgroup/compas_assembly",
+    "package_old_versions_txt": "https://github.com/blockresearchgroup/compas_assembly/doc_versions.txt",
 }
 
 html_context = {}

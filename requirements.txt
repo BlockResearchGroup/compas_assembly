@@ -1,2 +1,2 @@
-COMPAS>=1.0
+compas>=1.0
 shapely

@@ -10,6 +10,32 @@ from compas.geometry import centroid_points_weighted
 
 
 class Interface(Data):
+    """
+    A data structure for representing interfaces between blocks
+    and managing their geometrical and structural properties.
+
+    Parameters
+    ----------
+    type
+    size
+    points
+    frame
+    forces
+    mesh
+    viewmesh
+    interaction
+
+    Attributes
+    ----------
+    polygon
+    contactforces
+    compressionforces
+    tensionforces
+    frictionforces
+    resultantforce
+
+    """
+
     def __init__(
         self,
         type=None,
@@ -54,6 +80,22 @@ class Interface(Data):
         self.mesh = data["mesh"]
         self.viewmesh = data["viewmesh"]
         self.interaction = data["interaction"]
+
+    @classmethod
+    def from_data(cls, data):
+        """Construct an interface from a data dict.
+
+        Parameters
+        ----------
+        data : dict
+            The data dictionary.
+
+        Returns
+        -------
+        :class:`compas_assembly.datastructures.Interface`
+
+        """
+        return cls(**data)
 
     @property
     def polygon(self):
@@ -136,19 +178,3 @@ class Interface(Data):
         p1 = position + forcevector
         p2 = position - forcevector
         return Line(p1, p2)
-
-    @classmethod
-    def from_data(cls, data):
-        """Construct an interface from a data dict.
-
-        Parameters
-        ----------
-        data : dict
-            The data dictionary.
-
-        Returns
-        -------
-        :class:`compas_assembly.datastructures.Interface`
-
-        """
-        return cls(**data)

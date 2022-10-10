@@ -9,12 +9,12 @@ compas_assembly
 .. toctree::
     :maxdepth: 1
 
-    compas_assembly.blender
+    compas_assembly.algorithms
+    compas_assembly.artists
     compas_assembly.datastructures
     compas_assembly.geometry
-    compas_assembly.ghpython
-    compas_assembly.plotter
     compas_assembly.rhino
+    compas_assembly.viewer
 
 """
 from __future__ import print_function

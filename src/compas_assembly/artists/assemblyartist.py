@@ -6,6 +6,9 @@ from abc import abstractmethod
 
 
 class AssemblyArtist(Artist):
+    """
+    Base artist for assembly data structures.
+    """
 
     default_nodecolor = Color.from_hex("#0092D2")
     default_edgecolor = Color.white()
