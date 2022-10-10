@@ -92,24 +92,17 @@
 </figure>
 <p class="lead">Construct an assembly data structure for the Armadillo Vault that can be used for equilibrium calculations, generation of fabrication data, or assembly simulationos.
 We construct the assembly from a list oof meshes representing the blocks.
-The JSON file containing the meshes is available here: <a class="reference download internal" download="" href="../_downloads/d3450ecea4d1126afc9443df384be466/armadillo.json"><code class="xref download docutils literal notranslate"><span class="pre">armadillo.json</span></code></a>.</p>
-<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">compas</span>
-
+The JSON file containing the meshes is available here: <code class="xref download docutils literal notranslate"><span class="pre">armadillo.json</span></code>.</p>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="kn">import</span> <span class="nn">compas</span>
+<span class="kn">import</span> <span class="nn">compas_assembly</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Block</span>
-<span class="kn">from</span> <span class="nn">compas_assembly.rhino</span> <span class="kn">import</span> <span class="n">AssemblyArtist</span>
-
-<span class="kn">from</span> <span class="nn">compas.rpc</span> <span class="kn">import</span> <span class="n">Proxy</span>
-
-<span class="c1"># prepare proxy for RPC</span>
-
-<span class="n">proxy</span> <span class="o">=</span> <span class="n">Proxy</span><span class="p">(</span><span class="s1">&#39;compas_assembly.datastructures&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">compas_assembly.algorithms</span> <span class="kn">import</span> <span class="n">assembly_interfaces</span>
+<span class="kn">from</span> <span class="nn">compas_assembly.viewer</span> <span class="kn">import</span> <span class="n">DEMViewer</span>
 
 <span class="c1"># load meshes</span>
 
-<span class="n">FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;armadillo.json&#39;</span><span class="p">)</span>
-<span class="n">meshes</span> <span class="o">=</span> <span class="n">compas</span><span class="o">.</span><span class="n">json_load</span><span class="p">(</span><span class="n">FILE</span><span class="p">)</span>
+<span class="n">meshes</span> <span class="o">=</span> <span class="n">compas</span><span class="o">.</span><span class="n">json_load</span><span class="p">(</span><span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;armadillo.json&quot;</span><span class="p">))</span>
 
 <span class="c1"># construct assembly</span>
 
@@ -120,19 +113,15 @@ The JSON file containing the meshes is available here: <a class="reference downl
 
 <span class="c1"># identify interfaces</span>
 
-<span class="n">assembly</span> <span class="o">=</span> <span class="n">proxy</span><span class="o">.</span><span class="n">assembly_interfaces_numpy</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">amin</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">)</span>
+<span class="n">assembly_interfaces</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">amin</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">)</span>
 
 <span class="c1"># ==============================================================================</span>
 <span class="c1"># Visualization</span>
 <span class="c1"># ==============================================================================</span>
 
-<span class="n">artist</span> <span class="o">=</span> <span class="n">AssemblyArtist</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="s2">&quot;Armadillo&quot;</span><span class="p">)</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">clear_layer</span><span class="p">()</span>
-
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_nodes</span><span class="p">()</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_blocks</span><span class="p">()</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_edges</span><span class="p">()</span>
-<span class="n">artist</span><span class="o">.</span><span class="n">draw_interfaces</span><span class="p">()</span>
+<span class="n">viewer</span> <span class="o">=</span> <span class="n">DEMViewer</span><span class="p">()</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">add_assembly</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </section>

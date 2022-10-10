@@ -90,27 +90,20 @@
 <figure class="figure align-default">
 <img alt="../_images/arch.png" class="figure-img img-fluid" src="../_images/arch.png" />
 </figure>
-<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">Line</span>
-<span class="kn">from</span> <span class="nn">compas.datastructures</span> <span class="kn">import</span> <span class="n">Mesh</span>
-
-<span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Block</span>
-<span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
+<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.algorithms</span> <span class="kn">import</span> <span class="n">assembly_interfaces</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.geometry</span> <span class="kn">import</span> <span class="n">Arch</span>
-
-<span class="kn">from</span> <span class="nn">compas_view2.app</span> <span class="kn">import</span> <span class="n">App</span>
-<span class="kn">from</span> <span class="nn">compas_view2.objects</span> <span class="kn">import</span> <span class="n">Object</span>
-<span class="kn">from</span> <span class="nn">compas_view2.objects</span> <span class="kn">import</span> <span class="n">MeshObject</span>
+<span class="kn">from</span> <span class="nn">compas_assembly.viewer</span> <span class="kn">import</span> <span class="n">DEMViewer</span>
 
 <span class="c1"># construct an arch assembly</span>
 
 <span class="n">arch</span> <span class="o">=</span> <span class="n">Arch</span><span class="p">(</span><span class="n">rise</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">span</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">thickness</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
-<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_geometry</span><span class="p">(</span><span class="n">arch</span><span class="p">)</span>
+<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="o">.</span><span class="n">from_template</span><span class="p">(</span><span class="n">arch</span><span class="p">)</span>
 
 <span class="c1"># define the boundary conditions</span>
 
-<span class="n">assembly</span><span class="o">.</span><span class="n">node_attribute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;is_support&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-<span class="n">assembly</span><span class="o">.</span><span class="n">node_attribute</span><span class="p">(</span><span class="mi">39</span><span class="p">,</span> <span class="s2">&quot;is_support&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">assembly</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node_attribute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;is_support&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">assembly</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">node_attribute</span><span class="p">(</span><span class="mi">39</span><span class="p">,</span> <span class="s2">&quot;is_support&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># identify the interfaces</span>
 
@@ -120,37 +113,9 @@
 <span class="c1"># Visualisation</span>
 <span class="c1"># ==============================================================================</span>
 
-<span class="n">Object</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Block</span><span class="p">,</span> <span class="n">MeshObject</span><span class="p">)</span>
-
-<span class="n">viewer</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
-
-<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
-    <span class="n">point</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="o">*</span><span class="n">assembly</span><span class="o">.</span><span class="n">node_attributes</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">&quot;xyz&quot;</span><span class="p">))</span>
-    <span class="n">block</span> <span class="o">=</span> <span class="n">assembly</span><span class="o">.</span><span class="n">node_attribute</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">&quot;block&quot;</span><span class="p">)</span>
-
-    <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-
-    <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
-        <span class="n">block</span><span class="p">,</span>
-        <span class="n">show_faces</span><span class="o">=</span><span class="n">assembly</span><span class="o">.</span><span class="n">node_attribute</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s2">&quot;is_support&quot;</span><span class="p">),</span>
-        <span class="n">show_edges</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">facecolor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
-    <span class="p">)</span>
-
-<span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">assembly</span><span class="o">.</span><span class="n">edges</span><span class="p">():</span>
-    <span class="n">line</span> <span class="o">=</span> <span class="n">Line</span><span class="p">(</span><span class="o">*</span><span class="n">assembly</span><span class="o">.</span><span class="n">edge_coordinates</span><span class="p">(</span><span class="o">*</span><span class="n">edge</span><span class="p">))</span>
-    <span class="n">interface</span> <span class="o">=</span> <span class="n">assembly</span><span class="o">.</span><span class="n">edge_attribute</span><span class="p">(</span><span class="n">edge</span><span class="p">,</span> <span class="s2">&quot;interface&quot;</span><span class="p">)</span>
-
-    <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-
-    <span class="n">viewer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
-        <span class="n">Mesh</span><span class="o">.</span><span class="n">from_polygons</span><span class="p">([</span><span class="n">interface</span><span class="o">.</span><span class="n">points</span><span class="p">]),</span>
-        <span class="n">show_edges</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">facecolor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
-        <span class="n">linecolor</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
-    <span class="p">)</span>
-
-<span class="n">viewer</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">viewer</span> <span class="o">=</span> <span class="n">DEMViewer</span><span class="p">()</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">add_assembly</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </section>
