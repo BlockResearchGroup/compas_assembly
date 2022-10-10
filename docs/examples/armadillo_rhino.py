@@ -2,8 +2,13 @@ import compas
 import compas_assembly
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import Block
-from compas_assembly.algorithms import assembly_interfaces
-from compas_assembly.viewer import DEMViewer
+from compas_assembly.rhino import RhinoAssemblyArtist
+
+from compas.rpc import Proxy
+
+# prepare proxy for RPC
+
+proxy = Proxy('compas_assembly.datastructures')
 
 # load meshes
 
@@ -18,12 +23,16 @@ for mesh in meshes:
 
 # identify interfaces
 
-assembly_interfaces(assembly, tmax=0.02, amin=0.0001)
+assembly = proxy.assembly_interfaces(assembly, tmax=0.02, amin=0.0001)
 
 # ==============================================================================
 # Visualization
 # ==============================================================================
 
-viewer = DEMViewer()
-viewer.add_assembly(assembly)
-viewer.run()
+artist = RhinoAssemblyArtist(assembly, layer="Armadillo")
+artist.clear_layer()
+
+artist.draw_nodes()
+artist.draw_blocks()
+artist.draw_edges()
+artist.draw_interfaces()
