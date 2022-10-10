@@ -5,7 +5,7 @@ from compas_assembly.datastructures import Block
 from compas_assembly.algorithms import assembly_interfaces
 from compas_assembly.viewer import DEMViewer
 
-meshes = compas.json_load(compas_assembly.get('crossvault.json'))
+meshes = compas.json_load(compas_assembly.get("crossvault.json"))
 
 assembly = Assembly()
 for mesh in meshes:
