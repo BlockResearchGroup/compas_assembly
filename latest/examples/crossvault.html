@@ -46,7 +46,7 @@
         <meta id="doc_versions" data-url="https://github.com/blockresearchgroup/compas_assembly/doc_versions.txt" data-docs="https://blockresearchgroup.github.io/compas_assembly">
         <li class="nav-item nav-versions dropdown">
           <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            0.4.3
+            0.5.0
           </a>
           <div id="doc_version_list" class="dropdown-menu dropdown-menu-md-right" aria-labelledby="bd-versions"></div>
         </li>
@@ -100,7 +100,7 @@ The JSON file containing the meshes is available here: <code class="xref downloa
 <span class="kn">from</span> <span class="nn">compas_assembly.algorithms</span> <span class="kn">import</span> <span class="n">assembly_interfaces</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.viewer</span> <span class="kn">import</span> <span class="n">DEMViewer</span>
 
-<span class="n">meshes</span> <span class="o">=</span> <span class="n">compas</span><span class="o">.</span><span class="n">json_load</span><span class="p">(</span><span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;crossvault.json&#39;</span><span class="p">))</span>
+<span class="n">meshes</span> <span class="o">=</span> <span class="n">compas</span><span class="o">.</span><span class="n">json_load</span><span class="p">(</span><span class="n">compas_assembly</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;crossvault.json&quot;</span><span class="p">))</span>
 
 <span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">mesh</span> <span class="ow">in</span> <span class="n">meshes</span><span class="p">:</span>
