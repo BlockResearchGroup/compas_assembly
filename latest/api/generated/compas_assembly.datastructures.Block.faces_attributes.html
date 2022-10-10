@@ -104,7 +104,7 @@
 <span class="sig-prename descclassname"><span class="pre">Block.</span></span><span class="sig-name descname"><span class="pre">faces_attributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/block.py#L1286"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Get or set multiple attributes of multiple faces.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>names</strong> (<em>list[str], optional</em>) – The names of the attribute.
 Default is None.</p></li>
@@ -113,14 +113,14 @@ Default is None.</p></li>
 <li><p><strong>keys</strong> (<em>list[int], optional</em>) – A list of face identifiers.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dt class="field-even">Returns</dt>
 <dd class="field-even"><p><em>list[dict[str, Any]] | list[list[Any]] | None</em> – If the parameter <cite>names</cite> is empty,
 a list containing per face an attribute dict with all attributes (default + custom) of the face.
 If the parameter <cite>names</cite> is not empty,
 a list containing per face a list of attribute values corresponding to the requested names.
 None if the function is used as a “setter”.</p>
 </dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dt class="field-odd">Raises</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#KeyError" title="(in Python v3.10)"><strong>KeyError</strong></a> – If any of the faces does not exist.</p>
 </dd>
 </dl>
@@ -151,8 +151,11 @@ None if the function is used as a “setter”.</p>
 <li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../examples.html">Examples</a></li>
 <li class="toctree-l1 nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav flex-column collapse show active">
 <li class="toctree-l2 nav-item active"><a class="nav-link reference internal" href="../compas_assembly.html">compas_assembly</a><ul class="nav flex-column collapse show active">
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.algorithms.html">compas_assembly.algorithms</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.artists.html">compas_assembly.artists</a></li>
 <li class="toctree-l3 nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
 <li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.geometry.html">compas_assembly.geometry</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
 </ul>
 </li>
 </ul>
@@ -169,10 +172,7 @@ None if the function is used as a “setter”.</p>
       <div class="d-none d-xl-block col-xl-2 compas-toc" role="toc">
         
         <ul class="nav flex-column" id="compas-toc">
-<li class="nav-item"><a class="nav-link reference internal" href="#">Block.faces_attributes</a><ul class="nav flex-column">
-<li class="nav-item"><a class="nav-link reference internal" href="#compas_assembly.datastructures.Block.faces_attributes"><code class="docutils literal notranslate"><span class="pre">Block.faces_attributes()</span></code></a></li>
-</ul>
-</li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">Block.faces_attributes</a></li>
 </ul>
 
       </div>
