@@ -35,12 +35,13 @@ HERE = os.path.dirname(__file__)
 HOME = os.path.abspath(os.path.join(HERE, "../../"))
 DATA = os.path.abspath(os.path.join(HOME, "data"))
 TEMP = os.path.abspath(os.path.join(HERE, "__temp"))
+SAMPLES = os.path.abspath(os.path.join(HERE, "data/samples"))
 
 
-__all__ = ["DATA", "TEMP"]
+__all__ = ["DATA", "TEMP", "SAMPLES"]
 __all_plugins__ = ["compas_assembly.install", "compas_assembly.rhino"]
 
 
 def get(filename):
     filename = filename.strip("/")
-    return os.path.abspath(os.path.join(DATA, filename))
+    return os.path.abspath(os.path.join(SAMPLES, filename))
