@@ -91,59 +91,26 @@
         
         <section id="installation">
 <h1>Installation</h1>
-<section id="basic-installation">
-<h2>Basic Installation</h2>
-<p>We highly recommend to install <a class="reference internal" href="api/compas_assembly.html#module-compas_assembly" title="compas_assembly"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code></a> in a
-separate <code class="docutils literal notranslate"><span class="pre">conda</span></code> environment. In this guide, we will create and use an
-environmenment based on Python 3.7 with the name “dem”, referring to
-“Discrete Element Modelling”, but you can use any other name you like
-(except for “base”, which is the name of the root environment of your conda
-installation).</p>
-<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda create -n dem -c conda-forge <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7 COMPAS shapely
+<section id="installation-with-conda">
+<h2>Installation with conda</h2>
+<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda create -n dem -c conda-forge <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.9 compas compas_occ compas_view2 shapely --yes
 conda activate dem
 pip install compas_assembly
 </code></pre></div>
 </div>
-<p>To verify that the procedure was successful, import the installed package.
-That’s it! If no errors appear, you are ready to start working.</p>
-<div class="language-python notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;import compas_assembly&quot;</span>
-</code></pre></div>
-</div>
-<section id="alternatives">
-<h3>Alternatives</h3>
-<p>If you prefer installing <code class="docutils literal notranslate"><span class="pre">compas_assembly</span></code> directly from GitHub, replace <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">compas_assembly</span></code> with</p>
-<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>pip install git+https://github.com/BlockResearchGroup/compas_assembly.git#egg<span class="o">=</span>compas_assembly
-</code></pre></div>
-</div>
-<p>Or, to install from a local source repo, navigate to the root of the repo, and do</p>
-<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>pip install -e .
-</code></pre></div>
-</div>
-</section>
-</section>
-<section id="install-the-viewer">
-<h2>Install the viewer</h2>
-<p>If you don’t need the functionality of CAD software,
-but simply want to be able to visualize assemblies and various aspects related to their stability and collapse behaviour,
-you can use the COMPAS viewer instead.</p>
-<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>conda install -n dem compas_view2
-</code></pre></div>
-</div>
-<p>For more information about the viewer, <a class="reference external" href="https://compas.dev/compas_view2/latest/index.html">check out the docs</a>.</p>
 </section>
 <section id="install-compas-assembly-for-rhino">
 <h2>Install <a class="reference internal" href="api/compas_assembly.html#module-compas_assembly" title="compas_assembly"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code></a> for Rhino</h2>
 <p><a class="reference internal" href="api/compas_assembly.html#module-compas_assembly" title="compas_assembly"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code></a> can be installed in Rhino like any other COMPAS package.
 See the <a class="reference external" href="https://compas.dev/compas/latest/gettingstarted/rhino.html">Getting Started instructions for Rhino</a> in the main COMPAS docs for more information.</p>
-<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>python -m compas_rhino.install -p compas compas_rhino compas_assembly
+<div class="language-bash notranslate"><div class="highlight"><pre><button class="btn copy"><i class="far fa-copy"></i></button><code><span></span>python -m compas_rhino.install
 </code></pre></div>
 </div>
 <p>Note that, if Rhino was running while the above command was executed, you have to restart Rhino before the changes have an effect.</p>
 </section>
 <section id="install-compas-assembly-for-blender">
 <h2>Install <a class="reference internal" href="api/compas_assembly.html#module-compas_assembly" title="compas_assembly"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code></a> for Blender</h2>
-<p>To use <a class="reference internal" href="api/compas_assembly.html#module-compas_assembly" title="compas_assembly"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code></a> in Blender, you have to install it in your COMPAS Blender environment,
-<a class="reference external" href="https://compas.dev/compas/latest/gettingstarted/blender.html">as described here</a>.</p>
+<p>Instructions coming soon…</p>
 </section>
 <section id="install-equilibrium-solvers">
 <h2>Install equilibrium solvers</h2>
@@ -207,11 +174,7 @@ Currently, the following equilibrium solvers are compatible with <a class="refer
         
         <ul class="nav flex-column" id="compas-toc">
 <li class="nav-item"><a class="nav-link reference internal" href="#">Installation</a><ul class="nav flex-column">
-<li class="nav-item"><a class="nav-link reference internal" href="#basic-installation">Basic Installation</a><ul class="nav flex-column">
-<li class="nav-item"><a class="nav-link reference internal" href="#alternatives">Alternatives</a></li>
-</ul>
-</li>
-<li class="nav-item"><a class="nav-link reference internal" href="#install-the-viewer">Install the viewer</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#installation-with-conda">Installation with conda</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#install-compas-assembly-for-rhino">Install <code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code> for Rhino</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#install-compas-assembly-for-blender">Install <code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code> for Blender</a></li>
 <li class="nav-item"><a class="nav-link reference internal" href="#install-equilibrium-solvers">Install equilibrium solvers</a></li>
