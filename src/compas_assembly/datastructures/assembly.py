@@ -384,7 +384,7 @@ class Assembly(Datastructure):
         List[:class:`compas_assembly.datastructures.Interface`]
 
         """
-        return self.graph.edge_attribute(edge, "interfaces")
+        return self.graph.edge_attribute(edge, "interfaces") or []
 
     def edge_blocks(self, edge):
         """Retrieve the two blocks corresponding to a graph edge.

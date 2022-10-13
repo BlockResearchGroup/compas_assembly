@@ -160,15 +160,14 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
         self.edge_color = color
         guids = []
         for edge in self.edges:
-            interface = self.assembly.edge_interface(edge)
-            artist = Artist(Polygon(interface.points))
-            artist.layer = self.layer
-            color = self.edge_color[edge].rgb255
-            guids += artist.draw(color=color)
-            if show_frames:
-                artist = Artist(interface.frame, scale=0.1)
-                artist.layer = self.layer
-                guids += artist.draw()
+            interfaces = self.assembly.edge_interfaces(edge)
+            for interface in interfaces:
+                artist = Artist(Polygon(interface.points))
+                color = self.edge_color[edge].rgb255
+                guids += artist.draw(color=color)
+                if show_frames:
+                    artist = Artist(interface.frame, scale=0.1)
+                    guids += artist.draw()
         return guids
 
     def draw_selfweight(self, color=None, scale=1.0, tol=1e-3):
