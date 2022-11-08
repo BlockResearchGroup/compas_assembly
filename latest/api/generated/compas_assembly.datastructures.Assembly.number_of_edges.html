@@ -20,11 +20,11 @@
   <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
   
-  <link rel="next" title="Assembly.number_of_nodes" href="compas_assembly.datastructures.Assembly.number_of_nodes.html" />
+  <link rel="next" title="Assembly.number_of_interfaces" href="compas_assembly.datastructures.Assembly.number_of_interfaces.html" />
   
 
   
-  <link rel="prev" title="Assembly.nodes_where_predicate" href="compas_assembly.datastructures.Assembly.nodes_where_predicate.html" />
+  <link rel="prev" title="Assembly.number_of_blocks" href="compas_assembly.datastructures.Assembly.number_of_blocks.html" />
   
 
   <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -50,7 +50,7 @@
         <meta id="doc_versions" data-url="https://github.com/blockresearchgroup/compas_assembly/doc_versions.txt" data-docs="https://blockresearchgroup.github.io/compas_assembly">
         <li class="nav-item nav-versions dropdown">
           <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            0.4.1
+            0.5.0
           </a>
           <div id="doc_version_list" class="dropdown-menu dropdown-menu-md-right" aria-labelledby="bd-versions"></div>
         </li>
@@ -101,11 +101,11 @@
 <h1>Assembly.number_of_edges</h1>
 <dl class="py method">
 <dt class="sig sig-object py" id="compas_assembly.datastructures.Assembly.number_of_edges">
-<span class="sig-prename descclassname"><span class="pre">Assembly.</span></span><span class="sig-name descname"><span class="pre">number_of_edges</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/assembly.py#L562"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
-<dd><p>Compute the number of edges of the network.</p>
+<span class="sig-prename descclassname"><span class="pre">Assembly.</span></span><span class="sig-name descname"><span class="pre">number_of_edges</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/assembly.py#L344"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Return the number of edges in the assembly graph.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><em>int</em> – the number of edges.</p>
+<dd class="field-odd"><p><em>int</em></p>
 </dd>
 </dl>
 </dd></dl>
@@ -132,18 +132,13 @@
 <li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../index.html">Introduction</a></li>
 <li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../tutorial.html">Tutorial</a></li>
-<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../examples.html">Examples</a><ul class="nav flex-column collapse">
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/arch.html">Arch</a></li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/crossvault.html">Crossvault</a></li>
-<li class="toctree-l2 nav-item"><a class="nav-link reference internal" href="../../examples/armadillo.html">Armadillo Vault</a></li>
-</ul>
-</li>
+<li class="toctree-l1 nav-item"><a class="nav-link reference internal" href="../../examples.html">Examples</a></li>
 <li class="toctree-l1 nav-item active"><a class="nav-link reference internal" href="../../api.html">API Reference</a><ul class="nav flex-column collapse show active">
 <li class="toctree-l2 nav-item active"><a class="nav-link reference internal" href="../compas_assembly.html">compas_assembly</a><ul class="nav flex-column collapse show active">
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.blender.html">compas_assembly.blender</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.algorithms.html">compas_assembly.algorithms</a></li>
+<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.artists.html">compas_assembly.artists</a></li>
 <li class="toctree-l3 nav-item active"><a class="nav-link reference internal" href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
 <li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.geometry.html">compas_assembly.geometry</a></li>
-<li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.ghpython.html">compas_assembly.ghpython</a></li>
 <li class="toctree-l3 nav-item"><a class="nav-link reference internal" href="../compas_assembly.rhino.html">compas_assembly.rhino</a></li>
 </ul>
 </li>
@@ -173,20 +168,20 @@
   <footer class="compas-footer">
     <nav class="nav p-2">
       
-      <a href="compas_assembly.datastructures.Assembly.nodes_where_predicate.html" title="Assembly.nodes_where_predicate" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
+      <a href="compas_assembly.datastructures.Assembly.number_of_blocks.html" title="Assembly.number_of_blocks" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
         <div class="nav-button p-2 m-2"><i class="fas fa-arrow-left"></i></div>
         <div class="nav-title flex-grow-1 align-self-center">
           <div class="nav-direction small font-weight-light">Previous</div>
-          Assembly.nodes_where_predicate
+          Assembly.number_of_blocks
         </div>
       </a>
       
 
       
-      <a href="compas_assembly.datastructures.Assembly.number_of_nodes.html" title="Assembly.number_of_nodes" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
+      <a href="compas_assembly.datastructures.Assembly.number_of_interfaces.html" title="Assembly.number_of_interfaces" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
         <div class="nav-title footer-link flex-grow-1 align-self-center">
           <div class="nav-direction small font-weight-light">Next</div>
-          Assembly.number_of_nodes
+          Assembly.number_of_interfaces
         </div>
         <div class="nav-button p-2 m-2"><i class="fas fa-arrow-right"></i></div>
       </a>

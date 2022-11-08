@@ -3,7 +3,7 @@
 
 <head>
   
-  <title>compas_assembly - Block.subdivide</title>
+  <title>compas_assembly - Assembly.unset_boundary_conditions</title>
   
 
   <meta charset="utf-8" />
@@ -20,11 +20,11 @@
   <link rel="stylesheet" type="text/css" href="../../_static/css/compas-reference.css" />
 
   
-  <link rel="next" title="Block.summary" href="compas_assembly.datastructures.Block.summary.html" />
+  <link rel="next" title="Assembly.ToString" href="compas_assembly.datastructures.Assembly.ToString.html" />
   
 
   
-  <link rel="prev" title="Block.split_strip" href="compas_assembly.datastructures.Block.split_strip.html" />
+  <link rel="prev" title="Assembly.transformed" href="compas_assembly.datastructures.Assembly.transformed.html" />
   
 
   <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -88,34 +88,24 @@
             
             <li class="breadcrumb-item"><a href="../compas_assembly.datastructures.html">compas_assembly.datastructures</a></li>
             
-            <li class="breadcrumb-item"><a href="compas_assembly.datastructures.Block.html">Block</a></li>
+            <li class="breadcrumb-item"><a href="compas_assembly.datastructures.Assembly.html">Assembly</a></li>
             
-            <!-- <li class="breadcrumb-item active" aria-current="page">Block.subdivide</li> -->
+            <!-- <li class="breadcrumb-item active" aria-current="page">Assembly.unset_boundary_conditions</li> -->
           </ol>
         </nav>
         
 
         
         
-        <section class="detail" id="block-subdivide">
-<h1>Block.subdivide</h1>
+        <section class="detail" id="assembly-unset-boundary-conditions">
+<h1>Assembly.unset_boundary_conditions</h1>
 <dl class="py method">
-<dt class="sig sig-object py" id="compas_assembly.datastructures.Block.subdivide">
-<span class="sig-prename descclassname"><span class="pre">Block.</span></span><span class="sig-name descname"><span class="pre">subdivide</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scheme</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'catmullclark'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/block.py#L88"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
-<dd><p>Subdivide the input mesh.</p>
+<dt class="sig sig-object py" id="compas_assembly.datastructures.Assembly.unset_boundary_conditions">
+<span class="sig-prename descclassname"><span class="pre">Assembly.</span></span><span class="sig-name descname"><span class="pre">unset_boundary_conditions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/blockresearchgroup/compas_assembly/blob/master/src/compas_assembly/datastructures/assembly.py#L510"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Unset all boundary conditions.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>mesh</strong> (<a class="reference external" href="https://compas.dev/compas/latest/api/generated/compas.datastructures.Mesh.html#compas.datastructures.Mesh" title="(in COMPAS v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mesh</span></code></a>) – A mesh object.</p></li>
-<li><p><strong>scheme</strong> (<em>Literal[‘tri’, ‘quad’, ‘corner’, ‘catmullclark’, ‘doosabin’, ‘frames’, ‘loop’], optional</em>) – The scheme according to which the mesh should be subdivided.</p></li>
-<li><p><strong>**options</strong> (<em>dict[str, Any], optional</em>) – Optional additional keyword arguments.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><a class="reference external" href="https://compas.dev/compas/latest/api/generated/compas.datastructures.Mesh.html#compas.datastructures.Mesh" title="(in COMPAS v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mesh</span></code></a> – The subdivided mesh.</p>
-</dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.11)"><strong>ValueError</strong></a> – If the scheme is not supported.</p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><em>None</em></p>
 </dd>
 </dl>
 </dd></dl>
@@ -166,7 +156,7 @@
       <div class="d-none d-xl-block col-xl-2 compas-toc" role="toc">
         
         <ul class="nav flex-column" id="compas-toc">
-<li class="nav-item"><a class="nav-link reference internal" href="#">Block.subdivide</a></li>
+<li class="nav-item"><a class="nav-link reference internal" href="#">Assembly.unset_boundary_conditions</a></li>
 </ul>
 
       </div>
@@ -178,20 +168,20 @@
   <footer class="compas-footer">
     <nav class="nav p-2">
       
-      <a href="compas_assembly.datastructures.Block.split_strip.html" title="Block.split_strip" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
+      <a href="compas_assembly.datastructures.Assembly.transformed.html" title="Assembly.transformed" class="nav-link footer-link float-start text-left d-flex w-50" rel="prev">
         <div class="nav-button p-2 m-2"><i class="fas fa-arrow-left"></i></div>
         <div class="nav-title flex-grow-1 align-self-center">
           <div class="nav-direction small font-weight-light">Previous</div>
-          Block.split_strip
+          Assembly.transformed
         </div>
       </a>
       
 
       
-      <a href="compas_assembly.datastructures.Block.summary.html" title="Block.summary" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
+      <a href="compas_assembly.datastructures.Assembly.ToString.html" title="Assembly.ToString" class="nav-link footer-link float-end text-right d-flex w-50" rel="next">
         <div class="nav-title footer-link flex-grow-1 align-self-center">
           <div class="nav-direction small font-weight-light">Next</div>
-          Block.summary
+          Assembly.ToString
         </div>
         <div class="nav-button p-2 m-2"><i class="fas fa-arrow-right"></i></div>
       </a>
