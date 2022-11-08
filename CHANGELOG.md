@@ -9,7 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Added basic "dome" template: `compas_assembly.geometry.Dome`.
+* Added resultant visualisation to `compas_assembly.viewer.app.DEMViewer`.
+* Added `compas_assembly.datastructures.Assembly.add_block_from_mesh`.
+* Added `compas_assembly.datastructures.Assembly.number_of_nodes`.
+* Added `compas_assembly.datastructures.Assembly.number_of_edges`.
+* Added `compas_assembly.datastructures.Assembly.number_of_blocks`.
+* Added `compas_assembly.datastructures.Assembly.number_of_interfaces`.
+* Added `compas_assembly.datastructures.Assembly.unset_boundary_conditions`.
+* Added `compas_assembly.datastructures.Assembly.set_boundary_condition`.
+* Added `compas_assembly.datastructures.Assembly.set_boundary_conditions`.
+
 ### Changed
+
+* Fixed bug in `compas_assembly.algorithms.assembly_interfaces`.
+* Changed `compas_assembly.algorithms.assembly_interfaces` to return modified assembly for RPC.
+* Changed `compas_assembly.algorithms.assembly_interfaces_numpy` to return modified assembly for RPC.
 
 ### Removed
 
