@@ -4,14 +4,16 @@ from math import fabs
 
 from shapely.geometry import Polygon as ShapelyPolygon
 
-from compas.geometry import Frame, Transformation
-from compas.geometry import centroid_polygon
-from compas.geometry import bestfit_frame_numpy
-from compas.geometry import transform_points
+from compas.geometry import Frame
+from compas.geometry import Transformation
 from compas.geometry import Plane
+from compas.geometry import Polygon
+from compas.geometry import centroid_polygon
+
+# from compas.geometry import bestfit_frame_numpy
+from compas.geometry import transform_points
 from compas.geometry import is_coplanar
 from compas.geometry import is_colinear
-from compas.geometry import Polygon
 
 from compas.utilities import window
 
@@ -29,6 +31,7 @@ def assembly_interfaces(
     nmax: int = 10,
     tmax: float = 1e-6,
     amin: float = 1e-1,
+    nnbrs_dims: int = 3,
 ):
     """Identify the interfaces between the blocks of an assembly.
 
@@ -56,9 +59,11 @@ def assembly_interfaces(
     nmax = min(nmax, len(blocks))
 
     block_cloud = [block.centroid() for block in blocks]
-    block_nnbrs = find_nearest_neighbours(block_cloud, nmax)
+    block_nnbrs = find_nearest_neighbours(block_cloud, nmax, dims=nnbrs_dims)
 
-    for node in assembly.nodes():
+    assembly.graph.edge = {node: {} for node in assembly.graph.nodes()}
+
+    for node in assembly.graph.nodes():
         i = node_index[node]
 
         block = blocks[i]
@@ -81,6 +86,8 @@ def assembly_interfaces(
 
             if interfaces:
                 assembly.add_block_block_interfaces(block, nbr, interfaces)
+
+    return assembly
 
 
 def mesh_mesh_interfaces(
@@ -107,11 +114,12 @@ def mesh_mesh_interfaces(
     """
     world = Frame.worldXY()
     interfaces = []
+    frames = a.frames()
 
     for face in a.faces():
         points = a.face_coordinates(face)
-        result = bestfit_frame_numpy(points)
-        frame = Frame(*result)
+        # result = bestfit_frame_numpy(points)
+        frame = frames[face]
         matrix = Transformation.from_change_of_basis(world, frame)
         projected = transform_points(points, matrix)
         p0 = ShapelyPolygon(projected)

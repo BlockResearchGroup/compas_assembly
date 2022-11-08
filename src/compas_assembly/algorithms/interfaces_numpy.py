@@ -53,7 +53,9 @@ def assembly_interfaces_numpy(
     block_cloud = [block.centroid() for block in blocks]
     block_nnbrs = find_nearest_neighbours(block_cloud, nmax)
 
-    for node in assembly.nodes():
+    assembly.graph.edge = {node: {} for node in assembly.graph.nodes()}
+
+    for node in assembly.graph.nodes():
         i = node_index[node]
 
         block = blocks[i]
@@ -76,6 +78,8 @@ def assembly_interfaces_numpy(
 
             if interfaces:
                 assembly.add_block_block_interfaces(block, nbr, interfaces)
+
+    return assembly
 
 
 def mesh_mesh_interfaces(
@@ -142,7 +146,9 @@ def mesh_mesh_interfaces(
                 continue
 
             coords = [[x, y, 0.0] for x, y, z in intersection.exterior.coords]
-            coords = local_to_world_coordinates_numpy(Frame(o, A[0], A[1]), coords[:-1])
+            coords = local_to_world_coordinates_numpy(
+                Frame(o, A[0], A[1]), coords[:-1]
+            ).tolist()
             interface = Interface(
                 type="face_face",
                 size=area,
