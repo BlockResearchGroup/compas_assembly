@@ -98,6 +98,18 @@
     "sidebar": [
         {
             "type": "checkbox",
+            "text": "Show Nodes",
+            "action": "show_nodes",
+            "checked": true
+        },
+        {
+            "type": "checkbox",
+            "text": "Show Edges",
+            "action": "show_edges",
+            "checked": true
+        },
+        {
+            "type": "checkbox",
             "text": "Show Interfaces",
             "action": "show_interfaces",
             "checked": true
@@ -112,6 +124,12 @@
             "type": "checkbox",
             "text": "Show Normal Forces",
             "action": "show_normalforces",
+            "checked": true
+        },
+        {
+            "type": "checkbox",
+            "text": "Show Resultants",
+            "action": "show_resultants",
             "checked": true
         },
         {
