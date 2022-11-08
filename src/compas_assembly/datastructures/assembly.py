@@ -222,6 +222,30 @@ class Assembly(Datastructure):
         self._blocks[block.guid] = node
         return node
 
+    def add_block_from_mesh(self, mesh, node=None, attr_dict=None, **kwattr):
+        """Add a block to the assembly from a normal mesh.
+
+        Parameters
+        ----------
+        mesh : :class:`compas.datastructures.Mesh`
+            The mesh to add.
+        node : hashable, optional
+            The identifier of the corresponding node in the connectivity graph.
+            If no value is provided, the identifier will be generated automatically by the graph.
+        attr_dict : dict, optional
+            A dictionary of block attributes.
+        **kwatr : dict, optional
+            Additional attributes in the form of named function parameters.
+
+        Returns
+        -------
+        hashable
+            The identifier of the node in the graph corresponding to the block.
+
+        """
+        block = mesh.copy(cls=Block)
+        return self.add_block(block, node=node, attr_dict=attr_dict, **kwattr)
+
     def add_block_block_interfaces(self, a, b, interfaces):
         """Add an interface between two blocks.
 
@@ -297,6 +321,16 @@ class Assembly(Datastructure):
     # accessors
     # ==========================================================================
 
+    def number_of_nodes(self):
+        """Return the number of nodes in the assembly graph.
+
+        Returns
+        -------
+        int
+
+        """
+        return len(list(self.graph.nodes()))
+
     def nodes(self):
         """Iterate over the nodes of the graph of the assembly.
 
@@ -306,6 +340,16 @@ class Assembly(Datastructure):
 
         """
         return self.graph.nodes()
+
+    def number_of_edges(self):
+        """Return the number of edges in the assembly graph.
+
+        Returns
+        -------
+        int
+
+        """
+        return len(list(self.graph.edges()))
 
     def edges(self):
         """Iterate over the edges of the graph of the assembly.
@@ -317,6 +361,16 @@ class Assembly(Datastructure):
         """
         return self.graph.edges()
 
+    def number_of_blocks(self):
+        """Return the number of blocks in the assembly.
+
+        Returns
+        -------
+        int
+
+        """
+        return self.number_of_nodes()
+
     def blocks(self):
         """Iterate over the blocks of the assembly.
 
@@ -327,6 +381,16 @@ class Assembly(Datastructure):
         """
         for node in self.graph.nodes():
             yield self.node_block(node)
+
+    def number_of_interfaces(self):
+        """Return the number of interfaces in the assembly.
+
+        Returns
+        -------
+        int
+
+        """
+        return self.number_of_edges()
 
     def interfaces(self):
         """Yield the interfaces of the assembly.
@@ -411,7 +475,7 @@ class Assembly(Datastructure):
         Parameters
         ----------
         node : hashable
-            the identifier of the node.
+            The identifier of the node.
 
         Returns
         -------
@@ -438,6 +502,52 @@ class Assembly(Datastructure):
         a = self.node_point(u)
         b = self.node_point(v)
         return Line(a, b)
+
+    # ==========================================================================
+    # boundary conditions
+    # ==========================================================================
+
+    def unset_boundary_conditions(self):
+        """Unset all boundary conditions.
+
+        Returns
+        -------
+        None
+
+        """
+        for node in self.graph.nodes():
+            self.graph.unset_node_attribute(node, "is_support")
+
+    def set_boundary_condition(self, node):
+        """Set the boundary condition for a single node.
+
+        Parameters
+        ----------
+        node : hashable
+            The identifier of the node.
+
+        Returns
+        -------
+        None
+
+        """
+        self.graph.node_attribute(node, "is_support", True)
+
+    def set_boundary_conditions(self, nodes):
+        """Set the boundary condition for multiple nodes.
+
+        Parameters
+        ----------
+        nodes : list[hashable]
+            The identifiers of the node.
+
+        Returns
+        -------
+        None
+
+        """
+        for node in nodes:
+            self.graph.node_attribute(node, "is_support", True)
 
     # ==========================================================================
     # methods
