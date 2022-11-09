@@ -9,7 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Added layers to `compas_assembly.rhino.artists.RhinoAssemblyArtist`
+
 ### Changed
+
+* Fixed bug in `compas_assembly.rhino.artists.RhinoAssemblyArtist.draw_forces`
 
 ### Removed
 

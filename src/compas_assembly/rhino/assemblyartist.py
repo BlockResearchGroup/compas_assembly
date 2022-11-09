@@ -1,6 +1,5 @@
 import compas_rhino
 
-from compas.geometry import Point
 from compas.geometry import Vector
 from compas.geometry import Polygon
 from compas.colors import Color
@@ -191,7 +190,7 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
         list[Sysyem.Guid]
 
         """
-        layer = layer or "{}::Selfweight".format(self.layer or self.assembly.name)
+        layer = "{}::Selfweight".format(self.layer or self.assembly.name)
         guids = []
         color = color or self.default_selfweightcolor
         color = color.rgb255
