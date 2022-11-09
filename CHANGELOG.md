@@ -9,7 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Added `compas_assembly.rhino.artists.RhinoAssemblyArtist.draw_resultants`
+
 ### Changed
+
+* Changed artist color scheme
+* Fixed bug in `compas_assembly.rhino.artists.RhinoAssemblyArtist.draw_forces`
 
 ### Removed
 

@@ -38,10 +38,12 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
         self.node_color = color
         self.node_text = text
         nodes = nodes or self.nodes
+        support_color = Color(0.05, 0.05, 0.05).rgb255
         points = []
         for node in nodes:
+            is_support = self.assembly.graph.node_attribute(node, "is_support")
             pos = self.node_xyz[node]
-            color = self.node_color[node].rgb255
+            color = support_color if is_support else self.node_color[node].rgb255
             points.append(
                 {
                     "pos": list(pos),
@@ -129,12 +131,14 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
         """
         layer = "{}::Blocks".format(self.layer or self.assembly.name)
         self.node_color = color
+        support_color = Color(0.05, 0.05, 0.05).rgb255
         guids = []
         for node in self.nodes:
             block = self.assembly.node_block(node)
             artist = Artist(block)
             artist.layer = layer
-            color = self.node_color[node].rgb255
+            is_support = self.assembly.graph.node_attribute(node, "is_support")
+            color = support_color if is_support else self.node_color[node].rgb255
             if show_faces:
                 guids += artist.draw_faces(color=color, join_faces=True)
             if show_edges:
@@ -228,29 +232,82 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
         friction = Color.cyan().rgb255
         for edge in self.edges:
             interfaces = self.assembly.edge_interfaces(edge)
+            lines = []
             for interface in interfaces:
                 for force in interface.compressionforces:
-                    vector = force.vector * scale
-                    if vector.length > tol:
-                        artist = Artist(vector)
-                        artist.layer = layer
-                        guids += artist.draw(color=compression, point=force.start)
+                    vector = force.vector * scale * 0.5
+                    if vector.length > tol * 0.5:
+                        point = force.midpoint
+                        lines.append(
+                            {
+                                "start": list(point - vector),
+                                "end": list(point + vector),
+                                "color": compression,
+                            }
+                        )
                 for force in interface.tensionforces:
-                    vector = force.vector * scale
-                    if vector.length > tol:
-                        artist = Artist(vector)
-                        artist.layer = layer
-                        guids += artist.draw(color=tension, point=force.start)
+                    vector = force.vector * scale * 0.5
+                    if vector.length > tol * 0.5:
+                        point = force.midpoint
+                        lines.append(
+                            {
+                                "start": list(point - vector),
+                                "end": list(point + vector),
+                                "color": tension,
+                            }
+                        )
                 for force in interface.frictionforces:
-                    vector = force.vector * scale
-                    if vector.length > tol:
-                        artist = Artist(vector)
-                        artist.layer = layer
-                        guids += artist.draw(color=friction, point=force.start)
+                    vector = force.vector * scale * 0.5
+                    if vector.length > tol * 0.5:
+                        point = force.midpoint
+                        lines.append(
+                            {
+                                "start": list(point - vector),
+                                "end": list(point + vector),
+                                "color": friction,
+                            }
+                        )
+            guids += compas_rhino.draw_lines(
+                lines, layer=layer, clear=False, redraw=False
+            )
         return guids
 
     def draw_resultants(self, scale=1.0, tol=1e-3):
+        """Draw the resultants of the contact forces at the interfaces between the blocks of the assembly.
+
+        Parameters
+        ----------
+        scale : float, optional
+            Scale factor for the length of the vectors.
+        tol : float, optional
+            Minimum length requirement for displaying vectors.
+
+        Returns
+        -------
+        list[System.Guid]
+
+        """
+        layer = "{}::Resultants".format(self.layer or self.assembly.name)
         guids = []
+        color = Color.green().rgb255
+        for edge in self.edges:
+            interfaces = self.assembly.edge_interfaces(edge)
+            lines = []
+            for interface in interfaces:
+                for force in interface.resultantforce:
+                    vector = force.vector * scale * 0.5
+                    if vector.length > tol * 0.5:
+                        point = force.midpoint
+                        lines.append(
+                            {
+                                "start": list(point - vector),
+                                "end": list(point + vector),
+                                "color": color,
+                            }
+                        )
+            guids += compas_rhino.draw_lines(
+                lines, layer=layer, clear=False, redraw=False
+            )
         return guids
 
     def draw_reactions(self, scale=1.0, tol=1e-3):
