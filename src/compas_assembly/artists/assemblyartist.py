@@ -10,7 +10,7 @@ class AssemblyArtist(Artist):
     Base artist for assembly data structures.
     """
 
-    default_nodecolor = Color.from_hex("#0092D2")
+    default_nodecolor = Color.grey().lightened(50)
     default_edgecolor = Color.white()
 
     default_selfweightcolor = Color.magenta()
