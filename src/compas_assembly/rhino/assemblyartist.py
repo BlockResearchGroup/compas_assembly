@@ -35,6 +35,7 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
             The GUIDs of the created Rhino objects.
 
         """
+        layer = "{}::Nodes".format(self.layer or self.assembly.name)
         self.node_color = color
         self.node_text = text
         nodes = nodes or self.nodes
@@ -50,12 +51,10 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
                     "text": self.node_text[node],
                 }
             )
-        guids = compas_rhino.draw_points(
-            points, layer=self.layer, clear=False, redraw=False
-        )
+        guids = compas_rhino.draw_points(points, layer=layer, clear=False, redraw=False)
         if text:
             guids += compas_rhino.draw_labels(
-                points, layer=self.layer, clear=False, redraw=False
+                points, layer=layer, clear=False, redraw=False
             )
         return guids
 
@@ -79,6 +78,7 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
             The GUIDs of the created Rhino objects.
 
         """
+        layer = "{}::Edges".format(self.layer or self.assembly.name)
         self.edge_color = color
         self.edge_text = text
         edges = edges or self.edges
@@ -97,15 +97,17 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
                     "name": name,
                 }
             )
-        guids = compas_rhino.draw_lines(
-            lines, layer=self.layer, clear=False, redraw=False
-        )
+        guids = compas_rhino.draw_lines(lines, layer=layer, clear=False, redraw=False)
         if text:
             pass
         return guids
 
     def draw_blocks(
-        self, color=None, show_faces=True, show_edges=False, show_vertices=False
+        self,
+        color=None,
+        show_faces=True,
+        show_edges=False,
+        show_vertices=False,
     ):
         """Draw the blocks of the assembly.
 
@@ -126,12 +128,13 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
         list[System.Guid]
 
         """
+        layer = "{}::Blocks".format(self.layer or self.assembly.name)
         self.node_color = color
         guids = []
         for node in self.nodes:
             block = self.assembly.node_block(node)
             artist = Artist(block)
-            artist.layer = self.layer
+            artist.layer = layer
             color = self.node_color[node].rgb255
             if show_faces:
                 guids += artist.draw_faces(color=color, join_faces=True)
@@ -157,16 +160,19 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
         list[System.Guid]
 
         """
+        layer = "{}::Interfaces".format(self.layer or self.assembly.name)
         self.edge_color = color
         guids = []
         for edge in self.edges:
             interfaces = self.assembly.edge_interfaces(edge)
             for interface in interfaces:
                 artist = Artist(Polygon(interface.points))
+                artist.layer = layer
                 color = self.edge_color[edge].rgb255
                 guids += artist.draw(color=color)
                 if show_frames:
                     artist = Artist(interface.frame, scale=0.1)
+                    artist.layer = layer
                     guids += artist.draw()
         return guids
 
@@ -185,6 +191,7 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
         list[Sysyem.Guid]
 
         """
+        layer = layer or "{}::Selfweight".format(self.layer or self.assembly.name)
         guids = []
         color = color or self.default_selfweightcolor
         color = color.rgb255
@@ -196,7 +203,7 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
             point = block.centroid()
             vector = Vector(0, 0, -volume * scale)
             artist = Artist(vector)
-            artist.layer = self.layer
+            artist.layer = layer
             guids += artist.draw(color=color, point=point)
         return guids
 
@@ -215,23 +222,32 @@ class RhinoAssemblyArtist(RhinoArtist, AssemblyArtist):
         list[System.Guid]
 
         """
+        layer = "{}::Forces".format(self.layer or self.assembly.name)
         guids = []
         tension = Color.red().rgb255
         compression = Color.blue().rgb255
+        friction = Color.cyan().rgb255
         for edge in self.edges:
-            interface = self.assembly.edge_interface(edge)
-            if not interface.forces:
-                continue
-            frame = interface.frame
-            for (x, y, z), force in zip(interface.points, interface.forces):
-                point = Point(x, y, z)
-                vector = frame.zaxis.scaled(force * scale)
-                if vector.length < tol:
-                    continue
-                color = tension if force > 0 else compression
-                artist = Artist(vector)
-                artist.layer = self.layer
-                guids += artist.draw(color=color, point=point)
+            interfaces = self.assembly.edge_interfaces(edge)
+            for interface in interfaces:
+                for force in interface.compressionforces:
+                    vector = force.vector * scale
+                    if vector.length > tol:
+                        artist = Artist(vector)
+                        artist.layer = layer
+                        guids += artist.draw(color=compression, point=force.start)
+                for force in interface.tensionforces:
+                    vector = force.vector * scale
+                    if vector.length > tol:
+                        artist = Artist(vector)
+                        artist.layer = layer
+                        guids += artist.draw(color=tension, point=force.start)
+                for force in interface.frictionforces:
+                    vector = force.vector * scale
+                    if vector.length > tol:
+                        artist = Artist(vector)
+                        artist.layer = layer
+                        guids += artist.draw(color=friction, point=force.start)
         return guids
 
     def draw_resultants(self, scale=1.0, tol=1e-3):
