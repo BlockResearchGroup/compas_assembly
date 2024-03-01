@@ -1,25 +1,23 @@
-from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
-
-from compas.geometry import centroid_points
-from compas.geometry import cross_vectors
-from compas.geometry import dot_vectors
-from compas.geometry import centroid_polyhedron
-from compas.geometry import volume_polyhedron
-
-from compas.geometry import Point
-from compas.geometry import Frame
+from __future__ import print_function
 
 from compas.datastructures import Mesh
+from compas.geometry import Frame
+from compas.geometry import Point
+from compas.geometry import centroid_points
+from compas.geometry import centroid_polyhedron
+from compas.geometry import cross_vectors
+from compas.geometry import dot_vectors
+from compas.geometry import volume_polyhedron
 
 
 class Block(Mesh):
     """A data structure for the individual blocks of a discrete element assembly."""
 
-    def __init__(self, node=None):
-        super(Block, self).__init__()
-        self.attributes.update({"node": None})
+    def __init__(self, node=None, **kwargs):
+        super(Block, self).__init__(**kwargs)
+        self.attributes["node"] = None
         self.node = node
 
     @property
@@ -89,9 +87,7 @@ class Block(Mesh):
         :class:`compas.geometry.Point`
 
         """
-        x, y, z = centroid_points(
-            [self.vertex_coordinates(key) for key in self.vertices()]
-        )
+        x, y, z = centroid_points([self.vertex_coordinates(key) for key in self.vertices()])
         return Point(x, y, z)
 
     def frames(self):
@@ -121,9 +117,7 @@ class Block(Mesh):
         xyz = self.face_coordinates(face)
         o = self.face_center(face)
         w = self.face_normal(face)
-        u = [
-            xyz[1][i] - xyz[0][i] for i in range(3)
-        ]  # align with longest edge instead?
+        u = [xyz[1][i] - xyz[0][i] for i in range(3)]  # align with longest edge instead?
         v = cross_vectors(w, u)
         return Frame(o, u, v)
 
@@ -151,10 +145,7 @@ class Block(Mesh):
         """
         vertex_index = {vertex: index for index, vertex in enumerate(self.vertices())}
         vertices = [self.vertex_coordinates(vertex) for vertex in self.vertices()]
-        faces = [
-            [vertex_index[vertex] for vertex in self.face_vertices(face)]
-            for face in self.faces()
-        ]
+        faces = [[vertex_index[vertex] for vertex in self.face_vertices(face)] for face in self.faces()]
         x, y, z = centroid_polyhedron((vertices, faces))
         return Point(x, y, z)
 
@@ -169,9 +160,6 @@ class Block(Mesh):
         """
         vertex_index = {vertex: index for index, vertex in enumerate(self.vertices())}
         vertices = [self.vertex_coordinates(vertex) for vertex in self.vertices()]
-        faces = [
-            [vertex_index[vertex] for vertex in self.face_vertices(face)]
-            for face in self.faces()
-        ]
+        faces = [[vertex_index[vertex] for vertex in self.face_vertices(face)] for face in self.faces()]
         v = volume_polyhedron((vertices, faces))
         return v

@@ -2,8 +2,8 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-from compas.utilities import flatten
 from compas.geometry import convex_hull
+from compas.itertools import flatten
 from compas.topology import unify_cycles
 
 
@@ -36,7 +36,7 @@ def assembly_hull(assembly, keys=None, unify=True):
     points = []
     for key in keys:
         block = assembly.blocks[key]
-        points.extend(block.vertices_attributes('xyz'))
+        points.extend(block.vertices_attributes("xyz"))
 
     faces = convex_hull(points)
     vertices = list(set(flatten(faces)))

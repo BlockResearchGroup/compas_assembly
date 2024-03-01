@@ -1,17 +1,12 @@
-from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
+from __future__ import print_function
 
 from ._geometry import Geometry
 
 
 class Wall(Geometry):
-    """Create voussoirs for a typical brick wall.
-
-    Parameters
-    ----------
-
-    """
+    """Create voussoirs for a typical brick wall."""
 
     def __init__(self):
         super(Wall, self).__init__()

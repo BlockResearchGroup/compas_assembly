@@ -1,29 +1,22 @@
-from typing import List
-
 from math import fabs
+from typing import List
 
 from shapely.geometry import Polygon as ShapelyPolygon
 
+from compas.datastructures import Mesh
 from compas.geometry import Frame
-from compas.geometry import Transformation
 from compas.geometry import Plane
 from compas.geometry import Polygon
+from compas.geometry import Transformation
 from compas.geometry import centroid_polygon
-
-# from compas.geometry import bestfit_frame_numpy
-from compas.geometry import transform_points
-from compas.geometry import is_coplanar
 from compas.geometry import is_colinear
-
+from compas.geometry import is_coplanar
+from compas.geometry import transform_points
 from compas.utilities import window
-
-from compas.datastructures import Mesh
-from compas.datastructures import mesh_merge_faces
-
+from compas_assembly.algorithms.nnbrs import find_nearest_neighbours
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import Block
 from compas_assembly.datastructures import Interface
-from compas_assembly.algorithms.nnbrs import find_nearest_neighbours
 
 
 def assembly_interfaces(
@@ -76,7 +69,7 @@ def assembly_interfaces(
                 # a block has no interfaces with itself
                 continue
 
-            if assembly.graph.has_edge(n, node, directed=False):
+            if assembly.graph.has_edge((n, node), directed=False):
                 # the interfaces between these two blocks have already been identified
                 continue
 
@@ -148,7 +141,6 @@ def mesh_mesh_interfaces(
             coords = transform_points(coords, matrix.inverted())[:-1]
 
             interface = Interface(
-                type="face_face",
                 size=area,
                 points=coords,
                 frame=Frame(
@@ -216,7 +208,7 @@ def merge_coplanar_interfaces(assembly, tol=1e-6):
                                 points.append(temp.vertex_coordinates(vertex))
 
                         if is_coplanar(points, tol=tol):
-                            mesh_merge_faces(temp, [face, nbr])
+                            temp.merge_faces([face, nbr])
                             has_merged = True
                             reconstruct = True
                             break
@@ -232,11 +224,8 @@ def merge_coplanar_interfaces(assembly, tol=1e-6):
                 for face in temp.faces():
                     points = temp.face_coordinates(face)
                     area = temp.face_area(face)
-                    frame = Frame.from_plane(
-                        Plane(temp.face_centroid(face), temp.face_normal(face))
-                    )
+                    frame = Frame.from_plane(Plane(temp.face_centroid(face), temp.face_normal(face)))
                     interface = Interface(
-                        type="face_face",
                         size=area,
                         points=points,
                         frame=frame,

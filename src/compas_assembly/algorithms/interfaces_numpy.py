@@ -6,13 +6,12 @@ from scipy.linalg import solve
 from shapely.geometry import Polygon
 
 from compas.geometry import Frame
-from compas.geometry import local_to_world_coordinates_numpy
 from compas.geometry import centroid_points
-
+from compas.geometry import local_to_world_coordinates_numpy
+from compas_assembly.algorithms.nnbrs import find_nearest_neighbours
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import Block
 from compas_assembly.datastructures import Interface
-from compas_assembly.algorithms.nnbrs import find_nearest_neighbours
 
 
 def assembly_interfaces_numpy(
@@ -125,7 +124,6 @@ def mesh_mesh_interfaces(
         rst = {key: rst[k_i[key]] for key in b.vertices()}
 
         for f1 in b.faces():
-
             rst1 = [rst[key] for key in b.face_vertices(f1)]
 
             if any(fabs(t) > tmax for r, s, t in rst1):
@@ -146,11 +144,8 @@ def mesh_mesh_interfaces(
                 continue
 
             coords = [[x, y, 0.0] for x, y, z in intersection.exterior.coords]
-            coords = local_to_world_coordinates_numpy(
-                Frame(o, A[0], A[1]), coords[:-1]
-            ).tolist()
+            coords = local_to_world_coordinates_numpy(Frame(o, A[0], A[1]), coords[:-1]).tolist()
             interface = Interface(
-                type="face_face",
                 size=area,
                 points=coords,
                 frame=Frame(

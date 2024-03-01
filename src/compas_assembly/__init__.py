@@ -1,33 +1,13 @@
-"""
-********************************************************************************
-compas_assembly
-********************************************************************************
-
-.. currentmodule:: compas_assembly
-
-
-.. toctree::
-    :maxdepth: 1
-
-    compas_assembly.algorithms
-    compas_assembly.artists
-    compas_assembly.datastructures
-    compas_assembly.geometry
-    compas_assembly.rhino
-    compas_assembly.viewer
-
-"""
 from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 
 import os
 
-__author__ = ["Tom Van Mele <van.mele@arch.ethz.ch>"]
-__copyright__ = "Block Research Group - ETH Zurich"
+__author__ = ["Tom Van Mele"]
+__copyright__ = "ETH Zurich - Block Research Group"
 __license__ = "MIT License"
-__email__ = "van.mele@arch.ethz.ch"
-
+__email__ = "tom.v.mele@gmail.com"
 __version__ = "0.6.2"
 
 

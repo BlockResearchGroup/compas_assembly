@@ -1,12 +1,11 @@
-from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
+from __future__ import print_function
 
-from compas.geometry import Point
-from compas.geometry import Line
 from compas.datastructures import Datastructure
 from compas.datastructures import Graph
-
+from compas.geometry import Line
+from compas.geometry import Point
 from compas_assembly.datastructures import Block
 
 
@@ -35,6 +34,25 @@ class Assembly(Datastructure):
 
     """
 
+    @property
+    def __data__(self):
+        return {
+            "attributes": self.attributes,
+            "graph": self.graph,
+        }
+
+    @classmethod
+    def __from_data__(cls, data):
+        assembly = cls()
+        assembly.attributes.update(data["attributes"] or {})
+        assembly.graph = data["graph"]
+        assembly._blocks = {}
+        for node in assembly.graph.nodes():
+            block = assembly.graph.node_attribute(node, "block")
+            if block:
+                assembly._blocks[block.guid] = node
+        return assembly
+
     def __init__(self, name=None, **kwargs):
         super(Assembly, self).__init__()
 
@@ -56,42 +74,6 @@ class Assembly(Datastructure):
                 "interfaces": None,
             }
         )
-
-    # ==========================================================================
-    # data
-    # ==========================================================================
-
-    @property
-    def DATASCHEMA(self):
-        import schema
-
-        return schema.Schema(
-            {
-                "attributes": dict,
-                "graph": Graph,
-            }
-        )
-
-    @property
-    def JSONSCHEMANAME(self):
-        return "assembly"
-
-    @property
-    def data(self):
-        return {
-            "attributes": self.attributes,
-            "graph": self.graph.data,
-        }
-
-    @data.setter
-    def data(self, data):
-        self.attributes.update(data["attributes"] or {})
-        self.graph.data = data["graph"]
-        self._blocks = {}
-        for node in self.graph.nodes():
-            block = self.graph.node_attribute(node, "block")
-            if block:
-                self._blocks[block.guid] = node
 
     # ==========================================================================
     # properties
@@ -567,7 +549,7 @@ class Assembly(Datastructure):
 
         Examples
         --------
-        >>> assembly = Assembly.from_json('assembly.json')
+        >>> assembly = Assembly.from_json("assembly.json")
         >>> R = Rotation.from_axis_and_angle([1.0, 0, 0], -pi / 2)
         >>> assembly_transform(assembly, R)
 
@@ -591,7 +573,7 @@ class Assembly(Datastructure):
 
         Examples
         --------
-        >>> assembly = Assembly.from_json('assembly.json')
+        >>> assembly = Assembly.from_json("assembly.json")
         >>> R = Rotation.from_axis_and_angle([1.0, 0, 0], -pi / 2)
         >>> transformed = assembly_transformed(assembly, R)
 

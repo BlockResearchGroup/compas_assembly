@@ -21,8 +21,8 @@ def assembly_hull_numpy(assembly, keys=None, unify=True):
     tuple
         The vertices and faces of the hull.
 
-    Warning
-    -------
+    Warnings
+    --------
     This function requires Numpy and cannot be used directly inside Rhino.
 
     Examples
@@ -34,7 +34,7 @@ def assembly_hull_numpy(assembly, keys=None, unify=True):
     points = []
     for key in keys:
         block = assembly.blocks[key]
-        points.extend(block.vertices_attributes('xyz'))
+        points.extend(block.vertices_attributes("xyz"))
 
     vertices, faces = convex_hull_numpy(points)
 

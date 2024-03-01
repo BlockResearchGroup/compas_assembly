@@ -1,16 +1,15 @@
-from typing import List
-
 import os
-from compas.colors import Color
-from compas.geometry import Line
-from compas.utilities import remap_values
-from compas_assembly.datastructures import Interface
+from typing import List
 
 from compas_view2.app import App
 from compas_view2.app import Controller
 from compas_view2.objects import Collection
-
 from qt_material import apply_stylesheet
+
+from compas.colors import Color
+from compas.geometry import Line
+from compas.utilities import remap_values
+from compas_assembly.datastructures import Interface
 
 HERE = os.path.dirname(__file__)
 CONFIG = os.path.join(HERE, "config.json")
@@ -204,9 +203,7 @@ class DEMViewer(App):
         for edge in assembly.graph.edges():
             for interface in assembly.graph.edge_attribute(edge, "interfaces"):
                 interfaces.append(interface.polygon)
-                properties.append(
-                    {"is_visible": show_interfaces, "linewidth": linewidth}
-                )
+                properties.append({"is_visible": show_interfaces, "linewidth": linewidth})
         self.interfaces = self.add(Collection(interfaces, properties))
 
         compression = []
@@ -214,9 +211,7 @@ class DEMViewer(App):
         friction = []
         resultants = []
         for edge in assembly.graph.edges():
-            interfaces: List[Interface] = assembly.graph.edge_attribute(
-                edge, "interfaces"
-            )
+            interfaces: List[Interface] = assembly.graph.edge_attribute(edge, "interfaces")
             for interface in interfaces:
                 compression += interface.compressionforces
                 tension += interface.tensionforces
@@ -255,22 +250,14 @@ class DEMViewer(App):
         for item in items:
             if item["type"] == "radio":
                 action = item["action"]
-                item["action"] = (
-                    action if callable(action) else getattr(self.controller, action)
-                )
+                item["action"] = action if callable(action) else getattr(self.controller, action)
             elif item["type"] == "checkbox":
                 action = item["action"]
-                item["action"] = (
-                    action if callable(action) else getattr(self.controller, action)
-                )
+                item["action"] = action if callable(action) else getattr(self.controller, action)
             elif item["type"] == "slider":
                 action = item["action"]
-                item["action"] = (
-                    action if callable(action) else getattr(self.controller, action)
-                )
+                item["action"] = action if callable(action) else getattr(self.controller, action)
             elif item["type"] == "button":
                 action = item["action"]
-                item["action"] = (
-                    action if callable(action) else getattr(self.controller, action)
-                )
+                item["action"] = action if callable(action) else getattr(self.controller, action)
         super()._add_sidebar_items(items, *args, **kwargs)

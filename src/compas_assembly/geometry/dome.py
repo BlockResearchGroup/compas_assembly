@@ -1,9 +1,13 @@
-from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
+from __future__ import print_function
 
-from math import cos, sin, pi
+from math import cos
+from math import pi
+from math import sin
+
 from compas.datastructures import Mesh
+
 from ._geometry import Geometry
 
 
@@ -21,12 +25,7 @@ def radius(r_i, r_f, theta_upper, theta_lower, theta):
 
 
 class Dome(Geometry):
-    """Create voussoirs for a spherical dome geometry with given rise and span.
-
-    Parameters
-    ----------
-
-    """
+    """Create voussoirs for a spherical dome geometry with given rise and span."""
 
     def __init__(
         self,
