@@ -1,5 +1,5 @@
-from compas_assembly.datastructures import Assembly
 from compas_assembly.algorithms import assembly_interfaces
+from compas_assembly.datastructures import Assembly
 from compas_assembly.geometry import Arch
 from compas_assembly.viewer import DEMViewer
 
