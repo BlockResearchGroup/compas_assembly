@@ -4,7 +4,7 @@
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/compas_assembly.svg)](https://pypi.python.org/project/compas_assembly)
 [![PyPI - Latest Release](https://img.shields.io/pypi/v/compas_assembly.svg)](https://pypi.python.org/project/compas_assembly)
 
-Assembly data structure for the compas_assembly framework.
+Assembly data structure for the COMPAS framework.
 
 ## Installation
 
