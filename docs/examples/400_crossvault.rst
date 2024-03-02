@@ -3,8 +3,6 @@ Crossvault
 **********
 
 .. figure:: /_images/crossvault.png
-    :figclass: figure
-    :class: figure-img img-fluid
 
 .. rst-class:: lead
 
