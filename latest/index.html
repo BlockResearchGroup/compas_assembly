@@ -535,11 +535,15 @@ document.write(`
 <figure class="figure align-default">
 <img alt="_images/assembly.png" class="figure-img img-fluid" src="_images/assembly.png" />
 </figure>
-<p class="lead"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code> contains data structures and algorithms for modelling the individual
-elements of Discrete Element Assemblies or Models, and the connections and relationships between them.
-The package itself <strong>DOES NOT</strong> provide tools or solvers for computing contact forces between the elements,
-nor for analysing the stability of entire assemblies.
-To enable such calculations, you have to install additional solver packages such as <code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_rbe</span></code>.</p>
+<p class="lead"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compas_assembly</span></code> provides a lightweight data structure for representing
+Discrete Element Models (DEMs), the individual elements,
+and interactions between elements.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>COMPAS Assembly itself doen’s provide any equilibrium solvers.
+To compute the equilibrium forces of assemblies under influence of external loads,
+you should install an equilibrium solver, such as <a class="reference external" href="https://blockresearchgroup.github.io/compas_cra">compas_cra</a>.</p>
+</div>
 <section id="table-of-contents">
 <h2>Table of Contents</h2>
 <div class="toctree-wrapper compound">
