@@ -8,11 +8,16 @@ COMPAS Assembly
 
 .. rst-class:: lead
 
-:mod:`compas_assembly` contains data structures and algorithms for modelling the individual
-elements of Discrete Element Assemblies or Models, and the connections and relationships between them.
-The package itself **DOES NOT** provide tools or solvers for computing contact forces between the elements,
-nor for analysing the stability of entire assemblies.
-To enable such calculations, you have to install additional solver packages such as :mod:`compas_rbe`.
+:mod:`compas_assembly` provides a lightweight data structure for representing
+Discrete Element Models (DEMs), the individual elements,
+and interactions between elements.
+
+.. warning::
+
+    COMPAS Assembly itself doen's provide any equilibrium solvers.
+    To compute the equilibrium forces of assemblies under influence of external loads,
+    you should install an equilibrium solver, such as `compas_cra <https://blockresearchgroup.github.io/compas_cra>`_.
+
 
 Table of Contents
 =================
