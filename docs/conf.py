@@ -6,7 +6,7 @@ import sphinx_compas2_theme
 
 # -- General configuration ------------------------------------------------
 
-project = "COMPAS Assemblty"
+project = "COMPAS Assembly"
 copyright = "ETH Zurich - Block Research Group"
 package = "compas_assembly"
 organization = "blockresearchgroup"
