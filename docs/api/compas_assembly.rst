@@ -11,6 +11,4 @@ compas_assembly
     compas_assembly.algorithms
     compas_assembly.datastructures
     compas_assembly.geometry
-    compas_assembly.rhino
-    compas_assembly.viewer
 
