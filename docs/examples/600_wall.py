@@ -12,7 +12,7 @@ from compas_assembly.viewer import DEMViewer
 
 HERE = pathlib.Path(__file__).parent
 DATA = HERE / "wall.json"
-ASSEMBLY = HERE / "wall-assembly.json"
+ASSEMBLY = HERE / "wall_assembly.json"
 
 # =============================================================================
 # Import

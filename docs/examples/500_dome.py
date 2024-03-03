@@ -8,7 +8,7 @@ from compas_assembly.datastructures import Assembly
 from compas_assembly.geometry import Dome
 from compas_assembly.viewer import DEMViewer
 
-ASSEMBLY = pathlib.Path(__file__).parent / "dome-assembly.json"
+ASSEMBLY = pathlib.Path(__file__).parent / "dome_assembly.json"
 
 # =============================================================================
 # Template

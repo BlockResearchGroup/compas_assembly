@@ -20,9 +20,6 @@ Equilibrium
 Coming...
 
 
-Code
-====
-
 .. note::
 
     Note that this example uses ``compas_cra`` for the equilibrium calculations.
@@ -30,6 +27,9 @@ Code
     or simply don't want to compute the contact forces,
     just comment out lines 3 and 41.
 
+
+Code
+====
 
 .. literalinclude:: 300_arch.py
     :language: python

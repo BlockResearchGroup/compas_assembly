@@ -1,7 +1,8 @@
 import pathlib
 
 # from compas_cra.equilibrium import cra_solve
-# from compas_cra.equilibrium import rbe_solve
+from compas_cra.equilibrium import rbe_solve
+
 import compas
 from compas.datastructures import Mesh
 from compas.geometry import Scale
@@ -9,8 +10,8 @@ from compas_assembly.algorithms import assembly_interfaces
 from compas_assembly.datastructures import Assembly
 from compas_assembly.viewer import DEMViewer
 
-MESHES = pathlib.Path(__file__).parent.parent / "crossvault_blocks.json"
-ASSEMBLY = pathlib.Path(__file__).parent / "crossvault-assembly.json"
+MESHES = pathlib.Path(__file__).parent / "crossvault_blocks.json"
+ASSEMBLY = pathlib.Path(__file__).parent / "crossvault_assembly.json"
 
 # =============================================================================
 # Block meshes
@@ -54,7 +55,7 @@ for node in nodes:
 # Ideally, the RBE result can be used to jumpstart the CRA solver
 # But this is not available yet...
 
-# rbe_solve(assembly)
+rbe_solve(assembly)
 
 # =============================================================================
 # Export

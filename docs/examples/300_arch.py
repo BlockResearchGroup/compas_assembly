@@ -8,7 +8,7 @@ from compas_assembly.datastructures import Assembly
 from compas_assembly.geometry import Arch
 from compas_assembly.viewer import DEMViewer
 
-ASSEMBLY = pathlib.Path(__file__).parent / "arch-assembly.json"
+ASSEMBLY = pathlib.Path(__file__).parent / "arch_assembly.json"
 
 # =============================================================================
 # Arch assembly

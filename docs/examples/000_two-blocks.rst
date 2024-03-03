@@ -13,8 +13,13 @@ and compute the contact forces between the blocks that result in static equilibr
 Finally, we export the assembly to a JSON file and visualize the result with the DEM Viewer.
 
 
-Code
-====
+Equilibrium
+===========
+
+The equilibrium is simple.
+The forces are equally distributed over the four corners of the interface,
+and the resultant is throught center.
+There is no friction.
 
 .. note::
 
@@ -23,6 +28,9 @@ Code
     or simply don't want to compute the contact forces,
     just comment out lines 3 and 48.
 
+
+Code
+====
 
 .. literalinclude:: 000_two-blocks.py
     :language: python

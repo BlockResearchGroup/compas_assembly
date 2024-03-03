@@ -10,7 +10,7 @@ from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import Block
 from compas_assembly.viewer import DEMViewer
 
-ASSEMBLY = pathlib.Path(__file__).parent / "stack-assembly.json"
+ASSEMBLY = pathlib.Path(__file__).parent / "stack_assembly.json"
 
 # =============================================================================
 # Geometry

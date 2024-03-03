@@ -1,14 +1,34 @@
-**********
+********************************************************************************
 Crossvault
-**********
+********************************************************************************
 
-.. figure:: /_images/crossvault.png
+.. figure:: /_images/400_crossvault.png
 
-.. rst-class:: lead
+Summary
+=======
 
-Construct an assembly data structure of a cross-vault that can be used for equilibrium calculations, generation of fabrication data, or assembly simulationos.
-We construct the assembly from a list oof meshes representing the blocks.
+First, we construct the assembly from a list of meshes representing the blocks.
 The JSON file containing the meshes is available here: :download:`crossvault.json <crossvault.json>`.
+Then, we detect the interfaces between the blocks, and compute an approximate equilibrium solution.
+Finally, we export the assembly and visualize the result.
 
-.. literalinclude:: crossvault.py
+
+Equilibrium
+===========
+
+Coming...
+
+
+.. note::
+
+    Note that this example uses ``compas_cra`` for the equilibrium calculations.
+    If you don't have ``compas_cra`` installed,
+    or simply don't want to compute the contact forces,
+    just comment out lines 3, 4 and 58.
+
+
+Code
+====
+
+.. literalinclude:: 400_crossvault.py
     :language: python
