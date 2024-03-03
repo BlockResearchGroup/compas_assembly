@@ -59,7 +59,7 @@
         </script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="API Reference" href="../api.html" />
+    <link rel="next" title="Crossvault" href="400_crossvault.html" />
     <link rel="prev" title="Leaning Stack of Blocks" href="100_stack.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -484,6 +484,9 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="000_two-blocks.html">Two Blocks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="100_stack.html">Leaning Stack of Blocks</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">A Semicircular Arch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="400_crossvault.html">Crossvault</a></li>
+<li class="toctree-l2"><a class="reference internal" href="500_dome.html">A Hemispherical Dome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="600_wall.html">A Curved Wall</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -576,9 +579,6 @@ Finally, we export the assembly to a JSON file and visualize the result with the
 <section id="equilibrium">
 <h2>Equilibrium</h2>
 <p>Coming…</p>
-</section>
-<section id="code">
-<h2>Code</h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Note that this example uses <code class="docutils literal notranslate"><span class="pre">compas_cra</span></code> for the equilibrium calculations.
@@ -586,6 +586,9 @@ If you don’t have <code class="docutils literal notranslate"><span class="pre"
 or simply don’t want to compute the contact forces,
 just comment out lines 3 and 41.</p>
 </div>
+</section>
+<section id="code">
+<h2>Code</h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
 
 <span class="kn">from</span> <span class="nn">compas_cra.equilibrium</span> <span class="kn">import</span> <span class="n">cra_penalty_solve</span>
@@ -596,7 +599,7 @@ just comment out lines 3 and 41.</p>
 <span class="kn">from</span> <span class="nn">compas_assembly.geometry</span> <span class="kn">import</span> <span class="n">Arch</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.viewer</span> <span class="kn">import</span> <span class="n">DEMViewer</span>
 
-<span class="n">ASSEMBLY</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;arch-assembly.json&quot;</span>
+<span class="n">ASSEMBLY</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;arch_assembly.json&quot;</span>
 
 <span class="c1"># =============================================================================</span>
 <span class="c1"># Arch assembly</span>

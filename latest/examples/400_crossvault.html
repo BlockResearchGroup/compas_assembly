@@ -59,6 +59,8 @@
         </script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="A Hemispherical Dome" href="500_dome.html" />
+    <link rel="prev" title="A Semicircular Arch" href="300_arch.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -169,7 +171,7 @@
                     </li>
                 
 
-                    <li class="nav-item">
+                    <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="../examples.html">
                         Examples
                       </a>
@@ -307,6 +309,10 @@ document.write(`
   
 
   
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
 </div>
 
     </nav>
@@ -353,7 +359,7 @@ document.write(`
                     </li>
                 
 
-                    <li class="nav-item">
+                    <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="../examples.html">
                         Examples
                       </a>
@@ -470,14 +476,17 @@ document.write(`
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../examples.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../examples.html">Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="000_two-blocks.html">Two Blocks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="100_stack.html">Leaning Stack of Blocks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="300_arch.html">A Semicircular Arch</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Crossvault</a></li>
+<li class="toctree-l2"><a class="reference internal" href="500_dome.html">A Hemispherical Dome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="600_wall.html">A Curved Wall</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -534,6 +543,9 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
+    
+    <li class="breadcrumb-item"><a href="../examples.html" class="nav-link">Examples</a></li>
+    
     <li class="breadcrumb-item active" aria-current="page">Crossvault</li>
   </ul>
 </nav>
@@ -554,11 +566,107 @@ document.write(`
   <section id="crossvault">
 <h1>Crossvault</h1>
 <figure class="align-default">
-<img alt="../_images/crossvault.png" src="../_images/crossvault.png" />
+<img alt="../_images/400_crossvault.png" src="../_images/400_crossvault.png" />
 </figure>
-<p class="lead">Construct an assembly data structure of a cross-vault that can be used for equilibrium calculations, generation of fabrication data, or assembly simulationos.
-We construct the assembly from a list oof meshes representing the blocks.
-The JSON file containing the meshes is available here: <code class="xref download docutils literal notranslate"><span class="pre">crossvault.json</span></code>.</p>
+<section id="summary">
+<h2>Summary</h2>
+<p>First, we construct the assembly from a list of meshes representing the blocks.
+The JSON file containing the meshes is available here: <code class="xref download docutils literal notranslate"><span class="pre">crossvault.json</span></code>.
+Then, we detect the interfaces between the blocks, and compute an approximate equilibrium solution.
+Finally, we export the assembly and visualize the result.</p>
+</section>
+<section id="equilibrium">
+<h2>Equilibrium</h2>
+<p>Coming…</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that this example uses <code class="docutils literal notranslate"><span class="pre">compas_cra</span></code> for the equilibrium calculations.
+If you don’t have <code class="docutils literal notranslate"><span class="pre">compas_cra</span></code> installed,
+or simply don’t want to compute the contact forces,
+just comment out lines 3, 4 and 58.</p>
+</div>
+</section>
+<section id="code">
+<h2>Code</h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+
+<span class="c1"># from compas_cra.equilibrium import cra_solve</span>
+<span class="kn">from</span> <span class="nn">compas_cra.equilibrium</span> <span class="kn">import</span> <span class="n">rbe_solve</span>
+
+<span class="kn">import</span> <span class="nn">compas</span>
+<span class="kn">from</span> <span class="nn">compas.datastructures</span> <span class="kn">import</span> <span class="n">Mesh</span>
+<span class="kn">from</span> <span class="nn">compas.geometry</span> <span class="kn">import</span> <span class="n">Scale</span>
+<span class="kn">from</span> <span class="nn">compas_assembly.algorithms</span> <span class="kn">import</span> <span class="n">assembly_interfaces</span>
+<span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Assembly</span>
+<span class="kn">from</span> <span class="nn">compas_assembly.viewer</span> <span class="kn">import</span> <span class="n">DEMViewer</span>
+
+<span class="n">MESHES</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;crossvault_blocks.json&quot;</span>
+<span class="n">ASSEMBLY</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;crossvault_assembly.json&quot;</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Block meshes</span>
+<span class="c1"># =============================================================================</span>
+
+<span class="n">meshes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Mesh</span><span class="p">]</span> <span class="o">=</span> <span class="n">compas</span><span class="o">.</span><span class="n">json_load</span><span class="p">(</span><span class="n">MESHES</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">mesh</span> <span class="ow">in</span> <span class="n">meshes</span><span class="p">:</span>
+    <span class="n">mesh</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">Scale</span><span class="o">.</span><span class="n">from_factors</span><span class="p">([</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">]))</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Assembly</span>
+<span class="c1"># =============================================================================</span>
+
+<span class="n">assembly</span> <span class="o">=</span> <span class="n">Assembly</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">mesh</span> <span class="ow">in</span> <span class="n">meshes</span><span class="p">:</span>
+    <span class="n">assembly</span><span class="o">.</span><span class="n">add_block_from_mesh</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Interfaces</span>
+<span class="c1"># =============================================================================</span>
+
+<span class="n">assembly_interfaces</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">nmax</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">tmax</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">amin</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">)</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Boundary conditions</span>
+<span class="c1"># =============================================================================</span>
+
+<span class="n">assembly</span><span class="o">.</span><span class="n">unset_boundary_conditions</span><span class="p">()</span>
+
+<span class="n">nodes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">assembly</span><span class="o">.</span><span class="n">nodes</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="n">assembly</span><span class="o">.</span><span class="n">node_point</span><span class="p">(</span><span class="n">node</span><span class="p">)</span><span class="o">.</span><span class="n">z</span><span class="p">)[:</span><span class="mi">4</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+    <span class="n">assembly</span><span class="o">.</span><span class="n">set_boundary_condition</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Equilibrium</span>
+<span class="c1"># =============================================================================</span>
+
+<span class="c1"># CRA is too slow for this structure.</span>
+<span class="c1"># RBE gives only an approximative result.</span>
+<span class="c1"># Ideally, the RBE result can be used to jumpstart the CRA solver</span>
+<span class="c1"># But this is not available yet...</span>
+
+<span class="n">rbe_solve</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Export</span>
+<span class="c1"># =============================================================================</span>
+
+<span class="n">compas</span><span class="o">.</span><span class="n">json_dump</span><span class="p">(</span><span class="n">assembly</span><span class="p">,</span> <span class="n">ASSEMBLY</span><span class="p">)</span>
+
+<span class="c1"># =============================================================================</span>
+<span class="c1"># Viz</span>
+<span class="c1"># =============================================================================</span>
+
+<span class="n">viewer</span> <span class="o">=</span> <span class="n">DEMViewer</span><span class="p">()</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">viewer</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">look_at</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+
+<span class="n">viewer</span><span class="o">.</span><span class="n">add_assembly</span><span class="p">(</span><span class="n">assembly</span><span class="p">)</span>
+
+<span class="n">viewer</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -573,6 +681,22 @@ The JSON file containing the meshes is available here: <code class="xref downloa
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#equilibrium">Equilibrium</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code">Code</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

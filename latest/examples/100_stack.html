@@ -484,6 +484,9 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="000_two-blocks.html">Two Blocks</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Leaning Stack of Blocks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="300_arch.html">A Semicircular Arch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="400_crossvault.html">Crossvault</a></li>
+<li class="toctree-l2"><a class="reference internal" href="500_dome.html">A Hemispherical Dome</a></li>
+<li class="toctree-l2"><a class="reference internal" href="600_wall.html">A Curved Wall</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -577,13 +580,9 @@ Finally, we export the assembly to a JSON file and visualize the result with the
 <h2>Equilibrium</h2>
 <p>Note that the contact forces (in blue) increase towards the bottom of the stack,
 due to the increasing weight.</p>
-<p>The result forces (in green) between block 0 and 1, between 1 and 2, and between 2 and 3
+<p>The resultant forces (in green) between blocks 0 and 1, blocks 1 and 2, and blocks 2 and 3
 are not contained in the interfaces between those blocks.
-As a result, the stack can only be stable by introducing equilibriating “glue” forces (in red)
-at those interfaces.</p>
-</section>
-<section id="code">
-<h2>Code</h2>
+As a result, the stack requires equilibriating “glue” forces (in red) at those interfaces.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This example uses <code class="docutils literal notranslate"><span class="pre">compas_cra</span></code> for the equilibrium calculations.
@@ -591,6 +590,9 @@ If you don’t have <code class="docutils literal notranslate"><span class="pre"
 or simply don’t want to compute the contact forces,
 just comment out lines 3 and 50.</p>
 </div>
+</section>
+<section id="code">
+<h2>Code</h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
 
 <span class="kn">from</span> <span class="nn">compas_cra.equilibrium</span> <span class="kn">import</span> <span class="n">cra_penalty_solve</span>
@@ -603,7 +605,7 @@ just comment out lines 3 and 50.</p>
 <span class="kn">from</span> <span class="nn">compas_assembly.datastructures</span> <span class="kn">import</span> <span class="n">Block</span>
 <span class="kn">from</span> <span class="nn">compas_assembly.viewer</span> <span class="kn">import</span> <span class="n">DEMViewer</span>
 
-<span class="n">ASSEMBLY</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;stack-assembly.json&quot;</span>
+<span class="n">ASSEMBLY</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;stack_assembly.json&quot;</span>
 
 <span class="c1"># =============================================================================</span>
 <span class="c1"># Geometry</span>
