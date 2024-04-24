@@ -8,7 +8,7 @@ from qt_material import apply_stylesheet
 
 from compas.colors import Color
 from compas.geometry import Line
-from compas.utilities import remap_values
+from compas.itertools import remap_values
 from compas_assembly.datastructures import Interface
 
 HERE = os.path.dirname(__file__)

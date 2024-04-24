@@ -12,7 +12,7 @@ from compas.geometry import Transformation
 from compas.geometry import centroid_points_weighted
 from compas.geometry import dot_vectors
 from compas.geometry import transform_points
-from compas.utilities import pairwise
+from compas.itertools import pairwise
 
 
 def outer_product(u, v):

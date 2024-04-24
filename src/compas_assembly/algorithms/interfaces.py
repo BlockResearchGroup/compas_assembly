@@ -12,7 +12,7 @@ from compas.geometry import centroid_polygon
 from compas.geometry import is_colinear
 from compas.geometry import is_coplanar
 from compas.geometry import transform_points
-from compas.utilities import window
+from compas.itertools import window
 from compas_assembly.algorithms.nnbrs import find_nearest_neighbours
 from compas_assembly.datastructures import Assembly
 from compas_assembly.datastructures import Block
