@@ -8,7 +8,7 @@ __author__ = ["Tom Van Mele"]
 __copyright__ = "ETH Zurich - Block Research Group"
 __license__ = "MIT License"
 __email__ = "tom.v.mele@gmail.com"
-__version__ = "0.7.0"
+__version__ = "0.7.1"
 
 
 HERE = os.path.dirname(__file__)
