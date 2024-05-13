@@ -5,29 +5,24 @@ Installation
 Stable
 ======
 
-Stable releases are available on PyPI and can be installed with pip.
+Stable releases of :mod:`compas_assembly` are available on PyPI and can be installed with pip.
 
 .. code-block:: bash
 
     pip install compas_assembly
 
-
-Latest
-======
-
-The latest version can be installed from local source.
+Several examples use the COMPAS Viewer for visualisation.
+To install :mod:`compas_viewer` in the same environment
 
 .. code-block:: bash
 
-    git clone https://github.com/blockresearchgroup/compas_assembly.git
-    cd compas_assembly
-    pip install -e .
+    pip install compas_viewer
 
 
 Development
 ===========
 
-To install `compas_assembly` for development, install from local source with the "dev" requirements.
+To install :mod:`compas_assembly` for development, install from local source with the "dev" requirements.
 
 .. code-block:: bash
 
